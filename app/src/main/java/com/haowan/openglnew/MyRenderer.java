@@ -64,6 +64,8 @@ public class MyRenderer implements GLSurfaceView.Renderer {
     public void setContext(Context context) { _context = context; }
 
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+        RenderLib.init();
+
       _act = -1; _first=true; _mode=0; _k=1.2f;
       _x0=_y0=_x1=_y1=0;
       _vx = 0; _vy = 0; _vw = 1080; _vh = 1800;
@@ -104,10 +106,12 @@ public class MyRenderer implements GLSurfaceView.Renderer {
     public void onSurfaceChanged(GL10 gl, int width, int height) {
 //      _vw = width; _vh = height;
 //        JNILib.resize(_vx, _vy, _vw, _vh);
+        RenderLib.resize(width, height);
         JNILib.resize(width, height);
     }
 
     public void onDrawFrame(GL10 gl) {
+        RenderLib.step();
         Log.i(TAG,"------onDrawFrame:currThread:"+Thread.currentThread());
         Log.i(TAG, "_x=" + _x + ", _y=" + _y);
 //        Log.i(TAG,"---------mode:"+_mode);

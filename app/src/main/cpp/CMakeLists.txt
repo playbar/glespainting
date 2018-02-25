@@ -12,7 +12,7 @@ add_library(gles3jni SHARED
 target_link_libraries(gles3jni
                       android
                       log
-                      GLESv3
+                      GLESv2
                       EGL )
 
 

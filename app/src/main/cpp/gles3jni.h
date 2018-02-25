@@ -1,21 +1,5 @@
-/*
- * Copyright 2013 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-#ifndef GLES3JNI_H
-#define GLES3JNI_H 1
+#ifndef __GLES3JNI_H__
+#define __GLES3JNI_H__
 
 #include <android/log.h>
 #include <math.h>
@@ -24,16 +8,18 @@
 #include <GLES2/gl2.h>
 
 
-#define DEBUG 1
+#ifdef __cplusplus
+extern "C"{
+#endif
 
-#define LOG_TAG "GLES3JNI"
-#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
-#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__ );
-#define LOGV(...) __android_log_print(ANDROID_LOG_VERBOSE, LOG_TAG, __VA_ARGS__)
+JNIEXPORT void JNICALL Java_com_haowan_openglnew_RenderLib_init(JNIEnv* env, jobject obj);
+JNIEXPORT void JNICALL Java_com_haowan_openglnew_RenderLib_resize(JNIEnv* env, jobject obj, jint width, jint height);
+JNIEXPORT void JNICALL Java_com_haowan_openglnew_RenderLib_step(JNIEnv* env, jobject obj);
 
-// ----------------------------------------------------------------------------
-// Types, functions, and data used by both ES2 and ES3 renderers.
-// Defined in gles3jni.cpp.
+#ifdef __cplusplus
+}
+#endif
+
 
 #define MAX_INSTANCES_PER_SIDE 4
 #define MAX_INSTANCES   (MAX_INSTANCES_PER_SIDE * MAX_INSTANCES_PER_SIDE)
@@ -101,20 +87,4 @@ private:
 };
 
 
-
-#ifdef __cplusplus__
-extern "C"{
-#endif
-
-extern Renderer* createES2Renderer();
-
-JNIEXPORT void JNICALL Java_com_haowan_openglnew_RenderLib_init(JNIEnv* env, jobject obj);
-JNIEXPORT void JNICALL Java_com_haowan_openglnew_RenderLib_resize(JNIEnv* env, jobject obj, jint width, jint height);
-JNIEXPORT void JNICALL Java_com_haowan_openglnew_RenderLib_step(JNIEnv* env, jobject obj);
-
-#ifdef __cplusplus__
-}
-#endif
-
-
-#endif // GLES3JNI_H
+#endif // __GLES3JNI_H__

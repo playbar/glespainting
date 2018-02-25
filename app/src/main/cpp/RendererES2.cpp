@@ -15,6 +15,7 @@
  */
 
 #include "gles3jni.h"
+#include "mylog.h"
 #include <EGL/egl.h>
 
 static const char VERTEX_SHADER[] =

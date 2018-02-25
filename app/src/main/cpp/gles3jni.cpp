@@ -22,6 +22,7 @@
 #include <EGL/egl.h>
 
 #include "gles3jni.h"
+#include "mylog.h"
 
 const Vertex QUAD[4] = {
     // Square with diagonal < 2 so that it fits in a [-1 .. 1]^2 square
@@ -450,12 +451,6 @@ static Renderer* g_renderer = NULL;
 
 
 
-#if !defined(DYNAMIC_ES3)
-static GLboolean gl3stubInit() {
-    return GL_TRUE;
-}
-#endif
-
 EGLContext gShareContext;
 EGLDisplay gDisplay;
 EGLSurface gAuxSurface;
@@ -523,6 +518,7 @@ void * thread_1(void *pdata ){
 
 }
 
+extern Renderer* createES2Renderer();
 
 JNIEXPORT void JNICALL
 Java_com_haowan_openglnew_RenderLib_init(JNIEnv* env, jobject obj) {
@@ -537,13 +533,7 @@ Java_com_haowan_openglnew_RenderLib_init(JNIEnv* env, jobject obj) {
     printGlString("Extensions", GL_EXTENSIONS);
 
     const char* versionStr = (const char*)glGetString(GL_VERSION);
-//    if (strstr(versionStr, "OpenGL ES 3.") && gl3stubInit()) {
-//        g_renderer = createES3Renderer();
-//    } else if (strstr(versionStr, "OpenGL ES 2.")) {
-//        g_renderer = createES2Renderer();
-//    } else {
-//        LOGE("Unsupported OpenGL ES version");
-//    }
+
 
     g_renderer = createES2Renderer();
 
