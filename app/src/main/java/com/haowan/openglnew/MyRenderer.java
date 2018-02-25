@@ -108,7 +108,8 @@ public class MyRenderer implements GLSurfaceView.Renderer {
     }
 
     public void onDrawFrame(GL10 gl) {
-//        Log.i(TAG,"------onDrawFrame:currThread:"+Thread.currentThread());
+        Log.i(TAG,"------onDrawFrame:currThread:"+Thread.currentThread());
+        Log.i(TAG, "_x=" + _x + ", _y=" + _y);
 //        Log.i(TAG,"---------mode:"+_mode);
       if(_first){
           JNILib.drawBlankCanvas(0.9f,0.9f,0.9f);
