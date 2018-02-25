@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:skin="http://schemas.android.com/android/skin"
+    skin:enable="true"
+    android:id="@+id/note_bottom_bar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_paint_bottom_bg"
+    android:minHeight="56dp"
+    android:baselineAligned="false"
+    android:orientation="horizontal" ><!-- draw_bottom_bg -->
+
+    <LinearLayout
+        android:id="@+id/alpha_size_layout"
+        android:layout_width="0px"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:layout_weight="5"
+        android:gravity="center_vertical">
+
+        <LinearLayout
+            android:id="@+id/size_relative"
+            android:layout_width="fill_parent"
+            android:layout_height="0px"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingLeft="8dip"
+			android:orientation="vertical"/>
+
+        <LinearLayout
+            android:id="@+id/tran_relative"
+            android:layout_width="fill_parent"
+            android:layout_height="0px"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingLeft="8dip"
+			android:orientation="vertical"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/opt_layout"
+        android:layout_width="0px"
+        android:layout_height="fill_parent"
+        android:layout_weight="4"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:paddingLeft="1dip" >
+	    <TextView
+	        android:id="@+id/note_one_back"
+	        android:layout_width="0px"
+	        android:layout_height="fill_parent"
+	        android:layout_weight="1"
+	        android:drawableTop="@drawable/icon_fowward"
+	        android:paddingTop="5dp"
+	        android:gravity="center_horizontal"
+	        android:text="@string/per_step_back"
+	        skin:enable="true"
+	        android:textColor="@color/text_color_black"
+	        android:textSize="10sp" />
+	
+	    <RelativeLayout android:id="@+id/note_pickcolor_tab"
+	        android:layout_width="0px"
+	        android:layout_height="fill_parent"
+	        android:layout_weight="1"
+	        android:paddingTop="5dp">
+            <ImageView android:id="@+id/pickcolor_image"
+                android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:src="@drawable/icon_edit_colorpick"
+		        android:layout_centerHorizontal="true"
+		        />
+            <ImageView android:id="@+id/pickcolor_color"
+                android:layout_width="5dip"
+                android:layout_height="5dip"
+                android:src="@drawable/curr_color"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/pickcolor_image"
+                android:layout_marginLeft="-15dp"/>
+	        <TextView
+		        android:id="@+id/pickcolor_text"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_centerHorizontal="true"
+		        android:layout_below="@id/pickcolor_image"
+		        android:text="@string/per_pickcolor"
+		        skin:enable="true"
+		        android:textColor="@color/text_color_black"
+	        	android:textSize="10sp" />
+	    </RelativeLayout> 
+	
+	    <TextView
+	        android:id="@+id/note_mood_tab"
+	        android:layout_width="0px"
+	        android:layout_height="fill_parent"
+	        android:layout_weight="1"
+	        android:paddingTop="5dp"
+	        android:drawableTop="@drawable/icon_more_write"
+	        android:gravity="center_horizontal"
+	        android:text="@string/per_more"
+	        skin:enable="true"
+	        android:textColor="@color/text_color_black"
+	        android:textSize="10sp" />
+	</LinearLayout>
+    
+</LinearLayout>

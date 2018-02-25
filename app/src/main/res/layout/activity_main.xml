@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/surface_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <Button
+        android:id="@+id/btn2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="普通线"
+        android:layout_alignParentBottom="true"/>
+
+    <Button
+        android:id="@+id/btn3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="直线"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/btn2"/>
+
+    <Button
+        android:id="@+id/btn4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="回退"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/btn3"/>
+    <Button
+        android:id="@+id/btn5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="恢复"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/btn4"/>
+
+    <Button
+        android:id="@+id/btn6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="画布大小"
+        android:layout_above="@id/btn5"/>
+    <Button
+        android:id="@+id/btn7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="保存"
+        android:layout_above="@id/btn5"
+        android:layout_toRightOf="@id/btn6"/>
+    <Button
+        android:id="@+id/btn8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="播放"
+        android:layout_above="@id/btn5"
+        android:layout_toRightOf="@id/btn7"/>
+    <Button
+        android:id="@+id/btn9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="颜色"
+        android:layout_above="@id/btn5"
+        android:layout_toRightOf="@id/btn8"/>
+
+    <Button
+        android:id="@+id/btn10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="模糊"
+        android:layout_above="@id/btn9"/>
+    <Button
+        android:id="@+id/btn11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="柳叶笔"
+        android:layout_above="@id/btn9"
+        android:layout_toRightOf="@id/btn10"/>
+
+    <Button
+        android:id="@+id/btn12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="取色"
+        android:layout_above="@id/btn9"
+        android:layout_toRightOf="@id/btn11"/>
+    <Button
+        android:id="@+id/btn13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="存图"
+        android:layout_above="@id/btn9"
+        android:layout_toRightOf="@id/btn12"/>
+
+    <SeekBar
+        android:id="@+id/size"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="100"
+        android:layout_above="@id/btn10"
+        />
+    <SeekBar
+        android:id="@+id/alpha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="255"
+        android:layout_above="@id/size"
+        />
+
+
+</RelativeLayout>

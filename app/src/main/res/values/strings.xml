@@ -1,0 +1,1402 @@
+<resources>
+    <string-array name="market_unit">
+        <item>RMB</item>
+        <item>EXP</item>
+        <item>POS</item>
+    </string-array>
+    <!-- ver92 jiangtao 付费看过程,下载高清 -->
+
+    <string-array name="pager_title">
+        <item>打赏人数</item>
+        <item>大图下载</item>
+        <item>付费观看</item>
+    </string-array>
+
+    <!-- <string name="note_coin_setting_useable">&#160;&#160;当前设置画币功能可以使用!</string> -->
+    <string name="note_coin_setting_help">&#160;&#160;必选标签选择除&lt;临摹&gt;以外可用!</string>
+    <string name="note_coin_ischain_trade">接龙作品不可交易</string>
+    <string name="note_coin_istogether_trade">合绘作品不可交易</string>
+    <string name="opengl_cannot_downloadbigimg">高级画板暂不支持下载高清图</string>
+    <string name="note_play_help_level">&#160;&#160;目前等级小于3级!</string>
+    <string name="note_download_help_level">&#160;&#160;目前等级小于3级!</string>
+    <string name="points_detucted">提交作品扣除5积分</string>
+    <string name="hd_start_download">开始下载图片</string>
+    <string name="hd__download_have_no">高清图尚未生成,请稍后再试</string>
+    <string name="hd_is_downloading">图片正在下载中&#8230;</string>
+    <string name="reward_list_none">此处暂无承包商</string>
+    <string name="reward_list_tip_pay">支付了</string>
+    <string name="reward_list_tip_reward">打赏了</string>
+    <string name="noteinfo_sure_setting">确认设置</string>
+    <string name="coin_setting_range">画币范围:</string>
+    <string name="coin_setting_big">数量超过最大值!</string>
+    <string name="coin_setting_small">数量小于最小值!</string>
+    <string name="coin_setting_zero">询价价格不能为0</string>
+    <string name="coin_setting_zero_exchange">交易价格不能为0</string>
+    <string name="coin_setting_system">不能低于系统设置询价金额</string>
+    <string name="hd_down_failed">图片下载失败!</string>
+    <string name="hd_save_in">图片已保存至相册</string>
+    <string name="progress_paying">正在支付,请稍后&#8230;</string>
+    <string name="chose_way_to_pay2">请选择支付方式</string>
+    <string name="chose_way_to_pay">选择支付方式</string>
+    <string name="confirm_to_pay">确认支付</string>
+    <string name="pay_with_hb">画币支付</string>
+    <string name="need_to_pay">需要支付画币</string>
+    <string name="tip_download_tail">画币下载高清图吗?</string>
+    <string name="tip_play_tail">画币观看过程吗?</string>
+    <string name="tip_sure_pay_head">确定支付</string>
+    <string name="comment_say_something">说点什么&#8230;</string>
+    <string name="note_to_think">我再想想</string>
+    <string name="note_to_play">继续观看</string>
+    <string name="note_voice_close">点击关闭声音</string>
+    <string name="note_voice_open">点击打开声音</string>
+    <string name="note_to_download">继续下载</string>
+    <string name="note_pay_watch">¥付费观看</string>
+    <string name="note_tradable">可交易</string>
+    <string name="note_traded">已交易</string>
+
+    <string name="noteinfo_toast_settitle">请指定标题</string>
+    <string name="noteinfo_toast_choselabel">请选择标签</string>
+    <string name="noteinfo_setting_finish">设置完成</string>
+    <string name="noteinfo_setting_hb">设置画币</string>
+    <string name="noteinfo_input_hb">输入画币数</string>
+    <string name="noteinfo_input_inquiry">输入最低询价价格</string>
+    <string name="noteinfo_copyright_setting">版权交易金额设置</string>
+    <string name="noteinfo_copyright_exchange">版权交易</string>
+    <string name="noteinfo_copyright_buy_toast_title">购买提醒</string>
+    <string name="noteinfo_copyright_buy_content"><![CDATA[您将花费<font color="#29cc88">%1$d</font>画币购买%2$s的作品<br/>《%3$s》]]></string>
+    <string name="noteinfo_copyright_buy_subcontent">%1$d画币(作品费用)+%2$d画币(交易手续费)</string>
+    <string name="noteinfo_copyright_buy_btn">确认购买</string>
+    <string name="noteinfo_copyright_hb">转让金额</string>
+    <string name="i_agree">我同意</string>
+    <string name="noteinfo_copyright_agree">《版权交易协议》</string>
+    <string name="noteinfo_copyright_agree_title">版权交易协议</string>
+    <string name="noteinfo_copyright_hb_wrong">交易价格异常,请退出重试</string>
+    <string name="noteinfo_copyright_buy_toast">您总共将花费%1$d画币购买%2$s的《%3$s》</string>
+    <string name="noteinfo_copyright_buy_subtoast"><![CDATA[作品版权交易服务费 <font color="#29CC88">%1$d</font> 画币]]></string>
+    <string name="noteinfo_getcharge_failed">获取支付信息失败,请稍后再试</string>
+    <string name="note_exchange_buy_failed">作品购买失败,请稍后再试</string>
+    <string name="note_exchange_buy_title"><![CDATA[此幅作品所有权交易需要 <big><big><font color="#ffac23">%1$d</font></big></big> 画币]]></string>
+    <string name="note_exchange_buy_content">
+
+        <![CDATA[
+        <font color="#333333" size="7">购买者将获得：</font><br/>
+        <font color="#29CC88" size="2">一. 本作品受《中华人民共和国著作权法》保护的13项权利：</font><br/>
+        1.复制权\t
+        2.发行权\t
+        3.出租权\t
+        4.展览权\t
+        5.表演权\t
+        6.放映权\t
+        7.广播权\t
+        8.信息网络传播权\t
+        9.摄制权\t
+        10.改编权\t
+        11.翻译权\t
+        12.汇编权\t
+        13.应当由著作权人享有的其他权利。<br/>
+        <font color="#29CC88" size="16">二. 本作品在画吧的3项权利：</font><br/>
+        1.作品数据控制权<br/>
+        2.增值收入归属权<br/>
+        3.所有者信息展示权<br/>
+        ]]>
+    </string>
+    <string name="note_owner_str">版权所有者</string>
+    <string name="note_author_str">作品作者</string>
+    <string name="note_together_king">发起者</string>
+    <string name="note_together_he">合绘人</string>
+    <string name="note_together">合绘</string>
+    <string name="note_input_pwd">密码错误无法进行合绘</string>
+    <string name="note_input_length">密码长度不够</string>
+    <string name="note_input_noinput">请输入密码</string>
+
+    <string name="note_reset_title">作品信息修改</string>
+    <string name="note_reset_btn_str">修改</string>
+    <string name="note_reset_success">作品信息修改成功</string>
+    <string name="note_reset_failed">作品信息修改失败</string>
+    <string name="note_reset_notclick">此项不可二次编辑</string>
+    <string name="note_exchange_buying">正在购买&#8230;</string>
+    <string name="noteinfo_pay_help">付费查看过程</string>
+    <string name="noteinfo_grant_help">允许下载高清图</string>
+    <string name="noteinfo_label_edit">编辑标签</string>
+    <string name="noteinfo_label_opus">作品标签</string>
+    <string name="noteinfo_original">原作出处</string>
+    <string name="noteinfo_must_input">(必填)</string>
+    <string name="noteinfo_advice_input">(建议填写)</string>
+    <string name="noteinfo_ciyuan_book">次元册</string>
+    <string name="noteinfo_original_mark">原作标签:</string>
+    <string name="noteinfo_main_role">主要角色:</string>
+    <string name="noteinfo_label_action">活动标签</string>
+    <string name="noteinfo_title_pay">付费观看过程</string>
+    <string name="noteinfo_title_grant">授权</string>
+    <string name="noteinfo_note_publish">发布</string>
+    <string name="noteinfo_radio_no">否</string>
+    <string name="noteinfo_radio_yes">是</string>
+    <string name="noteinfo_pay_hint">免费观看过程</string>
+    <string name="noteinfo_download_title">下载高清图</string>
+    <string name="noteinfo_grant_hint">不允许下载高清图</string>
+    <string name="noteinfo_explain_hint">撰写内容</string>
+    <string name="noteinfo_label_hint">选择标签</string>
+    <string name="noteinfo_title_hint">填写标题(禁用符号&lt; &gt; &amp;)</string>
+    <string name="noteinfo_title_chains">接龙</string>
+    <string name="noteinfo_title_together">合绘</string>
+    <string name="noteinfo_title_exchange">版权交易</string>
+    <string name="noteinfo_title_exchange_subtitle">出售作品版权, 获得更多收入!</string>
+    <string name="noteinfo_title_explain">配文</string>
+    <string name="noteinfo_title_label">标签</string>
+    <string name="noteinfo_title_left">标题</string>
+
+    <string name="title_noteinfo_setting">作品信息</string>
+    <!-- Generic terms -->
+    <string name="mode_day">白天模式</string>
+    <string name="mode_night">夜间模式</string>
+    <string name="loading_skin">正在加载皮肤</string>
+    <string name="app_name">画吧</string>
+    <string name="OkButton">确定</string>
+    <string name="CancelButton">取消</string>
+    <string name="AcceptButton">认证</string>
+    <string name="RefuseButton">拒绝</string>
+    <string name="agreeButton">同意</string>
+    <string name="per_notes">作 品</string>
+    <string name="per_add_friends">加好友</string>
+    <string name="per_report">举&#160;&#160;&#160;&#160;报</string>
+    <string name="per_step_back">回退</string>
+    <string name="per_commit">提交</string>
+    <string name="per_comment">我要评论</string>
+    <string name="per_just_save">保存</string>
+    <string name="pre_reset">重置</string>
+    <string name="per_delete">删除</string>
+    <string name="per_used_color">记忆色</string>
+    <string name="per_basic_color">基本色</string>
+    <string name="per_canvas_scale">画布比例</string>
+    <string name="per_tool">工具</string>
+    <string name="per_thickness">粗&#160;&#160;&#160;&#160;细</string>
+    <string name="per_color">颜&#160;&#160;&#160;&#160;色</string>
+    <string name="per_eraser">橡皮擦</string>
+    <string name="per_palette">调色盘</string>
+    <string name="per_paint_kettle">油漆桶</string>
+    <string name="per_transparency">透明度</string>
+    <string name="per_pickcolor">取色</string>
+    <string name="per_pickcolor_cancel">非取色</string>
+    <string name="per_more">更多</string>
+    <string name="per_chat">聊&#160;&#160;&#160;&#160;天</string>
+    <string name="OkBut_space">确&#160;&#160;&#160;定</string>
+    <string name="cancelBut_space">取&#160;&#160;&#160;消</string>
+    <string name="refuseBut_space">拒&#160;&#160;&#160;绝</string>
+    <string name="downBut_space">下&#160;&#160;&#160;载</string>
+    <string name="commitBut_space">提&#160;&#160;&#160;交</string>
+    <string name="HuaLiaoServiceDescription">使用画吧服务</string>
+    <string name="AddCOkButton">添加</string>
+    <string name="history">历史记录</string>
+    <string name="draw_note_str">草&#160;&#160;&#160;&#160;稿</string>
+    <string name="open_native_avatar">头像</string>
+    <string name="delete_native">删除</string>
+    <string name="personal_note">个人作品(%1$s)</string>
+    <string name="personal_book">个人绘本(%1$s)</string>
+    <string name="participate">我要参加</string>
+    <string name="start_draw_str">开始画吧!</string>
+
+    <!-- Subscription class -->
+    <string name="SubscriptAccept">订阅已经接受</string>
+    <string name="SubscriptError">订阅错误</string>
+    <string name="SubscriptRefused">订阅被拒绝</string>
+    <string name="SubscriptText">%s 想要添加你到他/她的好友列表.批准他/她的请求吗?</string>
+    <string name="SubscriptTitle">批准好友请求?</string>
+
+    <!-- XmppConnectionAdapter class -->
+    <string name="AcceptContactRequest">%s刚将你添加到他/她的好友列表.</string>
+    <string name="AcceptContactRequestFrom">批准%s联系你</string>
+
+    <!-- ContactList Activity -->
+    <string name="contact_list_all_contact">所有联系人</string>
+    <string name="contact_list_no_group">没有组</string>
+
+    <!-- UserInfo dialog -->
+    <string name="userinfo_label_delete">删除</string>
+    <string name="chat_name">Beem - 聊天</string>
+    <string name="chat_send_message">发送</string>
+    <string name="chat_state_composing">正在输入信息</string>
+    <string name="chat_state_gone">已经离开了会话</string>
+    <string name="chat_state_active">关注会话</string>
+    <string name="chat_state_inactive">正在做其他事情</string>
+    <string name="chat_otrstate_plaintext">PLAINTEXT</string>
+    <string name="chat_otrstate_encrypted">ENCRYPTED</string>
+    <string name="chat_otrstate_finished">FINISHED</string>
+    <string name="chat_otrstate_authenticated">AUTHENTICATED</string>
+    <string name="mtm_notification">Certificate Verification</string>
+
+    <!-- Error messages -->
+    <string name="error_login_authentication">验证时发生错误,用户名或者密码错误.</string>
+    <string name="upload_avatar_failed">上传失败,请稍后重试!</string>
+    <string name="service_unavailable">请确认网络是否顺畅,稍后再试。</string>
+    <string name="create_tag_failed">创建失败,请重试</string>
+    <string name="enter_game">首&#160;&#160;页</string>
+    <string name="personal_settings">我的</string>
+    <string name="friends_list">好&#160;&#160;友</string>
+    <string name="message_list">消&#160;&#160;息</string>
+    <string name="system_help">系统帮助</string>
+    <string name="attention_person">关注人列表</string>
+    <string name="avatar">头像</string>
+    <string name="avatar_unknow">未知头像</string>
+    <string name="avatar_save">头像已保存</string>
+    <string name="disc">请插入存储卡</string>
+    <string name="fail">操作失败，请检查存储卡</string>
+    <string name="excellent_pieces">优秀作品</string>
+    <string name="feedback">建议反馈与FAQ</string>
+    <string name="tips">DIY头像</string>
+    <string name="nick_name">个人昵称</string>
+    <string name="reward_nick">昵称</string>
+    <string name="signature">个性签名</string>
+    <string name="signature1">个性签名:</string>
+    <string name="relation_str1">关　系:</string>
+    <string name="status_offline_str">离线</string>
+    <string name="status_online_str">在线</string>
+    <string name="friend_nick_name_edit">添加好友</string>
+    <string name="friend_delete_confirm">确定删除该好友吗？</string>
+    <string name="confirm_exit">系统要恢复该设备\n注册的账号，请重新登录。</string>
+    <string name="special_character">含有非法字符，请重新输入！</string>
+    <string name="emoji_no">不允许输入表情字符</string>
+    <string name="recommend">推荐给好友</string>
+    <string name="system_setting">系统设置</string>
+    <string name="recover_opus">后悔药(恢复已删除的作品)</string>
+    <string name="unregister_str">使用其他账号登录</string>
+    <string name="register_time_str">注册时间: %1$s</string>
+    <string name="register_time_str1">注册时间</string>
+    <string name="together_pass_str">合绘密码: %1$s</string>
+
+    <string name="user_agreement_bottom_prefix">注册或登录即遵守</string>
+    <string name="user_agreement_bottom"><u>&lt;画吧™用户协议&gt;</u></string>
+    <string name="user_leaf_repair">柳叶笔修复</string>
+    <string name="repair_success">已修复</string>
+    <string name="repair_cancel">取消修复</string>
+    <string name="leaf_toast_text">若柳叶笔无法正常使用,请进入系统帮助点击柳叶笔修复</string>
+    <string name="repair_view_toast">此修复只针对部分机型</string>
+    <string name="user_agreement">用户须知</string>
+    <string name="exit_game">退出</string>
+    <string name="confirm_exit_game">确定要退出游戏吗？</string>
+    <string name="guide">新手指引</string>
+    <string name="sound_effects">音效</string>
+    <string name="no_friend">当前没有好友</string>
+    <string name="person_nick">昵称</string>
+    <string name="person_nick1">昵　称:</string>
+    <string name="person_sex">性　别:</string>
+    <string name="person_sex1">性　别</string>
+    <string name="person_age">年　龄:</string>
+    <string name="person_age1">年　龄</string>
+    <string name="person_area">地　区:</string>
+    <string name="person_area1">地　区</string>
+    <string name="custom_avatar">头像编辑</string>
+    <string name="close_chat">确定删除该聊天？</string>
+    <string name="friend_has_delete">获取好友信息失败</string>
+    <string name="feedback_success">问题反馈成功</string>
+    <string name="vote_success">投花成功</string>
+    <string name="submit_note_success">作品提交成功.</string>
+    <string name="change_skin">更换皮肤</string>
+    <string name="change_skin_succeed">皮肤切换成功!</string>
+    <string name="change_skin_failed">皮肤切换失败!</string>
+    <string name="clear_cache_str">清除系统缓存</string>
+    <string name="share_photos">马上分享给好友？</string>
+    <string name="save_position">已保存至:</string>
+    <string name="confirm_clean_paint">确定要删除画的内容吗？</string>
+    <string name="confirm_delete_draft">确定删除选中草稿吗？</string>
+    <string name="confirm_upload_draft">确定将草稿上传到云?</string>
+    <string name="confirm_delete_netdraft">确定删除选中的云草稿吗?</string>
+    <string name="confirm_download_draft">确定将云草稿下载到本地吗?</string>
+    <string name="draft_upload_failed">《%1$s》上传失败，请再次上传</string>
+    <string name="draft_img_upload_failed">草稿《%1$s》缩略图上传失败</string>
+
+    <string name="get_note_failed">获取作品失败</string>
+    <string name="invitation_code">邀请码:</string>
+    <string name="my_remark_info">我是某某某</string>
+    <string name="my_invitation_code">我的邀请码:</string>
+    <string name="invite_friend_title">邀请好友</string>
+    <string name="remark">备注:</string>
+    <string name="point">%1$d积分</string>
+    <string name="no_sd_save_fail">没检测到存储卡\n聊天记录保存失败.</string>
+    <string name="no_space_save_fail">存储卡空间不足\n保存失败.</string>
+    <string name="privilege_piano">开通钢琴功能花费100积分\n</string>
+    <string name="get_total">(邀请朋友注册，每日登录都可获得积分，详见帮助)</string>
+    <string name="no_total">很遗憾，您的积分不够，快去“自己”中购买吧\n(邀请朋友注册，每日登录都可获得积分\n详见帮助)</string>
+    <string name="privilege_success">订购成功</string>
+    <string name="privilege_failed">订购失败</string>
+    <string name="req_fail">请确认网络是否顺畅,稍后再试。</string>
+    <string name="faq">常见问题</string>
+    <string name="first_page">已是第一页,在点一次到聊天界面</string>
+    <string name="last_page">已是最后一页,在点一次到聊天界面</string>
+    <string name="me">我:</string>
+    <string name="friend">好友:</string>
+    <string name="most_words">最多输入140个文字</string>
+    <string name="improper_character">非法字符</string>
+    <string name="login_wait">正在连接，请等待</string>
+    <string name="note_name">标题</string>
+    <string name="note_set">设置</string>
+    <string name="notification_reminder">消息提醒</string>
+    <string name="if_fullscreen">是否全屏</string>
+    <string name="if_loadimage">是否加载图片</string>
+    <string name="if_danmaku">是否显示弹幕</string>
+    <string name="note_content_null">多画几笔吧!</string>
+    <string name="no_opus_collect">暂无收藏的作品</string>
+    <string name="no_forum_collect">暂无收藏的帖子</string>
+    <string name="delete_history">确定删除历史记录吗？</string>
+    <string name="bill_board">排行榜</string>
+    <string name="big_board">达人榜</string>
+    <string name="new_opus">新作品</string>
+    <string name="square_item_tipaction_str">活动</string>
+    <string name="data_fail">获取数据失败</string>
+    <string name="reply_comment">回复评论</string>
+    <string name="reply_comment_note">回复作品评论</string>
+    <string name="reply_comment_book">回复绘本评论</string>
+    <string name="xlistview_footer_hint_normal">-查看更多-</string>
+    <string name="xlistview_footer_hint_ready">松开载入更多</string>
+    <string name="no_history">没有作品记录</string>
+    <string name="no_notice">没有公告消息</string>
+    <string name="no_comment">该作品暂无评论</string>
+    <string name="no_msg">暂无评论</string>
+    <string name="submit_note">正在提交作品&#8230;</string>
+    <string name="submit_picture">正在提交&#8230;</string>
+    <string name="submit_note_failed">提交作品失败</string>
+    <string name="anonymous_users">匿名用户</string>
+    <string name="submit_anonymously">匿名发布</string>
+    <string name="submit_solitaire">可接龙</string>
+    <string name="submit_watermark">加水印</string>
+    <string name="privilege_no_enough_points">很遗憾，您的积分不够!</string>
+    <string name="coin_not_enough">画币不足,请充值</string>
+    <string name="note_comment">评论作品</string>
+    <string name="reply_label">回复帖子</string>
+    <string name="read_note">查看作品</string>
+    <string name="vote_failed">您已投过票</string>
+    <string name="comment_normal">评论</string>
+    <string name="comment_with_num">评论 %1$d</string>
+    <string name="play">播放</string>
+    <string name="pause">暂停</string>
+    <string name="next_paint">我要接画</string>
+    <string name="new_version">新版本检测</string>
+    <string name="newest_version">已是最新版本</string>
+    <string name="account_manager">账号管理</string>
+    <string name="new_version_title">检测到新版本</string>
+    <string name="note_camera_str">拍照</string>
+    <string name="note_ff_str">快进</string>
+    <string name="handling">处理中&#8230;</string>
+    <string name="wait_note_content">正在获取作品内容&#8230;</string>
+    <string name="save_draft">是否保存到草稿箱?</string>
+    <string name="saving_success">保存中&#8230;</string>
+    <string name="saveing_toast">草稿保存中,请稍等</string>
+    <string name="have_saved">已存为草稿</string>
+    <string name="save_success">保存成功</string>
+    <string name="save_failed">保存失败,请检查存储卡</string>
+    <string name="final_ranked">总排行</string>
+    <string name="loading_page">正在加载作品内容,请稍候&#8230;</string>
+    <string name="default_name">自动保存</string>
+    <string name="default_name_jielong">接龙自动保存</string>
+    <string name="default_name_together">合绘自动保存</string>
+    <string name="default_name1">自动保存1</string>
+    <string name="default_name_jielong1">接龙自动保存1</string>
+    <string name="default_name_together1">合绘自动保存1</string>
+    <string name="draft_title">草稿</string>
+    <string name="draft_jielong_str">接龙</string>
+    <string name="draft_together">合绘</string>
+    <string name="avatar_title">头像</string>
+    <string name="boy">男</string>
+    <string name="girl">女</string>
+    <string name="unknown">未知</string>
+    <string name="no_sign">暂无签名!</string>
+    <string name="no_oneback">不能再回退了!</string>
+    <string name="no_onerecover">没有可恢复的内容了!</string>
+    <string name="not_show">&#160;&#160;&#160;&#160;&#160;&#160;不再提示</string>
+    <string name="auto_show">&#160;&#160;&#160;&#160;&#160;&#160;自动提示</string>
+    <string name="req_title_str">好友请求</string>
+    <string name="req_content1"> 请求加你为好友</string>
+    <string name="req_content2">备注:</string>
+    <string name="req_content3">新的好友消息,请到\"我的消息\"中处理</string>
+    <string name="report_title_str">举报详情</string>
+    <string name="report_radio_btn1_str">淫秽色情</string>
+    <string name="report_radio_btn2_str">广告骚扰</string>
+    <string name="report_radio_btn3_str">人身攻击</string>
+    <string name="report_radio_btn4_str">其他</string>
+    <string name="report_edit_more">更多详情</string>
+    <string name="report_success">举报成功</string>
+    <string name="change_info_str2"> 的转生</string>
+    <string name="change_info_str3">欢迎来到画吧\n请完善您的个人资料先&#8230;</string>
+    <string name="user_info">查看用户信息</string>
+    <string name="copy_reply_content">复制内容</string>
+    <string name="collect_forum">收藏帖子</string>
+    <string name="anno_user">匿名用户</string>
+    <string name="search_msg">邀请码、昵称或直接查找</string>
+    <string name="friends_not_found">没有找到好友</string>
+    <string name="system_info_toast">可在系统消息中继续处理此消息哦!</string>
+    <string name="operate_fail">操作失败,请检查网络连接!</string>
+    <string name="network_success">网络已连接!</string>
+    <string name="share">分享</string>
+    <string name="quickplay">速播</string>
+    <string name="order_shell">义取</string>
+    <string name="input_text">请输入文字内容：</string>
+    <string name="input_hint_title">点击输入内容</string>
+    <string name="remote_piano">远程钢琴</string>
+    <string name="go_bang">五子棋</string>
+    <string name="clear_text">清空</string>
+    <string name="clear_history">清空历史</string>
+    <string name="input_text_title">文本</string>
+    <string name="anonymous_user_not_see_notes">如果可以看那还叫匿名吗?</string>
+    <string name="nativenote_create_time">创作时间:</string>
+    <string name="native_check_sdcard">请检查你的存储卡!</string>
+    <string name="delete_success">删除成功</string>
+    <string name="delete_failed">删除失败</string>
+    <string name="user_account_restore">正在修复你的账号,请保持网络连接&#8230;</string>
+    <string name="forum_notice_board">公告栏</string>
+    <string name="forum_reply">回复</string>
+    <string name="forum_reply_success">回复成功</string>
+    <string name="forum_reply_failed">回复失败</string>
+    <string name="forum_floor_host">楼 主</string>
+    <string name="forum_floor">【%1$d 楼】%2$s</string>
+    <string name="forum_floor1">【%1$d 楼】</string>
+    <string name="is_loading_section">正在加载,请等待&#8230;</string>
+    <string name="label_title_content_null">帖子标题为空</string>
+    <string name="label_create_success">帖子创建成功</string>
+    <string name="label_create_failed">帖子创建失败</string>
+    <string name="huaba_forum_title">画吧论坛</string>
+    <string name="manager_operate">管理员操作</string>
+    <string name="personal_operate">个人操作</string>
+    <string name="label_top">置顶</string>
+    <string name="label_no_top">去置顶</string>
+    <string name="label_best">加精</string>
+    <string name="label_no_best">去加精</string>
+    <string name="label_lock">锁住</string>
+    <string name="label_no_lock">解锁</string>
+    <string name="label_del">删除帖子</string>
+    <string name="label_del_reply">删除评论</string>
+    <string name="add_to_blacklist">添加到黑名单</string>
+    <string name="remove_blacklist">从黑名单移除</string>
+    <string name="label_is_locked">本帖已锁,无法评论</string>
+    <string name="label_reply_del_by_manager">此内容已被管理员删除</string>
+    <string name="label_reply_del_by_personal">此内容已被楼主删除</string>
+    <string name="label_reply_del_by_self">此内容已被作者本人删除</string>
+    <string name="label_reply_del">此回复已被删除,无法进行操作</string>
+    <string name="label_is_first">已是第一页</string>
+    <string name="label_is_last">已是最后一页</string>
+    <string name="attachment_max">最多只能添加五条附件</string>
+    <string name="privilege_no">你没有此版块的发帖权限</string>
+    <string name="label_data_wrong">此帖中数据错误,请与小学生联系</string>
+    <string name="label_switch_title">【版块切换】</string>
+    <string name="label_author_title">版主: %1$s</string>
+    <string name="label_author_title1">版主: </string>
+    <string name="attach_title_str">附件 : </string>
+    <string name="create_label_input_toast">请在此处输入标题</string>
+    <string name="operate_success">操作成功</string>
+    <string name="operate_success_rotate">操作成功,请等待1分钟</string>
+    <string name="operate_out_limit">积分超出单次限制</string>
+    <string name="operate_no_power">操作失败,无此项权限</string>
+    <string name="operate_failed">操作失败</string>
+    <string name="add_attach_str">添加附件</string>
+    <string name="add_attach_limited">你添加的附件已超过限制,请重新选择</string>
+    <string name="add_book_limited">绘本只能添加%1$d页,已添加%2$d页</string>
+    <string name="create_label_title">发表帖子</string>
+    <string name="create_label_publish">发布</string>
+    <string name="preview">预览</string>
+    <string name="cancel_preview">取消预览</string>
+    <string name="need_priv_to_create">创建\n帖子需花费5积分,确定创建吗？</string>
+    <string name="sure_to_operate">确定进行此项操作吗?</string>
+    <string name="is_commit_plate">正在提交帖子,请等待&#8230;</string>
+    <string name="note_have_no_space">抱歉,作品已经画爆了,无法再继续绘画</string>
+    <string name="note_new_str">新建</string>
+    <string name="title_is_not_null">标题不能为空</string>
+    <string name="content_not_null">内容不能为空</string>
+    <string name="reply_not_null">回复不能为空</string>
+    <string name="refresh_release_text">松开立即刷新</string>
+    <string name="refresh_down_text">下拉可以刷新</string>
+    <string name="refresh_refreshing">刷新中&#8230;</string>
+    <string name="refresh_failed">刷新失败,请稍后再试!</string>
+    <string name="camera_cache_str">拍照缓存</string>
+    <string name="note_cache_str">作品缓存</string>
+    <string name="clear_note_str">清除作品缓存</string>
+    <string name="clear_camera_str">清除拍照缓存</string>
+    <string name="clear_capture">已占用 %1$s</string>
+    <string name="clear_toast2">(照片一旦清空,不可恢复噢!)</string>
+    <string name="clear_success">清理成功</string>
+    <string name="clear_failed">清除失败</string>
+    <string name="clearing">清理中&#8230;</string>
+    <string name="collect_success">收藏成功</string>
+    <string name="collect_failed">收藏失败</string>
+    <string name="collect_haved">不可重复收藏</string>
+    <string name="select_delete_collect">请选择要取消收藏的作品</string>
+    <string name="select_delete_collect1">请选择要取消收藏的帖子</string>
+    <string name="select_delete_selfopus">请选择要删除的作品</string>
+    <string name="select_recover_selfopus">请选择要恢复的作品</string>
+    <string name="sure_delete_histroy">确定清空聊天记录吗？</string>
+    <string name="delete_mes">删除该条信息</string>
+    <string name="clear_mes">清空聊天记录</string>
+    <string name="contents">请在此处输入内容</string>
+    <string name="bright_set">亮度调节</string>
+    <string name="forum_feedback">反馈到论坛</string>
+    <string name="admin_transfer">转移帖子</string>
+    <string name="admin_recommend">推荐到banner</string>
+    <string name="admin_recommend_remove">将帖子从banner移除</string>
+    <string name="admin_fobid_str">禁止刷新帖子</string>
+    <string name="admin_cancel_hot">取消热帖</string>
+    <string name="admin_activity">官方活动</string>
+    <string name="admin_announcement">官方公告</string>
+    <string name="admin_activity_non">非官方活动</string>
+    <string name="admin_announcement_non">非官方公告</string>
+    <string name="admin_reward">奖励操作</string>
+    <string name="help">更&#160;&#160;多</string>
+    <string name="library_select">从图库选择</string>
+    <string name="reward_coins_max">奖励积分一次不得超过100</string>
+    <string name="reward_coins_str">奖励积分</string>
+    <string name="reward_huabi">奖励画币</string>
+    <string name="reward_exp">奖励经验值</string>
+    <string name="reward_coins">奖励积分:</string>
+    <string name="reward_reason">奖励原因:</string>
+    <string name="reward_huabi1">奖励画币:</string>
+    <string name="reward_exp1">奖励经验值:</string>
+    <string name="reward_coins_num">60</string>
+    <string name="reward_reason_info">Good</string>
+    <string name="reward_str">奖励</string>
+    <string name="coins_manager">积分管理</string>
+    <string name="share_text">画吧是最好玩的手机涂鸦社区，用我的邀请码%1$d注册,双方各奖100积分！安卓版：http://www.haowanlab.com/huabar.apk</string>
+    <string name="share_to">分享到:</string>
+    <string name="open_label">打开帖子</string>
+    <string name="forum_text">论      坛</string>
+    <string name="forum_text1">论坛</string>
+    <string name="draw_text">画板</string>
+    <string name="login_func_title">关      注</string>
+    <string name="login_func_title1">关注/消息</string>
+    <string name="login_billboard_title">排行</string>
+    <string name="login_draw_title">画画</string>
+    <string name="note_str">作      品</string>
+    <string name="system_str">系      统</string>
+    <string name="book_list">绘本</string>
+    <string name="yuegao_title">约稿</string>
+    <string name="yuegao_plate">约稿板块</string>
+    <string name="squart_tab">发      现</string>
+    <string name="hot_tab">热      门</string>
+    <string name="fans_str">粉丝</string>
+    <string name="add_fans_str">关注</string>
+    <string name="menu_attention">关注</string>
+    <string name="add_fans_str1">+关注</string>
+    <string name="follow_num_str">%1$d 关注</string>
+    <string name="fan_num_str">%1$d 粉丝</string>
+    <string name="have_add_fans_str">已关注</string>
+    <string name="attentionsuccess">关注成功</string>
+    <string name="suretocancel">确定取消关注吗?</string>
+    <string name="cancelsuccess">取消关注成功</string>
+    <string name="delete_reply">确定删除此回复吗?</string>
+    <string name="my_attention">我的关注</string>
+    <string name="high_player">画吧精华</string>
+    <string name="two_player">萝莉专区</string>
+    <string name="together_player">绘画广场</string>
+    <string name="young_player">新幼花园</string>
+    <string name="water_player">灌水天地</string>
+    <string name="study_player">画吧学堂</string>
+    <string name="anno_player">公告栏</string>
+    <string name="device_player">建议与反馈</string>
+    <string name="post_details">帖子详情</string>
+    <string name="publish_new_plate">在【%1$s】发了新帖</string>
+    <string name="publish_new">发表了新作品</string>
+    <string name="publish_new_book">发布了新绘本</string>
+    <string name="change_new_head">更换了新头像</string>
+    <string name="abandon_avatar">确定放弃本次头像编辑吗?</string>
+    <string name="abandon_edit">确定放弃本次编辑吗?</string>
+    <string name="send_progress">上传中&#8230;</string>
+    <string name="no_content">作品无内容或无法识别</string>
+    <string name="reply_quick">非私密问题可直接反馈到论坛，答复会更快</string>
+    <string name="devide_line">分隔线</string>
+    <string name="not_support_pickcolor">此处暂不支持取色</string>
+    <string name="not_support">该页面不支持此功能</string>
+    <string name="eraser_not_trans">橡皮擦不可用透明设置</string>
+    <string name="eraser_not_leaf">橡皮擦不可用柳叶功能</string>
+    <string name="eraser_not_blur">橡皮擦不可用此功能</string>
+    <string name="give_flower_toast">追加 %1$d 朵花,花费 %2$d 积分</string>
+    <string name="can_not_zero_flower">不允许用0朵花来挑逗他人</string>
+    <string name="buy_now">生成订单</string>
+    <string name="buy_list">查看订单</string>
+    <string name="contact_service">联系客服</string>
+    <string name="contact_service1">客服</string>
+    <string name="others">其他</string>
+    <string name="brand_title">品  牌</string>
+    <string name="type_title">型  号</string>
+    <string name="order_num">您的订单号为 %1$d,快去淘宝\"画吧小店\"购买吧!</string>
+    <string name="order_success">恭喜你,订单已生成</string>
+    <string name="order_failed">很遗憾,订单生成失败</string>
+    <string name="order_list_orderid">订单号</string>
+    <string name="order_list_price">价格</string>
+    <string name="order_list_effect">效果</string>
+    <string name="order_list_type">款式</string>
+    <string name="order_list_status">状态</string>
+    <string name="brand_type_notnull">手机品牌或型号不能为空</string>
+    <string name="add_flowers">追加投花</string>
+    <string name="select_brand_first">请先选择品牌</string>
+    <string name="can_not_null">不能为空</string>
+    <string name="phone_type_title">选择机型</string>
+    <string name="phone_order_title">生成订单</string>
+    <string name="phone_order1_title">订单号:\n%1$d</string>
+    <string name="phone_succ_title">画吧小店\n下单</string>
+    <string name="searching">正在查询&#8230;</string>
+    <string name="search_failed">查询失败</string>
+    <string name="no_brower">请确认你的手机安装了浏览器</string>
+    <string name="image_loading">图片加载中&#8230;</string>
+    <string name="send_title">发送</string>
+    <string name="history_question">历史记录</string>
+    <string name="sale_author">此作品定制手机壳已售出%1$d件\n作者:%2$s</string>
+    <string name="select_toast">请选择(您要定制的手机型号)</string>
+    <string name="postage">(全国包邮)</string>
+    <string name="order_dialog_title">%1$s 定制手机壳1件</string>
+    <string name="order_headline">%1$s的客服专用贴</string>
+    <string name="order_service_failed">联系客服失败</string>
+    <string name="order_service_success">问题已收到,我们将尽快给您答复</string>
+    <string name="order_not_null">内容不能为空</string>
+    <string name="order_plate_name">客服栏</string>
+    <string name="order_no_history">请先提交问题</string>
+    <string name="delete_sure">作品删除不可恢复,世上没有后悔药!</string>
+    <string name="recover_toast">恢复一副作品扣除%1$d积分,本次恢复将扣除%2$d积分</string>
+    <string name="not_remorseful">我不后悔</string>
+    <string name="note_not_support_self">咱就不能谦虚点吗？</string>
+    <string name="loading_wait_toast">加载中&#8230;</string>
+    <string name="login_toast">登录中&#8230;</string>
+    <string name="loading_failed1">加载失败!</string>
+    <string name="phone_shell_image_failed">此机型缩略图暂缺,但不影响购买</string>
+    <string name="phone_brand">品    牌</string>
+    <string name="phone_type">型    号</string>
+    <string name="three_step">三步购买</string>
+    <string name="onload_note">上传作品</string>
+    <string name="youyou_toast">使用指南：\n由由笔需双手操作，可画出精确细节！\n1、将由由笔移到要画的位置，手指不抬起。\n2、另一指按一下左下角的由字，开始画。\n3、此功能需耐心练习，熟练后很好用！</string>
+    <string name="not_normal_sign">包含非法符号</string>
+    <string name="remove_label">帖子《%1$s》已移至%2$s</string>
+    <string name="expiretime">有效期(天)</string>
+    <string name="new_note">新建作品</string>
+    <string name="new_avatar">新建头像</string>
+    <string name="toast_str">提&#160;&#160;示</string>
+    <string name="friend_num_str">在线好友数 %1$d/%2$d</string>
+    <string name="space">&#160;&#160;</string>
+    <string name="space1"> &#160;</string>
+    <string name="importent">*</string>
+    <string name="custom_toast">注：圆内为实际有效区域</string>
+
+    <!-- 关于我们相关字符 -->
+    <string name="about_us">关于我们</string>
+    <string name="about_version">版本：V%1$s</string>
+    <string name="about_weibo">微博：@画吧HuaBar</string>
+    <string name="about_weixin">微信：hua_ba</string>
+    <string name="about_email">qin@haowanlab.com</string>
+    <string name="about_proxy">使用协议与免责声明</string>
+    <string name="about_thort">画的不好没关系^_^\n画吧是最好玩的手机涂鸦社区!</string>
+    <string name="about_copyright">Copyright 2013&#8211;2015 haowanlab.com\nAll Rights Reserved</string>
+    <string name="about_introduce">&#160;&#160;&#160;&#160;&#160;&#160;&#160;好玩实验室是一个死都要创新的团队，只做原创游戏应用，只为你脸上惊喜笑容!</string>
+    <string name="proxy_content_str">     	1、好玩实验室(www.haowanlab.com)是画吧的作者和所有权者，享有本应用(画吧)的一切权利；任何个人或组织不得侵权，违者将追究法律责任.\n
+		2、好玩实验室保留因业务发展需要，单方面对本应用的全部或部分内容在任何时候不经通知的情况下变更、暂停、终止、撤销的权利.\n
+		3、用户在使用或传播本应用的过程中，如果出现任何问题或造成任何损失和后果，好玩实验室不承担责任.\n
+		4、用户不得借助本应用从事任何违法活动，当发现用户违法使用本应用时，好玩实验室有权制止并不承担任何责任和后果.\n
+		5、凡以任何方式登录或使用本应用均视为自愿接受相关条款和约束.\n
+		6、本声明未涉及的问题请参见国家有关法律法规，本声明的最终解释权归好玩实验室所有.\n</string>
+    <string name="input__searchkey">请输入关键字</string>
+    <string name="black_collect_str">我的收藏</string>
+    <string name="black_search_str">作品搜索</string>
+    <string name="no_search_record">暂无相关作品</string>
+    <string name="stage_str">第 %1$d 期</string>
+    <string name="page_str">第 %1$d 页</string>
+    <string name="price_prefx_str">价  格:￥</string>
+    <string name="add_self_str">个人作品</string>
+    <string name="add_self_book_str">个人绘本</string>
+    <string name="add_collect_str">收藏作品</string>
+    <string name="draw_line">画直线</string>
+    <string name="blur_paint">模糊</string>
+    <string name="paint_pencil">铅笔</string>
+    <string name="paint_crayon">喷枪</string>
+    <string name="paint_marker">马克笔</string>
+    <string name="paint_oil">毛刷</string>
+    <string name="mode_symmetry">反转</string>
+    <string name="mode_duicheng">对称</string>
+    <string name="repeat_draft">草稿修复</string>
+    <string name="play_review">看过程</string>
+    <string name="repair_scale">修复画布比例</string>
+    <string name="repair_image_blur">修复图片模糊</string>
+    <string name="migu_buy_toast">如果支付成功,咪咕画吧初级会员将在10分钟内同步到您的账号</string>
+    <string name="paint_pen">钢笔</string>
+    <string name="paint_flat">平笔</string>
+    <string name="expend_paint">柳叶笔</string>
+    <string name="draw_line_mode">直线绘图模式</string>
+    <string name="normal_draw_mode">正常模式</string>
+    <string name="pwd_name_email_notnull">邮箱和密码不能为空</string>
+    <string name="email_pattern_wrong">邮箱不正确</string>
+    <string name="pwd_forbidden">只允许输入字母数字下划线</string>
+    <string name="email_already_register">账号或密码输入不正确</string>
+    <string name="email_have_register">邮箱已被注册,你可以使用密码找回</string>
+    <string name="email_not_register">此账号尚未绑定</string>
+    <string name="get_password">密码已找回,请到您的邮箱中查看</string>
+    <string name="max_register_str">您的手机已达到最大用户注册量</string>
+    <string name="invcode_unuse">邀请码不正确</string>
+    <string name="email_can_not_null">邮箱不能为空</string>
+    <string name="must_edit_item">*为必填项</string>
+    <string name="password_five">密码至少5位</string>
+    <string name="not_same">密码与确认密码不一致</string>
+    <string name="service_busy">服务器繁忙,请稍候再试!</string>
+    <string name="account_bundle_str">账号绑定</string>
+    <string name="qq_bundle_str">QQ绑定</string>
+    <string name="weixin_bundle_str">微信绑定</string>
+    <string name="weibo_bundle_str">微博绑定</string>
+    <string name="email_bundle_str">邮箱绑定</string>
+    <string name="login_huaba_account_str">画吧账号登录</string>
+    <string name="login_str">登录</string>
+    <string name="curr_account">当前账号:&#160;</string>
+    <string name="qq_login_str">QQ账号登录</string>
+    <string name="weixin_login_str">微信账号登录</string>
+    <string name="weibo_login_str">微博账号登录</string>
+    <string name="look_str">随便玩玩</string>
+    <string name="find_pwd_str">找回密码</string>
+    <string name="register_str">用户注册</string>
+    <string name="email_str">邮箱: </string>
+    <string name="account_str">账号: </string>
+    <string name="pwd_str">密码: </string>
+    <string name="repwd_str">确认密码: </string>
+    <string name="nick_str">昵称:&#160;</string>
+    <string name="yaoqing_str">邀请码: </string>
+    <string name="login_account_hint">请输入您的注册邮箱</string>
+    <string name="login_pwd_hint">请输入您的密码</string>
+    <string name="register_account_hint">请使用邮箱注册</string>
+    <string name="register_pwd_hint">5~16位字母,数字,下划线</string>
+    <string name="register_repwd_hint">再次输入密码</string>
+    <string name="input_toast">(*为必填项,请填写您的真实邮箱,方便以后找回密码,用朋友邀请码注册,双方各加100积分)</string>
+    <string name="find_pwd_toast">(请填写您的注册邮箱。)</string>
+    <string name="save_image">保存图片</string>
+    <string name="image_saving">图片保存中&#8230;</string>
+    <string name="image_upload">图片上传中&#8230;</string>
+    <string name="save_to_album">已保存至您的相册</string>
+    <string name="copy_opus_addr">作品地址已复制</string>
+    <string name="copy_invalid">本页面不支持复制链接</string>
+    <string name="image_from_huaba">画吧图片</string>
+    <string name="register_success">注册成功</string>
+    <string name="save_failed_noimage">未找到图片,保存失败</string>
+    <string name="data_wrong">数据错误,请重新登陆</string>
+    <string name="avatar_upload">头像上传中,请稍候&#8230;</string>
+    <string name="avatar_handle">头像处理中,请稍候&#8230;</string>
+    <string name="comfirm_info_again">请再次确认您的注册邮箱和密码\n</string>
+    <string name="my_collect">我的收藏</string>
+    <string name="my_note">我的作品</string>
+    <string name="my_friend">我的好友</string>
+    <string name="my_luntan">画吧论坛</string>
+    <string name="my_message">我的消息</string>
+    <string name="my_book">我的绘本</string>
+    <!-- 我的粉丝 -->
+
+    <string name="unit_points">积分</string>
+    <string name="my_fans">我的粉丝</string>
+    <string name="my_settings">我的设置</string>
+    <string name="jump">跳过</string>
+    <!-- 选择封面 -->
+    <string name="menu_my_friend">我的好友</string>
+    <string name="total">共</string>
+    <string name="changing_cover">更新封面中</string>
+    <string name="use">使用</string>
+    <string name="preview1">预览</string>
+    <string name="people_buy">人购买</string>
+    <string name="people_get">人领取</string>
+    <string name="user_relationship">用户关系</string>
+    <string name="user_gender">性别</string>
+    <string name="user_age">年龄</string>
+    <string name="user_location">位置</string>
+    <string name="user_honor">荣誉</string>
+    <string name="user_honor_orignal">原创榜：</string>
+    <string name="user_honor_art">艺术大作榜：</string>
+    <string name="user_honor_gold">徽章：</string>
+    <string name="nothing">无</string>
+    <string name="opus">作品\n</string>
+    <string name="home_page">主页</string>
+    <string name="covers_store">封面商城</string>
+    <string name="change_cover">更换封面</string>
+    <string name="from_my_opus">从我的作品中选择</string>
+    <string name="from_cover_store">从商城选择</string>
+    <string name="cost_free">免费</string>
+    <string name="huaba_coin">画币</string>
+    <string name="normal_price">普通价:</string>
+    <string name="you_will_pay">您将支付</string>
+    <string name="vip_cost">会员价:</string>
+    <string name="from_album">从相册选择</string>
+    <string name="get_cover_success">领取成功</string>
+    <string name="from_camera">拍照</string>
+    <string name="change_cover_success">更换封面成功</string>
+    <string name="change_cover_failed">更换封面失败</string>
+    <string name="is_cover_using">该封面证已使用</string>
+    <string name="data_wrong_try">数据错误,请重试</string>
+    <string name="please_check">请检查</string>
+    <string name="is_exists">是否存在</string>
+    <string name="my_collect_post">帖子收藏</string>
+    <string name="pay_one">10积分/1画币</string>
+    <string name="pay_two">100积分/10画币</string>
+    <string name="pay_ten">1000积分/100画币</string>
+    <string name="pay_ten1">10000积分/1000画币</string>
+    <string name="buy_success">积分购买成功</string>
+    <string name="buy_failed">积分购买失败,请稍后再试</string>
+    <string name="buy_point_title">购买积分</string>
+    <string name="buy_result">您已成功购买%1$d积分,总资产为%2$d积分,祝您玩的开心!</string>
+    <string name="buy_point_detail">购买%1$d积分</string>
+    <string name="buy_point_confirm_toast">确定购买%1$d积分吗?</string>
+    <string name="ping_vip_func_title">开通会员</string>
+    <string name="ping_month_detail">1000画币/月</string>
+    <string name="ping_season_detail">2800画币/季</string>
+    <string name="ping_year_detail">10000画币/年</string>
+    <string name="ping_month_detail1">(30天)</string>
+    <string name="ping_season_detail1">(100天)</string>
+    <string name="ping_year_detail1">(365天)</string>
+    <string name="ping_month">包月</string>
+    <string name="ping_season">包季</string>
+    <string name="ping_year">包年</string>
+    <string name="open_vip">开通%1$s会员功能</string>
+    <string name="haubi_100">100画币</string>
+    <string name="haubi_1000">1000画币</string>
+    <string name="haubi_10000">10000画币</string>
+    <string name="haubi_free">免费获取画币</string>
+    <string name="how_free">如何免费获取画币</string>
+    <string name="how_free_content">        分享绘画过程，其他人每次点击，你将获得%1$s画币，每日最多%2$s个画币哟。</string>
+    <string name="huabi_give10">赠送10画币</string>
+    <string name="huabi_give200">赠送200画币</string>
+    <string name="pic_book_str">我的绘本</string>
+    <string name="create_book_title">创建绘本</string>
+    <string name="pic_book_name">绘本名称</string>
+    <string name="pic_book_edit">绘本编辑</string>
+    <string name="pic_book_buy">发布</string>
+    <string name="pic_book_addname_toast">请输入绘本名称</string>
+    <string name="cover_text">封面</string>
+    <string name="click_to_edit_page">点击编辑此页</string>
+    <string name="book_edit_success">绘本发布成功</string>
+    <string name="book_edit_failed">绘本发布失败</string>
+    <string name="book_edit_add_cover">请添加封面作品</string>
+    <string name="book_edit_wrong">绘本页需连续</string>
+    <string name="book_edit_exit">你的绘本已经更改或还未上架,不上架别人将看不到你的绘本哟!</string>
+    <string name="book_return_title">暂不上架</string>
+    <string name="book_confirm_title">上架</string>
+    <string name="edit_desctiption">绘本简介</string>
+    <string name="edit_desctiption1">本页文字</string>
+    <string name="one_page_edit_title">编辑封面</string>
+    <string name="one_page_edit_title1">编辑第%1$d页</string>
+    <string name="one_page_note_not_null">请先选择作品</string>
+    <string name="one_page_commit_success">单页上传成功</string>
+    <string name="one_page_commit_failed">单页上传失败</string>
+    <string name="page_count">%1$d/%2$d</string>
+    <string name="create_book_toast">(创建一个绘本将花费500积分)</string>
+    <string name="add_note_to_book">添加作品</string>
+    <string name="no_page">暂无页面</string>
+    <string name="upload_book_sure">确定上架吗?</string>
+    <string name="image_load_failed">图片加载失败,请重试</string>
+    <string name="have_flowers">已投过花</string>
+    <string name="i_know">我知道了</string>
+    <string name="book_toast">绘本可以让你创作整本的漫画或系列作品供大家欣赏，拥有自己的绘本是每个绘画爱好者的梦想！</string>
+    <string name="delete_bookpage_str">确定清空此页内容吗?</string>
+    <string name="page_clear_failed">清空失败!</string>
+    <string name="replying">回复中&#8230;</string>
+    <string name="reply_success">回复成功</string>
+    <string name="reply_failed">回复失败</string>
+    <string name="reclick_exit">再按一次退出画吧</string>
+    <string name="post_num">帖子数: %1$d</string>
+    <string name="account_wrong">账号异常,请重新登录</string>
+    <string name="square_curved_str">二次元</string>
+    <string name="square_national_customs_str">国风</string>
+    <string name="square_painting_art_str">绘画艺术</string>
+    <string name="square_cartoon_str">漫画</string>
+    <string name="square_chain_game_str">接龙游戏</string>
+    <string name="square_chain_jielong_tap">接画</string>
+    <string name="square_course_str">教程</string>
+    <string name="square_children_paint_str">儿童画</string>
+    <string name="xlistview_header_hint_normal">下拉刷新</string>
+    <string name="xlistview_header_hint_ready">松开刷新数据</string>
+    <string name="xlistview_header_hint_loading">正在加载&#8230;</string>
+    <string name="xlistview_header_last_time">上次更新时间：</string>
+    <!--
+    <string name="xlistview_footer_hint_normal">查看更多</string>
+    <string name="xlistview_footer_hint_ready">松开载入更多</string>
+
+
+
+
+
+    -->
+    <string name="wait_for_getdata">正在获取数据,请稍等!</string>
+    <string name="screenshot_failed">截图失败,请重新打开此页面</string>
+    <string name="recommend_to_classify">推荐作品至&#8230;</string>
+    <string name="recommend_to_toast">推荐作品至《%1$s》</string>
+    <string name="recommend_reason">推荐理由</string>
+    <string name="delete_from_classify">从此分类中删除</string>
+    <string name="delete_classify_note_sure">确定从此分类中删除吗?</string>
+    <string name="top_classify">确定将此作品置顶吗?</string>
+    <string name="set_note_top">将此作品置顶</string>
+    <string name="set_aspectratio">旋转方向</string>
+    <string name="rotate_left_str">向左旋转90度(逆时针)</string>
+    <string name="rotate_right_str">向右旋转90度(顺时针)</string>
+    <string name="rotate_toast_str">提示:每幅作品只能旋转一次</string>
+    <string name="eightyforbid">18禁</string>
+    <string name="delete_opus">删除作品</string>
+    <string name="redrawpic">修复图片</string>
+    <string name="modify_label">修改标签</string>
+    <string name="modify_coin">修改画币设置</string>
+    <string name="modify_selflabel">修改自定义标签</string>
+    <string name="eightyforbid_toast">要删除此作品吗?(只删除图片)</string>
+    <string name="eightyforbid_toast1">要彻底删除此作品吗?</string>
+    <string name="operate_repeat">重复操作</string>
+    <string name="helper_text_des">        画吧等级：\n
+		新用户等级为Lv0，随exp(经验值)增加升级：\n
+		0-10 exp    Lv0 \n
+		11-20 exp    Lv1 \n
+		21-40 exp    Lv2 \n
+		41-80 exp    Lv3 \n
+		&#160;&#160;&#160;&#160;&#8230;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#8230; \n
+		等级数对应可追加花数，例如： \n
+		Lv5用户最多可为一幅作品追加5朵花。 \n
+		\n
+		exp(经验值)获得： \n
+		每日登录 +1,发表作品 +1，作品上周排行榜 +5~40， \n
+		作品被推广场 +2,作品被推首页 +5，画吧年龄 +1/每月 \n
+		参加画吧活动。。。 \n
+		\n
+		画吧积分： \n
+		用途：发表作品-5，发表帖子-5，接龙-2，追花每朵-2，开通道具 \n
+		获得：新用户+200，每日登录+10+2x连登天数(150封顶)，
+		画吧彩蛋+5~1000(投花、评论触发)，作品得花+1/每朵(第二天体现)，
+		可接龙作品被接画+1/每接，至个人资料页面购买，参加画吧活动。。。 \n
+		\n
+		画币：\n
+		1.可通过支付宝、微信支付充值.\n
+		2.分享绘画过程或绘本，别人点击一次你就可以获得1画币，每天最多5个.\n
+		3.画币可用于开通会员、购买积分、打赏以及礼品兑换。\n
+		\n
+		画吧会员：\n
+		通过画币开通，目前包括以下功能：\n
+		金色昵称和皇冠\n
+		每天登录双倍经验值\n
+		DIY展示我的关系(CP、师父)\n
+		后悔药(可以恢复被删除的作品)</string>
+    <string name="submit_publish_str">发&#160;&#160;&#160;&#160;布</string>
+    <string name="submit_title_str">标题:</string>
+    <string name="submit_description">配文:</string>
+    <string name="submit_action_str">活动</string>
+    <string name="submit_mark_str">标签选择</string>
+    <string name="submit_mark_str1">普通标签</string>
+    <string name="submit_max_select">(*绿框标签必选一项)</string>
+    <string name="submit_max_select_toast">绿框标签必选一项</string>
+    <string name="submit_max_select1">普通标签最多选3个</string>
+    <string name="submit_action_select">活动只能选1个</string>
+    <string name="phone_performance">手机性能较差,无法回退!</string>
+    <string name="phone_performance_createbit">手机性能较差,启用小画布绘图</string>
+    <string name="cannot_solitaire">十八禁作品,不可接龙</string>
+    <string name="share_failed">分享失败</string>
+    <string name="bitmap_failed">图片生成失败</string>
+    <string name="all_opus">显示全部作品</string>
+    <string name="art_opus">显示原创作品</string>
+    <string name="hot_opus">显示热门作品</string>
+    <string name="all_opus1">全部作品</string>
+    <string name="art_opus1">原创作品</string>
+    <string name="canvas_scale_toast">创建新的画布将丢失本次绘画内容,确定创建吗?</string>
+    <string name="move_to_select">滑动可选</string>
+    <string name="send_to_weixin">分享过程给微信好友</string>
+    <string name="send_to_weixin_image">分享图片给微信好友</string>
+    <string name="send_to_pengyouquan">分享过程到朋友圈</string>
+    <string name="send_to_pengyouquan_image">分享图片到朋友圈</string>
+    <string name="share_title">快来和我一起玩画吧</string>
+    <string name="share_title_opus">画吧作品</string>
+    <string name="share_content_avatar">我的头像漂亮吗?喜欢就来画吧绘制你自己的专属头像吧。画吧官网：http://www.haowanlab.com</string>
+    <string name="share_content_opus">我画的画漂亮吗?喜欢就来画吧一起玩吧。画吧官网：http://www.haowanlab.com</string>
+    <string name="share_content">画吧是最好玩的手机涂鸦社区,快来下载一起玩耍吧！画吧官网：http://www.haowanlab.com</string>
+    <string name="weibo_share_content">#画吧##指绘#@画吧HuaBar</string>
+    <string name="look_process">欣赏绘画过程:</string>
+    <string name="look_share">查看分享:</string>
+    <string name="look_book">查看绘本:</string>
+    <string name="share_success">分享成功</string>
+    <string name="share_avatar_title">我的手绘个人头像</string>
+    <string name="share_history_chat">我的画吧聊天记录</string>
+    <string name="add_blacklist_success">已添加到黑名单</string>
+    <string name="add_blacklist_failed">添加黑名单失败</string>
+    <string name="remove_blacklist_success">已从黑名单移除</string>
+    <string name="remove_blacklist_failed">从黑名单移除失败</string>
+    <string name="remove_from_fantan">确定从本接龙中移除这幅作品吗?</string>
+    <string name="remove_success">移除成功</string>
+    <string name="remove_failed">移除失败</string>
+    <string name="device_str">设备: %1$s</string>
+    <string name="mark_str">标签:&#160;%1$s</string>
+    <string name="upload_time_str">%1$s发表</string>
+    <string name="bill_ming">名</string>
+    <string name="not_exist_page">共%1$d页,不存在第%2$d页</string>
+    <string name="not_exist_page1">不存在此页</string>
+    <string name="system_notice">系统通知</string>
+    <string name="reply_admin">回复楼主</string>
+    <string name="back_btn_str">&lt;&#160;&#160;返回</string>
+    <string name="buy_coins_str">画币数量:</string>
+    <string name="buy_cost_str">花费金额:</string>
+    <string name="buy_type_str">付款方式:</string>
+    <string name="huabi_str">%1$d画币</string>
+    <string name="app_recommend">应用推荐</string>
+    <string name="app_recommend1">推荐</string>
+    <string name="bundle_success">绑定成功</string>
+    <string name="bundle_failed">绑定失败</string>
+    <string name="bundle_repeat">不可重复绑定</string>
+    <string name="recommend_cooperate">换量合作 \n pr@haowanlab.com</string>
+    <string name="type_curr_account_email">邮箱账号</string>
+    <string name="type_curr_account_qq">qq账号</string>
+    <string name="type_curr_account_weixin">微信账号</string>
+    <string name="type_curr_account_weibo">新浪微博账号</string>
+    <string name="type_curr_account_look">随便玩玩</string>
+    <string name="pencil_notuse_alpha">铅笔不可调节透明度</string>
+    <string name="install_qq_str">安装QQ客户端后才能分享到QQ空间</string>
+    <string name="relation_title_str">关系</string>
+    <string name="relation_hint_str">CP,师傅,徒弟&#8230;</string>
+    <string name="relation_person_title">人物</string>
+    <string name="relation_title">关系设置</string>
+    <string name="relation_not_null">关系不能为空</string>
+    <string name="relation_person_not_null">人物不能为空</string>
+    <string name="relation_only_three">只能设置三个关系</string>
+    <string name="recover_success">作品恢复成功</string>
+    <string name="recover_failed">作品恢复失败</string>
+    <string name="huabi_record">画币交易记录</string>
+    <string name="pay_success">支付成功</string>
+    <string name="pay_fail">支付失败</string>
+    <string name="pay_cancel">取消支付</string>
+    <string name="pay_invisible">支付失败,请先安装相关支付软件</string>
+    <string name="huabar_market">画吧印工坊</string>
+    <string name="huabar_market_intro1">作为一幅有理想的画，我不想永远只活在手机里，我要出去，我要拥有完整的生命。。带我去三次元世界吧！</string>
+    <string name="huabar_market_intro2">很喜欢这幅作品？那么。。。把她做成礼物吧，画吧印工坊提供7x24小时周边定制服务，帮您把（%1$s）变成下列可爱的礼物，送到你的面前。</string>
+    <string name="huabar_market_info">画吧订单:作品ID:%1$d,用户id:%2$s</string>
+    <string name="huabar_toast">订单信息已复制,请粘贴在淘宝买家留言</string>
+    <string name="vip_buy">购买</string>
+    <string name="pay_zhifubao">支付宝</string>
+    <string name="pay_weixin">微信支付</string>
+    <string name="pay_zhifubao_style">alipay</string>
+    <string name="pay_weixin_style">wx</string>
+    <string name="add_huabi">+%1$d画币</string>
+    <string name="plus_huabi">-%1$d画币</string>
+    <string name="input_huabinum_toast">请输入购买的画币数量</string>
+    <string name="input_huabinum_toast1">画币数不能为0</string>
+    <string name="input_style_toast">请选择支付方式</string>
+    <string name="suject_buy_huabi">充值%1$s画币</string>
+    <string name="delete_relation_str">确定删除关系(%1$s)吗?</string>
+    <string name="buy_huabi_title">购买画币</string>
+    <string name="buy_huabi_toast">购买成功</string>
+    <string name="vip_function_str">        &#160;&#160;画吧会员：\n
+		*金色昵称和皇冠\n
+		*每天登录双倍经验值\n
+		*DIY展示我的关系(CP、师父)\n
+		*后悔药(可以恢复被删除的作品)\n
+		&#160;&#160;更多专享功能不断开发中&#8230;</string>
+    <string name="vip_func">此功能为会员专享</string>
+    <string name="toast_detail">会员详情</string>
+    <string name="confirm_buy">开通会员</string>
+    <string name="dashang_title">承包商 </string>
+    <string name="arbitrarily">任意赏</string>
+    <string name="dashang_title_pop">打赏</string>
+    <string name="sure_to_dashang">赏\n%1$s&#160;作品\n《%2$s》\n%3$d画币</string>
+    <string name="dashang_success">打赏成功</string>
+    <string name="dashang_failed">打赏失败</string>
+    <string name="dashang_noenough">画币不足,请购买</string>
+    <string name="dashang_confirm">赏</string>
+    <string name="dashang_t1">膝盖都切了,画币算什么?</string>
+    <string name="dashang_t2">666才是真的6!</string>
+    <string name="dashang_t3">有支持,才有更好的创作!</string>
+    <string name="curr_activity1">活动详情</string>
+    <string name="no_action_detail_str">暂无活动详情</string>
+    <string name="original_creation">原创</string>
+    <string name="second_creation">二创</string>
+    <string name="copy_creation">临摹</string>
+    <string name="sketch_creation">写生</string>
+    <string name="bookmark_chahua">插画集</string>
+    <string name="bookmark_manhua">条漫</string>
+    <string name="bookmark_heji">作品集</string>
+    <string name="system_sync">同步系统亮度</string>
+    <string name="curr_bright_mode">同步模式不可调节</string>
+    <string name="book_reviewing">审核中</string>
+    <string name="book_reviewed">审核过</string>
+    <string name="book_reject">被驳回</string>
+    <string name="cover_info_title">封面信息</string>
+    <string name="cover_save_title">保存</string>
+    <string name="cover_edit_toast">标题及封面不可为空</string>
+    <string name="cover_edit_toast1">请选择一项必选标签</string>
+    <string name="add_title_for_book">快来添加个绘本标题先~</string>
+    <string name="cost_points">2000积分</string>
+    <string name="create_book_failed">创建绘本失败</string>
+    <string name="add_title_for_book_toast">请先添加标题</string>
+    <string name="book_share_edit_str">编辑绘本</string>
+    <string name="book_share_delete_str">删除绘本</string>
+    <string name="book_share_share_str">我的分享</string>
+    <string name="book_share_ok">审核通过</string>
+    <string name="book_share_back">绘本打回</string>
+    <string name="paint_num">%1$d笔</string>
+    <string name="update_please">请先升级</string>
+    <string name="book_buy_success">绘本购买成功</string>
+    <string name="cover_update_success">封面更新成功</string>
+    <string name="cover_update_failed">封面更新失败</string>
+    <string name="content_update_success">绘本内容更新成功</string>
+    <string name="content_update_failed">绘本内容更新失败</string>
+    <string name="confirm_delete_book">确定删除此绘本吗?</string>
+    <string name="delete_book_toast">*绘本删除后不可恢复</string>
+    <string name="book_input_title">简介</string>
+    <string name="book_input_toast">请输入单页简介</string>
+    <string name="check_str">审核绘本</string>
+    <string name="book_back_reason">驳回原因: %1$s\n请修改绘本并重新提交审核。</string>
+    <string name="book_for_check">待审核绘本</string>
+    <string name="update_cover_toast">请先添加个封面吧</string>
+    <string name="update_content_toast">请添加至少三页内容</string>
+    <string name="draft_not_collect">草稿不可收藏</string>
+    <string name="draft_not_comment">草稿不可评论</string>
+    <string name="book_edit_select_toast">已有草稿,是否加载最新草稿?</string>
+    <string name="book_edit_select_loaddraft">加载草稿</string>
+    <string name="book_edit_select_newedit">直接编辑</string>
+    <string name="book_add_cover_toast">快来添加个封面吧~</string>
+    <string name="book_cover_title_str">标题</string>
+    <string name="book_cover_cover_str">封面</string>
+    <string name="book_cover_intro_str">说明</string>
+    <string name="book_cover_intro_hint">撰写说明</string>
+    <string name="book_cover_label_str">标签</string>
+    <string name="book_cover_label_hint">点击添加标签</string>
+    <string name="book_cover_mark_dialog_title">添加标签</string>
+    <string name="book_element_hint">点击添加文字说明</string>
+    <string name="book_buying">正在购买绘本&#8230;</string>
+    <string name="book_list_empty_str">绘本可以让你创建自己的条漫、个人作品集、绘本故事、小人书&#8230;等等\n2000积分/本，快来体验吧！</string>
+    <string name="book_shenhe_title">绘本发布审核标准</string>
+    <string name="my_new_opus">最新作品</string>
+    <string name="my_new_book">最新绘本</string>
+    <string name="rank_no_order">排名不分先后</string>
+    <string name="yuegao_style_title">任务类型+酬金(例：Q版头像，20元)</string>
+    <string name="yuegao_style_content">&#160;任务要求：\n\n
+截稿日期：\n\n
+可出酬金：\n\n
+付款方式：</string>
+    <string name="shenhe_biaozhun">&#160;1.每个绘本均需创作一个封面.\n
+2.若绘本内容为系列作品，封面必须与作品内容相关.\n
+3.绘本内容严禁涉及政治、暴力、色情要素，且不推荐发布涉及“精神污染”要素的内容.\n
+4.绘本须有鲜明的主题，若为漫画/条漫类，需有完整的故事内容.\n
+5.在绘本说明内，需写明绘本类型、内容简介、作品人物设定及故事情节的引用出处等.\n
+6.若绘本通过审核，将自动进入广场的绘本分类.\n
+7.若绘本未通过审核，则只能自身可见或作为附件发布论坛.\n
+8.绘本审核通过后，若有修改需再次审核，因此建议，尽量一次性完成绘本编辑.</string>
+    <string name="mark_toast1">        原创: 创作出的全新作品。
+		理论上借鉴任何作品的构图，色彩或人设等，均不能算作原创。
+		因此希望大家谨慎选择原创标签。</string>
+    <string name="mark_toast2">        二创: 即为二次创作。
+		指使用已存在的著作物为基调，进行改编，引用的作品。
+		区别于抄袭与剽窃的点在于，二次创作在原作基础上有明显的延伸或自我创意，甚至颠覆或重新演绎。</string>
+    <string name="mark_toast3">        临摹: 照着已存在的他人画作或照片进行仿制的作品。
+		一般临摹是为了学习技法。</string>
+    <string name="mark_toast4">        写生: 直接以实物或风景或人物为对象的作画方式。
+		直接面对要绘画的对象的一种绘画方式。
+		根据自己拍摄的照片画的作品也可算作写生。</string>
+    <string name="book_mark_toast1">        具有连贯故事情节的插画作品</string>
+    <string name="book_mark_toast2">        具有连贯故事情节的漫画作品</string>
+    <string name="book_mark_toast3">        随意的作品合集</string>
+
+    <!-- 云旺资源 -->
+    <string name="title_activity_at_msg_list">/@消息</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="feedback_demo">反馈</string>
+
+    <string name="quit_confirm">退出后您将收不到新消息通知，是否确认退出？</string>
+    <string name="guest_login">账号不存在，是否以游客方式登录？</string>
+    <string name="confirm">确定</string>
+    <string name="cancel">取消</string>
+    <string name="complete">完成</string>
+    <string name="upload_yun">上传到云</string>
+    <string name="download_yun">下载到本地</string>
+    <string name="have_no_data">没有草稿</string>
+    <string name="setting_sound">声音提醒</string>
+    <string name="setting_vibration">振动提醒</string>
+    <string name="setting_nodisturb_dsc">消息免打扰</string>
+    <string name="title_activity_test_activity1">TestActivity1</string>
+    <string name="title_activity_test_activity2">TestActivity2</string>
+    <string name="title_activity_tribe_members">TribeMembersActivity</string>
+    <string name="title_activity_tribe_info">TribeInfoActivity</string>
+    <string name="title_activity_seacher_tribe">SeacherTribeActivity</string>
+    <string name="title_activity_edit_tribe_info">EditTribeInfoActivity</string>
+    <string name="title_activity_invite_tribe_member">InviteTribeMemberActivity</string>
+
+    <string name="search_friend_hint">账号</string>
+    <string name="search">搜索</string>
+    <string name="net_null">哎呀，怎么没网络了，请联网后试试！</string>
+    <string name="search_friend_not_found">该用户不存在</string>
+    <string name="search_friend_not_found_message">无法找到该用户，请检查输入的帐号是否正确</string>
+    <string name="search_friend_processing">正在为您查找</string>
+    <string name="send_msg">发送消息</string>
+    <string name="add_friend">添加好友</string>
+    <string name="remark_name">昵 称: </string>
+    <string name="profile_account">账 号: </string>
+
+    <string name="title_activity_system_message">SystemMessageActivity</string>
+
+    <string-array name="pref_config_tcms_storage_titles">
+        <item>In Settings(public)</item>
+        <item>In externalStorage(public)</item>
+        <item>In preference(private)</item>
+    </string-array>
+    <string-array name="pref_config_tcms_storage_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string name="pref_header_general">测试设置</string>
+    <string name="title_activity_contact_setting">ContactSettingActivity</string>
+    <string name="title_activity_tribe_msg_rec_type_set">TribeMsgRecTypeSetActivity</string>
+    <string name="clear_cache">清除缓存</string>
+    <string name="mark_all_read">全部已读</string>
+
+    <string name="demo_forward">转发</string>
+    <string name="demo_delete">删除消息</string>
+    <string name="demo_copy">复制</string>
+    <string name="title_activity_choose_picture">ChoosePictureActivity</string>
+    <string name="title_activity_preview_image">PreviewImageActivity</string>
+    <!--云旺資源結束-->
+    <!-- 即時通訊代碼通知國際化 -->
+
+    <string name="no_browser_detected">未检测到浏览器</string>
+    <string name="send_verification_application">你需要发送验证申请，等对方通过</string>
+    <string name="i_am">我是</string>
+    <string name="friend_verification">朋友验证</string>
+    <string name="verification_send_successed">好友申请已发送成功</string>
+    <string name="verification_send_failed">好友申请发送失败</string>
+    <string name="user_verification_accepted">接受了你的好友请求</string>
+    <string name="user_verification_denied">拒绝了你的好友请求</string>
+    <string name="user_has_add_you">添加您为好友</string>
+    <string name="user_profile">个人资料</string>
+    <string name="cant_operate_to_self">不能对自己进行该操作</string>
+    <string name="back">返回</string>
+    <string name="contact_system_message">联系人系统消息</string>
+    <string name="clear">清空</string>
+    <string name="apply_be_friend">申请加您为好友</string>
+    <string name="accept">接&#160;受</string>
+    <string name="been_added">已添加</string>
+    <string name="been_ignored">已忽略</string>
+    <string name="add">添加</string>
+    <string name="im_searching">正在查找</string>
+    <string name="message">消息</string>
+    <string name="contacts">联系人</string>
+    <string name="tribe">群组</string>
+    <string name="kicked_offline">被踢下线</string>
+    <string name="chat_login_failed">聊天登录失败,请重试</string>
+    <string name="black_list_empty">黑名单为空</string>
+    <string name="get_black_list_failed">获取黑名单失败</string>
+    <string name="sync_tribe">同步群组</string>
+    <string name="release_sync_tribe">松开同步群组</string>
+    <string name="search_join_tribe">搜索加入群</string>
+    <string name="create_tribe">创建群</string>
+    <string name="create_tribe_success">创建群成功</string>
+    <string name="create_tribe_failed">创建群失败</string>
+    <string name="sync_tribe_members">同步群成员</string>
+    <string name="sync_tribe_members_success">同步群成员成功</string>
+    <string name="sync_tribe_members_failed">同步群成员失败</string>
+    <string name="release_sync_tribe_members">松开同步群成员</string>
+    <string name="release_sync_tribe_member_list">松开同步群成员列表</string>
+    <string name="sync_tribe_member_list">同步群成员列表</string>
+    <string name="member_list">成员列表</string>
+    <string name="user_id">用户id</string>
+    <string name="forward_mesage">转发消息</string>
+    <string name="use_speaker_mode">使用扬声器模式</string>
+    <string name="use_phone_mode">使用听筒模式</string>
+    <string name="call">呼叫</string>
+    <string name="add_to_phone_contact">添加到手机通讯录</string>
+    <string name="copy_to_clipboard">复制到剪切板</string>
+    <string name="custom_tribe_title">自定义群标题</string>
+    <string name="click_receive_message">已屏蔽消息,点击接收</string>
+    <string name="reminder">提示</string>
+    <string name="sure_receive_message">接收群消息可能会产生较大数据流量，您确定接收吗？</string>
+    <string name="chatting_config">聊天设置</string>
+    <string name="record_been_cleared">聊天记录已清除</string>
+    <string name="sure_clear_record">聊天记录会被删除,确定清除?</string>
+    <string name="add_to_black_list_success">加入黑名单成功</string>
+    <string name="add_to_black_list_failed">加入黑名单失败</string>
+    <string name="remove_from_black_list_success">移出黑名单成功</string>
+    <string name="remove_from_black_list_failed">移出黑名单失败</string>
+    <string name="delete_friend_success">删除好友成功</string>
+    <string name="delete_friend_failed">删除好友失败</string>
+    <string name="modify_remark_success">修改备注成功</string>
+    <string name="modify_remark_failed">修改备注失败</string>
+    <string name="not_login">未登录</string>
+    <string name="msg_top_bg">#EEEEEE</string><!--云旺消息置顶颜色-->
+    <string name="msg_top_bg_n">#132643</string><!--云旺消息置顶颜色-->
+    <string name="no_conversation_yet">还没有聊天记录,快去找人聊天吧</string>
+    <string name="tribe_system_message">群系统消息</string>
+    <string name="friends">好友</string>
+    <string name="unread_message">条未读消息</string>
+    <string name="discussion_groups">讨论组</string>
+    <string name="edit_tribe_remark">编辑群名片</string>
+    <string name="modify_success">修改成功</string>
+    <string name="modify_failed">修改失败</string>
+    <string name="edit_tribe_info">编辑群信息</string>
+    <string name="create_discussion_group">创建讨论组</string>
+    <string name="add_contact">添加联系人</string>
+    <string name="add_tribe_member_success">添加群成员成功</string>
+    <string name="add_tribe_member_failed">添加群成员失败</string>
+    <string name="input_tribe_id">请输入群ID</string>
+    <string name="no_tribe_found">未找到该群</string>
+    <string name="search_tribe">搜索群</string>
+    <string name="set_tribe_admin">设置群管理员</string>
+    <string name="remove_tribe_admin">取消群管理员</string>
+    <string name="kick_member_out">踢出群</string>
+    <string name="tribe_profile">群资料</string>
+    <string name="tribe_id">群号</string>
+    <string name="tribe_message_setting_tip">接收群消息时不能屏蔽群\@消息哦!</string>
+    <string name="accept_and_remind">接收并提醒</string>
+    <string name="accept_not_remind">接收不提醒</string>
+    <string name="dont_accept">不提醒</string>
+    <string name="tribe_member_manage">群成员管理</string>
+    <string name="dismiss_tribe">解散群</string>
+    <string name="dismiss_tribe_success">解散群成功</string>
+    <string name="dismiss_tribe_failed">解散群失败</string>
+    <string name="exit_tribe">退出群</string>
+    <string name="exit_tribe_success">退出群成功</string>
+    <string name="exit_tribe_failed">退出群失败</string>
+    <string name="join_tribe">加入群</string>
+    <string name="join_tribe_success">加入群成功</string>
+    <string name="join_tribe_failed">加入群失败</string>
+    <string name="setting_failed">设置失败</string>
+    <string name="setting_success">设置成功</string>
+    <string name="manage">管理</string>
+    <string name="no_admin_permissions">无管理员权限</string>
+    <string name="kick_member_success">踢出成员成功</string>
+    <string name="send_invite_success">邀请成功</string>
+    <string name="tribe_owner">群主</string>
+    <string name="admin">管理员</string>
+    <string name="agreed">已同意</string>
+    <string name="ingored">已忽略</string>
+    <string name="card">名片</string>
+    <string name="people_card">[名片]</string>
+    <string name="chose_contact">选择联系人</string>
+    <string name="sure_to_use">确认使用?</string>
+    <string name="delete_friend">刪除好友</string>
+    <string name="modify_remark">修改备注</string>
+    <string name="ignore">忽略</string>
+    <string name="tribe_name1">群名称:</string>
+    <string name="tribe_name2">群名称</string>
+    <string name="tribe_notice">群公告:</string>
+    <string name="tribe_notice1">群公告</string>
+    <string name="friend_request_sent">好友申请已发送</string>
+    <string name="friend_request_failed">好友申请发送失败,请重试</string>
+    <string name="no_search_found">没有搜索结果</string>
+    <string name="start_to_chat">开始聊天</string>
+    <string name="chatting_cache">聊天缓存</string>
+    <string name="delete_conversation">删除聊天</string>
+    <string name="sticky_conversation">置顶聊天</string>
+    <string name="unsticky_conversation">取消置顶</string>
+    <string name="delete_friends">删除好友</string>
+    <string name="clear_chatting_cache">清除聊天缓存</string>
+    <string name="no_cache_yet">暂无缓存</string>
+    <string name="clear_cache_succeed">清除缓存成功</string>
+    <string name="clear_cache_failed">清除缓存失败</string>
+    <string name="net_connect_failed">网络连接失败</string>
+    <string name="waiting_verification">等待验证</string>
+    <string name="ignored">已忽略</string>
+    <string name="add_black_list">加入黑名单</string>
+    <string name="remove_black_list">移出黑名单</string>
+    <string name="chat_message">聊天消息</string>
+    <string name="you_have">你有</string>
+    <string name="seconds">秒</string>
+    <string name="action_str">活动</string>
+    <string name="current_balance_not_enough">可提现余额不足</string>
+    <string name="apply_succeed">已提交申请</string>
+    <string name="apply_failed">提交申请失败</string>
+    <string name="author_invitation_str">作者邀请码: %1$s</string>
+    <string name="author_name_str">作者昵称: %1$s</string>
+    <string name="mirror_image_failed">对称图生成失败,请稍后再试</string>
+    <string name="sms_login_failed">短信验证登录失败,请稍候重试</string>
+    <string name="bundle_account_toast"><![CDATA[尊敬的用户:<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;目前您是随便玩玩账号, 为了您帐号安全<br/>请点击<font color="#29cc88">绑定当前账号!</font>]]></string>
+    <string name="_create_label_remind">“ %1$s ”标签在《次元册》中还未收录，你要创建吗？</string>
+    <string name="ciyuan_set_cover">设置封面</string>
+    <string name="ciyuan_set_avatar">设置头像</string>
+
+
+</resources>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/basic_color_relative"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/dialogbg"
+                android:padding="5dip">
+
+    <TextView
+        android:id="@+id/usecolor_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/per_used_color"
+        android:textColor="@color/white"
+        android:textSize="11sp"/>
+
+    <HorizontalScrollView
+        android:id="@+id/user_grid_root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/usecolor_text"
+        android:fadeScrollbars="false"
+        android:scrollbarAlwaysDrawHorizontalTrack="true"
+        android:scrollbarThumbHorizontal="@drawable/shape_scroll_bar_blac"
+        android:scrollbars="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.haowan.openglnew.NoScrollGridView
+                android:id="@+id/usedGrid1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:horizontalSpacing="2dip"
+                android:listSelector="@android:color/transparent"/>
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <RelativeLayout
+        android:id="@+id/palette_relative"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/user_grid_root"
+        android:layout_alignTop="@id/user_grid_root"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="4dip"
+        android:layout_toRightOf="@id/user_grid_root"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/palette_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"
+            android:text="@string/per_palette"
+            android:textColor="@color/white"
+            android:textSize="8sp"/>
+
+        <ImageView
+            android:id="@+id/palette_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/palette_tv"
+            android:layout_centerHorizontal="true"
+            android:background="@null"
+            android:src="@drawable/paint_fun_palette_normal"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/basecolor_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/user_grid_root"
+        android:layout_marginTop="5dip"
+        android:text="@string/per_basic_color"
+        android:textColor="@color/white"
+        android:textSize="11sp"/>
+
+    <com.haowan.openglnew.NoScrollGridView
+        android:id="@+id/gridcolor1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/basecolor_text"
+        android:horizontalSpacing="2dip"
+        android:listSelector="@android:color/transparent"
+        android:numColumns="9"/>
+
+    <RelativeLayout
+        android:id="@+id/eraser_relative"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/gridcolor1"
+        android:layout_alignTop="@id/gridcolor1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="4dip"
+        android:layout_toRightOf="@id/gridcolor1"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/eraser_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"
+            android:text="@string/per_eraser"
+            android:textColor="@color/white"
+            android:textSize="8sp"/>
+
+        <ImageView
+            android:id="@+id/eraser_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/eraser_tv"
+            android:layout_centerHorizontal="true"
+            android:background="@null"
+            android:src="@drawable/img_eraser"/>
+
+    </RelativeLayout>
+</RelativeLayout>
