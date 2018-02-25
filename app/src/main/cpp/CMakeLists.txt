@@ -28,6 +28,7 @@ add_library(gles3jni SHARED
            2d/CCMenuItem.cpp
            2d/CCLabelAtlas.cpp
            2d/CCAtlasNode.cpp
+           2d/CCCamera.cpp
            base/ccTypes.cpp
            base/CCDirector.cpp
            base/CCAutoreleasePool.cpp
@@ -38,15 +39,55 @@ add_library(gles3jni SHARED
            base/CCConfiguration.cpp
            base/ccUtils.cpp
            base/CCConsole.cpp
+           base/ccUTF8.cpp
+           base/pvr.cpp
+           base/etc1.cpp
+           base/atitc.cpp
+           base/s3tc.cpp
+           base/TGAlib.cpp
+           base/ZipUtils.cpp
+           base/CCEventTouch.cpp
+           base/CCEventDispatcher.cpp
            base/CCNinePatchImageParser.cpp
+           base/CCEventListenerCustom.cpp
+           base/CCEventListenerTouch.cpp
+           base/CCEventListener.cpp
+           base/CCEventListenerMouse.cpp
+           base/CCEventListenerAcceleration.cpp
+           base/CCEventListenerKeyboard.cpp
+           base/CCEventListenerController.cpp
            renderer/CCTextureCache.cpp
            renderer/CCTexture2D.cpp
            renderer/ccGLStateCache.cpp
            renderer/CCGLProgram.cpp
            renderer/CCGLProgramCache.cpp
+           renderer/ccShaders.cpp
+           renderer/CCRenderer.cpp
+           renderer/CCRenderState.cpp
+           renderer/CCTrianglesCommand.cpp
+           renderer/CCGLProgramState.cpp
+           renderer/CCMeshCommand.cpp
+           renderer/CCRenderCommand.cpp
+           renderer/CCFrameBuffer.cpp
+           renderer/CCBatchCommand.cpp
+           renderer/CCCustomCommand.cpp
+           renderer/CCGroupCommand.cpp
+           renderer/CCPrimitiveCommand.cpp
+           renderer/CCVertexAttribBinding.cpp
+           renderer/CCTextureAtlas.cpp
+           renderer/CCVertexIndexBuffer.cpp
+           renderer/CCGLProgramStateCache.cpp
+           renderer/CCPrimitive.cpp
+           renderer/CCPass.cpp
            platform/CCImage.cpp
+           platform/android/CCGLViewImpl-android.cpp
+           platform/CCGLView.cpp
            platform/android/CCDevice-android.cpp
-
+           external/ConvertUTF/ConvertUTF.c
+           external/unzip/unzip.cpp
+           external/unzip/ioapi.cpp
+           external/unzip/ioapi_mem.cpp
+           external/xxhash/xxhash.c
            Caretaker.cpp
            LayerManager.cpp
            VisibleRect.cpp
@@ -55,7 +96,11 @@ add_library(gles3jni SHARED
 
  target_include_directories(gles3jni PRIVATE
                            ${CMAKE_CURRENT_SOURCE_DIR}
+                           ${CMAKE_CURRENT_SOURCE_DIR}/platform
                            ${CMAKE_CURRENT_SOURCE_DIR}/external
+                           ${CMAKE_CURRENT_SOURCE_DIR}/external/xxhash
+                           ${CMAKE_CURRENT_SOURCE_DIR}/external/unzip
+                           ${CMAKE_CURRENT_SOURCE_DIR}/external/ConvertUTF
                            ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/include/android/freetype2
                            ${CMAKE_CURRENT_SOURCE_DIR}/external/png/include/android
                            )

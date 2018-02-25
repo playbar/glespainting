@@ -32,8 +32,6 @@ THE SOFTWARE.
 #include "2d/CCCamera.h"
 #include "2d/CCScene.h"
 #include "renderer/CCRenderer.h"
-#include "vr/CCVRProtocol.h"
-#include "vr/CCVRGenericRenderer.h"
 
 NS_CC_BEGIN
 
@@ -108,7 +106,6 @@ GLView::GLView()
 : _scaleX(1.0f)
 , _scaleY(1.0f)
 , _resolutionPolicy(ResolutionPolicy::UNKNOWN)
-, _vrImpl(nullptr)
 , _designResolutionSize(0,0)
 , _screenSize(0,0)
 {
@@ -494,35 +491,9 @@ void GLView::renderScene(Scene* scene, Renderer* renderer)
     CCASSERT(scene, "Invalid Scene");
     CCASSERT(renderer, "Invalid Renderer");
 
-    if (_vrImpl)
-    {
-        _vrImpl->render(scene, renderer);
-    }
-    else
-    {
-        scene->render(renderer, Mat4::IDENTITY, nullptr);
-    }
+    scene->render(renderer, Mat4::IDENTITY, nullptr);
+
 }
 
-VRIRenderer* GLView::getVR() const
-{
-    return _vrImpl;
-}
-
-void GLView::setVR(VRIRenderer* vrRenderer)
-{
-    if (_vrImpl != vrRenderer)
-    {
-        if (_vrImpl) {
-            _vrImpl->cleanup();
-            delete _vrImpl;
-        }
-
-        if (vrRenderer)
-            vrRenderer->setup(this);
-
-        _vrImpl = vrRenderer;
-    }
-}
 
 NS_CC_END
