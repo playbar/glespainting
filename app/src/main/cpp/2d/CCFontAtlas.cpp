@@ -27,8 +27,6 @@
 #include "2d/CCFontAtlas.h"
 #if CC_TARGET_PLATFORM != CC_PLATFORM_WIN32 && CC_TARGET_PLATFORM != CC_PLATFORM_WINRT && CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID
 #include <iconv.h>
-#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-#include "Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 #endif
 #include "2d/CCFontFreeType.h"
 #include "base/ccUTF8.h"
@@ -224,7 +222,8 @@ void FontAtlas::conversionU32TOGB2312(const std::u32string& u32Text, std::unorde
         cocos2d::StringUtils::UTF32ToUTF16(u32Text, u16Text);
         WideCharToMultiByte(936, NULL, (LPCWCH)u16Text.c_str(), strLen, (LPSTR)gb2312Text, gb2312StrSize, NULL, NULL);
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-        conversionEncodingJNI((char*)u32Text.c_str(), gb2312StrSize, "UTF-32LE", gb2312Text, "GB2312");
+        //todo
+//        conversionEncodingJNI((char*)u32Text.c_str(), gb2312StrSize, "UTF-32LE", gb2312Text, "GB2312");
 #else
         if (_iconv == nullptr)
         {

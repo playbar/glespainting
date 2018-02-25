@@ -29,6 +29,38 @@ add_library(gles3jni SHARED
            2d/CCLabelAtlas.cpp
            2d/CCAtlasNode.cpp
            2d/CCCamera.cpp
+           2d/CCRenderTexture.cpp
+           2d/CCSpriteFrameCache.cpp
+           2d/CCAnimationCache.cpp
+           2d/CCFontFreeType.cpp
+           2d/CCDrawingPrimitives.cpp
+           2d/CCFontAtlasCache.cpp
+           2d/CCFontFNT.cpp
+           2d/CCTransition.cpp
+           2d/CCActionManager.cpp
+           2d/CCActionTiledGrid.cpp
+           2d/CCActionGrid.cpp
+           2d/CCLayer.cpp
+           2d/CCComponentContainer.cpp
+           2d/CCSpriteFrame.cpp
+           2d/CCActionInterval.cpp
+           2d/CCAction.cpp
+           2d/CCAutoPolygon.cpp
+           2d/CCActionInstant.cpp
+           2d/CCAnimation.cpp
+           2d/CCSpriteFrame.cpp
+           2d/CCSpriteBatchNode.cpp
+           2d/CCNodeGrid.cpp
+           2d/CCGrid.cpp
+           2d/CCGrabber.cpp
+           2d/CCActionCamera.cpp
+           2d/CCActionEase.cpp
+           2d/CCFontAtlas.cpp
+           2d/CCTweenFunction.cpp
+           2d/CCFontCharMap.cpp
+           2d/CCCameraBackgroundBrush.cpp
+           3d/CCFrustum.cpp
+           3d/CCPlane.cpp
            base/ccTypes.cpp
            base/CCDirector.cpp
            base/CCAutoreleasePool.cpp
@@ -44,7 +76,11 @@ add_library(gles3jni SHARED
            base/etc1.cpp
            base/atitc.cpp
            base/s3tc.cpp
+           base/CCValue.cpp
            base/TGAlib.cpp
+           base/CCNS.cpp
+           base/ccCArray.cpp
+           base/CCAsyncTaskPool.cpp
            base/ZipUtils.cpp
            base/CCEventTouch.cpp
            base/CCEventDispatcher.cpp
@@ -56,6 +92,13 @@ add_library(gles3jni SHARED
            base/CCEventListenerAcceleration.cpp
            base/CCEventListenerKeyboard.cpp
            base/CCEventListenerController.cpp
+           base/CCEventListenerFocus.cpp
+           base/CCEventCustom.cpp
+           base/CCEvent.cpp
+           base/base64.cpp
+           base/CCTouch.cpp
+           base/ObjectFactory.cpp
+           base/CCUserDefault-android.cpp
            renderer/CCTextureCache.cpp
            renderer/CCTexture2D.cpp
            renderer/ccGLStateCache.cpp
@@ -77,29 +120,46 @@ add_library(gles3jni SHARED
            renderer/CCTextureAtlas.cpp
            renderer/CCVertexIndexBuffer.cpp
            renderer/CCGLProgramStateCache.cpp
+           renderer/CCVertexIndexData.cpp
            renderer/CCPrimitive.cpp
            renderer/CCPass.cpp
+           renderer/CCQuadCommand.cpp
            platform/CCImage.cpp
            platform/android/CCGLViewImpl-android.cpp
            platform/CCGLView.cpp
            platform/android/CCDevice-android.cpp
+           platform/CCFileUtils.cpp
+           platform/CCSAXParser.cpp
+           platform/android/CCFileUtils-android.cpp
            external/ConvertUTF/ConvertUTF.c
            external/unzip/unzip.cpp
            external/unzip/ioapi.cpp
            external/unzip/ioapi_mem.cpp
            external/xxhash/xxhash.c
+           external/clipper/clipper.cpp
+           external/md5/md5.c
+           external/tinyxml2/tinyxml2.cpp
+           external/edtaa3func/edtaa3func.cpp
+           external/poly2tri/sweep/cdt.cc
+           external/poly2tri/sweep/sweep_context.cc
+           external/poly2tri/sweep/advancing_front.cc
+           external/poly2tri/common/shapes.cc
+           external/poly2tri/sweep/sweep.cc
            Caretaker.cpp
            LayerManager.cpp
            VisibleRect.cpp
            JniHelper.cpp
+           cocos2d.cpp
             )
 
  target_include_directories(gles3jni PRIVATE
                            ${CMAKE_CURRENT_SOURCE_DIR}
                            ${CMAKE_CURRENT_SOURCE_DIR}/platform
                            ${CMAKE_CURRENT_SOURCE_DIR}/external
+                           ${CMAKE_CURRENT_SOURCE_DIR}/external/tinyxml2
                            ${CMAKE_CURRENT_SOURCE_DIR}/external/xxhash
                            ${CMAKE_CURRENT_SOURCE_DIR}/external/unzip
+                           ${CMAKE_CURRENT_SOURCE_DIR}/external/edtaa3func
                            ${CMAKE_CURRENT_SOURCE_DIR}/external/ConvertUTF
                            ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/include/android/freetype2
                            ${CMAKE_CURRENT_SOURCE_DIR}/external/png/include/android

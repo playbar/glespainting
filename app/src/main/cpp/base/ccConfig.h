@@ -292,7 +292,7 @@ THE SOFTWARE.
   #ifdef CC_ENABLE_SCRIPT_BINDING
     #define CC_CONSTRUCTOR_ACCESS public
   #else
-    #define CC_CONSTRUCTOR_ACCESS protected
+    #define CC_CONSTRUCTOR_ACCESS public
   #endif
 #endif
 
