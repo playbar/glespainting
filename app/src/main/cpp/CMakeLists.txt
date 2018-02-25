@@ -58,6 +58,8 @@ add_library(gles3jni SHARED
            2d/CCFontAtlas.cpp
            2d/CCTweenFunction.cpp
            2d/CCFontCharMap.cpp
+           2d/CCLabel.cpp
+           2d/CCLabelTextFormatter.cpp
            2d/CCCameraBackgroundBrush.cpp
            3d/CCFrustum.cpp
            3d/CCPlane.cpp
@@ -123,6 +125,7 @@ add_library(gles3jni SHARED
            renderer/CCVertexIndexData.cpp
            renderer/CCPrimitive.cpp
            renderer/CCPass.cpp
+           renderer/CCTextureCube.cpp
            renderer/CCQuadCommand.cpp
            platform/CCImage.cpp
            platform/android/CCGLViewImpl-android.cpp

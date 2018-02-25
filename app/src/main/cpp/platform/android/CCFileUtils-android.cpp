@@ -30,8 +30,6 @@ THE SOFTWARE.
 #include "platform/android/CCFileUtils-android.h"
 #include "platform/CCCommon.h"
 #include "JniHelper.h"
-#include "Java_org_cocos2dx_lib_Cocos2dxHelper.h"
-#include "Java_org_cocos2dx_lib_Cocos2dxEngineDataManager.h"
 #include "android/asset_manager.h"
 #include "android/asset_manager_jni.h"
 #include "base/ZipUtils.h"
@@ -92,12 +90,13 @@ FileUtilsAndroid::~FileUtilsAndroid()
 bool FileUtilsAndroid::init()
 {
     _defaultResRootPath = ASSETS_FOLDER_NAME;
-    
-    std::string assetsPath(getApkPath());
-    if (assetsPath.find("/obb/") != std::string::npos)
-    {
-        obbfile = new ZipFile(assetsPath);
-    }
+
+    //todo
+//    std::string assetsPath(getApkPath());
+//    if (assetsPath.find("/obb/") != std::string::npos)
+//    {
+//        obbfile = new ZipFile(assetsPath);
+//    }
 
     return FileUtils::init();
 }
@@ -282,7 +281,7 @@ long FileUtilsAndroid::getFileSize(const std::string& filepath)
 
 FileUtils::Status FileUtilsAndroid::getContents(const std::string& filename, ResizableBuffer* buffer)
 {
-    EngineDataManager::onBeforeReadFile();
+//    EngineDataManager::onBeforeReadFile();
 
     static const std::string apkprefix("assets/");
     if (filename.empty())
