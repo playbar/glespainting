@@ -207,7 +207,7 @@ Java_com_haowan_openglnew_RenderLib_resize(JNIEnv* env, jobject obj, jint width,
         g_renderer->resize(width, height);
     }
     glViewport(0, 0, width, height);
-
+//    glBindFramebuffer(GL_FRAMEBUFFER, 0 );
 }
 
 JNIEXPORT void JNICALL

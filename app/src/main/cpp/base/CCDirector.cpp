@@ -294,7 +294,7 @@ void Director::drawScene()
         _eventDispatcher->dispatchEvent(_eventAfterUpdate);
     }
 
-    _renderer->clear();
+//    _renderer->clear();
     experimental::FrameBuffer::clearAllFBOs();
     
     _eventDispatcher->dispatchEvent(_eventBeforeDraw);
@@ -429,8 +429,8 @@ void Director::setOpenGLView(GLView *openGLView)
             _eventDispatcher->setEnabled(true);
         }
         
-        _defaultFBO = experimental::FrameBuffer::getOrCreateDefaultFBO(_openGLView);
-        _defaultFBO->retain();
+//        _defaultFBO = experimental::FrameBuffer::getOrCreateDefaultFBO(_openGLView);
+//        _defaultFBO->retain();
     }
 }
 
