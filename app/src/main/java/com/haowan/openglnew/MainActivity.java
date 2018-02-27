@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import com.haowan.opengl_new.R;
 
+import org.cocos2dx.lib.Cocos2dxHelper;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -25,7 +27,15 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-public class MainActivity extends Activity implements View.OnClickListener{
+public class MainActivity extends Activity implements View.OnClickListener, Cocos2dxHelper.Cocos2dxHelperListener {
+
+    static {
+        try {
+            System.loadLibrary("gles3jni");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     private static final String TAG = "MainActivity";
 
@@ -51,6 +61,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Cocos2dxHelper.init(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
@@ -272,4 +283,13 @@ public class MainActivity extends Activity implements View.OnClickListener{
         return cachePath;
     }
 
+    @Override
+    public void showDialog(String pTitle, String pMessage) {
+
+    }
+
+    @Override
+    public void runOnGLThread(Runnable pRunnable) {
+
+    }
 }

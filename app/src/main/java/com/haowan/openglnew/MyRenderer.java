@@ -66,99 +66,99 @@ public class MyRenderer implements GLSurfaceView.Renderer {
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         RenderLib.init();
 
-      _act = -1; _first=true; _mode=0; _k=1.2f;
-      _x0=_y0=_x1=_y1=0;
-      _vx = 0; _vy = 0; _vw = 1080; _vh = 1800;
-        JNILib.init(MainActivity.screenWH[0],MainActivity.screenWH[1], screenWH[0], screenWH[1]);  //canvas width/height, viewport's origin and width/height
-      {
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inScaled = false;   // No pre-scaling
-          {
-              //初始化普通画笔纹理
-              final Bitmap bm = BitmapFactory.decodeResource(_context.getResources(), R.drawable.brush_2, options);
-              int w = bm.getWidth();
-              int h = bm.getHeight();
-              int[] pixels = new int[w * h];
-              bm.getPixels(pixels, 0, w, 0, 0, w, h);
-              JNILib.setTexture(0, w, h, pixels);  //normal pen
-          }
-        {
-            //初始化模糊画笔纹理
-          final Bitmap bm = BitmapFactory.decodeResource(_context.getResources(), R.drawable._104, options);
-          int w = bm.getWidth();
-          int h = bm.getHeight();
-          int[] pixels = new int[w * h];
-          bm.getPixels(pixels, 0, w, 0, 0, w, h);
-            JNILib.setTexture(1, w, h, pixels);  //normal pen
-        }
-          {
-              //初始化直线画笔纹理
-              final Bitmap bm = BitmapFactory.decodeResource(_context.getResources(), R.drawable.h, options);
-              int w = bm.getWidth();
-              int h = bm.getHeight();
-              int[] pixels = new int[w * h];
-              bm.getPixels(pixels, 0, w, 0, 0, w, h);
-              JNILib.setTexture(2, w, h, pixels);  //normal pen
-          }
-      }
+//      _act = -1; _first=true; _mode=0; _k=1.2f;
+//      _x0=_y0=_x1=_y1=0;
+//      _vx = 0; _vy = 0; _vw = 1080; _vh = 1800;
+//        JNILib.init(MainActivity.screenWH[0],MainActivity.screenWH[1], screenWH[0], screenWH[1]);  //canvas width/height, viewport's origin and width/height
+//      {
+//        final BitmapFactory.Options options = new BitmapFactory.Options();
+//        options.inScaled = false;   // No pre-scaling
+//          {
+//              //初始化普通画笔纹理
+//              final Bitmap bm = BitmapFactory.decodeResource(_context.getResources(), R.drawable.brush_2, options);
+//              int w = bm.getWidth();
+//              int h = bm.getHeight();
+//              int[] pixels = new int[w * h];
+//              bm.getPixels(pixels, 0, w, 0, 0, w, h);
+//              JNILib.setTexture(0, w, h, pixels);  //normal pen
+//          }
+//        {
+//            //初始化模糊画笔纹理
+//          final Bitmap bm = BitmapFactory.decodeResource(_context.getResources(), R.drawable._104, options);
+//          int w = bm.getWidth();
+//          int h = bm.getHeight();
+//          int[] pixels = new int[w * h];
+//          bm.getPixels(pixels, 0, w, 0, 0, w, h);
+//            JNILib.setTexture(1, w, h, pixels);  //normal pen
+//        }
+//          {
+//              //初始化直线画笔纹理
+//              final Bitmap bm = BitmapFactory.decodeResource(_context.getResources(), R.drawable.h, options);
+//              int w = bm.getWidth();
+//              int h = bm.getHeight();
+//              int[] pixels = new int[w * h];
+//              bm.getPixels(pixels, 0, w, 0, 0, w, h);
+//              JNILib.setTexture(2, w, h, pixels);  //normal pen
+//          }
+//      }
     }
 
     public void onSurfaceChanged(GL10 gl, int width, int height) {
 //      _vw = width; _vh = height;
 //        JNILib.resize(_vx, _vy, _vw, _vh);
         RenderLib.resize(width, height);
-        JNILib.resize(width, height);
+//        JNILib.resize(width, height);
     }
 
     public void onDrawFrame(GL10 gl) {
         RenderLib.step();
-        Log.i(TAG,"------onDrawFrame:currThread:"+Thread.currentThread());
-        Log.i(TAG, "_x=" + _x + ", _y=" + _y);
-//        Log.i(TAG,"---------mode:"+_mode);
-      if(_first){
-          JNILib.drawBlankCanvas(0.9f,0.9f,0.9f);
-        _first = false;
-      }
-      else {
-          if(_mode == 4){
-              JNILib.changeCanvas(screenWH[0],screenWH[1],0xffffffff);
-              _mode = 0;
-          }else if(_mode==0){
-//              float[] results = JNILib.getCanvasCoord(_x,_y);
-//              _x = results[0]; _y = results[1];
-              if(_act==-1) return;
-              JNILib.drawNormalLine(_act, _x, _y, size, color, _mode);
-          }else if(_mode==1){
-              if(_act==-1) return;
-              JNILib.drawBlurLine(_act, _x, _y, size, color, _mode);
-          }else if(_mode == 2){
-              if(_act==-1) return;
-              JNILib.drawSegLine(_act, _x, _y, size, color, _mode);
-          }else if(_mode == 3){
-              if(_act==-1) return;
-              JNILib.drawLeaf(_act, _x, _y, size, color, _mode);
-
-          }else if(_mode==50){
-            JNILib.pan(_x0,_y0,_x1,_y1);
-            JNILib.zoom(_k,_x0,_y0);
-
-        }else if(_mode == 10){
-              JNILib.undo(-1, beanSize, mbyte, mbyte.length);
-        }else if(_mode == 11){
-              JNILib.redo(mbyte, mbyte.length);
-          }else if(_mode == 12){
-
-//              JNILib.drawBlankCanvas(0.8f,0.8f,0.8f);
-              JNILib.playData(beanSize, mbyte, mbyte.length);
-              long time = System.currentTimeMillis();
-              JNILib.playDraw(beanSize);
-              Log.i(TAG,"---------------play use time:"+(System.currentTimeMillis() - time));
-
-          }else if(_mode == 20){
-              Log.i(TAG,"----------mode=20,清空------");
-              JNILib.drawBlankCanvas(0.8f,0.8f,0.8f);
-          }
-      }
+//        Log.i(TAG,"------onDrawFrame:currThread:"+Thread.currentThread());
+//        Log.i(TAG, "_x=" + _x + ", _y=" + _y);
+////        Log.i(TAG,"---------mode:"+_mode);
+//        if(_first){
+//            JNILib.drawBlankCanvas(0.9f,0.9f,0.9f);
+//            _first = false;
+//        }
+//        else {
+//            if(_mode == 4){
+//                JNILib.changeCanvas(screenWH[0],screenWH[1],0xffffffff);
+//                _mode = 0;
+//            }else if(_mode==0){
+////              float[] results = JNILib.getCanvasCoord(_x,_y);
+////              _x = results[0]; _y = results[1];
+//                if(_act==-1) return;
+//                JNILib.drawNormalLine(_act, _x, _y, size, color, _mode);
+//            }else if(_mode==1){
+//                if(_act==-1) return;
+//                JNILib.drawBlurLine(_act, _x, _y, size, color, _mode);
+//            }else if(_mode == 2){
+//                if(_act==-1) return;
+//                JNILib.drawSegLine(_act, _x, _y, size, color, _mode);
+//            }else if(_mode == 3){
+//                if(_act==-1) return;
+//                JNILib.drawLeaf(_act, _x, _y, size, color, _mode);
+//
+//            }else if(_mode==50){
+//                JNILib.pan(_x0,_y0,_x1,_y1);
+//                JNILib.zoom(_k,_x0,_y0);
+//
+//            }else if(_mode == 10){
+//                JNILib.undo(-1, beanSize, mbyte, mbyte.length);
+//            }else if(_mode == 11){
+//                JNILib.redo(mbyte, mbyte.length);
+//            }else if(_mode == 12){
+//
+////              JNILib.drawBlankCanvas(0.8f,0.8f,0.8f);
+//                JNILib.playData(beanSize, mbyte, mbyte.length);
+//                long time = System.currentTimeMillis();
+//                JNILib.playDraw(beanSize);
+//                Log.i(TAG,"---------------play use time:"+(System.currentTimeMillis() - time));
+//
+//            }else if(_mode == 20){
+//                Log.i(TAG,"----------mode=20,清空------");
+//                JNILib.drawBlankCanvas(0.8f,0.8f,0.8f);
+//            }
+//        }
     }
 
     public int beanSize = 0;

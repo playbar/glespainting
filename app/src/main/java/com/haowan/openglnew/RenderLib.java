@@ -20,15 +20,6 @@ package com.haowan.openglnew;
 
 public class RenderLib {
 
-
-     static {
-          try {
-               System.loadLibrary("gles3jni");
-          } catch (Exception e) {
-               e.printStackTrace();
-          }
-     }
-
      public static native void init();
      public static native void resize(int width, int height);
      public static native void step();

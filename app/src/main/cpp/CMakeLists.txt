@@ -128,11 +128,12 @@ add_library(gles3jni SHARED
            renderer/CCTextureCube.cpp
            renderer/CCQuadCommand.cpp
            platform/CCImage.cpp
-           platform/android/CCGLViewImpl-android.cpp
            platform/CCGLView.cpp
-           platform/android/CCDevice-android.cpp
            platform/CCFileUtils.cpp
            platform/CCSAXParser.cpp
+           platform/android/CCGLViewImpl-android.cpp
+           platform/android/CCDevice-android.cpp
+           platform/android/CCApplication-android.cpp
            platform/android/CCFileUtils-android.cpp
            external/ConvertUTF/ConvertUTF.c
            external/unzip/unzip.cpp
@@ -148,7 +149,10 @@ add_library(gles3jni SHARED
            external/poly2tri/sweep/advancing_front.cc
            external/poly2tri/common/shapes.cc
            external/poly2tri/sweep/sweep.cc
+           Java_org_cocos2dx_lib_Cocos2dxBitmap.cpp
+           Java_org_cocos2dx_lib_Cocos2dxHelper.cpp
            Caretaker.cpp
+           AppDelegate.cpp
            LayerManager.cpp
            VisibleRect.cpp
            JniHelper.cpp

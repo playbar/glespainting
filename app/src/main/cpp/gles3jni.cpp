@@ -20,9 +20,20 @@
 #include <pthread.h>
 #include <stdio.h>
 #include <EGL/egl.h>
+#include <platform/android/CCGLViewImpl-android.h>
+#include <renderer/ccGLStateCache.h>
+#include <renderer/CCGLProgramCache.h>
+#include <2d/CCDrawingPrimitives.h>
+#include <renderer/CCTextureCache.h>
+#include <base/CCEventType.h>
+#include <base/CCEventCustom.h>
+#include <platform/CCApplication.h>
+#include "base/CCEventDispatcher.h"
 
 #include "gles3jni.h"
 #include "mylog.h"
+#include "base/CCDirector.h"
+#include "AppDelegate.h"
 
 
 // ----------------------------------------------------------------------------
@@ -161,8 +172,31 @@ Java_com_haowan_openglnew_RenderLib_init(JNIEnv* env, jobject obj) {
     printGlString("Renderer", GL_RENDERER);
     printGlString("Extensions", GL_EXTENSIONS);
 
-    g_renderer = createES2Renderer();
+//    g_renderer = createES2Renderer();
 
+    /////
+
+    auto director = cocos2d::Director::getInstance();
+    auto glview = director->getOpenGLView();
+    if (!glview)
+    {
+        glview = cocos2d::GLViewImpl::create("Android app");
+        glview->setFrameSize(1080, 1920);
+        director->setOpenGLView(glview);
+
+        cocos2d::Application::getInstance()->run();
+    }
+    else
+    {
+        cocos2d::GL::invalidateStateCache();
+        cocos2d::GLProgramCache::getInstance()->reloadDefaultGLPrograms();
+        cocos2d::DrawPrimitives::init();
+        cocos2d::VolatileTextureMgr::reloadAllTextures();
+
+        cocos2d::EventCustom recreatedEvent(EVENT_RENDERER_RECREATED);
+        director->getEventDispatcher()->dispatchEvent(&recreatedEvent);
+        director->setGLDefaultValues();
+    }
 
 }
 
@@ -178,7 +212,20 @@ Java_com_haowan_openglnew_RenderLib_resize(JNIEnv* env, jobject obj, jint width,
 
 JNIEXPORT void JNICALL
 Java_com_haowan_openglnew_RenderLib_step(JNIEnv* env, jobject obj) {
-    if (g_renderer) {
-        g_renderer->render();
-    }
+    cocos2d::Director::getInstance()->mainLoop();
+//    if (g_renderer) {
+//        g_renderer->render();
+//    }
+}
+
+namespace {
+    std::unique_ptr<AppDelegate> appDelegate;
+}
+
+JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved)
+{
+    cocos2d::JniHelper::setJavaVM(vm);
+    appDelegate.reset(new AppDelegate());
+
+    return JNI_VERSION_1_4;
 }
