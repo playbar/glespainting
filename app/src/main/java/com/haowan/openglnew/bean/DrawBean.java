@@ -1,9 +1,6 @@
-package com.haowan.openglnew;
-
-import android.util.Log;
+package com.haowan.openglnew.bean;
 
 import java.io.Serializable;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
 /**
@@ -21,7 +18,7 @@ public class DrawBean implements Serializable{
     Point end;//终点数据
     ArrayList<Point> pointList;//比划过程数据
 //    ByteBuffer byteBuffer = ByteBuffer.allocate(10000000);
-    byte[] byteData;//底层使用数据
+    public byte[] byteData;//底层使用数据
 
     /**
      * 添加点数据到列表

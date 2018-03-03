@@ -1,4 +1,4 @@
-package com.haowan.openglnew;
+package com.haowan.openglnew.Constants;
 
 import com.haowan.opengl_new.R;
 

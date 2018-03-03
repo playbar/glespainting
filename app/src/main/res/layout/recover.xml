@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/shape_paint_bottom_bg" >
+    <ImageButton android:id="@+id/recover_image"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:src="@drawable/paint_fun_recover_normal"
+        android:background="@drawable/icon_tab_press_bg"/>
+</LinearLayout>

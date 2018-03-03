@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linear_item"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+    <com.haowan.openglnew.view.RoundImageView android:id="@+id/image_item"
+        android:layout_width="30dip"
+        android:layout_height="30dip"
+        android:layout_marginTop="5dip"/>
+	<TextView android:id="@+id/text_item"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="@string/app_name"
+	    android:textSize="10sp"
+	    android:focusable="false"
+	    android:clickable="false"/>
+
+</LinearLayout>

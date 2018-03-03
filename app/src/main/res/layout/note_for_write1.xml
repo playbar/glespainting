@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:skin="http://schemas.android.com/android/skin"
+    xmlns:playmode="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/note_for_write"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/mood_essays_bitmap" >
+
+    <RelativeLayout
+        android:id="@+id/paint_for_note"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </RelativeLayout>
+    
+	<include android:id="@+id/note_bottom_bar"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    layout="@layout/paint_bar"
+	    android:layout_alignParentBottom="true"/>
+	
+	<!-- <ImageButton android:id="@+id/draw_line"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentRight="true"
+	    android:layout_above="@id/note_bottom_bar"
+	    android:src="@drawable/cancel_line"
+	    android:background="@null"
+	    android:visibility="invisible"/> -->
+	
+	<include android:id="@+id/note_color_bar"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    layout="@layout/color_pop_layout"
+	    android:layout_above="@id/note_bottom_bar"
+	    android:visibility="invisible"/>
+	
+	<ImageButton android:id="@+id/draw_blur"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentRight="true"
+	    android:layout_above="@id/note_color_bar"
+	    android:src="@drawable/normal_paint"
+	    android:background="@null"
+	    android:visibility="invisible"/>
+	
+	<RelativeLayout android:id="@+id/size_layout"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:layout_marginBottom="30dip"
+	    android:background="@color/transparent"></RelativeLayout>
+	<RelativeLayout android:id="@+id/alpha_layout"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:background="@color/transparent"></RelativeLayout>
+
+	<!-- 拍照时显示的邀请码 -->
+	<TextView
+		android:id="@+id/verification"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textColor="@color/new_color_333333"
+		android:textSize="@dimen/new_dimen_12sp"
+		android:shadowColor="@color/new_color_FFFFFF"
+		android:shadowRadius="1"
+		android:shadowDx="1"
+		android:shadowDy="1"
+		android:layout_marginRight="2dip"
+		android:layout_marginTop="2dip"
+		android:layout_alignParentRight="true"
+		/>
+
+	<!-- 缩放新手指导 -->
+	<RelativeLayout android:id="@+id/notewrite_zoom_guide_relative"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:visibility="gone">
+	    <com.haowan.huabar.view.RoundImageView
+	        android:id="@+id/notewrite_zoom_guide"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:background="#88000000"/>
+	    <ImageButton android:id="@+id/notewrite_zoom_guide_btn"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:background="@color/transparent"
+	        android:layout_alignParentRight="true"
+	        android:layout_alignParentBottom="true"
+	        android:layout_marginRight="20dip"
+	        android:layout_marginBottom="60dip"/>
+	</RelativeLayout>
+
+</RelativeLayout>

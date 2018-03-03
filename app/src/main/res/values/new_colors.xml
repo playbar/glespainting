@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="new_white">#FFFFFF</color>
+    <!-- 首页 -->
+    <color name="new_color_000011">#000011</color>
+    <color name="new_color_222222">#333333</color><!--首页tab选中黑色-->
+    <color name="new_color_232323">#333333</color><!--顶部中心标题文字颜色-->
+    <color name="new_color_29CC88">#29CC88</color><!--导航线颜色,VIP昵称颜色,主体绿-->
+    <color name="new_color_29CC88_alpha_24">#3D29CC88</color><!--导航线颜色,VIP昵称颜色,主体绿-->
+    <color name="new_color_dialog_title_bg_29CC88">#29CC88</color>
+    <color name="new_color_DEFFF1">#DEFFF1</color>
+    <color name="new_color_FFFFFF_half_alpha">#80FFFFFF</color>
+    <color name="new_color_29CC88_half_alpha">#8F29CC88</color>
+    <color name="new_color_333333">#333333</color>
+    <color name="new_color_AAAAAA">#AAAAAA</color><!--首页tab未选中灰色-->
+    <color name="new_color_EEEEEE">#E1E1E1</color><!--分割线颜色-->
+    <color name="new_color_B3B3B3">#B3B3B3</color><!--灰色字体-->
+    <color name="new_color_29CC88_A">#3829CC88</color><!--水印颜色-->
+    <color name="new_color_29CC88_A60">#29CC88</color>
+    <color name="new_color_999999">#999999</color><!--打赏对话框灰色文字颜色-->
+    <color name="new_color_DDDDDD">#DDDDDD</color><!--打赏对话框灰色线颜色-->
+    <color name="new_color_CCCCCC">#CCCCCC</color><!--打赏对话框hint颜色-->
+    <color name="new_color_555555">#555555</color><!--首页约稿等入口文字颜色-->
+    <color name="new_color_DF2E4F">#DF2E4F</color>
+    <color name="new_color_666666">#666666</color>
+    <color name="new_color_F6A623">#F6A623</color>
+    <color name="new_color_F5F5F5">#F5F5F5</color><!--整体背景颜色-->
+    <color name="new_color_EBEBEB">#EBEBEB</color>
+    <color name="new_color_F5A623">#F5A623</color>
+    <color name="new_color_4990E2">#4990E2</color>
+    <color name="new_color_7ED321">#7ED321</color>
+    <color name="new_color_444444">#444444</color>
+    <color name="new_color_C4C4C4">#C4C4C4</color><!--引导页指示器-->
+    <color name="new_color_8F9B9A">#8F9B9A</color><!--引导页指示器-->
+    <color name="new_color_355C4B">#355C4B</color><!--珍藏证书文字颜色-->
+    <color name="new_color_355C4B_A">#7F355C4B</color><!--珍藏证书文字颜色-->
+    <color name="new_color_35CB8A">#35CB8A</color>
+    <color name="new_color_80999999">#80999999</color><!--珍藏证书导航背景-->
+    <color name="new_color_777777">#777777</color>
+    <color name="new_color_C9DFD6">#C9DFD6</color><!--珍藏证书页面文字颜色-->
+    <color name="new_color_FFFFFF">#FFFFFF</color><!-- 纯白色 -->
+    <color name="new_color_FFFFFE">#FFFFFE</color>
+    <color name="color_dialog_bg_FFFFFF">#FFFFFF</color><!-- 纯白色 -->
+    <color name="color_dialog_title_FFFFFF">#FFFFFF</color>
+    <color name="new_color_25BB7D">#25BB7D</color>
+    <color name="new_color_DFF8EF">#DFF8EF</color>
+    <color name="new_color_A0EACF">#A0EACF</color>
+    <color name="new_color_80FFFFFF">#80FFFFFF</color>
+    <color name="new_color_message_unread">#FFF2F0</color><!-- 未读消息颜色 -->
+    <color name="new_color_FF5F58">#FF5F58</color><!--搜索帖子关键字颜色-->
+    <color name="new_color_ECECEC">#ECECEC</color><!-- 标签作品列表页创建者背景色 -->
+    <color name="new_color_F0F0F0">#F0F0F0</color><!-- 自定义标签作品列表页面标签简介背景色 -->
+
+    <!--首页颜色-->
+    <color name="new_color_E0F1FF">#E5E0F1FF</color>
+    <color name="new_color_FFEDED">#E5FFEDED</color>
+    <color name="new_color_FFF5E4">#E5FFF5E4</color>
+    <color name="new_color_F6EEFF">#E5F6EEFF</color>
+    <color name="new_color_ECFFF6">#E5ECFFF6</color>
+    <color name="new_color_FFEEE1">#E5FFEEE1</color>
+
+    <!-- 签到颜色 -->
+    <color name="new_color_FFE372">#FFE372</color>
+    <color name="new_color_FF661B">#FF661B</color>
+    <color name="new_color_d5ffe9">#D5FFE9</color>
+    <color name="new_color_f4f4f4">#F4F4F4</color>
+    <color name="new_color_979797">#979797</color>
+
+    <color name="new_color_F9F9F9">#F9F9F9</color>
+    <color name="new_color_FF587B">#FF587B</color>
+    <color name="new_color_454248">#454248</color>
+</resources>

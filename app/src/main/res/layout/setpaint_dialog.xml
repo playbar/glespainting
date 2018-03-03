@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_view"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent" >
+    <!-- 基本功能 -->
+    <RelativeLayout android:id="@+id/other"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true">
+	    <RelativeLayout android:id="@+id/other_func_relative"
+	        android:layout_width="40dip"
+	        android:layout_height="wrap_content"
+	        android:paddingTop="10dp"
+	        android:paddingBottom="8dp"
+	        android:background="@drawable/shape_paint_tool_bg"><!-- dialogbg -->
+	        <ListView android:id="@+id/other_func_listview"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:background="@android:color/transparent"
+	            android:dividerHeight="25dip"
+	            android:divider="@color/transparent"
+	            android:listSelector="@color/new_color_29CC88"
+	            android:cacheColorHint="@android:color/transparent"/>
+	    </RelativeLayout>
+    </RelativeLayout>
+
+    
+    
+    
+    <!-- 画笔效果 -->
+    <RelativeLayout android:id="@+id/paint_func_relative"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="8dip"
+        android:layout_marginLeft="8dip"
+        android:paddingTop="10dp"
+        android:layout_toLeftOf="@id/other"
+        android:layout_alignBottom="@id/other"
+        android:layout_alignTop="@id/other"
+        android:background="@drawable/shape_paint_tool_bg">
+	    <TextView android:id="@+id/canvas_scale_text"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="8dp"
+	        android:textSize="10sp"
+	        android:textColor="@color/white"
+	        android:text="@string/per_canvas_scale"/>
+        <com.haowan.openglnew.view.NoScrollGridView
+   	 	    android:id="@+id/canvas_scale"
+   	 	    android:layout_width="fill_parent"
+   	 	    android:layout_height="wrap_content"
+   	 	    android:layout_marginTop="8dip"
+   	 	    android:layout_below="@id/canvas_scale_text"
+   	        android:numColumns="3"
+   	        android:layout_centerHorizontal="true"
+   	        android:listSelector="@color/new_color_29CC88"/>
+        <TextView android:id="@+id/tool_text"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/canvas_scale"
+	        android:layout_marginTop="15dip"
+	        android:layout_marginLeft="8dp"
+	        android:textSize="10sp"
+	        android:textColor="@color/white"
+	        android:text="@string/per_tool"/>
+        <GridView android:id="@+id/paint_func"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tool_text"
+            android:layout_marginTop="8dip"
+            android:numColumns="3"
+            android:verticalSpacing="10dp"
+            android:cacheColorHint="@android:color/transparent"
+            android:listSelector="@color/new_color_29CC88"
+            android:background="@color/transparent"
+            android:horizontalSpacing="10dip"/>
+    </RelativeLayout>
+
+</RelativeLayout>

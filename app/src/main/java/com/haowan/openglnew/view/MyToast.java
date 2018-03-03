@@ -1,10 +1,11 @@
-package com.haowan.openglnew;
+package com.haowan.openglnew.view;
 
 import android.content.Context;
 import android.os.Handler;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,63 +45,6 @@ public class MyToast {
 		paintToast.setGravity(Gravity.TOP| Gravity.CENTER_HORIZONTAL, 0, 5);
 	}
 	
-//	/**
-//	 * 调节尺寸提示
-//	 * @param size
-//	 * @param isAuto 是否自动隐藏提示框(true-自动隐藏,false-手动隐藏)
-//	 */
-//	public void showSizeToast(int size,boolean isAuto){
-//		// 界面提示
-//		if (sizeView == null) {
-//			sizeView = inflater.inflate(R.layout.change_size_t, null);
-//			pSizeView = (ImageView) sizeView.findViewById(R.id.image1);
-//			paintSizeValue = (TextView) sizeView
-//					.findViewById(R.id.paint_param_value);
-//		}
-//		paintSizeValue.setText(String.valueOf(size));
-//		pSizeView.setBackgroundColor(RecordPaintInstance.getInstance().color);
-//		LayoutParams lp = pSizeView.getLayoutParams();
-//		lp.height = RecordPaintInstance.getInstance().size;
-//		pSizeView.setLayoutParams(lp);
-//		showPaintToast( sizeView);
-//		if(isAuto){
-//			new Handler().postDelayed(new Runnable() {
-//				@Override
-//				public void run() {
-//					dismissToast();
-//				}
-//			},200);
-//		}
-//	}
-	
-//	/**
-//	 * 调节透明提示
-//	 * @param alphaRate
-//	 * @param isAuto 是否自动隐藏提示框(true-自动隐藏,false-手动隐藏)
-//	 */
-//	public void showTranToast(int alphaRate,boolean isAuto){
-//		if (tranView == null) {
-//			tranView = inflater.inflate(R.layout.change_tran_t, null);
-//			paint_tran_value = (TextView) tranView
-//					.findViewById(R.id.paint_tran_value);
-//			circle1 = (ImageView) tranView.findViewById(R.id.circle1);
-//			circle2 = (ImageView) tranView.findViewById(R.id.circle2);
-//		}
-//		circle2.setColorFilter(RecordPaintInstance.getInstance().color);
-//		circle2.setAlpha(RecordPaintInstance.getInstance().alpha);
-//		circle2.bringToFront();
-//		paint_tran_value.setText(alphaRate + "%");
-//		showPaintToast( tranView);
-//		if(isAuto){
-//			new Handler().postDelayed(new Runnable() {
-//				@Override
-//				public void run() {
-//					dismissToast();
-//				}
-//			},200);
-//		}
-//	}
-	
 	/**
 	 * 画笔颜色该表提示
 	 */
@@ -112,12 +56,12 @@ public class MyToast {
 		}
 		circle.setColorFilter(color);
 		showPaintToast( colorView);
-//		new Handler().postDelayed(new Runnable() {
-//			@Override
-//			public void run() {
-//				dismissToast();
-//			}
-//		},200);
+		new Handler().postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				dismissToast();
+			}
+		},200);
 	}
 	
     private Toast paintToast;

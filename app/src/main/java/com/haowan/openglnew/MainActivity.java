@@ -16,6 +16,8 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.haowan.opengl_new.R;
+import com.haowan.openglnew.bean.DrawBean;
+import com.haowan.openglnew.view.MyToast;
 
 import org.cocos2dx.lib.Cocos2dxHelper;
 
@@ -28,14 +30,6 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class MainActivity extends Activity implements View.OnClickListener, Cocos2dxHelper.Cocos2dxHelperListener {
-
-    static {
-        try {
-            System.loadLibrary("gles3jni");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     private static final String TAG = "MainActivity";
 

@@ -1,0 +1,445 @@
+<!--
+  Copyright 2011 The Android Open Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<resources>
+
+    <declare-styleable name="SlidingMenu">
+        <attr name="mode">
+            <enum name="left" value="0"/>
+            <enum name="right" value="1"/>
+        </attr>
+        <attr name="viewAbove" format="reference"/>
+        <attr name="viewBehind" format="reference"/>
+        <attr name="behindOffset" format="dimension"/>
+        <attr name="behindWidth" format="dimension"/>
+        <attr name="behindScrollScale" format="float"/>
+        <attr name="touchModeAbove">
+            <enum name="margin" value="0"/>
+            <enum name="fullscreen" value="1"/>
+        </attr>
+        <attr name="touchModeBehind">
+            <enum name="margin" value="0"/>
+            <enum name="fullscreen" value="1"/>
+        </attr>
+        <attr name="shadowDrawable" format="reference"/>
+        <attr name="shadowWidth" format="dimension"/>
+        <attr name="fadeEnabled" format="boolean"/>
+        <attr name="fadeDegree" format="float"/>
+        <attr name="selectorEnabled" format="boolean"/>
+        <attr name="selectorDrawable" format="reference"/>
+    </declare-styleable>
+    <declare-styleable name="PullToRefresh">
+
+        <!-- A drawable to use as the background of the Refreshable View -->
+        <attr name="ptrRefreshableViewBackground" format="reference|color"/>
+
+        <!-- A drawable to use as the background of the Header and Footer Loading Views -->
+        <attr name="ptrHeaderBackground" format="reference|color"/>
+
+        <!-- Text Color of the Header and Footer Loading Views -->
+        <attr name="ptrHeaderTextColor" format="reference|color"/>
+
+        <!-- Text Color of the Header and Footer Loading Views Sub Header -->
+        <attr name="ptrHeaderSubTextColor" format="reference|color"/>
+
+        <!-- Mode of Pull-to-Refresh that should be used -->
+        <attr name="ptrMode">
+            <flag name="disabled" value="0x0"/>
+            <flag name="pullFromStart" value="0x1"/>
+            <flag name="pullFromEnd" value="0x2"/>
+            <flag name="both" value="0x3"/>
+            <flag name="manualOnly" value="0x4"/>
+
+            <!-- These last two are depreacted -->
+            <flag name="pullDownFromTop" value="0x1"/>
+            <flag name="pullUpFromBottom" value="0x2"/>
+        </attr>
+
+        <!-- Whether the Indicator overlay(s) should be used -->
+        <attr name="ptrShowIndicator" format="reference|boolean"/>
+
+        <!-- Drawable to use as Loading Indicator. Changes both Header and Footer. -->
+        <attr name="ptrDrawable" format="reference"/>
+
+        <!-- Drawable to use as Loading Indicator in the Header View. Overrides value set in ptrDrawable. -->
+        <attr name="ptrDrawableStart" format="reference"/>
+
+        <!-- Drawable to use as Loading Indicator in the Footer View. Overrides value set in ptrDrawable. -->
+        <attr name="ptrDrawableEnd" format="reference"/>
+
+        <!-- Whether Android's built-in Over Scroll should be utilised for Pull-to-Refresh. -->
+        <attr name="ptrOverScroll" format="reference|boolean"/>
+
+        <!-- Base text color, typeface, size, and style for Header and Footer Loading Views -->
+        <attr name="ptrHeaderTextAppearance" format="reference"/>
+
+        <!-- Base text color, typeface, size, and style for Header and Footer Loading Views Sub Header -->
+        <attr name="ptrSubHeaderTextAppearance" format="reference"/>
+
+        <!-- Style of Animation should be used displayed when pulling. -->
+        <attr name="ptrAnimationStyle">
+            <flag name="rotate" value="0x0"/>
+            <flag name="flip" value="0x1"/>
+        </attr>
+
+        <!-- Whether the user can scroll while the View is Refreshing -->
+        <attr name="ptrScrollingWhileRefreshingEnabled" format="reference|boolean"/>
+
+        <!--
+        	Whether PullToRefreshListView has it's extras enabled. This allows the user to be 
+        	able to scroll while refreshing, and behaves better. It acheives this by adding
+        	Header and/or Footer Views to the ListView.
+        -->
+        <attr name="ptrListViewExtrasEnabled" format="reference|boolean"/>
+
+        <!--
+        	Whether the Drawable should be continually rotated as you pull. This only
+        	takes effect when using the 'Rotate' Animation Style.
+        -->
+        <attr name="ptrRotateDrawableWhilePulling" format="reference|boolean"/>
+
+        <!-- BELOW HERE ARE DEPRECEATED. DO NOT USE. -->
+        <attr name="ptrAdapterViewBackground" format="reference|color"/>
+        <attr name="ptrDrawableTop" format="reference"/>
+        <attr name="ptrDrawableBottom" format="reference"/>
+    </declare-styleable>
+
+    <attr name="borderRadius" format="dimension"/>
+    <attr name="type">
+        <enum name="circle" value="0"/>
+        <enum name="round" value="1"/>
+    </attr>
+
+    <declare-styleable name="RoundImageView">
+        <attr name="borderRadius"/>
+        <attr name="type"/>
+    </declare-styleable>
+
+    <attr name="enable" format="boolean"/>
+
+    <!-- 画吧皮肤自定义属性start -->
+    <!-- 颜色值 -->
+    <attr name="topbarColorValue" format="color"/> <!-- 顶部 -->
+    <attr name="mainTextColorValue" format="color"/> <!-- 主要文字颜色 -->
+    <attr name="minorTextColorValue" format="color"/> <!-- 次要文字颜色 -->
+
+    <attr name="floatValue" format="float"/>
+    <attr name="integerValue" format="integer"/>
+    <attr name="booleanValue" format="boolean"/>
+    <attr name="dimensionValue" format="dimension"/>
+    <attr name="stringValue" format="string"/>
+    <attr name="referenceValue" format="color|reference"/>
+    <attr name="imageValue" format="reference"/>
+    <attr name="curVisibility">
+        <enum name="show" value="0"/>
+        <!-- Not displayed, but taken into account during layout (space is left for it). -->
+        <enum name="inshow" value="1"/>
+        <!-- Completely hidden, as if the view had not been added. -->
+        <enum name="hide" value="2"/>
+    </attr>
+
+    <declare-styleable name="DragSortListView">
+        <attr name="collapsed_height" format="dimension"/>
+        <attr name="drag_scroll_start" format="float"/>
+        <attr name="max_drag_scroll_speed" format="float"/>
+        <attr name="float_background_color" format="color"/>
+        <attr name="remove_mode">
+            <enum name="clickRemove" value="0"/>
+            <enum name="flingRemove" value="1"/>
+        </attr>
+        <attr name="track_drag_sort" format="boolean"/>
+        <attr name="float_alpha" format="float"/>
+        <attr name="slide_shuffle_speed" format="float"/>
+        <attr name="remove_animation_duration" format="integer"/>
+        <attr name="drop_animation_duration" format="integer"/>
+        <attr name="drag_enabled" format="boolean"/>
+        <attr name="sort_enabled" format="boolean"/>
+        <attr name="remove_enabled" format="boolean"/>
+        <attr name="drag_start_mode">
+            <enum name="onDown" value="0"/>
+            <enum name="onMove" value="1"/>
+            <enum name="onLongPress" value="2"/>
+        </attr>
+        <attr name="drag_handle_id" format="integer"/>
+        <attr name="fling_handle_id" format="integer"/>
+        <attr name="click_remove_id" format="integer"/>
+        <attr name="use_default_controller" format="boolean"/>
+    </declare-styleable>
+    <!-- 画吧皮肤自定义属性end -->
+    <!-- 画吧图片裁剪自定义属性  -->
+    <declare-styleable name="RatioAttrs">
+        <attr name="ratioAttrs" format="float"/><!-- 图片的宽高比 -->
+        <attr name="paddingAttrs" format="integer"/><!-- 裁剪页面的左右内边距 -->
+        <attr name="isCircle" format="boolean"/><!--图片裁剪的形状-->
+    </declare-styleable>
+
+    <declare-styleable name="ViewPagerIndicator">
+        <!-- Style of the tab indicator's tabs. -->
+        <attr name="vpiTabPageIndicatorStyle" format="reference"/>
+    </declare-styleable>
+
+    <!--TabIndicator的参数设置-->
+    <declare-styleable name="PagerSlidingTab">
+        <attr name="indicatorColor" format="color"/>
+        <attr name="underlineColor" format="color"/>
+        <attr name="dividerColor" format="color"/>
+        <attr name="indicatorHeight" format="dimension"/>
+        <attr name="underlineHeight" format="dimension"/>
+        <attr name="pst_dividerPadding" format="dimension"/>
+        <attr name="tabPaddingLeftRight" format="dimension"/>
+        <attr name="scrollOffset" format="dimension"/>
+        <attr name="tabBackgrounds" format="reference"/>
+        <attr name="sameLine" format="boolean"/>
+        <attr name="pst_textAllCaps" format="boolean"/>
+    </declare-styleable>
+    <declare-styleable name="PlayMode">
+        <attr name="isPlay" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="FlowLayout">
+        <attr name="vertical_space" format="integer"/>
+        <attr name="horizontal_space" format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="WheelFullDatePickerStyle">
+
+        <!-- 顯示民國年 -->
+        <attr name="showTaiwanYear" format="boolean"/>
+        <!-- 小於0的數字前面加0 -->
+        <attr name="addZeroIfSmallThanTen" format="boolean"/>
+        <!-- 選單日期是否即時顯示 -->
+        <attr name="setCurrentTimeVisible" format="boolean"/>
+        <!-- 能不能設定今天以前的時間 -->
+        <attr name="canSetUpPastTime" format="boolean"/>
+        <!-- 能不能設定今天以後的時間 -->
+        <attr name="canSetUpFutureTime" format="boolean"/>
+        <!-- 是否顯示年月日字串 -->
+        <attr name="showDateLastString" format="boolean"/>
+    </declare-styleable>
+    <declare-styleable name="WheelTwoDimensionPickerStyle">
+
+        <!-- 是否總是顯示兩個滾輪 -->
+        <attr name="alwaysShowTwoWheel" format="boolean"/>
+        <!-- 如果滾輪樣式是純粹顯示文字，左邊滾輪的顯示行數 預設為一行 -->
+        <attr name="leftWheelVisibleLine" format="integer"/>
+        <!-- 如果滾輪樣式是純粹顯示文字，右邊滾輪的顯示行數 預設為一行 -->
+        <attr name="rightWheelVisibleLine" format="integer"/>
+        <!-- 如果滾輪樣式是純粹顯示文字，兩邊滾輪的文字大小 格式為dip -->
+        <attr name="wheelTwoDimensionTextSize" format="integer"/>
+        <!-- 是否即時顯示所選資料 -->
+        <attr name="isCurrentSelectVisible" format="boolean"/>
+    </declare-styleable>
+    <declare-styleable name="WheelSinglePickerStyle">
+
+        <!-- 如果滾輪樣式是純粹顯示文字，滾輪的顯示行數 預設為一行 -->
+        <attr name="visibleLine" format="integer"/>
+        <!-- 如果滾輪樣式是純粹顯示文字，兩邊滾輪的文字大小 格式為dip -->
+        <attr name="singleTextSize" format="integer"/>
+    </declare-styleable>
+    <declare-styleable name="TriangleViewStyle">
+        <attr name="triangleColor" format="reference|color"/>
+        <attr name="shapeArrow">
+
+            <!-- show event in current month. -->
+            <enum name="UP" value="0"/>
+            <!-- show event in current month and preious month. -->
+            <enum name="DOWN" value="1"/>
+            <!-- show event in current month and next month. -->
+            <enum name="RIGHT" value="2"/>
+            <!-- show event in all month. -->
+            <enum name="LEFT" value="3"/>
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="WheelTimerStyle">
+        <!-- 是否總是顯示兩個滾輪 -->
+        <attr name="timeMode">
+            <!-- 選擇模式 -->
+            <enum name="select" value="0"/>
+            <!-- 倒數模式 -->
+            <enum name="countDown" value="1"/>
+        </attr>
+    </declare-styleable>
+
+
+    <declare-styleable name="DatePicker">
+        <attr name="picker_text_color" format="color"/>
+        <attr name="picker_select_textColor" format="color"/>
+        <attr name="picker_split" format="color"/>
+        <attr name="picker_split_height" format="dimension"/>
+    </declare-styleable>
+
+    <!--联动选择器自定义属性 start-->
+    <declare-styleable name="LoopView">
+        <attr name="view_gravity">
+            <enum name="center" value="17"/>
+            <enum name="left" value="3"/>
+            <enum name="right" value="5"/>
+        </attr>
+        <attr name="lineColor" format="color"/>
+        <attr name="topBottomTextColor" format="color"/>
+        <attr name="centerTextColor" format="color"/>
+        <attr name="textSize" format="dimension"/>
+        <attr name="canLoop" format="boolean"/>
+        <attr name="initPosition" format="integer"/>
+        <attr name="drawItemCount" format="integer"/>
+        <attr name="lineSpacingMultiplier" format="float"/>
+
+
+        <!--set number of item displayed, default is 3-->
+        <attr name="npv_ShowCount" format="reference|integer"/>
+        <!--set if show divider, default is true-->
+        <attr name="npv_ShowDivider" format="reference|boolean"/>
+        <attr name="npv_DividerColor" format="reference|color"/>
+        <attr name="npv_DividerMarginLeft" format="reference|dimension"/>
+        <attr name="npv_DividerMarginRight" format="reference|dimension"/>
+        <attr name="npv_DividerHeight" format="reference|dimension"/>
+        <attr name="npv_TextColorNormal" format="reference|color"/>
+        <attr name="npv_TextColorSelected" format="reference|color"/>
+        <attr name="npv_TextColorHint" format="reference|color"/>
+        <attr name="npv_TextSizeNormal" format="reference|dimension"/>
+        <attr name="npv_TextSizeSelected" format="reference|dimension"/>
+        <attr name="npv_TextSizeHint" format="reference|dimension"/>
+        <attr name="npv_TextArray" format="reference"/>
+        <attr name="npv_MinValue" format="reference|integer"/>
+        <attr name="npv_MaxValue" format="reference|integer"/>
+        <attr name="npv_WrapSelectorWheel" format="reference|boolean"/>
+        <attr name="npv_RespondChangeOnDetached" format="reference|boolean"/>
+        <attr name="npv_HintText" format="reference|string"/>
+        <attr name="npv_EmptyItemHint" format="reference|string"/>
+        <attr name="npv_MarginStartOfHint" format="reference|dimension"/>
+        <attr name="npv_MarginEndOfHint" format="reference|dimension"/>
+        <attr name="npv_ItemPaddingHorizontal" format="reference|dimension"/>
+        <attr name="npv_ItemPaddingVertical" format="reference|dimension"/>
+        <attr name="npv_RespondChangeInMainThread" format="reference|boolean"/>
+        <attr name="npv_TextEllipsize" format="reference|string"/>
+
+        <!--just used to measure maxWidth for wrap_content without hint,
+            the string array will never be displayed.
+            you can set this attr if you want to keep the wraped numberpickerview
+            width unchanged when alter the content relist-->
+        <attr name="npv_AlternativeTextArrayWithMeasureHint" format="reference"/>
+        <attr name="npv_AlternativeTextArrayWithoutMeasureHint" format="reference"/>
+        <!--the max length of hint content-->
+        <attr name="npv_AlternativeHint" format="reference|string"/>
+    </declare-styleable>
+    <!--联动选择器自定义属性 end-->
+
+    <declare-styleable name="ScrollPickerView">
+        <attr name="spv_center_item_background" format="reference|color"/>
+        <attr name="spv_visible_item_count" format="integer"/>
+        <!-- 中间item的位置,默认为 mVisibleItemCount / 2-->
+        <attr name="spv_center_item_position" format="integer"/>
+        <!-- 是否循环滚动，默认为true，开启-->
+        <attr name="spv_is_circulation" format="boolean"/>
+        <!-- 不允许父组件拦截触摸事件，设置为true为不允许拦截，此时该设置才生效 -->
+        <attr name="spv_disallow_intercept_touch" format="boolean"/>
+        <!-- 滚动的方向-->
+        <attr name="spv_orientation" format="string">
+            <enum name="horizontal" value="1"/>
+            <enum name="vertical" value="2"/>
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="BitmapScrollPicker">
+        <!-- 绘制图片的方式-->
+        <attr name="spv_draw_bitmap_mode" format="string">
+            <enum name="fill" value="1"/>
+            <enum name="center" value="2"/>
+            <enum name="size" value="3"/>
+        </attr>
+        <!-- 绘制图片的方式为size时，指定的图片绘制大小-->
+        <attr name="spv_draw_bitmap_width" format="dimension"/>
+        <attr name="spv_draw_bitmap_height" format="dimension"/>
+        <!-- item内容缩放倍数-->
+        <attr name="spv_min_scale" format="float"/>
+        <attr name="spv_max_scale" format="float"/>
+    </declare-styleable>
+    <!--评分RatingBar-->
+    <declare-styleable name="BaseRatingBar">
+        <attr name="srb_numStars" format="integer"/>
+        <attr name="srb_rating" format="float"/>
+        <attr name="srb_starPadding" format="dimension"/>
+        <attr name="srb_drawableEmpty" format="reference"/>
+        <attr name="srb_drawableFilled" format="reference"/>
+        <attr name="srb_isIndicator" format="boolean"/>
+        <attr name="srb_scrollable" format="boolean"/>
+        <attr name="srb_clickable" format="boolean"/>
+        <attr name="srb_clearRatingEnabled" format="boolean"/>
+        <attr name="srb_starWidth" format="dimension"/>
+        <attr name="srb_starHeight" format="dimension"/>
+        <attr name="srb_stepSize" format="float"/>
+    </declare-styleable>
+
+    <!--加减数字view-->
+    <declare-styleable name="AddDelNumView">
+        <attr name="all_backGround" format="reference"/>
+        <attr name="del_backGround" format="reference"/>
+        <attr name="add_backGround" format="reference"/>
+        <attr name="add_del_textSize" format="dimension"/>
+        <attr name="add_del_textColor" format="color"/>
+        <attr name="num_backGround" format="reference"/>
+        <attr name="num_textSize" format="dimension"/>
+        <attr name="num_textColor" format="color"/>
+        <attr name="num_clickable" format="boolean"/>
+        <attr name="num_max" format="integer"/>
+        <attr name="num_min" format="integer"/>
+        <attr name="over_max_info" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="AutoLayout_Layout">
+
+        <attr name="layout_auto_basewidth">
+            <flag name="width" value="1"></flag>
+            <flag name="height" value="2"></flag>
+            <flag name="textSize" value="4"></flag>
+            <flag name="padding" value="8"></flag>
+            <flag name="margin" value="16"></flag>
+            <flag name="marginLeft" value="32"></flag>
+            <flag name="marginTop" value="64"></flag>
+            <flag name="marginRight" value="128"></flag>
+            <flag name="marginBottom" value="256"></flag>
+            <flag name="paddingLeft" value="512"></flag>
+            <flag name="paddingTop" value="1024"></flag>
+            <flag name="paddingRight" value="2048"></flag>
+            <flag name="paddingBottom" value="4096"></flag>
+        </attr>
+
+        <attr name="layout_auto_baseheight">
+            <flag name="width" value="1"></flag>
+            <flag name="height" value="2"></flag>
+            <flag name="textSize" value="4"></flag>
+            <flag name="padding" value="8"></flag>
+            <flag name="margin" value="16"></flag>
+            <flag name="marginLeft" value="32"></flag>
+            <flag name="marginTop" value="64"></flag>
+            <flag name="marginRight" value="128"></flag>
+            <flag name="marginBottom" value="256"></flag>
+            <flag name="paddingLeft" value="512"></flag>
+            <flag name="paddingTop" value="1024"></flag>
+            <flag name="paddingRight" value="2048"></flag>
+            <flag name="paddingBottom" value="4096"></flag>
+            <flag name="minWidth" value="8192"></flag>
+            <flag name="maxWidth" value="16384"></flag>
+            <flag name="minHeight" value="32768"></flag>
+            <flag name="maxHeight" value="65536"></flag>
+        </attr>
+
+    </declare-styleable>
+
+
+    <declare-styleable name="MetroLayout">
+        <attr name="metro_divider" format="dimension"></attr>
+    </declare-styleable>
+</resources>

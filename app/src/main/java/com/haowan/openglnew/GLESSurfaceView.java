@@ -2,7 +2,6 @@ package com.haowan.openglnew;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.opengl.GLSurfaceView;
 import android.os.Environment;
@@ -12,6 +11,11 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.Toast;
+
+import com.haowan.openglnew.bean.DrawBean;
+import com.haowan.openglnew.bean.Point;
+import com.haowan.openglnew.util.ArithmeticUtil;
+import com.haowan.openglnew.view.MyToast;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -28,12 +32,20 @@ import java.util.ArrayList;
 public class GLESSurfaceView extends GLSurfaceView {
 
     private static final String TAG = "GLESSurfaceView";
+    MyGestureListener myGestureListener;
     Handler mHandler;
-    MyToast myToast;
     MyRenderer mRenderer;
     public ArrayList<DrawBean> drawBeans = new ArrayList<>();
 
     ArrayList<DrawBean> redoBeans = new ArrayList<>();
+
+    public MyGestureListener getMyGestureListener() {
+        return myGestureListener;
+    }
+
+    public void setMyGestureListener(MyGestureListener myGestureListener) {
+        this.myGestureListener = myGestureListener;
+    }
 
     public GLESSurfaceView(Context context) {
         super(context);
@@ -52,14 +64,6 @@ public class GLESSurfaceView extends GLSurfaceView {
         mRenderer.setContext(context);
         setRenderer(mRenderer);
         setRenderMode(RENDERMODE_WHEN_DIRTY);
-
-        myToast = new MyToast(context);
-        mHandler = new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
-                myToast.showColorToast(msg.arg1);
-            }
-        };
 
     }
 
@@ -309,6 +313,24 @@ public class GLESSurfaceView extends GLSurfaceView {
                 this.queueEvent(new Runnable() {
                     @Override
                     public void run() {
+                        if(mode == 100){
+                            int color = mRenderer.pick((int)xs[0],(int)ys[0]);
+                            int cb = color >> 16 & 0xff;
+                            int cg = color >> 8 & 0xff;
+                            int cr = color & 0xff;
+                            final int tempColor = Color.rgb(cr,cg,cb);
+                            mHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if(myGestureListener != null) {
+                                        myGestureListener.onGetColorBegin((int) xs[0], (int) ys[0], tempColor);
+                                    }
+                                }
+                            });
+
+                            return;
+                        }
+
                         mRenderer.setOpMode(mode);
 
                         float[] f = JNILib.getCanvasCoord(xDown, yDown);
@@ -343,10 +365,15 @@ public class GLESSurfaceView extends GLSurfaceView {
                             int cb = color >> 16 & 0xff;
                             int cg = color >> 8 & 0xff;
                             int cr = color & 0xff;
-                            int tempColor = Color.rgb(cr,cg,cb);
-                            Message msg = Message.obtain();
-                            msg.arg1 = tempColor;
-                            mHandler.sendMessage(msg);
+                            final int tempColor = Color.rgb(cr,cg,cb);
+                            mHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if(myGestureListener != null){
+                                        myGestureListener.onGetColor((int)xs[0],(int)ys[0],tempColor);
+                                    }
+                                }
+                            });
                             return;
                         }
 
@@ -375,6 +402,22 @@ public class GLESSurfaceView extends GLSurfaceView {
                 this.queueEvent(new Runnable() {
                     @Override
                     public void run() {
+                        if(mode == 100){
+                            int color = mRenderer.pick((int)xs[0],(int)ys[0]);
+                            int cb = color >> 16 & 0xff;
+                            int cg = color >> 8 & 0xff;
+                            int cr = color & 0xff;
+                            final int tempColor = Color.rgb(cr,cg,cb);
+                            mHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if(myGestureListener != null){
+                                        myGestureListener.onGetColorEnd((int)xs[0],(int)ys[0],tempColor);
+                                    }
+                                }
+                            });
+                            return;
+                        }
                         float[] f = JNILib.getCanvasCoord(xUp, yUp);
                         mRenderer.handleActionUp(idUp, f[0], f[1]);
 
@@ -493,12 +536,9 @@ public class GLESSurfaceView extends GLSurfaceView {
                 mbyte = tempByte;
             }
 
-//            Log.i(TAG,"-----------setopMode(20)");
-//            Log.i(TAG,"------out:currThread:"+Thread.currentThread());
             this.queueEvent(new Runnable() {
                 @Override
                 public void run() {
-                    Log.i(TAG,"------queueEvent:currThread:"+Thread.currentThread());
                     mRenderer.setOpMode(20);
                 }
             });
@@ -506,22 +546,10 @@ public class GLESSurfaceView extends GLSurfaceView {
             requestRender();
 
             try {
-                Thread.sleep(1000);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
-//            this.queueEvent(new Runnable() {
-//                @Override
-//                public void run() {
-//                    mRenderer.setOpMode(12);
-////                    JNILib.drawBlankCanvas(0.8f,0.8f,0.8f);
-//                    JNILib.playData(drawBeans.size(), mbyte, mbyte.length);
-//
-//                }
-//            });
-
-//            requestRender();
 
             mRenderer.setOpMode(12);
             mRenderer.beanSize = drawBeans.size();
@@ -529,23 +557,6 @@ public class GLESSurfaceView extends GLSurfaceView {
             mRenderer.byteSize = mbyte.length;
 
             requestRender();
-
-//            JNILib.playData(drawBeans.size(), mbyte, mbyte.length);
-
-            Log.i(TAG,"---setData---drafbean.size:"+drawBeans.size());
-//            for(int i = 0;i < drawBeans.size();i++){
-//                Log.i(TAG,"-------i:"+i);
-//                try {
-//                    Thread.sleep(10);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//                    requestRender();
-//
-//            }
-
-
-
 
         }else {
             Toast.makeText(getContext(),"无数据",Toast.LENGTH_SHORT).show();
@@ -580,6 +591,21 @@ public class GLESSurfaceView extends GLSurfaceView {
     }
 
 
+
+    public interface MyGestureListener {
+
+        void onGetColor(int x, int y, int color);
+
+        void onGetColorBegin(int x, int y, int color);
+
+        void onGetColorEnd(int x, int y, int color);
+
+        void onGetColorCancel();
+
+        void strokeNum(int size);
+
+
+    }
 
 
 }

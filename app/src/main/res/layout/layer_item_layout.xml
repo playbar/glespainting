@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/drag_handle"
+        android:layout_width="@dimen/new_dimen_80dp"
+        android:layout_height="@dimen/new_dimen_80dp"
+        android:background="@color/new_color_FFFFFF"
+        android:padding="@dimen/new_dimen_5dp">
+        <TextView
+            android:id="@+id/layer_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:textColor="@color/new_color_666666"
+            android:text="2"/>
+        <ImageView
+            android:id="@+id/layer_lock"
+            android:layout_width="@dimen/new_dimen_20dp"
+            android:layout_height="@dimen/new_dimen_20dp"
+            android:padding="@dimen/new_dimen_3dp"
+            android:src="@drawable/layer_lock"
+            android:layout_toRightOf="@id/layer_id"/>
+        <ImageView
+            android:id="@+id/layer_see"
+            android:layout_width="@dimen/new_dimen_20dp"
+            android:layout_height="@dimen/new_dimen_20dp"
+            android:padding="@dimen/new_dimen_3dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/layer_see"/>
+        <TextView
+            android:id="@+id/layer_alpha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:textColor="@color/new_color_666666"
+            android:layout_alignParentBottom="true"
+            android:text="100%"/>
+        <TextView
+            android:id="@+id/layer_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:textColor="@color/new_color_666666"
+            android:text="滤色"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"/>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

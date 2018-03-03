@@ -11,7 +11,7 @@
  * <p>
  */
 
-package com.haowan.openglnew;
+package com.haowan.openglnew.view;
 
 import android.content.Context;
 import android.util.AttributeSet;

@@ -12,6 +12,7 @@
     <color name="checked_color">#fffff2f0</color><!-- 选中色 -->
     <color name="noteread_bottom_bar_bg">#CCFFFFFF</color><!-- 看作品的底部条背景色 -->
     <color name="personal_cover_cover">#33000000</color><!-- 个人菜单页封面蒙板 -->
+    <color name="list_divider_color">#E1E1E1</color>
     
     
 	<color name="blue_sky">#A0C8FF</color>

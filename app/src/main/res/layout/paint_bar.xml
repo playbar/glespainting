@@ -24,9 +24,33 @@
             android:layout_height="0px"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:paddingLeft="8dip"
-			android:orientation="vertical"/>
+            android:paddingLeft="8dip">
 
+			<!-- <com.haowan.huabar.view.NoScrollGridView 
+			    android:id="@+id/normal_size"
+			    android:layout_width="wrap_content"
+			    android:layout_height="fill_parent"
+			    android:numColumns="5"
+			    android:background="@color/transparent"
+			    android:scrollbars="none"
+			    android:listSelector="@drawable/transparent"
+			    android:gravity="center_vertical"
+			    android:layout_gravity="center_vertical"/> -->
+            
+            <SeekBar
+                android:id="@+id/size_seekbar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:max="200"
+                android:maxHeight="8dip"
+                android:minHeight="8dip"
+                android:progress="4"
+                android:progressDrawable="@drawable/player_seekbar_style"
+                android:thumb="@drawable/seekbar_thumb_s"
+                android:thumbOffset="0dip" />
+        </LinearLayout>
+        
         <LinearLayout
             android:id="@+id/tran_relative"
             android:layout_width="fill_parent"
@@ -34,8 +58,33 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:paddingLeft="8dip"
-			android:orientation="vertical"/>
+			android:paddingBottom="@dimen/new_dimen_3dp">
 
+            <!-- <com.haowan.huabar.view.NoScrollGridView 
+			    android:id="@+id/normal_alpha"
+			    android:layout_width="wrap_content"
+			    android:layout_height="fill_parent"
+			    android:numColumns="5"
+			    android:background="@color/transparent"
+			    android:scrollbars="none"
+			    android:listSelector="@drawable/transparent"
+			    android:gravity="center_vertical"
+			    android:layout_gravity="center_vertical"/> -->
+            
+            <SeekBar
+                android:id="@+id/alpha_seekbar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:max="255"
+                android:maxHeight="8dip"
+                android:minHeight="8dip"
+                android:progress="255"
+                android:thumb="@drawable/seekbar_thumb_o"
+                android:progressDrawable="@drawable/player_seekbar_style"
+                android:thumbOffset="0dip" />
+        </LinearLayout>
+        
     </LinearLayout>
 
     <LinearLayout
@@ -51,6 +100,7 @@
 	        android:layout_width="0px"
 	        android:layout_height="fill_parent"
 	        android:layout_weight="1"
+	        android:background="@drawable/icon_tab_press_bg"
 	        android:drawableTop="@drawable/icon_fowward"
 	        android:paddingTop="5dp"
 	        android:gravity="center_horizontal"
@@ -63,7 +113,8 @@
 	        android:layout_width="0px"
 	        android:layout_height="fill_parent"
 	        android:layout_weight="1"
-	        android:paddingTop="5dp">
+	        android:paddingTop="5dp"
+	        android:background="@drawable/icon_tab_press_bg">
             <ImageView android:id="@+id/pickcolor_image"
                 android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
@@ -87,14 +138,29 @@
 		        skin:enable="true"
 		        android:textColor="@color/text_color_black"
 	        	android:textSize="10sp" />
-	    </RelativeLayout> 
-	
+	    </RelativeLayout>
+
+		<TextView
+			android:id="@+id/note_layer_tab"
+			android:layout_width="0px"
+			android:layout_height="fill_parent"
+			android:layout_weight="1"
+			android:paddingTop="5dp"
+			android:background="@drawable/icon_tab_press_bg"
+			android:drawableTop="@drawable/icon_more_write"
+			android:gravity="center_horizontal"
+			android:text="@string/per_layer"
+			skin:enable="true"
+			android:textColor="@color/text_color_black"
+			android:textSize="10sp" />
+
 	    <TextView
 	        android:id="@+id/note_mood_tab"
 	        android:layout_width="0px"
 	        android:layout_height="fill_parent"
 	        android:layout_weight="1"
 	        android:paddingTop="5dp"
+	        android:background="@drawable/icon_tab_press_bg"
 	        android:drawableTop="@drawable/icon_more_write"
 	        android:gravity="center_horizontal"
 	        android:text="@string/per_more"

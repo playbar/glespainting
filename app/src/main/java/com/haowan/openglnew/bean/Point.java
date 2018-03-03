@@ -1,4 +1,4 @@
-package com.haowan.openglnew;
+package com.haowan.openglnew.bean;
 
 import java.io.Serializable;
 

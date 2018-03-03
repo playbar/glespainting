@@ -178,6 +178,7 @@
     <string name="per_pickcolor">取色</string>
     <string name="per_pickcolor_cancel">非取色</string>
     <string name="per_more">更多</string>
+    <string name="per_layer">图层</string>
     <string name="per_chat">聊&#160;&#160;&#160;&#160;天</string>
     <string name="OkBut_space">确&#160;&#160;&#160;定</string>
     <string name="cancelBut_space">取&#160;&#160;&#160;消</string>
@@ -1397,6 +1398,10 @@
     <string name="_create_label_remind">“ %1$s ”标签在《次元册》中还未收录，你要创建吗？</string>
     <string name="ciyuan_set_cover">设置封面</string>
     <string name="ciyuan_set_avatar">设置头像</string>
+    
+    <string name="layer_mode_normal">正常</string>
+    <string name="layer_mode_multiply">正片叠底</string>
+    <string name="layer_mode_screen">屏幕</string>
 
 
 </resources>
