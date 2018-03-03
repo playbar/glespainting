@@ -39,6 +39,8 @@ import com.haowan.openglnew.view.MyToast;
 import com.haowan.openglnew.view.colorpick.ColorPickerDialog;
 import com.mobeta.android.dslv.DragSortListView;
 
+import org.cocos2dx.lib.Cocos2dxHelper;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -56,7 +58,8 @@ public class NewOpenglWriter extends Activity implements View.OnClickListener,
         PaintPopWindow.PaintOperate,
         RedoPopWindow.RedoCallback,
         GLESSurfaceView.MyGestureListener,
-        LayerSettingPopWindow.LayerCallback
+        LayerSettingPopWindow.LayerCallback,
+        Cocos2dxHelper.Cocos2dxHelperListener
 {
 
     private int screenWidth,screenHeight;
@@ -131,6 +134,7 @@ public class NewOpenglWriter extends Activity implements View.OnClickListener,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Cocos2dxHelper.init(this);
         setContentView(R.layout.note_for_write_new);
         initData();
         initView();
@@ -760,4 +764,13 @@ public class NewOpenglWriter extends Activity implements View.OnClickListener,
         return false;
     }
 
+    @Override
+    public void showDialog(String pTitle, String pMessage) {
+
+    }
+
+    @Override
+    public void runOnGLThread(Runnable pRunnable) {
+
+    }
 }

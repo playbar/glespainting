@@ -29,7 +29,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-public class MainActivity extends Activity implements View.OnClickListener, Cocos2dxHelper.Cocos2dxHelperListener {
+public class MainActivity extends Activity implements View.OnClickListener,
+        Cocos2dxHelper.Cocos2dxHelperListener
+{
 
     private static final String TAG = "MainActivity";
 

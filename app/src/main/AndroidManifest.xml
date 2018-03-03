@@ -9,7 +9,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"><!--MainActivity-->
-        <activity android:name="com.haowan.openglnew.MainActivity"
+        <activity android:name="com.haowan.openglnew.NewOpenglWriter"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
