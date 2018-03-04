@@ -64,13 +64,13 @@ public class MyRenderer implements GLSurfaceView.Renderer {
     public void setContext(Context context) { _context = context; }
 
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-        RenderLib.init();
+//        RenderLib.init();
 
       _act = -1; _first=true; _mode=0; _k=1.2f;
       _x0=_y0=_x1=_y1=0;
       _vx = 0; _vy = 0; _vw = 1080; _vh = 1800;
 
-      JNILib.init(MainActivity.screenWH[0],MainActivity.screenWH[1], screenWH[0], screenWH[1]);  //canvas width/height, viewport's origin and width/height
+        RenderLib.init(MainActivity.screenWH[0],MainActivity.screenWH[1], screenWH[0], screenWH[1]);  //canvas width/height, viewport's origin and width/height
       {
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inScaled = false;   // No pre-scaling
@@ -81,7 +81,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
               int h = bm.getHeight();
               int[] pixels = new int[w * h];
               bm.getPixels(pixels, 0, w, 0, 0, w, h);
-              JNILib.setTexture(0, w, h, pixels);  //normal pen
+              RenderLib.setTexture(0, w, h, pixels);  //normal pen
           }
         {
             //初始化模糊画笔纹理
@@ -90,7 +90,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
           int h = bm.getHeight();
           int[] pixels = new int[w * h];
           bm.getPixels(pixels, 0, w, 0, 0, w, h);
-            JNILib.setTexture(1, w, h, pixels);  //normal pen
+            RenderLib.setTexture(1, w, h, pixels);  //normal pen
         }
           {
               //初始化直线画笔纹理
@@ -99,7 +99,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
               int h = bm.getHeight();
               int[] pixels = new int[w * h];
               bm.getPixels(pixels, 0, w, 0, 0, w, h);
-              JNILib.setTexture(2, w, h, pixels);  //normal pen
+              RenderLib.setTexture(2, w, h, pixels);  //normal pen
           }
       }
     }
@@ -108,7 +108,6 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 //      _vw = width; _vh = height;
 //        JNILib.resize(_vx, _vy, _vw, _vh);
         RenderLib.resize(width, height);
-        JNILib.resize(width, height);
     }
 
     public void onDrawFrame(GL10 gl) {
@@ -118,20 +117,20 @@ public class MyRenderer implements GLSurfaceView.Renderer {
         Log.i(TAG, "_x=" + _x + ", _y=" + _y);
 //        Log.i(TAG,"---------mode:"+_mode);
         if(_first){
-            JNILib.drawBlankCanvas(0.9f,0.9f,0.9f);
+            RenderLib.drawBlankCanvas(0.9f,0.9f,0.9f);
             _first = false;
         }
 
         else {
             if(_mode == 4){
-                JNILib.changeCanvas(screenWH[0],screenWH[1],0xffffffff);
+                RenderLib.changeCanvas(screenWH[0],screenWH[1],0xffffffff);
                 _mode = 0;
             }else if(_mode==0){
 //              float[] results = JNILib.getCanvasCoord(_x,_y);
 //              _x = results[0]; _y = results[1];
                 if(_act==-1)
                     return;
-                JNILib.drawNormalLine(_act, _x, _y, size, color, _mode);
+                RenderLib.drawNormalLine(_act, _x, _y, size, color, _mode);
             }else if(_mode==1){
                 if(_act==-1)
                     return;
@@ -146,8 +145,8 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 //                JNILib.drawLeaf(_act, _x, _y, size, color, _mode);
 
             }else if(_mode==50){
-                JNILib.pan(_x0,_y0,_x1,_y1);
-                JNILib.zoom(_k,_x0,_y0);
+                RenderLib.pan(_x0,_y0,_x1,_y1);
+                RenderLib.zoom(_k,_x0,_y0);
 
             }else if(_mode == 10){
 //                JNILib.undo(-1, beanSize, mbyte, mbyte.length);
@@ -163,7 +162,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 
             }else if(_mode == 20){
                 Log.i(TAG,"----------mode=20,清空------");
-                JNILib.drawBlankCanvas(0.8f,0.8f,0.8f);
+                RenderLib.drawBlankCanvas(0.8f,0.8f,0.8f);
             }
         }
 
@@ -205,7 +204,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
     }
 
     public void exit(){
-        JNILib.exit();
+        RenderLib.exit();
     }
 
 

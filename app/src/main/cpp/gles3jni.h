@@ -12,9 +12,19 @@
 extern "C"{
 #endif
 
-JNIEXPORT void JNICALL Java_com_haowan_openglnew_RenderLib_init(JNIEnv* env, jobject obj);
+JNIEXPORT void JNICALL Java_com_haowan_openglnew_RenderLib_init(JNIEnv* env, jobject obj,  jint canvasWidth, jint canvasHeight,
+                                                                jint viewportWidth, jint viewportHeight);
+
 JNIEXPORT void JNICALL Java_com_haowan_openglnew_RenderLib_resize(JNIEnv* env, jobject obj, jint width, jint height);
 JNIEXPORT void JNICALL Java_com_haowan_openglnew_RenderLib_step(JNIEnv* env, jobject obj);
+JNIEXPORT void JNICALL Java_com_haowan_openglnew_RenderLib_exit(JNIEnv* env, jobject obj);
+JNIEXPORT void JNICALL Java_com_haowan_openglnew_RenderLib_setTexture(JNIEnv * env, jobject obj, jint id, jint width, jint height, jintArray pixels);
+JNIEXPORT void JNICALL Java_com_haowan_openglnew_RenderLib_changeCanvas(JNIEnv* env, jobject obj, jint width, jint height, jint color);
+JNIEXPORT void JNICALL Java_com_haowan_openglnew_RenderLib_pan(JNIEnv* env, jobject obj, jfloat x0, jfloat y0, jfloat x1, jfloat y1);
+JNIEXPORT void JNICALL Java_com_haowan_openglnew_RenderLib_zoom(JNIEnv* env, jobject obj, jfloat scale, jfloat cx, jfloat cy);
+JNIEXPORT jfloatArray JNICALL Java_com_haowan_openglnew_RenderLib_getCanvasCoord(JNIEnv* env, jobject obj, jfloat x, jfloat y);
+JNIEXPORT void JNICALL Java_com_haowan_openglnew_RenderLib_drawBlankCanvas(JNIEnv* env, jobject obj, jfloat r, jfloat g, jfloat b);
+JNIEXPORT void JNICALL Java_com_haowan_openglnew_RenderLib_drawNormalLine(JNIEnv* env, jobject obj, jint action, jfloat x, jfloat y, jfloat width, jint color, jint textureID);
 
 #ifdef __cplusplus
 }

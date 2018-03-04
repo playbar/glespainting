@@ -4,10 +4,6 @@ package com.haowan.openglnew;
 // Wrapper for native library
 public class JNILib {
 
-     static {
-          System.loadLibrary("painter");
-     }
-
      public static native void init(int canvasWidth, int canvasHeight, int viewportWidth, int viewportHeight);
 
      public static native void exit();
