@@ -9,7 +9,6 @@ import android.os.Environment;
 import android.support.annotation.RequiresApi;
 import android.util.DisplayMetrics;
 import android.view.Display;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -28,7 +27,7 @@ import com.haowan.openglnew.Constants.Constants;
 import com.haowan.openglnew.adapter.ColorAdapter;
 import com.haowan.openglnew.adapter.LayerAdapter;
 import com.haowan.openglnew.bean.DrawBean;
-import com.haowan.openglnew.bean.LayerUiBean;
+import com.haowan.openglnew.bean.DrawLayer;
 import com.haowan.openglnew.dialog.LayerSettingPopWindow;
 import com.haowan.openglnew.dialog.PaintPopWindow;
 import com.haowan.openglnew.dialog.PickColorPopWindow;
@@ -122,7 +121,7 @@ public class NewOpenglWriter extends Activity implements View.OnClickListener,
     private LinearLayout layer_layout;
     private DragSortListView layer_listview;
     private LayerAdapter layerAdapter;
-    private List<LayerUiBean> layerList;
+    private List<DrawLayer> layerList;
     private ImageView layer_add;
 
     @Override
@@ -165,7 +164,7 @@ public class NewOpenglWriter extends Activity implements View.OnClickListener,
         layerList = new ArrayList<>();
         //默认加入一个图层
         for(int i = 0;i < 1;i++){
-            layerList.add(new LayerUiBean(i));
+            layerList.add(new DrawLayer(i));
         }
 
     }
@@ -256,7 +255,7 @@ public class NewOpenglWriter extends Activity implements View.OnClickListener,
     private DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {
         @Override
         public void drop(int from, int to) {
-            LayerUiBean item = layerAdapter.getItem(from);
+            DrawLayer item = layerAdapter.getItem(from);
             layerAdapter.remove(item);
             layerAdapter.insert(item, to);
             //TODO 图层交换
@@ -527,7 +526,7 @@ public class NewOpenglWriter extends Activity implements View.OnClickListener,
         if(!layerList.isEmpty()){
             mid = layerList.get(layerList.size() - 1).getLayerId();
         }
-        layerList.add(new LayerUiBean(mid+1));
+        layerList.add(new DrawLayer(mid+1));
         layerAdapter.notifyDataSetChanged();
     }
 

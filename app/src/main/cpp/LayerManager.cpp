@@ -213,7 +213,7 @@ bool LayerManager::init()
         this->addChild(sprite, 0);
     }
 
-//    drawTest();
+    drawTest();
 
     return true;
 }

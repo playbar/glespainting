@@ -8,7 +8,7 @@ import com.haowan.opengl_new.R;
  * Created by Mypc on 2018/2/22 0022.
  */
 
-public class LayerUiBean {
+public class DrawLayer {
     private int layerId;
     private int isLocked = 0;//0-不加锁，1-加锁
     private int isVisible = 1;//0- 不可见，1-可见
@@ -18,10 +18,10 @@ public class LayerUiBean {
     private int[] layerMode = {1, R.string.layer_mode_normal};
     private Bitmap subnail;
 
-    public LayerUiBean(int layerId){
+    public DrawLayer(int layerId){
         this.layerId = layerId;
     }
-    public LayerUiBean(){
+    public DrawLayer(){
     }
 
     public int getIsMoving() {

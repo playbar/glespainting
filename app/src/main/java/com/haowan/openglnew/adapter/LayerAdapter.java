@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.haowan.opengl_new.R;
-import com.haowan.openglnew.bean.LayerUiBean;
+import com.haowan.openglnew.bean.DrawLayer;
 import com.haowan.openglnew.dialog.LayerSettingPopWindow;
 
 import java.util.List;
@@ -21,12 +21,12 @@ import java.util.List;
  * Created by Mypc on 2018/2/22 0022.
  */
 @SuppressLint("NewApi")
-public class LayerAdapter extends ArrayAdapter<LayerUiBean> implements View.OnClickListener {
+public class LayerAdapter extends ArrayAdapter<DrawLayer> implements View.OnClickListener {
 
     LayoutInflater inflater;
     LayerSettingPopWindow.LayerCallback callback;
 
-    public LayerAdapter(Context context, List<LayerUiBean> objects,LayerSettingPopWindow.LayerCallback callback){
+    public LayerAdapter(Context context, List<DrawLayer> objects, LayerSettingPopWindow.LayerCallback callback){
         super(context, 0, objects);
         inflater = LayoutInflater.from(context);
         this.callback = callback;
@@ -48,7 +48,7 @@ public class LayerAdapter extends ArrayAdapter<LayerUiBean> implements View.OnCl
         }else{
             holder = (ViewHolder)convertView.getTag();
         }
-        LayerUiBean bean = getItem(position);
+        DrawLayer bean = getItem(position);
         holder.layer_id.setText(""+bean.getLayerId());
         holder.layer_alpha.setText(bean.getAlphaRate() + "%");
         holder.layer_lock.setImageResource(bean.getIsLocked() == 0 ? R.drawable.layer_unlock : R.drawable.layer_lock);

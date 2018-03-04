@@ -12,7 +12,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.haowan.opengl_new.R;
-import com.haowan.openglnew.bean.LayerUiBean;
+import com.haowan.openglnew.bean.DrawLayer;
 import com.haowan.openglnew.util.PGUtil;
 
 /**
@@ -23,13 +23,13 @@ public class LayerSettingPopWindow extends PopupWindow implements View.OnClickLi
     private Context context;
     private LayerCallback callback;
     private int position;
-    private LayerUiBean layerBean;
+    private DrawLayer layerBean;
 
     public void setCallback(LayerCallback callback) {
         this.callback = callback;
     }
 
-    public LayerSettingPopWindow(Context context, LayerCallback callback, int position, LayerUiBean layerBean){
+    public LayerSettingPopWindow(Context context, LayerCallback callback, int position, DrawLayer layerBean){
         super(context);
         this.context = context;
         this.callback = callback;

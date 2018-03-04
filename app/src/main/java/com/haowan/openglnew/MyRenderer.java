@@ -128,16 +128,20 @@ public class MyRenderer implements GLSurfaceView.Renderer {
             }else if(_mode==0){
 //              float[] results = JNILib.getCanvasCoord(_x,_y);
 //              _x = results[0]; _y = results[1];
-                if(_act==-1) return;
+                if(_act==-1)
+                    return;
                 JNILib.drawNormalLine(_act, _x, _y, size, color, _mode);
             }else if(_mode==1){
-                if(_act==-1) return;
+                if(_act==-1)
+                    return;
                 JNILib.drawBlurLine(_act, _x, _y, size, color, _mode);
             }else if(_mode == 2){
-                if(_act==-1) return;
+                if(_act==-1)
+                    return;
                 JNILib.drawSegLine(_act, _x, _y, size, color, _mode);
             }else if(_mode == 3){
-                if(_act==-1) return;
+                if(_act==-1)
+                    return;
                 JNILib.drawLeaf(_act, _x, _y, size, color, _mode);
 
             }else if(_mode==50){
