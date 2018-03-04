@@ -12,7 +12,7 @@
 #endif
 
 class Renderer {
-  public:
+public:
     Renderer();
     ~Renderer();
 
@@ -41,14 +41,15 @@ class Renderer {
     void snap1();
     void smap1(int);
 
-  private:
+public:
 
     GLuint mProgram;
     GLuint mVB, mVP;
     GLuint _fb0,_fb1,_fb;
     GLuint _tex0, _tex1, _tex[20];
     GLuint _st0, _dt0, _st1;
-    int _fbo_width, _fbo_height;
+    int _fbo_width;
+    int _fbo_height;
 
     GLuint _a0, _b0;
 

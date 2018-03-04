@@ -19,7 +19,9 @@ package com.haowan.openglnew;
 // Wrapper for native library
 
 public class RenderLib {
-
+     /// for layer
+     public static native int creatLayer();
+     ///
      public static native void init(int canvasWidth, int canvasHeight, int viewportWidth, int viewportHeight);
 //     public static native void init();
      public static native void resize(int width, int height);

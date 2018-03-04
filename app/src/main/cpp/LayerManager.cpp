@@ -1,418 +1,106 @@
-//#include <2d/painter.h>
 #include "LayerManager.h"
 #include "VisibleRect.h"
 #include "coclog.h"
+#include "draw/curve.h"
 
-USING_NS_CC;
-
-Scene* LayerManager::createScene()
+LayerManager::LayerManager()
 {
-    return LayerManager::create();
+    mCurrentLayer = 0;
 }
 
-// Print useful error message instead of segfaulting when files are not there.
-static void problemLoading(const char* filename)
+LayerID LayerManager::createLayer()
 {
-    printf("Error while loading: %s\n", filename);
-    printf("Depending on how you compiled you might have to add 'Resources/' in front of filenames in HelloWorldScene.cpp\n");
+    LayerID layerID;
+    glGenTextures(1, &layerID);
+    glBindTexture(GL_TEXTURE_2D, layerID);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _fbo_width, _fbo_height, 0,
+                 GL_RGBA, GL_UNSIGNED_BYTE, 0);
+    return layerID;
 }
 
-
-void LayerManager::createMenu()
+int LayerManager::deleteLayer(LayerID id)
 {
-//    auto visibleSize = Director::getInstance()->getVisibleSize();
-//    CocVec2 origin = Director::getInstance()->getVisibleOrigin();
-
-    // add a "close" icon to exit the progress. it's an autorelease object
-    auto closeItem = MenuItemImage::create(
-            "CloseNormal.png",
-            "CloseSelected.png",
-            CC_CALLBACK_1(LayerManager::menuCloseCallback, this));
-
-    if (closeItem == nullptr ||
-        closeItem->getContentSize().width <= 0 ||
-        closeItem->getContentSize().height <= 0)
-    {
-        problemLoading("'CloseNormal.png' and 'CloseSelected.png'");
-    }
-    else
-    {
-        float x = origin.x + visibleSize.width - closeItem->getContentSize().width/2;
-        float y = origin.y + closeItem->getContentSize().height/2;
-        closeItem->setPosition(CocVec2(x,y));
-    }
-
-    // Events
-    MenuItemFont::setFontName("fonts/arial.ttf");
-    MenuItemFont::setFontSize(10);
-    // Bugs Item
-    auto createMenu = MenuItemFont::create("Create", CC_CALLBACK_1(LayerManager::menuCreateCallback, this));
-    createMenu->setPosition( origin.x + 20., origin.y + 20);
-
-    auto deleteMenu = MenuItemFont::create("Delete", CC_CALLBACK_1(LayerManager::menuDeleteCallback, this));
-    deleteMenu->setPosition(origin.x + 20, origin.y + 10);
-
-    auto drawTestMenu = MenuItemFont::create("Test", CC_CALLBACK_1(LayerManager::menuDrawTestCallback, this));
-    drawTestMenu->setPosition( origin.x + 20., origin.y + 100);
-
-    auto rotaMenu = MenuItemFont::create("Rota", CC_CALLBACK_1(LayerManager::menuRotaCallback, this));
-    rotaMenu->setPosition( origin.x + 20., origin.y + 80);
-
-
-    auto translateMenu = MenuItemFont::create("translate", CC_CALLBACK_1(LayerManager::menuTranslateCallback, this));
-    translateMenu->setPosition( origin.x + 20., origin.y + 60);
-
-    auto copyMenu = MenuItemFont::create("copy", CC_CALLBACK_1(LayerManager::menuCopyCallback, this));
-    copyMenu->setPosition( origin.x + 20., origin.y + 40);
-
-    // create menu, it's an autorelease object
-    auto menu = Menu::create(createMenu, deleteMenu, drawTestMenu, rotaMenu, translateMenu,
-                             copyMenu, closeItem, NULL);
-    menu->setPosition(CocVec2::ZERO);
-    this->addChild(menu, 1);
-
-
-}
-
-void LayerManager::menuCreateCallback(Ref *pSender)
-{
-
-    LOGE("Fun:%s", __FUNCTION__);
-    createLayer();
-
-}
-
-void LayerManager::menuDeleteCallback(Ref *pSender)
-{
-    LOGE("Fun:%s", __FUNCTION__);
-    deleteLayer(mCurrentLayer);
-}
-
-void LayerManager::menuDrawTestCallback(Ref *pSender)
-{
-    LOGE("Fun:%s", __FUNCTION__);
-    if( mCurrentLayer == NULL)
-        return;
-
-    auto s = Director::getInstance()->getWinSize();
-
-    mCurrentLayer->drawTest();
-//    mCurrentLayer->drawPoint(CocVec2(s.width/2 -100, s.height/2 - 100), 50, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
-//
-//    mCurrentLayer->drawPoint(CocVec2(s.width/2+120, s.height/2+120), 10, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
-//
-//    // draw 4 small points
-//    CocVec2 position[] = { CocVec2(60,60), CocVec2(70,70), CocVec2(60,70), CocVec2(70,60) };
-//    mCurrentLayer->drawPoints( position, 4, 5, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
-//
-//    // draw a line
-//    mCurrentLayer->drawLine(CocVec2(0,0), CocVec2(s.width, s.height), Color4F(1.0, 0.0, 0.0, 0.5));
-
-    // draw a rectangle
-//    mCurrentLayer->drawRect(CocVec2(23,23), CocVec2(7,7), Color4F(1,1,0,1));
-//
-//    mCurrentLayer->drawRect(CocVec2(15,30), CocVec2(30,15), CocVec2(15,0), CocVec2(0,15), Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
-
-
-//    Label *label = Label::createWithTTF("Hello World", "fonts/Marker Felt.ttf", 24);
-//    if (label == nullptr)
-//    {
-//        problemLoading("'fonts/Marker Felt.ttf'");
-//    }
-//    else
-//    {
-//        float fx = 100; //origin.x + visibleSize.width/2;
-//        float fy = 10; //origin.y + visibleSize.height - label->getContentSize().height;
-//        // position the label on the center of the screen
-//        label->setPosition(fx, fy);
-//
-//        // add the label as a child to this layer
-//        mCurrentLayer->addChild(label, 1);
-//    }
-
-}
-
-void LayerManager::menuRotaCallback(Ref *pSender)
-{
-    LOGE("Fun:%s", __FUNCTION__);
-    if( mCurrentLayer == NULL)
-        return;
-
-    setRotate(15.0, 0, 0);
-
-}
-
-void LayerManager::menuTranslateCallback(Ref *pSender)
-{
-    LOGE("Fun:%s", __FUNCTION__);
-    if( mCurrentLayer == NULL)
-        return;
-    setTranslate(100, 100, 0);
-}
-
-void LayerManager::menuCopyCallback(Ref *pSender)
-{
-    LOGE("Fun:%s", __FUNCTION__);
-    if( mCurrentLayer == NULL)
-        return;
-    copyLayer( mCurrentLayer );
-    return;
-}
-
-// on "init" you need to initialize your instance
-bool LayerManager::init()
-{
-    //////////////////////////////
-    // 1. super init first
-    if ( !Scene::init() )
-    {
-        return false;
-    }
-
-    visibleSize = Director::getInstance()->getVisibleSize();
-    origin = Director::getInstance()->getVisibleOrigin();
-
-//    mh_init(800, 600, 800, 600);
-//    mh_resize(800, 600);
-    unsigned char pixles[16] =
-            {
-                    0xff, 0x00, 0xff, 0xff,
-                    0xff, 0x00, 0xff, 0xff,
-                    0xff, 0x00, 0xff, 0xff,
-                    0xff, 0x00, 0xff, 0xff
-            };
-//    mh_setTexture(0, 2, 2, pixles);
-//    mh_setTexture(1, 2, 2, pixles);
-//    mh_setTexture(2, 2, 2, pixles);
-//    mh_drawBlankCanvas(0.5, 0.5, 0.5);
-
-    /////////////////////////////
-//    return  true;
-    createMenu();
-//    return true;
-    /////////////////////////////
-    // 3. add your codes below...
-
-    // add a label shows "Hello World"
-    // create and initialize a label
-
-
-
-    // add "HelloWorld" splash screen"
-    Sprite *sprite = Sprite::create("HelloWorld.png");
-    if (sprite == nullptr)
-    {
-        problemLoading("'HelloWorld.png'");
-    }
-    else
-    {
-        // position the sprite on the center of the screen
-        sprite->setPosition(CocVec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
-
-        // add the sprite as a child to this layer
-        this->addChild(sprite, 0);
-    }
-
-    drawTest();
-
-    return true;
-}
-
-void LayerManager::drawTest()
-{
-    ////////////////
-    auto s = Director::getInstance()->getWinSize();
-
-    auto draw = DrawLayer::create();
-    addChild(draw, 10);
-    mCurrentLayer = draw;
-
-    draw->drawPoint(CocVec2(s.width/2-120, s.height/2-120), 10, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
-
-    draw->drawPoint(CocVec2(s.width/2+120, s.height/2+120), 10, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
-
-    // draw 4 small points
-    CocVec2 position[] = { CocVec2(60,60), CocVec2(70,70), CocVec2(60,70), CocVec2(70,60) };
-    draw->drawPoints( position, 4, 5, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
-
-    // draw a line
-    draw->drawLine(CocVec2(0,0), CocVec2(s.width, s.height), Color4F(1.0, 0.0, 0.0, 0.5));
-
-    // draw a rectangle
-    draw->drawRect(CocVec2(23,23), CocVec2(7,7), Color4F(1,1,0,1));
-
-    draw->drawRect(CocVec2(15,30), CocVec2(30,15), CocVec2(15,0), CocVec2(0,15), Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
-
-    // draw a circle
-    draw->drawCircle(VisibleRect::center() + CocVec2(140,0), 100, CC_DEGREES_TO_RADIANS(90), 50, true, 1.0f, 2.0f, Color4F(1.0, 0.0, 0.0, 0.5));
-
-    draw->drawCircle(VisibleRect::center() - CocVec2(140,0), 50, CC_DEGREES_TO_RADIANS(90), 30, false, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
-
-    // Draw some beziers
-    draw->drawQuadBezier(CocVec2(s.width - 150, s.height - 150), CocVec2(s.width - 70, s.height - 10), CocVec2(s.width - 10, s.height - 10), 10, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 0.5));
-
-    draw->drawQuadBezier(CocVec2(0, s.height), CocVec2(s.width/2, s.height/2), CocVec2(s.width, s.height), 50, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 0.5));
-
-    draw->drawCubicBezier(VisibleRect::center(), CocVec2(VisibleRect::center().x+30,VisibleRect::center().y+50), CocVec2(VisibleRect::center().x+60,VisibleRect::center().y-50),VisibleRect::right(),100, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 0.5));
-
-    draw->drawCubicBezier(CocVec2(s.width - 250, 40), CocVec2(s.width - 70, 100), CocVec2(s.width - 30, 250), CocVec2(s.width - 10, s.height - 50), 10, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 0.5));
-
-    auto array = PointArray::create(20);
-    array->addControlPoint(CocVec2(0,0));
-    array->addControlPoint(CocVec2(80,80));
-    array->addControlPoint(CocVec2(s.width-80,80));
-    array->addControlPoint(CocVec2(s.width-80,s.height-80));
-    array->addControlPoint(CocVec2(80,s.height-80));
-    array->addControlPoint(CocVec2(80,80));
-    array->addControlPoint(CocVec2(s.width/2, s.height/2));
-    draw->drawCardinalSpline(array, 0.5, 50, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 0.5));
-
-    auto array2 = PointArray::create(20);
-    array2->addControlPoint(CocVec2(s.width / 2, 30));
-    array2->addControlPoint(CocVec2(s.width  -80, 30));
-    array2->addControlPoint(CocVec2(s.width - 80, s.height - 80));
-    array2->addControlPoint(CocVec2(s.width / 2, s.height - 80));
-    array2->addControlPoint(CocVec2(s.width / 2, 30));
-    draw->drawCatmullRom(array2, 50, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 0.5));
-
-    // open random color poly
-    CocVec2 vertices[] = { CocVec2(0,0), CocVec2(50,50), CocVec2(100,50), CocVec2(100,100), CocVec2(50,100) };
-    draw->drawPoly( vertices, 5, false, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
-
-    // closed random color poly
-    CocVec2 vertices2[] = { CocVec2(30,130), CocVec2(30,230), CocVec2(50,200) };
-    draw->drawPoly( vertices2, 3, true, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
-
-    // Draw 10 circles
-    for( int i=0; i < 10; i++)
-    {
-        draw->drawDot(CocVec2(s.width/2, s.height/2), 10*(10-i), Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
-    }
-
-    auto draw2 = DrawLayer::create();
-    addChild(draw2, 10);
-    // Draw polygons
-    CocVec2 points[] = { CocVec2(s.height/4,0), CocVec2(s.width,s.height/5), CocVec2(s.width/3*2,s.height) };
-    draw2->drawPolygon(points, sizeof(points)/sizeof(points[0]), Color4F(1,0,0,0.5), 4, Color4F(0,0,1,0.5));
-
-    // star poly (triggers buggs)
-    {
-        const float o=80;
-        const float w=20;
-        const float h=50;
-        CocVec2 star[] = {
-                CocVec2(o+w,o-h), CocVec2(o+w*2, o),                        // lower spike
-                CocVec2(o + w*2 + h, o+w ), CocVec2(o + w*2, o+w*2),        // right spike
-                //              {o +w, o+w*2+h}, {o,o+w*2},                 // top spike
-                //              {o -h, o+w}, {o,o},                         // left spike
-        };
-
-        draw2->drawPolygon(star, sizeof(star)/sizeof(star[0]), Color4F(1,0,0,0.5), 1, Color4F(0,0,1,1));
-    }
-
-    // star poly (doesn't trigger bug... order is important un tesselation is supported.
-    {
-        const float o=180;
-        const float w=20;
-        const float h=50;
-        CocVec2 star[] = {
-                CocVec2(o,o), CocVec2(o+w,o-h), CocVec2(o+w*2, o),        // lower spike
-                CocVec2(o + w*2 + h, o+w ), CocVec2(o + w*2, o+w*2),    // right spike
-                CocVec2(o +w, o+w*2+h), CocVec2(o,o+w*2),               // top spike
-                CocVec2(o -h, o+w),                                     // left spike
-        };
-
-        draw2->drawPolygon(star, sizeof(star)/sizeof(star[0]), Color4F(1,0,0,0.5), 1, Color4F(0,0,1,1));
-    }
-
-    //draw a solid polygon
-    CocVec2 vertices3[] = {CocVec2(60,160), CocVec2(70,190), CocVec2(100,190), CocVec2(90,160)};
-    draw2->drawSolidPoly( vertices3, 4, Color4F(1,1,0,1) );
-
-    //draw a solid rectangle
-    draw2->drawSolidRect(CocVec2(10,10), CocVec2(20,20), Color4F(1,1,0,1));
-
-    //draw a solid circle
-    draw2->drawSolidCircle( VisibleRect::center() + CocVec2(140,0), 40, CC_DEGREES_TO_RADIANS(90), 50, 2.0f, 2.0f, Color4F(0.0, 1.0, 0.0, 1.0));
-
-    // Draw segment
-    draw2->drawSegment(CocVec2(20,s.height), CocVec2(20,s.height/2), 10, Color4F(0, 1, 0, 1));
-
-    draw2->drawSegment(CocVec2(10,s.height/2), CocVec2(s.width/2, s.height/2), 40, Color4F(1, 0, 1, 0.5));
-
-    // Draw triangle
-    draw2->drawTriangle(CocVec2(10, 10), CocVec2(70, 30), CocVec2(100, 140), Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 0.5));
-
-    for (int i = 0; i < 100; i++) {
-        draw2->drawPoint(CocVec2(i*7, 5), (float)i/5+1, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
-    }
-
-    draw->setVisible(false);
-    return;
-}
-
-
-void LayerManager::menuCloseCallback(Ref* pSender)
-{
-    //Close the cocos2d-x game scene and quit the application
-    Director::getInstance()->end();
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
-#endif
-
-    /*To navigate back to native iOS screen(if present) without quitting the application  ,do not use Director::getInstance()->end() and exit(0) as given above,instead trigger a custom event created in RootViewController.mm as below*/
-
-    //EventCustom customEndEvent("game_scene_close_event");
-    //_eventDispatcher->dispatchEvent(&customEndEvent);
-}
-
-
-DrawLayer *LayerManager::createLayer()
-{
-    DrawLayer *draw = DrawLayer::create();
-    addChild(draw, 10);
-    DrawBean *db = new DrawBean();
-    db->setLayer(draw);
-    db->setUserOp(LAYER_CREATE);
-    mCaretake.SetState(db);
-    mCurrentLayer = draw;
-    return draw;
-}
-
-int LayerManager::deleteLayer(DrawLayer *id)
-{
-    removeChild(id);
+    glDeleteTextures(1, &id);
     return -1;
 }
-int LayerManager::copyLayer(DrawLayer * id)
+
+int LayerManager::copyLayer(LayerID texid)
 {
-    DrawLayer *player = mCurrentLayer->clone();
-    player->setPositionX(100);
-//    player->setPositionY(100);
-    addChild(player, 10);
-    DrawBean *db = new DrawBean();
-    db->setLayer(player);
-    db->setUserOp(LAYER_CREATE);
-    mCaretake.SetState(db);
-//    mCurrentLayer->setVisible(false);
-    mCurrentLayer = player;
+    LayerID layerID;
+    glGenTextures(1, &layerID);
+    glBindTexture(GL_TEXTURE_2D, layerID);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _fbo_width, _fbo_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+    glBindFramebuffer(GL_FRAMEBUFFER, _fb0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, layerID, 0);
 
-    LOGE("Fun:%s, Line:%d", __FUNCTION__, __LINE__);
 
-    return 1;
+    glViewport(0, 0, _fbo_width, _fbo_height);
+    glClearColor(1.0, 0.6, 0.6, 1.0);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    glDisable(GL_BLEND);
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_STENCIL_TEST);
+
+    glBindBuffer(GL_ARRAY_BUFFER, _a0);
+    GLint ptloc = glGetAttribLocation(mProgram, "pos");
+    GLint tcloc = glGetAttribLocation(mProgram, "tcoord");
+    glVertexAttribPointer(ptloc, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex),
+                          (const GLvoid *) offsetof(Vertex, x));
+    glVertexAttribPointer(tcloc, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex),
+                          (const GLvoid *) offsetof(Vertex, u));
+    glEnableVertexAttribArray(ptloc);
+    glEnableVertexAttribArray(tcloc);
+
+    glUseProgram(mProgram);
+    GLint loc = glGetUniformLocation(mProgram, "mvp");
+    glUniformMatrix4fv(loc, 1, GL_FALSE, transmat);
+
+    glEnable(GL_TEXTURE_2D);
+
+    {
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texid);
+        GLint loc = glGetUniformLocation(mProgram, "flag");
+        glUniform1i(loc, 2);
+        loc = glGetUniformLocation(mProgram, "texture");
+        glUniform1i(loc, 0);
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    }
+
+    glDisableVertexAttribArray(ptloc);
+    glDisableVertexAttribArray(tcloc);
+    glUseProgram(0);
+    glBindTexture(GL_TEXTURE_2D,0);
+
+    return layerID;
 }
 
-int LayerManager::clearLayer(int id)
+int LayerManager::clearLayer(LayerID id)
 {
-    if(mCurrentLayer != NULL ) {
-        mCurrentLayer->cleanup();
+    if(mCurrentLayer != 0 )
+    {
+        glBindFramebuffer(GL_FRAMEBUFFER, _fb0);
+        glBindTexture(GL_TEXTURE_2D, mCurrentLayer);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, mCurrentLayer, 0);
+        glViewport(0, 0, _fbo_width, _fbo_height);
+        glClearColor(0, 0, 0,1.0);
+        glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
         return 1;
     }
     return -1;
 }
-int LayerManager::mergeLayer(DrawLayer *id1, DrawLayer *id2, int merge_mode)
+int LayerManager::mergeLayer(LayerID *id1, LayerID *id2, int merge_mode)
 {
+
     return -1;
 }
 int LayerManager::swapLayer(int layer1, int layer2)
@@ -420,7 +108,7 @@ int LayerManager::swapLayer(int layer1, int layer2)
     return -1;
 }
 
-DrawLayer *LayerManager::getCurrentLayer(int id)
+LayerID LayerManager::getCurrentLayer(int id)
 {
     return mCurrentLayer;
 }
@@ -428,7 +116,7 @@ int LayerManager::setOpacity(float opacity)
 {
     if( mCurrentLayer != NULL )
     {
-        mCurrentLayer->setOpacity( opacity);
+//        mCurrentLayer->setOpacity( opacity);
         return 1;
     }
     return -1;
@@ -436,7 +124,7 @@ int LayerManager::setOpacity(float opacity)
 float LayerManager::getOpacity()
 {
     if( mCurrentLayer != NULL ){
-        return mCurrentLayer->getOpacity();
+//        return mCurrentLayer->getOpacity();
     }
     return 0.0f;
 }
@@ -444,7 +132,7 @@ int LayerManager::setVisiable(int id, bool visiable)
 {
     if( mCurrentLayer != NULL )
     {
-        mCurrentLayer->setVisible( visiable);
+//        mCurrentLayer->setVisible( visiable);
         return 1;
     }
     return -1;
@@ -453,7 +141,7 @@ bool LayerManager::getVisiable(int id)
 {
     if( mCurrentLayer != NULL )
     {
-        return mCurrentLayer->isVisible();
+//        return mCurrentLayer->isVisible();
     }
     return false;
 }
@@ -461,7 +149,7 @@ int LayerManager::setLock(int id, bool block)
 {
     if( mCurrentLayer != NULL )
     {
-        mCurrentLayer->setLock(block);
+//        mCurrentLayer->setLock(block);
         return 1;
     }
     return -1;
@@ -469,14 +157,14 @@ int LayerManager::setLock(int id, bool block)
 bool LayerManager::getLock(int id)
 {
     if( mCurrentLayer != NULL )
-        return mCurrentLayer->isLock();
+//        return mCurrentLayer->isLock();
     return false;
 }
 int LayerManager::setTranslate(float x, float y, float z)
 {
     if( mCurrentLayer != NULL )
     {
-        mCurrentLayer->setPosition( x, y );
+//        mCurrentLayer->setPosition( x, y );
         return 1;
     }
     return -1;
@@ -486,7 +174,7 @@ int LayerManager::setScale(float fx, float fy, float scale)
 {
     if(mCurrentLayer != NULL )
     {
-        mCurrentLayer->setScale(fx, fy);
+//        mCurrentLayer->setScale(fx, fy);
         return 1;
     }
     return -1;
@@ -495,7 +183,7 @@ int LayerManager::setScale(float fx, float fy, float scale)
 int LayerManager::setRotate(float cx, float cy, float angle)
 {
     if( mCurrentLayer != NULL ) {
-        mCurrentLayer->setRotation(cx);
+//        mCurrentLayer->setRotation(cx);
         return 1;
     }
     return -1;
@@ -508,27 +196,27 @@ int LayerManager::setAllTranslate(float x, float y, float z)
     return -1;
 }
 
-cocos2d::CocVec3 LayerManager::getAllTranslate()
+Vec3 LayerManager::getAllTranslate()
 {
-    return cocos2d::CocVec3(0.0f, 0.0f, 0.0f);
+    return Vec3(0.0f, 0.0f, 0.0f);
 }
 
 int LayerManager::setAllScale(float cx, float cy, float scale)
 {
     return -1;
 }
-cocos2d::CocVec3 LayerManager::getAllScale()
+Vec3 LayerManager::getAllScale()
 {
-    return cocos2d::CocVec3(0.0f, 0.0f, 0.0f);
+    return Vec3(0.0f, 0.0f, 0.0f);
 }
 
 int LayerManager::setAllRotate(float cx, float cy, float angle)
 {
     return -1;
 }
-cocos2d::CocVec3 LayerManager::getAllRotate()
+Vec3 LayerManager::getAllRotate()
 {
-    return cocos2d::CocVec3(0.0f, 0.0f, 0.0f);
+    return Vec3(0.0f, 0.0f, 0.0f);
 }
 /////////////
 int LayerManager::setBlendMode(int mode)

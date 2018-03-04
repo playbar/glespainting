@@ -12,6 +12,9 @@
 extern "C"{
 #endif
 
+JNIEXPORT int JNICALL Java_com_haowan_openglnew_RenderLib_creatLayer(JNIEnv* env, jobject obj);
+
+
 JNIEXPORT void JNICALL Java_com_haowan_openglnew_RenderLib_init(JNIEnv* env, jobject obj,  jint canvasWidth, jint canvasHeight,
                                                                 jint viewportWidth, jint viewportHeight);
 

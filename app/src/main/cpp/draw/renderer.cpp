@@ -69,7 +69,8 @@ bool Renderer::init() {
 
   float w = st.canvas_width;
   float h = st.canvas_height;
-  _fbo_width = w;    _fbo_height = h;
+  _fbo_width = w;
+  _fbo_height = h;
 
   glGenBuffers(1, &mVB);
   {
@@ -145,12 +146,16 @@ bool Renderer::init() {
 void Renderer::changeCanvas() {
   float w = st.canvas_width;
   float h = st.canvas_height;
-  _fbo_width = w;    _fbo_height = h;
+  _fbo_width = w;
+  _fbo_height = h;
 
   {
-    float r = w * 0.5; float s = h * 0.5;
-    vts[0].set(-r,-s, 0, 0); vts[1].set(-r, s, 0, 1);
-    vts[2].set(r, -s, 1, 0); vts[3].set(r, s,  1, 1);
+    float r = w * 0.5;
+    float s = h * 0.5;
+    vts[0].set(-r,-s, 0, 0);
+    vts[1].set(-r, s, 0, 1);
+    vts[2].set(r, -s, 1, 0);
+    vts[3].set(r, s,  1, 1);
     glBindBuffer(GL_ARRAY_BUFFER, _a0);
     glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(Vertex), &vts[0].x, GL_STATIC_DRAW);
   }

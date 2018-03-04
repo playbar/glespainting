@@ -13,19 +13,16 @@
 #include <time.h>
 #include <unordered_map>
 #include <vector>
-#include <platform/CCStdC.h>
+#include "GLES2/gl2.h"
 
 using namespace std;
-
-NS_CC_BEGIN
-    class Node;
-NS_CC_END
 
 enum USER_OP{
     LAYER_CREATE = 800000,
     LAYER_DELETE = 880000
 };
 
+typedef GLuint LayerID;
 
 struct Point{
     int mx;
@@ -57,21 +54,21 @@ public:
             delete []mbyteData;
             mbyteData = NULL;
         }
-        mpLayer = NULL;
+        mLayer = NULL;
     }
 
     void addPoint(Point &point){
         mpointList.emplace_back(point);
     }
 
-    void setLayer(cocos2d::Node *player)
+    void setLayer(LayerID player)
     {
-        mpLayer = player;
+        mLayer = player;
     }
 
-    cocos2d::Node *getLayer()
+    LayerID getLayer()
     {
-        return mpLayer;
+        return mLayer;
     }
 
     int getTextureid() {
@@ -236,7 +233,7 @@ public:
 
 private:
     USER_OP mUserop; // 用户操作动作
-    cocos2d::Node *mpLayer; //当前活动图层
+    LayerID mLayer; //当前活动图层
     int mColor;//画笔颜色
     int malpha;//画笔透明度
     int msize;//画笔尺寸
@@ -317,7 +314,7 @@ public:
     }
 
 private:
-    unordered_map<int, DrawBean*> mData;
+    unordered_map<int, DrawBean*> mData; // 第一项为操作步骤
     unsigned int mTotalStep;
     unsigned int mCurrentStep;
 };

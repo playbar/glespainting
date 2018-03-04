@@ -133,7 +133,6 @@ public class NewOpenglWriter extends Activity implements View.OnClickListener,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Cocos2dxHelper.init(this);
         setContentView(R.layout.note_for_write_new);
         initData();
         initView();

@@ -6,7 +6,7 @@
 
 #include "state.h"
 #include "curve.h"
-#include "renderer.h"
+#include "LayerManager.h"
 
 enum OPMODE{
     OP_DRAW,    //0
@@ -25,7 +25,7 @@ int g_pencil = 1; // 0--normal, 1--blur, 2--spray, 3--leaf
 int g_width = 1;
 
 State st;
-static Renderer* g_renderer = NULL;
+LayerManager* g_renderer = NULL;
 Curve cc;
 
 Vec3 mh_getCanvasCoord(int x, int y){
@@ -83,7 +83,7 @@ void mh_drawNormalLine(int action, float x, float y, float size, int color, int 
 
 void mh_init(float cw, float ch, float vw, float vh){
   st.init(cw,ch,vw,vh);
-  g_renderer = new Renderer;
+  g_renderer = new LayerManager;
   g_renderer->init();
   g_renderer->setTransformMatrix(st.mvp.m);
 }

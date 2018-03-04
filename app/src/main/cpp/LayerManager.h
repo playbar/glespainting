@@ -43,57 +43,28 @@
 #ifndef __LAYER_MANAGER_H__
 #define __LAYER_MANAGER_H__
 
-#include "cocos2d.h"
 #include "Caretaker.h"
+#include "draw/vec2.h"
+#include "draw/vec3.h"
+#include "draw/vec4.h"
+#include "draw/color.h"
+#include "draw/renderer.h"
 
-using namespace cocos2d;
-
-class LayerManager : public cocos2d::Scene
+class LayerManager : public Renderer
 {
 public:
-    static cocos2d::Scene* createScene();
+    LayerManager();
+    ~LayerManager() = default;
 
-    virtual bool init();
-
-    void drawTest();
-
-    void createMenu();
-    void menuCreateCallback(Ref *pSender);
-    void menuDeleteCallback(Ref *pSender);
-    void menuDrawTestCallback(Ref *pSender);
-    void menuRotaCallback(Ref *pSender);
-    void menuTranslateCallback(Ref *pSender);
-    void menuCopyCallback(Ref *pSender);
-
-    // a selector callback
-    void menuCloseCallback(cocos2d::Ref* pSender);
-    
-    // implement the "static create()" method manually
-//    CREATE_FUNC(LayerManager);
-    static LayerManager *create()
-    {
-        LayerManager *pRet = new(std::nothrow)LayerManager();
-        if(pRet && pRet->init())
-        {
-            pRet->autorelease();
-            return pRet;
-        }
-        else
-        {
-            delete pRet;
-            pRet = nullptr;
-            return nullptr;
-        }
-    }
 public:
-    DrawLayer *createLayer(); //返回创建图层的id，发回UI层使用，成功返回从1开始的值，失败返回-1
-    int deleteLayer(DrawLayer *id); //删除图层，成功返回1，失败返回-1；
-    int copyLayer(DrawLayer *id);  //复制当前图层的内容到新图层，并且返回新图层的id，当前图层为新的图层。成功返回图层id， 失败返回-1。
-    int clearLayer(int id);//清空当前图层内容，成功返回1， 失败返回-1；
-    int mergeLayer(DrawLayer *id1, DrawLayer *id2, int merge_mode);// 合并图层, 相邻图层，根据alphe混合, 成功返回合并后的id， 失败返回-1
+    LayerID createLayer(); //返回创建图层的id，发回UI层使用，成功返回从1开始的值，失败返回-1
+    int deleteLayer(LayerID id); //删除图层，成功返回1，失败返回-1；
+    int copyLayer(LayerID id);  //复制当前图层的内容到新图层，并且返回新图层的id，当前图层为新的图层。成功返回图层id， 失败返回-1。
+    int clearLayer(LayerID id);//清空当前图层内容，成功返回1， 失败返回-1；
+    int mergeLayer(LayerID *id1, LayerID *id2, int merge_mode);// 合并图层, 相邻图层，根据alphe混合, 成功返回合并后的id， 失败返回-1
     int swapLayer(int layer1, int layer2);//交换图层位置信息，成功返回1， 失败返回-1；
 
-    DrawLayer *getCurrentLayer(int id);//获取当前图层，参数id为创建图层id， 成功返回当前id为指定参数的图层，失败返回-1
+    LayerID getCurrentLayer(int id);//获取当前图层，参数id为创建图层id， 成功返回当前id为指定参数的图层，失败返回-1
     int setOpacity(float opacity);  //获取当前图层，设置透明度，参数从0-1.0，成功返回1，失败返回-1；
     float getOpacity();//获取当前图层，获取透明度，失败为-1，成功为0.0-1.0的值，
     int setVisiable(int id, bool visiable);//visiable为false为隐藏，true为显示， 设置是否可以显示，成功返回为1，失败为-1
@@ -108,11 +79,11 @@ public:
     //vec3 getRotate(); //获取当前旋转值
     ////////////////////////
     int setAllTranslate(float x, float y, float z);//整个场景平移，失败返回-1，成功返回1
-    cocos2d::CocVec3 getAllTranslate();//整个场景，获取当前图层的位置，返回图层所在的位置
+    Vec3 getAllTranslate();//整个场景，获取当前图层的位置，返回图层所在的位置
     int setAllScale(float cx, float cy, float scale);//设置整个场景缩放，失败返回-1，成功返回1, 中心点，两手指中点
-    cocos2d::CocVec3 getAllScale(); // 获取当前图层的缩放比例，
+    Vec3 getAllScale(); // 获取当前图层的缩放比例，
     int setAllRotate(float cx, float cy, float angle);//设置图层当前旋转, 成功返回1， 失败返回-1, 中心点，两手指中点
-    cocos2d::CocVec3 getAllRotate(); //获取当前旋转值
+    Vec3 getAllRotate(); //获取当前旋转值
     /////////////
     int setBlendMode(int mode);//设置当前图层的混合模式，成功返回1，失败返回-1
     int getBlendMode(); //设置当前图层的混合模式
@@ -126,12 +97,9 @@ public:
     int getThumbnailData(); //获取整个截图
 
 private:
-    DrawLayer *mCurrentLayer;
+    LayerID mCurrentLayer;
     Caretaker mCaretake;
 
-public: // for test
-    Size visibleSize;
-    CocVec2 origin;
 };
 
 #endif // __HELLOWORLD_SCENE_H__
