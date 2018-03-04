@@ -69,7 +69,8 @@ public class MyRenderer implements GLSurfaceView.Renderer {
       _act = -1; _first=true; _mode=0; _k=1.2f;
       _x0=_y0=_x1=_y1=0;
       _vx = 0; _vy = 0; _vw = 1080; _vh = 1800;
-        JNILib.init(MainActivity.screenWH[0],MainActivity.screenWH[1], screenWH[0], screenWH[1]);  //canvas width/height, viewport's origin and width/height
+
+      JNILib.init(MainActivity.screenWH[0],MainActivity.screenWH[1], screenWH[0], screenWH[1]);  //canvas width/height, viewport's origin and width/height
       {
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inScaled = false;   // No pre-scaling

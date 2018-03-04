@@ -179,7 +179,6 @@ public class NewOpenglWriter extends Activity implements View.OnClickListener,
     }
 
     private void initNormalView(){
-        surfaceRoot = (RelativeLayout)findViewById(R.id.paint_for_note);
 
         normalPaint = findViewById(R.id.normal_paint);
         normalPaint.setOnClickListener(this);
@@ -268,7 +267,9 @@ public class NewOpenglWriter extends Activity implements View.OnClickListener,
      * 初始化绘画view
      */
     private void initSurfaceView(){
-        surfaceView = new GLESSurfaceView(this);
+        surfaceView = new GLESSurfaceView(this)
+        ;
+        surfaceRoot = (RelativeLayout)findViewById(R.id.paint_for_note);
         surfaceRoot.removeAllViews();
         surfaceRoot.addView(surfaceView);
         surfaceView.setColor(currColor);
