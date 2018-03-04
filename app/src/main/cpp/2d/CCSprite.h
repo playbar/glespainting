@@ -395,7 +395,7 @@ public:
     /**
      * Gets the offset position of the sprite. Calculated automatically by editors like Zwoptex.
      */
-    const Vec2& getOffsetPosition() const { return _offsetPosition; }
+    const CocVec2& getOffsetPosition() const { return _offsetPosition; }
 
 
     /**
@@ -515,7 +515,7 @@ public:
     * @js  NA
     * @lua NA
     */
-    virtual void setPosition(const Vec2& pos) override;
+    virtual void setPosition(const CocVec2& pos) override;
     virtual void setPosition(float x, float y) override;
     virtual void setRotation(float rotation) override;
     virtual void setRotationSkewX(float rotationX) override;
@@ -531,13 +531,13 @@ public:
     virtual void sortAllChildren() override;
     virtual void setScale(float scale) override;
     virtual void setPositionZ(float positionZ) override;
-    virtual void setAnchorPoint(const Vec2& anchor) override;
+    virtual void setAnchorPoint(const CocVec2& anchor) override;
     virtual void setContentSize(const Size& size) override;
     
     virtual void setIgnoreAnchorPointForPosition(bool value) override;
     
     virtual void setVisible(bool bVisible) override;
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    virtual void draw(CocRenderer *renderer, const CocMat4 &transform, uint32_t flags) override;
     virtual void setOpacityModifyRGB(bool modify) override;
     virtual bool isOpacityModifyRGB() const override;
     /// @}
@@ -675,7 +675,7 @@ protected:
     bool                _dirty;             /// Whether the sprite needs to be updated
     bool                _recursiveDirty;    /// Whether all of the sprite's children needs to be updated
     bool                _shouldBeHidden;    /// should not be drawn because one of the ancestors is not visible
-    Mat4              _transformToBatch;
+    CocMat4              _transformToBatch;
 
     //
     // Data used when the sprite is self-rendered
@@ -697,13 +697,13 @@ protected:
 
     Rect _centerRectNormalized;             /// Rectangle to implement "slice 9"
     RenderMode _renderMode;                 /// render mode used by the Sprite: Quad, Slice9, Polygon or Quad_Batchnode
-    Vec2 _stretchFactor;                    /// stretch factor to match the contentSize. for 1- and 9- slice sprites
+    CocVec2 _stretchFactor;                    /// stretch factor to match the contentSize. for 1- and 9- slice sprites
     Size _originalContentSize;              /// original content size
 
 
     // Offset Position (used by Zwoptex)
-    Vec2 _offsetPosition;
-    Vec2 _unflippedOffsetPositionFromCenter;
+    CocVec2 _offsetPosition;
+    CocVec2 _unflippedOffsetPositionFromCenter;
 
     // vertex coords, texture coords and color info
     V3F_C4B_T2F_Quad _quad;

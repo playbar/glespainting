@@ -133,7 +133,7 @@ public:
      * @lua NA
      */
     virtual void onExit() override;
-    virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
+    virtual void visit(CocRenderer *renderer, const CocMat4 &parentTransform, uint32_t parentFlags) override;
     
     virtual void setCameraMask(unsigned short mask, bool applyChildren = true) override;
     

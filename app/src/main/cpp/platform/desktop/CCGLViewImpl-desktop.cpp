@@ -654,7 +654,7 @@ void GLViewImpl::onGLFWMouseCallBack(GLFWwindow* /*window*/, int button, int act
         if(GLFW_PRESS == action)
         {
             _captured = true;
-            if (this->getViewPortRect().equals(Rect::ZERO) || this->getViewPortRect().containsPoint(Vec2(_mouseX,_mouseY)))
+            if (this->getViewPortRect().equals(Rect::ZERO) || this->getViewPortRect().containsPoint(CocVec2(_mouseX,_mouseY)))
             {
                 intptr_t id = 0;
                 this->handleTouchesBegin(1, &id, &_mouseX, &_mouseY);

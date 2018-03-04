@@ -379,7 +379,7 @@ public:
     //
     // Overrides
     //
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    virtual void draw(CocRenderer *renderer, const CocMat4 &transform, uint32_t flags) override;
 
     virtual void setContentSize(const Size & var) override;
     /** BlendFunction. Conforms to BlendProtocol protocol */
@@ -407,15 +407,15 @@ CC_CONSTRUCTOR_ACCESS:
     bool initWithColor(const Color4B& color);
 
 protected:
-    void onDraw(const Mat4& transform, uint32_t flags);
+    void onDraw(const CocMat4& transform, uint32_t flags);
 
     virtual void updateColor() override;
 
     BlendFunc _blendFunc;
-    Vec2 _squareVertices[4];
+    CocVec2 _squareVertices[4];
     Color4F  _squareColors[4];
     CustomCommand _customCommand;
-    Vec3 _noMVPVertices[4];
+    CocVec3 _noMVPVertices[4];
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(LayerColor);
 
@@ -468,7 +468,7 @@ public:
      * @param v The direction of gradient color.
      * @return An autoreleased LayerGradient object.
      */
-    static LayerGradient* create(const Color4B& start, const Color4B& end, const Vec2& v);
+    static LayerGradient* create(const Color4B& start, const Color4B& end, const CocVec2& v);
     
     /** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors.
      Default: true.
@@ -531,12 +531,12 @@ public:
      *
      * @param alongVector The direction of gradient.
      */
-    void setVector(const Vec2& alongVector);
+    void setVector(const CocVec2& alongVector);
     /** Returns the directional vector used for the gradient.
      *
      * @return The direction of gradient.
      */
-    const Vec2& getVector() const;
+    const CocVec2& getVector() const;
 
     virtual std::string getDescription() const override;
     
@@ -555,7 +555,7 @@ CC_CONSTRUCTOR_ACCESS:
      * @js init
      * @lua init
      */
-    bool initWithColor(const Color4B& start, const Color4B& end, const Vec2& v);
+    bool initWithColor(const Color4B& start, const Color4B& end, const CocVec2& v);
 
 protected:
     virtual void updateColor() override;
@@ -564,7 +564,7 @@ protected:
     Color3B _endColor;
     GLubyte _startOpacity;
     GLubyte _endOpacity;
-    Vec2   _alongVector;
+    CocVec2   _alongVector;
     bool    _compressedInterpolation;
 };
 
@@ -584,13 +584,13 @@ public:
      * @param expand an alpha value(0.f-1.f) that specifies how much of that radius in only inner color(the gradient
                      starts outside of that amount)
      */
-    static LayerRadialGradient* create(const Color4B& startColor, const Color4B& endColor, float radius, const Vec2& center, float expand);
+    static LayerRadialGradient* create(const Color4B& startColor, const Color4B& endColor, float radius, const CocVec2& center, float expand);
     static LayerRadialGradient* create();
     
     //
     // overrides
     //
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    virtual void draw(CocRenderer *renderer, const CocMat4 &transform, uint32_t flags) override;
     virtual void setContentSize(const Size& size) override;
     
     void setStartOpacity(GLubyte opacity);
@@ -602,8 +602,8 @@ public:
     void setRadius(float radius);
     float getRadius() const;
     
-    void setCenter(const Vec2& center);
-    Vec2 getCenter() const;
+    void setCenter(const CocVec2& center);
+    CocVec2 getCenter() const;
     
     void setExpand(float expand);
     float getExpand() const;
@@ -625,10 +625,10 @@ CC_CONSTRUCTOR_ACCESS:
     LayerRadialGradient();
     virtual ~LayerRadialGradient();
     
-    bool initWithColor(const Color4B& startColor, const Color4B& endColor, float radius, const Vec2& center, float expand);
+    bool initWithColor(const Color4B& startColor, const Color4B& endColor, float radius, const CocVec2& center, float expand);
     
 protected:
-    void onDraw(const Mat4& transform, uint32_t flags);
+    void onDraw(const CocMat4& transform, uint32_t flags);
     
     
 private:
@@ -640,10 +640,10 @@ private:
     Color4B _endColor;
     Color4F _endColorRend; // end color used in shader
     
-    Vec2 _center;
+    CocVec2 _center;
     float _radius;
     float _expand;
-    Vec2 _vertices[4];
+    CocVec2 _vertices[4];
     CustomCommand _customCommand;
     
     GLint _uniformLocationStartColor;

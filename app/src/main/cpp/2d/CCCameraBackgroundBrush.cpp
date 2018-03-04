@@ -130,10 +130,10 @@ bool CameraBackgroundDepthBrush::init()
     _glProgramState = GLProgramState::getOrCreateWithGLProgram(shader);
     _glProgramState->retain();
     
-    _quad.bl.vertices = Vec3(-1,-1,0);
-    _quad.br.vertices = Vec3(1,-1,0);
-    _quad.tl.vertices = Vec3(-1,1,0);
-    _quad.tr.vertices = Vec3(1,1,0);
+    _quad.bl.vertices = CocVec3(-1,-1,0);
+    _quad.br.vertices = CocVec3(1,-1,0);
+    _quad.tl.vertices = CocVec3(-1,1,0);
+    _quad.tr.vertices = CocVec3(1,1,0);
     
     _quad.bl.colors = _quad.br.colors = _quad.tl.colors = _quad.tr.colors = Color4B(0,0,0,1);
     
@@ -202,7 +202,7 @@ void CameraBackgroundDepthBrush::drawBackground(Camera* /*camera*/)
     //draw
     
     _glProgramState->setUniformFloat("depth", _depth);
-    _glProgramState->apply(Mat4::IDENTITY);
+    _glProgramState->apply(CocMat4::IDENTITY);
     
     auto supportVAO = Configuration::getInstance()->supportsShareableVAO();
     if (supportVAO)
@@ -421,14 +421,14 @@ void CameraBackgroundSkyBoxBrush::drawBackground(Camera* camera)
     if (!_actived)
         return;
 
-    Mat4 cameraModelMat = camera->getNodeToWorldTransform();
+    CocMat4 cameraModelMat = camera->getNodeToWorldTransform();
     
-    Vec4 color(1.f, 1.f, 1.f, 1.f);
+    CocVec4 color(1.f, 1.f, 1.f, 1.f);
     _glProgramState->setUniformVec4("u_color", color);
     cameraModelMat.m[12] = cameraModelMat.m[13] = cameraModelMat.m[14] = 0;
     _glProgramState->setUniformMat4("u_cameraRot", cameraModelMat);
     
-    _glProgramState->apply(Mat4::IDENTITY);
+    _glProgramState->apply(CocMat4::IDENTITY);
     
     glEnable(GL_DEPTH_TEST);
     RenderState::StateBlock::_defaultState->setDepthTest(true);
@@ -457,7 +457,7 @@ void CameraBackgroundSkyBoxBrush::drawBackground(Camera* camera)
         GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION);
         
         glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(Vec3), nullptr);
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(CocVec3), nullptr);
         
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
     }
@@ -483,7 +483,7 @@ bool CameraBackgroundSkyBoxBrush::init()
 {
     auto shader = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_SKYBOX);
     _glProgramState = GLProgramState::create(shader);
-    _glProgramState->setVertexAttribPointer(GLProgram::ATTRIBUTE_NAME_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(Vec3), nullptr);
+    _glProgramState->setVertexAttribPointer(GLProgram::ATTRIBUTE_NAME_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(CocVec3), nullptr);
     _glProgramState->retain();
     
     initBuffer();
@@ -512,10 +512,10 @@ void CameraBackgroundSkyBoxBrush::initBuffer()
     }
     
     // init vertex buffer object
-    Vec3 vexBuf[] =
+    CocVec3 vexBuf[] =
     {
-        Vec3(1, -1, 1),  Vec3(1, 1, 1),  Vec3(-1, 1, 1),  Vec3(-1, -1, 1),
-        Vec3(1, -1, -1), Vec3(1, 1, -1), Vec3(-1, 1, -1), Vec3(-1, -1, -1)
+        CocVec3(1, -1, 1),  CocVec3(1, 1, 1),  CocVec3(-1, 1, 1),  CocVec3(-1, -1, 1),
+        CocVec3(1, -1, -1), CocVec3(1, 1, -1), CocVec3(-1, 1, -1), CocVec3(-1, -1, -1)
     };
     
     glGenBuffers(1, &_vertexBuffer);

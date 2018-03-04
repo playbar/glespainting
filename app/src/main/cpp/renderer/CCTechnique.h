@@ -48,7 +48,7 @@ class Material;
 class CC_DLL Technique : public RenderState
 {
     friend class Material;
-    friend class Renderer;
+    friend class CocRenderer;
     friend class Pass;
     friend class MeshCommand;
     friend class Mesh;

@@ -55,7 +55,7 @@ class Component;
 class ComponentContainer;
 class EventDispatcher;
 class Scene;
-class Renderer;
+class CocRenderer;
 class Director;
 class GLProgram;
 class GLProgramState;
@@ -323,7 +323,7 @@ public:
     /**
      * Sets the position (x,y) of the node in its parent's coordinate system.
      *
-     * Usually we use `Vec2(x,y)` to compose Vec2 object.
+     * Usually we use `CocVec2(x,y)` to compose CocVec2 object.
      * This code snippet sets the node in the center of screen.
      @code
      Size size = Director::getInstance()->getWinSize();
@@ -332,13 +332,13 @@ public:
      *
      * @param position  The position (x,y) of the node in OpenGL coordinates.
      */
-    virtual void setPosition(const Vec2 &position);
+    virtual void setPosition(const CocVec2 &position);
 
     /** Sets the position (x,y) using values between 0 and 1.
      The positions in pixels is calculated like the following:
      @code
      // pseudo code
-     void setNormalizedPosition(Vec2 pos) {
+     void setNormalizedPosition(CocVec2 pos) {
        Size s = getParent()->getContentSize();
        _position = pos * s;
      }
@@ -346,40 +346,40 @@ public:
      *
      * @param position The normalized position (x,y) of the node, using value between 0 and 1.
      */
-    virtual void setPositionNormalized(const Vec2 &position);
+    virtual void setPositionNormalized(const CocVec2 &position);
     // FIXME: should get deprecated in v4.0
-    virtual void setNormalizedPosition(const Vec2 &position) { setPositionNormalized(position); }
+    virtual void setNormalizedPosition(const CocVec2 &position) { setPositionNormalized(position); }
 
     /**
      * Gets the position (x,y) of the node in its parent's coordinate system.
      *
-     * @see setPosition(const Vec2&)
+     * @see setPosition(const CocVec2&)
      *
      * @return The position (x,y) of the node in OpenGL coordinates.
      * @code
      * In js and lua return value is table which contains x,y.
      * @endcode
      */
-    virtual const Vec2& getPosition() const;
+    virtual const CocVec2& getPosition() const;
 
     /** Returns the normalized position.
      * 
      * @return The normalized position.
      */
-    virtual const Vec2& getPositionNormalized() const;
+    virtual const CocVec2& getPositionNormalized() const;
     // FIXME: should get deprecated in v4.0
-    virtual const Vec2& getNormalizedPosition() const { return getPositionNormalized(); }
+    virtual const CocVec2& getNormalizedPosition() const { return getPositionNormalized(); }
 
     /**
      * Sets the position (x,y) of the node in its parent's coordinate system.
      *
-     * Passing two numbers (x,y) is much efficient than passing Vec2 object.
+     * Passing two numbers (x,y) is much efficient than passing CocVec2 object.
      * This method is bound to Lua and JavaScript.
      * Passing a number is 10 times faster than passing a object from Lua to c++.
      *
      @code
      // sample code in Lua
-     local pos  = node::getPosition()  -- returns Vec2 object from C++.
+     local pos  = node::getPosition()  -- returns CocVec2 object from C++.
      node:setPosition(x, y)            -- pass x, y coordinate to C++.
      @endcode
      *
@@ -388,7 +388,7 @@ public:
      */
     virtual void setPosition(float x, float y);
     /**
-     * Gets position in a more efficient way, returns two number instead of a Vec2 object.
+     * Gets position in a more efficient way, returns two number instead of a CocVec2 object.
      *
      * @see `setPosition(float, float)`
      * In js,out value not return.
@@ -428,14 +428,14 @@ public:
      * @param position The position (X, Y, and Z) in its parent's coordinate system.
      * @js NA
      */
-    virtual void setPosition3D(const Vec3& position);
+    virtual void setPosition3D(const CocVec3& position);
     /**
      * Returns the position (X,Y,Z) in its parent's coordinate system.
      *
      * @return The position (X, Y, and Z) in its parent's coordinate system.
      * @js NA
      */
-    virtual Vec3 getPosition3D() const;
+    virtual CocVec3 getPosition3D() const;
 
     /**
      * Sets the 'z' coordinate in the position. It is the OpenGL Z vertex value.
@@ -526,15 +526,15 @@ public:
      *
      * @param anchorPoint   The anchor point of node.
      */
-    virtual void setAnchorPoint(const Vec2& anchorPoint);
+    virtual void setAnchorPoint(const CocVec2& anchorPoint);
     /**
      * Returns the anchor point in percent.
      *
-     * @see `setAnchorPoint(const Vec2&)`
+     * @see `setAnchorPoint(const CocVec2&)`
      *
      * @return The anchor point of node.
      */
-    virtual const Vec2& getAnchorPoint() const;
+    virtual const CocVec2& getAnchorPoint() const;
     /**
      * Returns the anchorPoint in absolute pixels.
      *
@@ -543,7 +543,7 @@ public:
      *
      * @return The anchor point in absolute pixels.
      */
-    virtual const Vec2& getAnchorPointInPoints() const;
+    virtual const CocVec2& getAnchorPointInPoints() const;
 
 
     /**
@@ -614,14 +614,14 @@ public:
      * @param rotation The rotation of the node in 3d.
      * @js NA
      */
-    virtual void setRotation3D(const Vec3& rotation);
+    virtual void setRotation3D(const CocVec3& rotation);
     /**
      * Returns the rotation (X,Y,Z) in degrees.
      * 
      * @return The rotation of the node in 3d.
      * @js NA
      */
-    virtual Vec3 getRotation3D() const;
+    virtual CocVec3 getRotation3D() const;
     
     /**
      * Set rotation by quaternion. You should make sure the quaternion is normalized.
@@ -1171,7 +1171,7 @@ public:
      * @param transform A transform matrix.
      * @param flags Renderer flag.
      */
-    virtual void draw(Renderer *renderer, const Mat4& transform, uint32_t flags);
+    virtual void draw(CocRenderer *renderer, const CocMat4& transform, uint32_t flags);
     virtual void draw() final;
 
     /**
@@ -1181,7 +1181,7 @@ public:
      * @param parentTransform A transform matrix.
      * @param parentFlags Renderer flag.
      */
-    virtual void visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags);
+    virtual void visit(CocRenderer *renderer, const CocMat4& parentTransform, uint32_t parentFlags);
     virtual void visit() final;
 
 
@@ -1550,7 +1550,7 @@ public:
      *
      * @return The transformation matrix.
      */
-    virtual const Mat4& getNodeToParentTransform() const;
+    virtual const CocMat4& getNodeToParentTransform() const;
     virtual AffineTransform getNodeToParentAffineTransform() const;
 
     /**
@@ -1562,7 +1562,7 @@ public:
      * @since v3.7
      * @return The transformation matrix.
      */
-    virtual Mat4 getNodeToParentTransform(Node* ancestor) const;
+    virtual CocMat4 getNodeToParentTransform(Node* ancestor) const;
 
     /**
      * Returns the affine transform matrix that transform the node's (local) space coordinates into the parent's space coordinates.
@@ -1581,7 +1581,7 @@ public:
      *
      * @param transform A given transformation matrix.
      */
-    virtual void setNodeToParentTransform(const Mat4& transform);
+    virtual void setNodeToParentTransform(const CocMat4& transform);
 
     /** @deprecated use getNodeToParentTransform() instead */
     CC_DEPRECATED_ATTRIBUTE virtual AffineTransform nodeToParentTransform() const { return getNodeToParentAffineTransform(); }
@@ -1592,7 +1592,7 @@ public:
      *
      * @return The transformation matrix.
      */
-    virtual const Mat4& getParentToNodeTransform() const;
+    virtual const CocMat4& getParentToNodeTransform() const;
     virtual AffineTransform getParentToNodeAffineTransform() const;
 
     /** @deprecated Use getParentToNodeTransform() instead */
@@ -1603,7 +1603,7 @@ public:
      *
      * @return transformation matrix, in pixels.
      */
-    virtual Mat4 getNodeToWorldTransform() const;
+    virtual CocMat4 getNodeToWorldTransform() const;
     virtual AffineTransform getNodeToWorldAffineTransform() const;
 
     /** @deprecated Use getNodeToWorldTransform() instead */
@@ -1614,7 +1614,7 @@ public:
      *
      * @return The transformation matrix.
      */
-    virtual Mat4 getWorldToNodeTransform() const;
+    virtual CocMat4 getWorldToNodeTransform() const;
     virtual AffineTransform getWorldToNodeAffineTransform() const;
 
     /** @deprecated Use getWorldToNodeTransform() instead */
@@ -1627,46 +1627,46 @@ public:
     /// @name Coordinate Converters
 
     /**
-     * Converts a Vec2 to node (local) space coordinates. The result is in Points.
+     * Converts a CocVec2 to node (local) space coordinates. The result is in Points.
      *
      * @param worldPoint A given coordinate.
      * @return A point in node (local) space coordinates.
      */
-    Vec2 convertToNodeSpace(const Vec2& worldPoint) const;
+    CocVec2 convertToNodeSpace(const CocVec2& worldPoint) const;
 
     /**
-     * Converts a Vec2 to world space coordinates. The result is in Points.
+     * Converts a CocVec2 to world space coordinates. The result is in Points.
      *
      * @param nodePoint A given coordinate.
      * @return A point in world space coordinates.
      */
-    Vec2 convertToWorldSpace(const Vec2& nodePoint) const;
+    CocVec2 convertToWorldSpace(const CocVec2& nodePoint) const;
 
     /**
-     * Converts a Vec2 to node (local) space coordinates. The result is in Points.
+     * Converts a CocVec2 to node (local) space coordinates. The result is in Points.
      * treating the returned/received node point as anchor relative.
      *
      * @param worldPoint A given coordinate.
      * @return A point in node (local) space coordinates, anchor relative.
      */
-    Vec2 convertToNodeSpaceAR(const Vec2& worldPoint) const;
+    CocVec2 convertToNodeSpaceAR(const CocVec2& worldPoint) const;
 
     /**
-     * Converts a local Vec2 to world space coordinates.The result is in Points.
+     * Converts a local CocVec2 to world space coordinates.The result is in Points.
      * treating the returned/received node point as anchor relative.
      *
      * @param nodePoint A given coordinate.
      * @return A point in world space coordinates, anchor relative.
      */
-    Vec2 convertToWorldSpaceAR(const Vec2& nodePoint) const;
+    CocVec2 convertToWorldSpaceAR(const CocVec2& nodePoint) const;
 
     /**
-     * convenience methods which take a Touch instead of Vec2.
+     * convenience methods which take a Touch instead of CocVec2.
      *
      * @param touch A given touch.
      * @return A point in world space coordinates.
      */
-    Vec2 convertTouchToNodeSpace(Touch * touch) const;
+    CocVec2 convertTouchToNodeSpace(Touch * touch) const;
 
     /**
      * converts a Touch (world coordinates) into a local coordinate. This method is AR (Anchor Relative).
@@ -1674,7 +1674,7 @@ public:
      * @param touch A given touch.
      * @return A point in world space coordinates, anchor relative.
      */
-    Vec2 convertTouchToNodeSpaceAR(Touch * touch) const;
+    CocVec2 convertTouchToNodeSpaceAR(Touch * touch) const;
 
     /**
      *  Sets an additional transform matrix to the node.
@@ -1686,8 +1686,8 @@ public:
      *
      * @param additionalTransform An additional transform matrix.
      */
-    void setAdditionalTransform(const Mat4* additionalTransform);
-    void setAdditionalTransform(const Mat4& additionalTransform);
+    void setAdditionalTransform(const CocMat4* additionalTransform);
+    void setAdditionalTransform(const CocMat4& additionalTransform);
     void setAdditionalTransform(const AffineTransform& additionalTransform);
 
     /// @} end of Coordinate Converters
@@ -1879,10 +1879,10 @@ protected:
     void detachChild(Node *child, ssize_t index, bool doCleanup);
 
     /// Convert cocos2d coordinates to UI windows coordinate.
-    Vec2 convertToWindowSpace(const Vec2& nodePoint) const;
+    CocVec2 convertToWindowSpace(const CocVec2& nodePoint) const;
 
-    Mat4 transform(const Mat4 &parentTransform);
-    uint32_t processParentFlags(const Mat4& parentTransform, uint32_t parentFlags);
+    CocMat4 transform(const CocMat4 &parentTransform);
+    uint32_t processParentFlags(const CocMat4& parentTransform, uint32_t parentFlags);
 
     virtual void updateCascadeOpacity();
     virtual void disableCascadeOpacity();
@@ -1919,29 +1919,29 @@ protected:
     float _scaleY;                  ///< scaling factor on y-axis
     float _scaleZ;                  ///< scaling factor on z-axis
 
-    Vec2 _position;                 ///< position of the node
+    CocVec2 _position;                 ///< position of the node
     float _positionZ;               ///< OpenGL real Z position
-    Vec2 _normalizedPosition;
+    CocVec2 _normalizedPosition;
     bool _usingNormalizedPosition;
     bool _normalizedPositionDirty;
 
     float _skewX;                   ///< skew angle on x-axis
     float _skewY;                   ///< skew angle on y-axis
 
-    Vec2 _anchorPointInPoints;      ///< anchor point in points
-    Vec2 _anchorPoint;              ///< anchor point normalized (NOT in points)
+    CocVec2 _anchorPointInPoints;      ///< anchor point in points
+    CocVec2 _anchorPoint;              ///< anchor point normalized (NOT in points)
 
     Size _contentSize;              ///< untransformed size of the node
     bool _contentSizeDirty;         ///< whether or not the contentSize is dirty
 
-    Mat4 _modelViewTransform;       ///< ModelView transform of the Node.
+    CocMat4 _modelViewTransform;       ///< ModelView transform of the Node.
 
     // "cache" variables are allowed to be mutable
-    mutable Mat4 _transform;        ///< transform
+    mutable CocMat4 _transform;        ///< transform
     mutable bool _transformDirty;   ///< transform dirty flag
-    mutable Mat4 _inverse;          ///< inverse transform
+    mutable CocMat4 _inverse;          ///< inverse transform
     mutable bool _inverseDirty;     ///< inverse transform dirty flag
-    mutable Mat4* _additionalTransform; ///< two transforms needed by additional transforms
+    mutable CocMat4* _additionalTransform; ///< two transforms needed by additional transforms
     mutable bool _additionalTransformDirty; ///< transform dirty ?
     bool _transformUpdated;         ///< Whether or not the Transform object was updated since the last frame
 
@@ -1992,7 +1992,7 @@ protected:
 
     bool _block;
 
-    bool _ignoreAnchorPointForPosition; ///< true if the Anchor Vec2 will be (0,0) when you position the Node, false otherwise.
+    bool _ignoreAnchorPointForPosition; ///< true if the Anchor CocVec2 will be (0,0) when you position the Node, false otherwise.
                                           ///< Used by Layer and Scene.
 
     bool _reorderChildDirty;          ///< children order dirty flag
@@ -2058,10 +2058,10 @@ private:
  * @param camera    Which camera used to unproject pt to near/far planes.
  * @param w2l       World to local transform matrix, used to convert Pn and Pf to rectangle space.
  * @param rect      The test rectangle in local space.
- * @parma p         Point to a Vec3 for store the intersect point, if don't need them set to nullptr.
+ * @parma p         Point to a CocVec3 for store the intersect point, if don't need them set to nullptr.
  * @return true if the point is in content rectangle, false otherwise.
  */
-bool CC_DLL isScreenPointInRect(const Vec2 &pt, const Camera* camera, const Mat4& w2l, const Rect& rect, Vec3 *p);
+bool CC_DLL isScreenPointInRect(const CocVec2 &pt, const Camera* camera, const CocMat4& w2l, const Rect& rect, CocVec3 *p);
 
 // NodeRGBA
 

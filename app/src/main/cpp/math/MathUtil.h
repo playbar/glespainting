@@ -43,8 +43,8 @@ NS_CC_MATH_BEGIN
  */
 class CC_DLL MathUtil
 {
-    friend class Mat4;
-    friend class Vec3;
+    friend class CocMat4;
+    friend class CocVec3;
 
 public:
 

@@ -93,7 +93,7 @@ bool TMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *la
     _layerOrientation = mapInfo->getOrientation();
 
     // offset (after layer orientation is set);
-    Vec2 offset = this->calculateLayerOffset(layerInfo->_offset);
+    CocVec2 offset = this->calculateLayerOffset(layerInfo->_offset);
     this->setPosition(CC_POINT_PIXELS_TO_POINTS(offset));
 
     this->setContentSize(CC_SIZE_PIXELS_TO_POINTS(Size(_layerSize.width * _mapTileSize.width, _layerSize.height * _mapTileSize.height)));
@@ -138,7 +138,7 @@ TMXLayer::~TMXLayer()
     
 }
 
-void TMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
+void TMXLayer::draw(CocRenderer *renderer, const CocMat4& transform, uint32_t flags)
 {
     updateTotalQuads();
 
@@ -157,7 +157,7 @@ void TMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
                      s.width,
                      s.height);
         
-        Mat4 inv = transform;
+        CocMat4 inv = transform;
         inv.inverse();
         rect = RectApplyTransform(rect, inv);
         
@@ -202,7 +202,7 @@ void TMXLayer::updateTiles(const Rect& culledRect)
     Rect visibleTiles = Rect(culledRect.origin, culledRect.size * Director::getInstance()->getContentScaleFactor());
     Size mapTileSize = CC_SIZE_PIXELS_TO_POINTS(_mapTileSize);
     Size tileSize = CC_SIZE_PIXELS_TO_POINTS(_tileSet->_tileSize);
-    Mat4 nodeToTileTransform = _tileToNodeTransform.getInversed();
+    CocMat4 nodeToTileTransform = _tileToNodeTransform.getInversed();
     //transform to tile
     visibleTiles = RectApplyTransform(visibleTiles, nodeToTileTransform);
     // tile coordinate is upside-down, so we need to make the tile coordinate use top-left for the start point.
@@ -262,7 +262,7 @@ void TMXLayer::updateTiles(const Rect& culledRect)
             int tileIndex = getTileIndexByPos(x, y);
             if(_tiles[tileIndex] == 0) continue;
             
-            int vertexZ = getVertexZForPos(Vec2(x,y));
+            int vertexZ = getVertexZForPos(CocVec2(x,y));
             auto iter = _indicesVertexZNumber.find(vertexZ);
             int offset = iter->second;
             iter->second++;
@@ -366,7 +366,7 @@ void TMXLayer::setupTiles()
 
 }
 
-Mat4 TMXLayer::tileToNodeTransform()
+CocMat4 TMXLayer::tileToNodeTransform()
 {
     float w = _mapTileSize.width / CC_CONTENT_SCALE_FACTOR();
     float h = _mapTileSize.height / CC_CONTENT_SCALE_FACTOR();
@@ -376,7 +376,7 @@ Mat4 TMXLayer::tileToNodeTransform()
     {
         case FAST_TMX_ORIENTATION_ORTHO:
         {
-            _tileToNodeTransform = Mat4
+            _tileToNodeTransform = CocMat4
             (
                 w, 0.0f, 0.0f, 0.0f,
                 0.0f, -h, 0.0f, offY,
@@ -389,7 +389,7 @@ Mat4 TMXLayer::tileToNodeTransform()
         case FAST_TMX_ORIENTATION_ISO:
         {
             float offX = (_layerSize.width - 1) * w / 2;
-            _tileToNodeTransform = Mat4
+            _tileToNodeTransform = CocMat4
             (
                 w/2, -w/2, 0.0f, offX,
                 -h/2, -h/2, 0.0f, offY,
@@ -400,7 +400,7 @@ Mat4 TMXLayer::tileToNodeTransform()
         }
         case FAST_TMX_ORIENTATION_HEX:
         {
-            _tileToNodeTransform = Mat4
+            _tileToNodeTransform = CocMat4
             (
                 h * sqrtf(0.75),    0,   0, 0,
                 -h/2,      -h,      0,   offY,
@@ -411,7 +411,7 @@ Mat4 TMXLayer::tileToNodeTransform()
         }
         default:
         {
-            _tileToNodeTransform = Mat4::IDENTITY;
+            _tileToNodeTransform = CocMat4::IDENTITY;
             return _tileToNodeTransform;
         }
     }
@@ -467,12 +467,12 @@ void TMXLayer::updateTotalQuads()
                 
                 auto& quad = _totalQuads[quadIndex];
                 
-                Vec3 nodePos(float(x), float(y), 0);
+                CocVec3 nodePos(float(x), float(y), 0);
                 _tileToNodeTransform.transformPoint(&nodePos);
                 
                 float left, right, top, bottom, z;
                 
-                z = getVertexZForPos(Vec2(x, y));
+                z = getVertexZForPos(CocVec2(x, y));
                 auto iter = _indicesVertexZOffsets.find(z);
                 if(iter == _indicesVertexZOffsets.end())
                 {
@@ -573,7 +573,7 @@ void TMXLayer::updateTotalQuads()
 }
 
 // removing / getting tiles
-Sprite* TMXLayer::getTileAt(const Vec2& tileCoordinate)
+Sprite* TMXLayer::getTileAt(const CocVec2& tileCoordinate)
 {
     CCASSERT( tileCoordinate.x < _layerSize.width && tileCoordinate.y < _layerSize.height && tileCoordinate.x >=0 && tileCoordinate.y >=0, "TMXLayer: invalid position");
     CCASSERT( _tiles, "TMXLayer: the tiles map has been released");
@@ -597,8 +597,8 @@ Sprite* TMXLayer::getTileAt(const Vec2& tileCoordinate)
             rect = CC_RECT_PIXELS_TO_POINTS(rect);
             tile = Sprite::createWithTexture(_texture, rect);
             
-            Vec2 p = this->getPositionAt(tileCoordinate);
-            tile->setAnchorPoint(Vec2::ZERO);
+            CocVec2 p = this->getPositionAt(tileCoordinate);
+            tile->setAnchorPoint(CocVec2::ZERO);
             tile->setPosition(p);
             tile->setPositionZ((float)getVertexZForPos(tileCoordinate));
             tile->setOpacity(this->getOpacity());
@@ -613,7 +613,7 @@ Sprite* TMXLayer::getTileAt(const Vec2& tileCoordinate)
     return tile;
 }
 
-int TMXLayer::getTileGIDAt(const Vec2& tileCoordinate, TMXTileFlags* flags/* = nullptr*/)
+int TMXLayer::getTileGIDAt(const CocVec2& tileCoordinate, TMXTileFlags* flags/* = nullptr*/)
 {
     CCASSERT(tileCoordinate.x < _layerSize.width && tileCoordinate.y < _layerSize.height && tileCoordinate.x >=0 && tileCoordinate.y >=0, "TMXLayer: invalid position");
     CCASSERT(_tiles, "TMXLayer: the tiles map has been released");
@@ -639,12 +639,12 @@ int TMXLayer::getTileGIDAt(const Vec2& tileCoordinate, TMXTileFlags* flags/* = n
     return (tile & kTMXFlippedMask);
 }
 
-Vec2 TMXLayer::getPositionAt(const Vec2& pos)
+CocVec2 TMXLayer::getPositionAt(const CocVec2& pos)
 {
     return PointApplyTransform(pos, _tileToNodeTransform);
 }
 
-int TMXLayer::getVertexZForPos(const Vec2& pos)
+int TMXLayer::getVertexZForPos(const CocVec2& pos)
 {
     int ret = 0;
     int maxVal = 0;
@@ -675,7 +675,7 @@ int TMXLayer::getVertexZForPos(const Vec2& pos)
     return ret;
 }
 
-void TMXLayer::removeTileAt(const Vec2& tileCoordinate)
+void TMXLayer::removeTileAt(const CocVec2& tileCoordinate)
 {
     
     CCASSERT( tileCoordinate.x < _layerSize.width && tileCoordinate.y < _layerSize.height && tileCoordinate.x >=0 && tileCoordinate.y >=0, "TMXLayer: invalid position");
@@ -756,9 +756,9 @@ void TMXLayer::parseInternalProperties()
 }
 
 //CCTMXLayer2 - obtaining positions, offset
-Vec2 TMXLayer::calculateLayerOffset(const Vec2& pos)
+CocVec2 TMXLayer::calculateLayerOffset(const CocVec2& pos)
 {
-    Vec2 ret;
+    CocVec2 ret;
     switch (_layerOrientation) 
     {
     case FAST_TMX_ORIENTATION_ORTHO:
@@ -777,12 +777,12 @@ Vec2 TMXLayer::calculateLayerOffset(const Vec2& pos)
 }
 
 // TMXLayer - adding / remove tiles
-void TMXLayer::setTileGID(int gid, const Vec2& tileCoordinate)
+void TMXLayer::setTileGID(int gid, const CocVec2& tileCoordinate)
 {
     setTileGID(gid, tileCoordinate, (TMXTileFlags)0);
 }
 
-void TMXLayer::setTileGID(int gid, const Vec2& tileCoordinate, TMXTileFlags flags)
+void TMXLayer::setTileGID(int gid, const CocVec2& tileCoordinate, TMXTileFlags flags)
 {
     CCASSERT(tileCoordinate.x < _layerSize.width && tileCoordinate.y < _layerSize.height && tileCoordinate.x >=0 && tileCoordinate.y >=0, "TMXLayer: invalid position");
     CCASSERT(_tiles, "TMXLayer: the tiles map has been released");
@@ -833,11 +833,11 @@ void TMXLayer::setTileGID(int gid, const Vec2& tileCoordinate, TMXTileFlags flag
     }
 }
 
-void TMXLayer::setupTileSprite(Sprite* sprite, const Vec2& pos, uint32_t gid)
+void TMXLayer::setupTileSprite(Sprite* sprite, const CocVec2& pos, uint32_t gid)
 {
     sprite->setPosition(getPositionAt(pos));
     sprite->setPositionZ((float)getVertexZForPos(pos));
-    sprite->setAnchorPoint(Vec2::ZERO);
+    sprite->setAnchorPoint(CocVec2::ZERO);
     sprite->setOpacity(this->getOpacity());
     
     //issue 1264, flip can be undone as well
@@ -849,7 +849,7 @@ void TMXLayer::setupTileSprite(Sprite* sprite, const Vec2& pos, uint32_t gid)
     if (gid & kTMXTileDiagonalFlag)
     {
         // put the anchor in the middle for ease of rotation.
-        sprite->setAnchorPoint(Vec2(0.5f,0.5f));
+        sprite->setAnchorPoint(CocVec2(0.5f,0.5f));
         sprite->setPosition(getPositionAt(pos).x + sprite->getContentSize().height/2,
                                   getPositionAt(pos).y + sprite->getContentSize().width/2 );
         

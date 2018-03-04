@@ -65,7 +65,7 @@ public:
      * @param direction The ray's direction.
      * @lua new
      */
-    Ray(const Vec3& origin, const Vec3& direction);
+    Ray(const CocVec3& origin, const CocVec3& direction);
 
     /**
      * Destructor.
@@ -84,7 +84,7 @@ public:
     bool intersects(const OBB& obb, float* distance = nullptr) const;
 
     float dist(const Plane& plane) const;
-    Vec3 intersects(const Plane& plane) const;
+    CocVec3 intersects(const Plane& plane) const;
     
     /**
      * Sets this ray to the specified values.
@@ -92,17 +92,17 @@ public:
      * @param origin The ray's origin.
      * @param direction The ray's direction.
      */
-    void set(const Vec3& origin, const Vec3& direction);
+    void set(const CocVec3& origin, const CocVec3& direction);
 
     /**
      * Transforms this ray by the given transformation matrix.
      *
      * @param matrix The transformation matrix to transform by.
      */
-    void transform(const Mat4& matrix);
+    void transform(const CocMat4& matrix);
 
-    Vec3 _origin;        // The ray origin position.
-    Vec3 _direction;     // The ray direction vector.
+    CocVec3 _origin;        // The ray origin position.
+    CocVec3 _direction;     // The ray direction vector.
 };
 
 // end of 3d group

@@ -252,8 +252,8 @@ Rect GLViewImpl::getSafeAreaRect() const
         safeAreaInsets.bottom *= eaglview.contentScaleFactor;
 
         // Get leftBottom and rightTop point in UI coordinates
-        Vec2 leftBottom = Vec2(safeAreaInsets.left, _screenSize.height - safeAreaInsets.bottom);
-        Vec2 rightTop = Vec2(_screenSize.width - safeAreaInsets.right, safeAreaInsets.top);
+        CocVec2 leftBottom = CocVec2(safeAreaInsets.left, _screenSize.height - safeAreaInsets.bottom);
+        CocVec2 rightTop = CocVec2(_screenSize.width - safeAreaInsets.right, safeAreaInsets.top);
 
         // Convert a point from UI coordinates to which in design resolution coordinate.
         leftBottom.x = (leftBottom.x - _viewPortRect.origin.x) / _scaleX,

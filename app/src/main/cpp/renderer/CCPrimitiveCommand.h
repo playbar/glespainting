@@ -61,8 +61,8 @@ public:
      @param mv ModelView matrix for the command.
      @param flags to indicate that the command is using 3D rendering or not.
      */
-    void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, Primitive* primitive, const Mat4& mv, uint32_t flags);
-    CC_DEPRECATED_ATTRIBUTE void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, Primitive* primitive,const Mat4& mv);
+    void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, Primitive* primitive, const CocMat4& mv, uint32_t flags);
+    CC_DEPRECATED_ATTRIBUTE void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, Primitive* primitive,const CocMat4& mv);
     
     /**Get the generated material ID.*/
     uint32_t getMaterialID() const { return _materialID; }
@@ -73,7 +73,7 @@ public:
     /**Get the blend function for drawing.*/
     BlendFunc getBlendType() const { return _blendType; }
     /**Get the modelview matrix when draw the primitive.*/
-    const Mat4& getModelView() const { return _mv; }
+    const CocMat4& getModelView() const { return _mv; }
     /**Execute and draw the command, called by renderer.*/
     void execute() const;
 protected:
@@ -83,7 +83,7 @@ protected:
     GLProgramState* _glProgramState;
     BlendFunc _blendType;
     Primitive* _primitive;
-    Mat4 _mv;
+    CocMat4 _mv;
 };
 
 NS_CC_END

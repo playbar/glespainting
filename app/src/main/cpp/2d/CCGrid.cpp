@@ -204,8 +204,8 @@ void GridBase::set2DProjection()
     
     director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 
-    Mat4 orthoMatrix;
-    Mat4::createOrthographicOffCenter(0, size.width, 0, size.height, -1, 1, &orthoMatrix);
+    CocMat4 orthoMatrix;
+    CocMat4::createOrthographicOffCenter(0, size.width, 0, size.height, -1, 1, &orthoMatrix);
     director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
 
     director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
@@ -246,7 +246,7 @@ void GridBase::afterDraw(cocos2d::Node * /*target*/)
     glViewport(vp._left, vp._bottom, vp._width, vp._height);
 //    if (target->getCamera()->isDirty())
 //    {
-//        Vec2 offset = target->getAnchorPointInPoints();
+//        CocVec2 offset = target->getAnchorPointInPoints();
 //
 //        //
 //        // FIXME: Camera should be applied in the AnchorPoint
@@ -450,9 +450,9 @@ void Grid3D::calculateVertexPoints(void)
 
     unsigned int numOfPoints = (_gridSize.width+1) * (_gridSize.height+1);
 
-    _vertices = malloc(numOfPoints * sizeof(Vec3));
-    _originalVertices = malloc(numOfPoints * sizeof(Vec3));
-    _texCoordinates = malloc(numOfPoints * sizeof(Vec2));
+    _vertices = malloc(numOfPoints * sizeof(CocVec3));
+    _originalVertices = malloc(numOfPoints * sizeof(CocVec3));
+    _texCoordinates = malloc(numOfPoints * sizeof(CocVec2));
     _indices = (GLushort*)malloc(_gridSize.width * _gridSize.height * sizeof(GLushort) * 6);
 
     GLfloat *vertArray = (GLfloat*)_vertices;
@@ -480,15 +480,15 @@ void Grid3D::calculateVertexPoints(void)
             memcpy(&idxArray[6*idx], tempidx, 6*sizeof(GLushort));
 
             int l1[4] = {a*3, b*3, c*3, d*3};
-            Vec3 e(x1, y1, 0);
-            Vec3 f(x2, y1, 0);
-            Vec3 g(x2, y2, 0);
-            Vec3 h(x1, y2, 0);
+            CocVec3 e(x1, y1, 0);
+            CocVec3 f(x2, y1, 0);
+            CocVec3 g(x2, y2, 0);
+            CocVec3 h(x1, y2, 0);
 
-            Vec3 l2[4] = {e, f, g, h};
+            CocVec3 l2[4] = {e, f, g, h};
 
             int tex1[4] = {a*2, b*2, c*2, d*2};
-            Vec2 Tex2F[4] = {Vec2(x1, y1), Vec2(x2, y1), Vec2(x2, y2), Vec2(x1, y2)};
+            CocVec2 Tex2F[4] = {CocVec2(x1, y1), CocVec2(x2, y1), CocVec2(x2, y2), CocVec2(x1, y2)};
 
             for (i = 0; i < 4; ++i)
             {
@@ -509,34 +509,34 @@ void Grid3D::calculateVertexPoints(void)
         }
     }
 
-    memcpy(_originalVertices, _vertices, (_gridSize.width+1) * (_gridSize.height+1) * sizeof(Vec3));
+    memcpy(_originalVertices, _vertices, (_gridSize.width+1) * (_gridSize.height+1) * sizeof(CocVec3));
 }
 
-Vec3 Grid3D::getVertex(const Vec2& pos) const
+CocVec3 Grid3D::getVertex(const CocVec2& pos) const
 {
     CCASSERT( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
     
     int index = (pos.x * (_gridSize.height+1) + pos.y) * 3;
     float *vertArray = (float*)_vertices;
 
-    Vec3 vert(vertArray[index], vertArray[index+1], vertArray[index+2]);
+    CocVec3 vert(vertArray[index], vertArray[index+1], vertArray[index+2]);
 
     return vert;
 }
 
-Vec3 Grid3D::getOriginalVertex(const Vec2& pos) const
+CocVec3 Grid3D::getOriginalVertex(const CocVec2& pos) const
 {
     CCASSERT( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
     
     int index = (pos.x * (_gridSize.height+1) + pos.y) * 3;
     float *vertArray = (float*)_originalVertices;
 
-    Vec3 vert(vertArray[index], vertArray[index+1], vertArray[index+2]);
+    CocVec3 vert(vertArray[index], vertArray[index+1], vertArray[index+2]);
 
     return vert;
 }
 
-void Grid3D::setVertex(const Vec2& pos, const Vec3& vertex)
+void Grid3D::setVertex(const CocVec2& pos, const CocVec3& vertex)
 {
     CCASSERT( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
     int index = (pos.x * (_gridSize.height + 1) + pos.y) * 3;
@@ -550,7 +550,7 @@ void Grid3D::reuse(void)
 {
     if (_reuseGrid > 0)
     {
-        memcpy(_originalVertices, _vertices, (_gridSize.width+1) * (_gridSize.height+1) * sizeof(Vec3));
+        memcpy(_originalVertices, _vertices, (_gridSize.width+1) * (_gridSize.height+1) * sizeof(CocVec3));
         --_reuseGrid;
     }
 }
@@ -690,9 +690,9 @@ void TiledGrid3D::calculateVertexPoints(void)
     CC_SAFE_FREE(_texCoordinates);
     CC_SAFE_FREE(_indices);
 
-    _vertices = malloc(numQuads*4*sizeof(Vec3));
-    _originalVertices = malloc(numQuads*4*sizeof(Vec3));
-    _texCoordinates = malloc(numQuads*4*sizeof(Vec2));
+    _vertices = malloc(numQuads*4*sizeof(CocVec3));
+    _originalVertices = malloc(numQuads*4*sizeof(CocVec3));
+    _texCoordinates = malloc(numQuads*4*sizeof(CocVec2));
     _indices = (GLushort*)malloc(numQuads*6*sizeof(GLushort));
 
     GLfloat *vertArray = (GLfloat*)_vertices;
@@ -757,7 +757,7 @@ void TiledGrid3D::calculateVertexPoints(void)
     memcpy(_originalVertices, _vertices, numQuads * 12 * sizeof(GLfloat));
 }
 
-void TiledGrid3D::setTile(const Vec2& pos, const Quad3& coords)
+void TiledGrid3D::setTile(const CocVec2& pos, const Quad3& coords)
 {
     CCASSERT( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
     int idx = (_gridSize.height * pos.x + pos.y) * 4 * 3;
@@ -765,7 +765,7 @@ void TiledGrid3D::setTile(const Vec2& pos, const Quad3& coords)
     memcpy(&vertArray[idx], &coords, sizeof(Quad3));
 }
 
-Quad3 TiledGrid3D::getOriginalTile(const Vec2& pos) const
+Quad3 TiledGrid3D::getOriginalTile(const CocVec2& pos) const
 {
     CCASSERT( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
     int idx = (_gridSize.height * pos.x + pos.y) * 4 * 3;
@@ -777,7 +777,7 @@ Quad3 TiledGrid3D::getOriginalTile(const Vec2& pos) const
     return ret;
 }
 
-Quad3 TiledGrid3D::getTile(const Vec2& pos) const
+Quad3 TiledGrid3D::getTile(const CocVec2& pos) const
 {
     CCASSERT( pos.x == (unsigned int)pos.x && pos.y == (unsigned int) pos.y , "Numbers must be integers");
     int idx = (_gridSize.height * pos.x + pos.y) * 4 * 3;

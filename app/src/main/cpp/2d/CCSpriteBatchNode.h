@@ -191,7 +191,7 @@ public:
     /**
      * @js NA
      */
-    virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
+    virtual void visit(CocRenderer *renderer, const CocMat4 &parentTransform, uint32_t parentFlags) override;
     
     using Node::addChild;
     virtual void addChild(Node * child, int zOrder, int tag) override;
@@ -207,7 +207,7 @@ public:
 	/**
 	* @js NA
 	*/
-	virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+	virtual void draw(CocRenderer *renderer, const CocMat4 &transform, uint32_t flags) override;
 	/**
 	* @js NA
 	*/

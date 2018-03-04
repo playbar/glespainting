@@ -176,7 +176,7 @@ public:
     unsigned int getLightMask() const { return _lightMask; }
     
     /**draw*/
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    virtual void draw(CocRenderer *renderer, const CocMat4 &transform, uint32_t flags) override;
 
     /** Adds a new material to the sprite.
      The Material will be applied to all the meshes that belong to the sprite.
@@ -227,7 +227,7 @@ CC_CONSTRUCTOR_ACCESS:
      * Visits this Sprite3D's children and draw them recursively.
      * Note: all its children will rendered as 3D objects
      */
-    virtual void visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags) override;
+    virtual void visit(CocRenderer *renderer, const CocMat4& parentTransform, uint32_t parentFlags) override;
     
     /**generate default material*/
     void genMaterial(bool useLight = false);
@@ -260,7 +260,7 @@ protected:
     Vector<Mesh*>              _meshes;
 
     mutable AABB                 _aabb;                 // cache current aabb
-    mutable Mat4                 _nodeToWorldTransform; // cache the matrix
+    mutable CocMat4                 _nodeToWorldTransform; // cache the matrix
     mutable bool                 _aabbDirty;
     unsigned int                 _lightMask;
     bool                         _shaderUsingLight; // is current shader using light ?

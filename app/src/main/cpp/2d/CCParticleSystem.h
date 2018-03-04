@@ -140,7 +140,7 @@ public:
 
 
 
-//typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tParticle*, Vec2);
+//typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tParticle*, CocVec2);
 
 class Texture2D;
 
@@ -297,12 +297,12 @@ public:
      *
      * @return The gravity.
      */
-    virtual const Vec2& getGravity();
+    virtual const CocVec2& getGravity();
     /** Sets the gravity.
      *
      * @param g The gravity.
      */
-    virtual void setGravity(const Vec2& g);
+    virtual void setGravity(const CocVec2& g);
     /** Gets the speed.
      *
      * @return The speed.
@@ -499,23 +499,23 @@ public:
      *
      * @return The source position of the emitter.
      */
-    const Vec2& getSourcePosition() const { return _sourcePosition; }
+    const CocVec2& getSourcePosition() const { return _sourcePosition; }
     /** Sets the source position of the emitter.
      *
      * @param pos The source position of the emitter.
      */
-    void setSourcePosition(const Vec2& pos) { _sourcePosition = pos; }
+    void setSourcePosition(const CocVec2& pos) { _sourcePosition = pos; }
     
     /** Gets the position variance of the emitter.
      *
      * @return The position variance of the emitter.
      */
-    const Vec2& getPosVar() const { return _posVar; }
+    const CocVec2& getPosVar() const { return _posVar; }
     /** Sets the position variance of the emitter.
      *
      * @param pos The position variance of the emitter.
      */
-    void setPosVar(const Vec2& pos) { _posVar = pos; }
+    void setPosVar(const CocVec2& pos) { _posVar = pos; }
 
     /** Gets the life of each particle.
      *
@@ -854,7 +854,7 @@ protected:
     //! Mode A:Gravity + Tangential Accel + Radial Accel
     struct {
         /** Gravity value. Only available in 'Gravity' mode. */
-        Vec2 gravity;
+        CocVec2 gravity;
         /** speed of each particle. Only available in 'Gravity' mode.  */
         float speed;
         /** speed variance of each particle. Only available in 'Gravity' mode. */
@@ -925,9 +925,9 @@ protected:
     /** How many seconds the emitter will run. -1 means 'forever' */
     float _duration;
     /** sourcePosition of the emitter */
-    Vec2 _sourcePosition;
+    CocVec2 _sourcePosition;
     /** Position variance of the emitter */
-    Vec2 _posVar;
+    CocVec2 _posVar;
     /** life, and life variation of each particle */
     float _life;
     /** life variance of each particle */

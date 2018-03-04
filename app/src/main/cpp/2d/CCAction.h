@@ -434,8 +434,8 @@ protected:
     bool _boundaryFullyCovered;
 
     /** Fast access to the screen dimensions. */
-    Vec2 _halfScreenSize;
-    Vec2 _fullScreenSize;
+    CocVec2 _halfScreenSize;
+    CocVec2 _fullScreenSize;
 
     /** World boundaries. */
     float _leftBoundary;

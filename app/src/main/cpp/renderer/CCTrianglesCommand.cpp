@@ -43,7 +43,7 @@ TrianglesCommand::TrianglesCommand()
     _type = RenderCommand::Type::TRIANGLES_COMMAND;
 }
 
-void TrianglesCommand::init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles,const Mat4& mv, uint32_t flags)
+void TrianglesCommand::init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles,const CocMat4& mv, uint32_t flags)
 {
     CCASSERT(glProgramState, "Invalid GLProgramState");
     CCASSERT(glProgramState->getVertexAttribsFlags() == 0, "No custom attributes are supported in QuadCommand");
@@ -70,12 +70,12 @@ void TrianglesCommand::init(float globalOrder, GLuint textureID, GLProgramState*
     }
 }
 
-void TrianglesCommand::init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles,const Mat4& mv)
+void TrianglesCommand::init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles,const CocMat4& mv)
 {
     init(globalOrder, textureID, glProgramState, blendType, triangles, mv, 0);
 }
 
-void TrianglesCommand::init(float globalOrder, Texture2D* texture, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles, const Mat4& mv, uint32_t flags)
+void TrianglesCommand::init(float globalOrder, Texture2D* texture, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles, const CocMat4& mv, uint32_t flags)
 {
     init(globalOrder, texture->getName(), glProgramState, blendType, triangles, mv, flags);
     _alphaTextureID = texture->getAlphaTextureName();

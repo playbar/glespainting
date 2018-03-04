@@ -102,7 +102,7 @@ int NinePatchImageParser::getPixelOriginOffset(Direction direction)const
     }
 }
 
-Vec2 NinePatchImageParser::parseHorizontalMargin()const
+CocVec2 NinePatchImageParser::parseHorizontalMargin()const
 {
     unsigned char* data = _image->getData();
     
@@ -129,10 +129,10 @@ Vec2 NinePatchImageParser::parseHorizontalMargin()const
         }
         lastPixel = pixel;
     }
-    return Vec2(x1,x2);
+    return CocVec2(x1,x2);
 }
 
-Vec2 NinePatchImageParser::parseVerticalMargin()const
+CocVec2 NinePatchImageParser::parseVerticalMargin()const
 {
     unsigned char* data = _image->getData();
     int imageWidth = _image->getWidth();
@@ -161,14 +161,14 @@ Vec2 NinePatchImageParser::parseVerticalMargin()const
         }
         lastPixel = pixel;
     }
-    return Vec2(y1,y2);
+    return CocVec2(y1,y2);
 }
 
 Rect NinePatchImageParser::parseCapInset() const
 {
     Rect capInsets;
-    Vec2 horizontalLine = this->parseHorizontalMargin();
-    Vec2 verticalLine = this->parseVerticalMargin();
+    CocVec2 horizontalLine = this->parseHorizontalMargin();
+    CocVec2 verticalLine = this->parseVerticalMargin();
     
     if(_isRotated)
     {

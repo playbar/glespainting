@@ -41,19 +41,19 @@ AffineTransform __CCAffineTransformMake(float a, float b, float c, float d, floa
   return t;
 }
 
-Vec2 __CCPointApplyAffineTransform(const Vec2& point, const AffineTransform& t)
+CocVec2 __CCPointApplyAffineTransform(const CocVec2& point, const AffineTransform& t)
 {
-  Vec2 p;
+  CocVec2 p;
   p.x = (float)((double)t.a * point.x + (double)t.c * point.y + t.tx);
   p.y = (float)((double)t.b * point.x + (double)t.d * point.y + t.ty);
   return p;
 }
 
-Vec2 PointApplyTransform(const Vec2& point, const Mat4& transform)
+CocVec2 PointApplyTransform(const CocVec2& point, const CocMat4& transform)
 {
-    Vec3 vec(point.x, point.y, 0);
+    CocVec3 vec(point.x, point.y, 0);
     transform.transformPoint(&vec);
-    return Vec2(vec.x, vec.y);
+    return CocVec2(vec.x, vec.y);
 }
 
 
@@ -81,10 +81,10 @@ Rect RectApplyAffineTransform(const Rect& rect, const AffineTransform& anAffineT
     float right  = rect.getMaxX();
     float bottom = rect.getMaxY();
     
-    Vec2 topLeft = PointApplyAffineTransform(Vec2(left, top), anAffineTransform);
-    Vec2 topRight = PointApplyAffineTransform(Vec2(right, top), anAffineTransform);
-    Vec2 bottomLeft = PointApplyAffineTransform(Vec2(left, bottom), anAffineTransform);
-    Vec2 bottomRight = PointApplyAffineTransform(Vec2(right, bottom), anAffineTransform);
+    CocVec2 topLeft = PointApplyAffineTransform(CocVec2(left, top), anAffineTransform);
+    CocVec2 topRight = PointApplyAffineTransform(CocVec2(right, top), anAffineTransform);
+    CocVec2 bottomLeft = PointApplyAffineTransform(CocVec2(left, bottom), anAffineTransform);
+    CocVec2 bottomRight = PointApplyAffineTransform(CocVec2(right, bottom), anAffineTransform);
 
     float minX = min(min(topLeft.x, topRight.x), min(bottomLeft.x, bottomRight.x));
     float maxX = max(max(topLeft.x, topRight.x), max(bottomLeft.x, bottomRight.x));
@@ -94,17 +94,17 @@ Rect RectApplyAffineTransform(const Rect& rect, const AffineTransform& anAffineT
     return Rect(minX, minY, (maxX - minX), (maxY - minY));
 }
 
-Rect RectApplyTransform(const Rect& rect, const Mat4& transform)
+Rect RectApplyTransform(const Rect& rect, const CocMat4& transform)
 {
     float top    = rect.getMinY();
     float left   = rect.getMinX();
     float right  = rect.getMaxX();
     float bottom = rect.getMaxY();
     
-    Vec3 topLeft(left, top, 0);
-    Vec3 topRight(right, top, 0);
-    Vec3 bottomLeft(left, bottom, 0);
-    Vec3 bottomRight(right, bottom, 0);
+    CocVec3 topLeft(left, top, 0);
+    CocVec3 topRight(right, top, 0);
+    CocVec3 bottomLeft(left, bottom, 0);
+    CocVec3 bottomRight(right, bottom, 0);
     transform.transformPoint(&topLeft);
     transform.transformPoint(&topRight);
     transform.transformPoint(&bottomLeft);
@@ -152,7 +152,7 @@ AffineTransform AffineTransformConcat(const AffineTransform& t1, const AffineTra
                                     t1.tx * t2.b + t1.ty * t2.d + t2.ty);                  //ty
 }
 
-Mat4 TransformConcat(const Mat4& t1, const Mat4& t2)
+CocMat4 TransformConcat(const CocMat4& t1, const CocMat4& t2)
 {
     return t1 * t2;
 }

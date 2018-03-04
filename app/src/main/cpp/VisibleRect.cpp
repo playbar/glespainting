@@ -42,56 +42,56 @@ Rect VisibleRect::getVisibleRect()
     return s_visibleRect;
 }
 
-Vec2 VisibleRect::left()
+CocVec2 VisibleRect::left()
 {
     lazyInit();
-    return Vec2(s_visibleRect.origin.x, s_visibleRect.origin.y+s_visibleRect.size.height/2);
+    return CocVec2(s_visibleRect.origin.x, s_visibleRect.origin.y+s_visibleRect.size.height/2);
 }
 
-Vec2 VisibleRect::right()
+CocVec2 VisibleRect::right()
 {
     lazyInit();
-    return Vec2(s_visibleRect.origin.x+s_visibleRect.size.width, s_visibleRect.origin.y+s_visibleRect.size.height/2);
+    return CocVec2(s_visibleRect.origin.x+s_visibleRect.size.width, s_visibleRect.origin.y+s_visibleRect.size.height/2);
 }
 
-Vec2 VisibleRect::top()
+CocVec2 VisibleRect::top()
 {
     lazyInit();
-    return Vec2(s_visibleRect.origin.x+s_visibleRect.size.width/2, s_visibleRect.origin.y+s_visibleRect.size.height);
+    return CocVec2(s_visibleRect.origin.x+s_visibleRect.size.width/2, s_visibleRect.origin.y+s_visibleRect.size.height);
 }
 
-Vec2 VisibleRect::bottom()
+CocVec2 VisibleRect::bottom()
 {
     lazyInit();
-    return Vec2(s_visibleRect.origin.x+s_visibleRect.size.width/2, s_visibleRect.origin.y);
+    return CocVec2(s_visibleRect.origin.x+s_visibleRect.size.width/2, s_visibleRect.origin.y);
 }
 
-Vec2 VisibleRect::center()
+CocVec2 VisibleRect::center()
 {
     lazyInit();
-    return Vec2(s_visibleRect.origin.x+s_visibleRect.size.width/2, s_visibleRect.origin.y+s_visibleRect.size.height/2);
+    return CocVec2(s_visibleRect.origin.x+s_visibleRect.size.width/2, s_visibleRect.origin.y+s_visibleRect.size.height/2);
 }
 
-Vec2 VisibleRect::leftTop()
+CocVec2 VisibleRect::leftTop()
 {
     lazyInit();
-    return Vec2(s_visibleRect.origin.x, s_visibleRect.origin.y+s_visibleRect.size.height);
+    return CocVec2(s_visibleRect.origin.x, s_visibleRect.origin.y+s_visibleRect.size.height);
 }
 
-Vec2 VisibleRect::rightTop()
+CocVec2 VisibleRect::rightTop()
 {
     lazyInit();
-    return Vec2(s_visibleRect.origin.x+s_visibleRect.size.width, s_visibleRect.origin.y+s_visibleRect.size.height);
+    return CocVec2(s_visibleRect.origin.x+s_visibleRect.size.width, s_visibleRect.origin.y+s_visibleRect.size.height);
 }
 
-Vec2 VisibleRect::leftBottom()
+CocVec2 VisibleRect::leftBottom()
 {
     lazyInit();
     return s_visibleRect.origin;
 }
 
-Vec2 VisibleRect::rightBottom()
+CocVec2 VisibleRect::rightBottom()
 {
     lazyInit();
-    return Vec2(s_visibleRect.origin.x+s_visibleRect.size.width, s_visibleRect.origin.y);
+    return CocVec2(s_visibleRect.origin.x+s_visibleRect.size.width, s_visibleRect.origin.y);
 }

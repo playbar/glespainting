@@ -208,16 +208,16 @@ Size GLView::getVisibleSize() const
     }
 }
 
-Vec2 GLView::getVisibleOrigin() const
+CocVec2 GLView::getVisibleOrigin() const
 {
     if (_resolutionPolicy == ResolutionPolicy::NO_BORDER)
     {
-        return Vec2((_designResolutionSize.width - _screenSize.width/_scaleX)/2, 
+        return CocVec2((_designResolutionSize.width - _screenSize.width/_scaleX)/2,
                            (_designResolutionSize.height - _screenSize.height/_scaleY)/2);
     }
     else 
     {
-        return Vec2::ZERO;
+        return CocVec2::ZERO;
     }
 }
 
@@ -460,12 +460,12 @@ float GLView::getScaleY() const
     return _scaleY;
 }
 
-void GLView::renderScene(Scene* scene, Renderer* renderer)
+void GLView::renderScene(Scene* scene, CocRenderer* renderer)
 {
     CCASSERT(scene, "Invalid Scene");
     CCASSERT(renderer, "Invalid Renderer");
 
-    scene->render(renderer, Mat4::IDENTITY, nullptr);
+    scene->render(renderer, CocMat4::IDENTITY, nullptr);
 
 }
 

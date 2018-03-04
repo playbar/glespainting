@@ -79,7 +79,7 @@ public:
      * @param originalSize A specified original size.
      * @return An autoreleased SpriteFrame object.
      */
-    static SpriteFrame* create(const std::string& filename, const Rect& rect, bool rotated, const Vec2& offset, const Size& originalSize);
+    static SpriteFrame* create(const std::string& filename, const Rect& rect, bool rotated, const CocVec2& offset, const Size& originalSize);
     
     /** Create a SpriteFrame with a texture, rect in points.
      It is assumed that the frame was not trimmed.
@@ -98,7 +98,7 @@ public:
      * @param originalSize A specified original size.
      * @return An autoreleased SpriteFrame object.
      */
-    static SpriteFrame* createWithTexture(Texture2D* pobTexture, const Rect& rect, bool rotated, const Vec2& offset, const Size& originalSize);
+    static SpriteFrame* createWithTexture(Texture2D* pobTexture, const Rect& rect, bool rotated, const CocVec2& offset, const Size& originalSize);
 
     // attributes
     /** Get rect of the sprite frame.
@@ -165,12 +165,12 @@ public:
      * 
      * @return The offset of the sprite frame, in pixels.
      */
-    const Vec2& getOffsetInPixels() const;
+    const CocVec2& getOffsetInPixels() const;
     /** Set offset of the frame.
      * 
      * @param offsetInPixels The offset of the sprite frame, in pixels.
      */
-    void setOffsetInPixels(const Vec2& offsetInPixels);
+    void setOffsetInPixels(const CocVec2& offsetInPixels);
 
     /** Get original size of the trimmed image.
      *
@@ -209,23 +209,23 @@ public:
      *
      * @return The offset of the sprite frame.
      */
-    const Vec2& getOffset() const;
+    const CocVec2& getOffset() const;
     /** Set offset of the frame.
      *
      * @param offsets The offset of the sprite frame.
      */
-    void setOffset(const Vec2& offsets);
+    void setOffset(const CocVec2& offsets);
 
     /** Get anchor point of the frame.
      *
      * @return The anchor point of the sprite frame.
      */
-    const Vec2& getAnchorPoint() const;
+    const CocVec2& getAnchorPoint() const;
     /** Set anchor point of the frame.
      *
      * @param anchorPoint The anchor point of the sprite frame.
      */
-    void setAnchorPoint(const Vec2& anchorPoint);
+    void setAnchorPoint(const CocVec2& anchorPoint);
     /** Check if anchor point is defined for the frame.
      *
      * @return true if anchor point is available.
@@ -277,24 +277,24 @@ CC_CONSTRUCTOR_ACCESS:
     /** Initializes a SpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
      The originalSize is the size in points of the frame before being trimmed.
      */
-    bool initWithTexture(Texture2D* pobTexture, const Rect& rect, bool rotated, const Vec2& offset, const Size& originalSize);
+    bool initWithTexture(Texture2D* pobTexture, const Rect& rect, bool rotated, const CocVec2& offset, const Size& originalSize);
     
     /** Initializes a SpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
      The originalSize is the size in pixels of the frame before being trimmed.
      
      @since v1.1
      */
-    bool initWithTextureFilename(const std::string& filename, const Rect& rect, bool rotated, const Vec2& offset, const Size& originalSize);
+    bool initWithTextureFilename(const std::string& filename, const Rect& rect, bool rotated, const CocVec2& offset, const Size& originalSize);
 
 protected:
-    Vec2 _offset;
-    Vec2 _anchorPoint;
+    CocVec2 _offset;
+    CocVec2 _anchorPoint;
     Size _originalSize;
     Rect _rectInPixels;
     bool   _rotated;
     Rect _rect;
     Rect _centerRect;
-    Vec2 _offsetInPixels;
+    CocVec2 _offsetInPixels;
     Size _originalSizeInPixels;
     Texture2D *_texture;
     std::string  _textureFilename;

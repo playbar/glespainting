@@ -57,17 +57,17 @@ public:
      *
      * @lua NA
      */
-    OBB(const Vec3* verts, int num);
+    OBB(const CocVec3* verts, int num);
     
     /*
      * Check point in
      */
-    bool containPoint(const Vec3& point) const;
+    bool containPoint(const CocVec3& point) const;
 
     /*
      * Specify obb values
      */
-    void set(const Vec3& center, const Vec3& _xAxis, const Vec3& _yAxis, const Vec3& _zAxis, const Vec3& _extents);
+    void set(const CocVec3& center, const CocVec3& _xAxis, const CocVec3& _yAxis, const CocVec3& _zAxis, const CocVec3& _extents);
     
     /*
      * Clear obb
@@ -86,7 +86,7 @@ public:
      * verts[6] : left bottom back
      * verts[7] : left top back
      */
-    void getCorners(Vec3* verts) const;
+    void getCorners(CocVec3* verts) const;
     
     /*
      * Check intersect with other
@@ -96,7 +96,7 @@ public:
 	/**
      * Transforms the obb by the given transformation matrix.
      */
-    void transform(const Mat4& mat);
+    void transform(const CocMat4& mat);
     
 protected:
     /*
@@ -112,32 +112,32 @@ protected:
     /*
      * Project point to the target axis
      */
-    float projectPoint(const Vec3& point, const Vec3& axis) const;
+    float projectPoint(const CocVec3& point, const CocVec3& axis) const;
     
     /*
      * Calculate the min and max project value of through the box's corners
      */
-    void getInterval(const OBB& box, const Vec3& axis, float &min, float &max) const;
+    void getInterval(const OBB& box, const CocVec3& axis, float &min, float &max) const;
     
     /*
      * Get the edge of x y z axis direction
      */
-    Vec3 getEdgeDirection(int index) const;
+    CocVec3 getEdgeDirection(int index) const;
     
     /*
      * Get the face of x y z axis direction
      */
-    Vec3 getFaceDirection(int index) const;
+    CocVec3 getFaceDirection(int index) const;
 
 public:
-    Vec3 _center;   // obb center
-    Vec3 _xAxis;    // x axis of obb, unit vector
-    Vec3 _yAxis;    // y axis of obb, unit vector
-    Vec3 _zAxis;    // z axis of obb, unit vector
-    Vec3 _extentX;  // _xAxis * _extents.x
-    Vec3 _extentY;  // _yAxis * _extents.y
-    Vec3 _extentZ;  // _zAxis * _extents.z
-    Vec3 _extents;  // obb length along each axis
+    CocVec3 _center;   // obb center
+    CocVec3 _xAxis;    // x axis of obb, unit vector
+    CocVec3 _yAxis;    // y axis of obb, unit vector
+    CocVec3 _zAxis;    // z axis of obb, unit vector
+    CocVec3 _extentX;  // _xAxis * _extents.x
+    CocVec3 _extentY;  // _yAxis * _extents.y
+    CocVec3 _extentZ;  // _zAxis * _extents.z
+    CocVec3 _extents;  // obb length along each axis
 };
 
 // end of 3d group

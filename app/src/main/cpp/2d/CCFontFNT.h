@@ -40,7 +40,7 @@ class CC_DLL FontFNT : public Font
     
 public:
     
-    static FontFNT * create(const std::string& fntFilePath, const Vec2& imageOffset = Vec2::ZERO);
+    static FontFNT * create(const std::string& fntFilePath, const CocVec2& imageOffset = CocVec2::ZERO);
     /** Purges the cached data.
     Removes from memory the cached configurations and the atlas name dictionary.
     */
@@ -54,7 +54,7 @@ public:
 
 protected:
     
-    FontFNT(BMFontConfiguration *theContfig, const Vec2& imageOffset = Vec2::ZERO);
+    FontFNT(BMFontConfiguration *theContfig, const CocVec2& imageOffset = CocVec2::ZERO);
     /**
      * @js NA
      * @lua NA
@@ -66,7 +66,7 @@ private:
     int  getHorizontalKerningForChars(char32_t firstChar, char32_t secondChar) const;
     
     BMFontConfiguration * _configuration;
-    Vec2                   _imageOffset;
+    CocVec2                   _imageOffset;
     //User defined font size
     float  _fontSize;
 };

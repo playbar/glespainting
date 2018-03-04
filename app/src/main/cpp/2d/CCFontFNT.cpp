@@ -603,7 +603,7 @@ void BMFontConfiguration::parseKerningEntry(const char* line)
     _kerningDictionary[key] = amount;
 }
 
-FontFNT * FontFNT::create(const std::string& fntFilePath, const Vec2& imageOffset /* = Vec2::ZERO */)
+FontFNT * FontFNT::create(const std::string& fntFilePath, const CocVec2& imageOffset /* = CocVec2::ZERO */)
 {
     BMFontConfiguration *newConf = FNTConfigLoadFile(fntFilePath);
     if (!newConf)
@@ -626,7 +626,7 @@ FontFNT * FontFNT::create(const std::string& fntFilePath, const Vec2& imageOffse
     return tempFont;
 }
 
-FontFNT::FontFNT(BMFontConfiguration *theContfig, const Vec2& imageOffset /* = Vec2::ZERO */)
+FontFNT::FontFNT(BMFontConfiguration *theContfig, const CocVec2& imageOffset /* = CocVec2::ZERO */)
 :_configuration(theContfig)
 ,_imageOffset(CC_POINT_PIXELS_TO_POINTS(imageOffset))
 {

@@ -75,7 +75,7 @@ void TransitionPageTurn::sceneOrder()
     _isInSceneOnTop = _back;
 }
 
-void TransitionPageTurn::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+void TransitionPageTurn::draw(CocRenderer *renderer, const CocMat4 &transform, uint32_t flags)
 {
     Scene::draw(renderer, transform, flags);
     

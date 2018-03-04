@@ -41,7 +41,7 @@ BatchCommand::BatchCommand()
     _shader = nullptr;
 }
 
-void BatchCommand::init(float globalOrder, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const Mat4& modelViewTransform, uint32_t flags)
+void BatchCommand::init(float globalOrder, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const CocMat4& modelViewTransform, uint32_t flags)
 {
     CCASSERT(shader, "shader cannot be null");
     CCASSERT(textureAtlas, "textureAtlas cannot be null");
@@ -56,7 +56,7 @@ void BatchCommand::init(float globalOrder, GLProgram* shader, BlendFunc blendTyp
     _mv = modelViewTransform;
 }
 
-void BatchCommand::init(float globalOrder, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const Mat4& modelViewTransform)
+void BatchCommand::init(float globalOrder, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const CocMat4& modelViewTransform)
 {
     init(globalOrder, shader, blendType, textureAtlas, modelViewTransform, 0);
 }

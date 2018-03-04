@@ -53,7 +53,7 @@ public:
      * Constructor.
      * @lua new
      */
-    AABB(const Vec3& min, const Vec3& max);
+    AABB(const CocVec3& min, const CocVec3& max);
     
     /**
      * Constructor.
@@ -63,7 +63,7 @@ public:
     /**
      * Gets the center point of the bounding box.
      */
-    Vec3 getCenter();
+    CocVec3 getCenter();
 
     /* Near face, specified counter-clockwise looking towards the origin from the positive z-axis.
      * verts[0] : left top front
@@ -77,7 +77,7 @@ public:
      * verts[6] : left bottom back
      * verts[7] : left top back
      */
-    void getCorners(Vec3 *dst) const;
+    void getCorners(CocVec3 *dst) const;
 
     /**
      * Tests whether this bounding box intersects the specified bounding object.
@@ -87,7 +87,7 @@ public:
     /**
      * check whether the point is in.
      */
-    bool containPoint(const Vec3& point) const;
+    bool containPoint(const CocVec3& point) const;
 
     /**
      * Sets this bounding box to the smallest bounding box
@@ -98,7 +98,7 @@ public:
     /**
      * Sets this bounding box to the specified values.
      */
-    void set(const Vec3& min, const Vec3& max);
+    void set(const CocVec3& min, const CocVec3& max);
     
     /**
      * Reset min and max value.If you invoke this method, isEmpty() shall return true.
@@ -113,16 +113,16 @@ public:
     /**
      * update the _min and _max from the given point.
      */
-    void updateMinMax(const Vec3* point, ssize_t num);
+    void updateMinMax(const CocVec3* point, ssize_t num);
     
     /**
      * Transforms the bounding box by the given transformation matrix.
      */
-    void transform(const Mat4& mat);
+    void transform(const CocMat4& mat);
 
 public:
-    Vec3 _min;
-    Vec3 _max;
+    CocVec3 _min;
+    CocVec3 _max;
 };
 
 // end of 3d group

@@ -103,11 +103,11 @@ void free()
     s_initialized = false;
 }
 
-void drawPoint(const Vec2& point)
+void drawPoint(const CocVec2& point)
 {
     lazy_init();
 
-    Vec2 p;
+    CocVec2 p;
     p.x = point.x;
     p.y = point.y;
 
@@ -125,7 +125,7 @@ void drawPoint(const Vec2& point)
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,1);
 }
 
-void drawPoints( const Vec2 *points, unsigned int numberOfPoints )
+void drawPoints( const CocVec2 *points, unsigned int numberOfPoints )
 {
     lazy_init();
 
@@ -142,13 +142,13 @@ void drawPoints( const Vec2 *points, unsigned int numberOfPoints )
 }
 
 
-void drawLine(const Vec2& origin, const Vec2& destination)
+void drawLine(const CocVec2& origin, const CocVec2& destination)
 {
     lazy_init();
 
-    Vec2 vertices[2] = {
-        Vec2(origin.x, origin.y),
-        Vec2(destination.x, destination.y)
+    CocVec2 vertices[2] = {
+        CocVec2(origin.x, origin.y),
+        CocVec2(destination.x, destination.y)
     };
 
     s_shader->use();
@@ -162,27 +162,27 @@ void drawLine(const Vec2& origin, const Vec2& destination)
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,2);
 }
 
-void drawRect( Vec2 origin, Vec2 destination )
+void drawRect( CocVec2 origin, CocVec2 destination )
 {
-    drawLine(Vec2(origin.x, origin.y), Vec2(destination.x, origin.y));
-    drawLine(Vec2(destination.x, origin.y), Vec2(destination.x, destination.y));
-    drawLine(Vec2(destination.x, destination.y), Vec2(origin.x, destination.y));
-    drawLine(Vec2(origin.x, destination.y), Vec2(origin.x, origin.y));
+    drawLine(CocVec2(origin.x, origin.y), CocVec2(destination.x, origin.y));
+    drawLine(CocVec2(destination.x, origin.y), CocVec2(destination.x, destination.y));
+    drawLine(CocVec2(destination.x, destination.y), CocVec2(origin.x, destination.y));
+    drawLine(CocVec2(origin.x, destination.y), CocVec2(origin.x, origin.y));
 }
 
-void drawSolidRect(Vec2 origin, Vec2 destination, Color4F color)
+void drawSolidRect(CocVec2 origin, CocVec2 destination, Color4F color)
 {
-    Vec2 vertices[] = {
+    CocVec2 vertices[] = {
         origin,
-        Vec2(destination.x, origin.y),
+        CocVec2(destination.x, origin.y),
         destination,
-        Vec2(origin.x, destination.y)
+        CocVec2(origin.x, destination.y)
     };
 
     drawSolidPoly(vertices, 4, color );
 }
 
-void drawPoly(const Vec2 *poli, unsigned int numberOfPoints, bool closePolygon)
+void drawPoly(const CocVec2 *poli, unsigned int numberOfPoints, bool closePolygon)
 {
     lazy_init();
 
@@ -202,7 +202,7 @@ void drawPoly(const Vec2 *poli, unsigned int numberOfPoints, bool closePolygon)
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, numberOfPoints);
 }
 
-void drawSolidPoly(const Vec2 *poli, unsigned int numberOfPoints, Color4F color)
+void drawSolidPoly(const CocVec2 *poli, unsigned int numberOfPoints, Color4F color)
 {
     lazy_init();
 
@@ -218,7 +218,7 @@ void drawSolidPoly(const Vec2 *poli, unsigned int numberOfPoints, Color4F color)
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, numberOfPoints);
 }
 
-void drawCircle( const Vec2& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY)
+void drawCircle( const CocVec2& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY)
 {
     lazy_init();
 
@@ -257,12 +257,12 @@ void drawCircle( const Vec2& center, float radius, float angle, unsigned int seg
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,segments+additionalSegment);
 }
 
-void drawCircle( const Vec2& center, float radius, float angle, unsigned int segments, bool drawLineToCenter)
+void drawCircle( const CocVec2& center, float radius, float angle, unsigned int segments, bool drawLineToCenter)
 {
     drawCircle(center, radius, angle, segments, drawLineToCenter, 1.0f, 1.0f);
 }
 
-void drawSolidCircle( const Vec2& center, float radius, float angle, unsigned int segments, float scaleX, float scaleY)
+void drawSolidCircle( const CocVec2& center, float radius, float angle, unsigned int segments, float scaleX, float scaleY)
 {
     lazy_init();
     
@@ -298,16 +298,16 @@ void drawSolidCircle( const Vec2& center, float radius, float angle, unsigned in
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,segments+1);
 }
 
-void drawSolidCircle( const Vec2& center, float radius, float angle, unsigned int segments)
+void drawSolidCircle( const CocVec2& center, float radius, float angle, unsigned int segments)
 {
     drawSolidCircle(center, radius, angle, segments, 1.0f, 1.0f);
 }
 
-void drawQuadBezier(const Vec2& origin, const Vec2& control, const Vec2& destination, unsigned int segments)
+void drawQuadBezier(const CocVec2& origin, const CocVec2& control, const CocVec2& destination, unsigned int segments)
 {
     lazy_init();
 
-    Vec2* vertices = new (std::nothrow) Vec2[segments + 1];
+    CocVec2* vertices = new (std::nothrow) CocVec2[segments + 1];
 
     float t = 0.0f;
     for(unsigned int i = 0; i < segments; i++)
@@ -341,7 +341,7 @@ void drawCardinalSpline( PointArray *config, float tension,  unsigned int segmen
 {
     lazy_init();
 
-    Vec2* vertices = new (std::nothrow) Vec2[segments + 1];
+    CocVec2* vertices = new (std::nothrow) CocVec2[segments + 1];
 
     ssize_t p;
     float lt;
@@ -361,12 +361,12 @@ void drawCardinalSpline( PointArray *config, float tension,  unsigned int segmen
         }
 
         // Interpolate
-        Vec2 pp0 = config->getControlPointAtIndex(p-1);
-        Vec2 pp1 = config->getControlPointAtIndex(p+0);
-        Vec2 pp2 = config->getControlPointAtIndex(p+1);
-        Vec2 pp3 = config->getControlPointAtIndex(p+2);
+        CocVec2 pp0 = config->getControlPointAtIndex(p-1);
+        CocVec2 pp1 = config->getControlPointAtIndex(p+0);
+        CocVec2 pp2 = config->getControlPointAtIndex(p+1);
+        CocVec2 pp3 = config->getControlPointAtIndex(p+2);
 
-        Vec2 newPos = ccCardinalSplineAt( pp0, pp1, pp2, pp3, tension, lt);
+        CocVec2 newPos = ccCardinalSplineAt( pp0, pp1, pp2, pp3, tension, lt);
         vertices[i].x = newPos.x;
         vertices[i].y = newPos.y;
     }
@@ -384,11 +384,11 @@ void drawCardinalSpline( PointArray *config, float tension,  unsigned int segmen
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,segments+1);
 }
 
-void drawCubicBezier(const Vec2& origin, const Vec2& control1, const Vec2& control2, const Vec2& destination, unsigned int segments)
+void drawCubicBezier(const CocVec2& origin, const CocVec2& control1, const CocVec2& control2, const CocVec2& destination, unsigned int segments)
 {
     lazy_init();
 
-    Vec2* vertices = new (std::nothrow) Vec2[segments + 1];
+    CocVec2* vertices = new (std::nothrow) CocVec2[segments + 1];
 
     float t = 0;
     for (unsigned int i = 0; i < segments; i++)

@@ -37,10 +37,10 @@
 #include "renderer/CCTechnique.h"
 #include "base/CCRef.h"
 #include "base/CCVector.h"
-#include "math/Vec2.h"
-#include "math/Vec3.h"
-#include "math/Vec4.h"
-#include "math/Mat4.h"
+#include "math/CocVec2.h"
+#include "math/CocVec3.h"
+#include "math/CocVec4.h"
+#include "math/CocMat4.h"
 #include "platform/CCPlatformMacros.h"
 
 
@@ -59,7 +59,7 @@ class CC_DLL Material : public RenderState
     friend class Technique;
     friend class Pass;
     friend class MeshCommand;
-    friend class Renderer;
+    friend class CocRenderer;
     friend class Mesh;
 
 public:

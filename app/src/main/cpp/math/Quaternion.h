@@ -23,8 +23,8 @@
 #ifndef QUATERNION_H_
 #define QUATERNION_H_
 
-#include "math/Vec3.h"
-#include "math/Mat4.h"
+#include "math/CocVec3.h"
+#include "math/CocMat4.h"
 //#include "Plane.h"
 
 /**
@@ -34,7 +34,7 @@
 
 NS_CC_MATH_BEGIN
 
-class Mat4;
+class CocMat4;
 
 /**
  * Defines a 4-element quaternion that represents the orientation of an object in space.
@@ -115,7 +115,7 @@ public:
      *
      * @param m The matrix.
      */
-    Quaternion(const Mat4& m);
+    Quaternion(const CocMat4& m);
 
     /**
      * Constructs a quaternion equal to the rotation from the specified axis and angle.
@@ -123,7 +123,7 @@ public:
      * @param axis A vector describing the axis of rotation.
      * @param angle The angle of rotation (in radians).
      */
-    Quaternion(const Vec3& axis, float angle);
+    Quaternion(const CocVec3& axis, float angle);
 
     /**
      * Constructs a new quaternion that is a copy of the specified one.
@@ -172,7 +172,7 @@ public:
      * @param m The matrix.
      * @param dst A quaternion to store the conjugate in.
      */
-    static void createFromRotationMatrix(const Mat4& m, Quaternion* dst);
+    static void createFromRotationMatrix(const CocMat4& m, Quaternion* dst);
 
     /**
      * Creates this quaternion equal to the rotation from the specified axis and angle
@@ -182,7 +182,7 @@ public:
      * @param angle The angle of rotation (in radians).
      * @param dst A quaternion to store the conjugate in.
      */
-    static void createFromAxisAngle(const Vec3& axis, float angle, Quaternion* dst);
+    static void createFromAxisAngle(const CocVec3& axis, float angle, Quaternion* dst);
 
     /**
      * Sets this quaternion to the conjugate of itself.
@@ -272,7 +272,7 @@ public:
      *
      * @param m The matrix.
      */
-    void set(const Mat4& m);
+    void set(const CocMat4& m);
 
     /**
      * Sets the quaternion equal to the rotation from the specified axis and angle.
@@ -280,7 +280,7 @@ public:
      * @param axis The axis of rotation.
      * @param angle The angle of rotation (in radians).
      */
-    void set(const Vec3& axis, float angle);
+    void set(const CocVec3& axis, float angle);
 
     /**
      * Sets the elements of this quaternion to a copy of the specified quaternion.
@@ -301,7 +301,7 @@ public:
      * 
      * @return The angle (in radians).
      */
-    float toAxisAngle(Vec3* e) const;
+    float toAxisAngle(CocVec3* e) const;
 
     /**
      * Interpolates between two quaternions using linear interpolation.
@@ -367,7 +367,7 @@ public:
      * @param v The vec3 to multiply.
      * @return The vec3 product.
      */
-    inline Vec3 operator*(const Vec3& v) const;
+    inline CocVec3 operator*(const CocVec3& v) const;
 
     /**
      * Multiplies this quaternion with the given quaternion.

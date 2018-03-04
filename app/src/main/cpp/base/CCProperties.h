@@ -38,10 +38,10 @@
 NS_CC_BEGIN
 
 class Properties;
-class Vec2;
-class Vec3;
-class Vec4;
-class Mat4;
+class CocVec2;
+class CocVec3;
+class CocVec4;
+class CocMat4;
 class Quaternion;
 class Data;
 
@@ -350,7 +350,7 @@ public:
      * 
      * @return True on success, false if the property does not exist or could not be scanned.
      */
-    bool getMat4(const char* name, Mat4* out) const;
+    bool getMat4(const char* name, CocMat4* out) const;
 
     /**
      * Interpret the value of the given property as a Vector2.
@@ -363,7 +363,7 @@ public:
      * 
      * @return True on success, false if the property does not exist or could not be scanned.
      */
-    bool getVec2(const char* name, Vec2* out) const;
+    bool getVec2(const char* name, CocVec2* out) const;
 
     /**
      * Interpret the value of the given property as a Vector3.
@@ -376,7 +376,7 @@ public:
      * 
      * @return True on success, false if the property does not exist or could not be scanned.
      */
-    bool getVec3(const char* name, Vec3* out) const;
+    bool getVec3(const char* name, CocVec3* out) const;
 
     /**
      * Interpret the value of the given property as a Vector4.
@@ -389,7 +389,7 @@ public:
      * 
      * @return True on success, false if the property does not exist or could not be scanned.
      */
-    bool getVec4(const char* name, Vec4* out) const;
+    bool getVec4(const char* name, CocVec4* out) const;
 
     /**
      * Interpret the value of the given property as a Quaternion specified as an axis angle.
@@ -416,7 +416,7 @@ public:
      * 
      * @return True on success, false if the property does not exist or could not be scanned.
      */
-    bool getColor(const char* name, Vec3* out) const;
+    bool getColor(const char* name, CocVec3* out) const;
 
     /**
      * Interpret the value of the given property as an RGBA color in hex and write this color to a Vector4.
@@ -430,7 +430,7 @@ public:
      * 
      * @return True on success, false if the property does not exist or could not be scanned.
      */
-    bool getColor(const char* name, Vec4* out) const;
+    bool getColor(const char* name, CocVec4* out) const;
 
     /**
      * Gets the file path for the given property if the file exists.
@@ -477,7 +477,7 @@ public:
      *
      * @return True if a valid Vector2 was parsed, false otherwise.
      */
-    static bool parseVec2(const char* str, Vec2* out);
+    static bool parseVec2(const char* str, CocVec2* out);
 
     /**
      * Attempts to parse the specified string as a Vector3 value.
@@ -489,7 +489,7 @@ public:
      *
      * @return True if a valid Vector3 was parsed, false otherwise.
      */
-    static bool parseVec3(const char* str, Vec3* out);
+    static bool parseVec3(const char* str, CocVec3* out);
     
     /**
      * Attempts to parse the specified string as a Vector4 value.
@@ -501,7 +501,7 @@ public:
      *
      * @return True if a valid Vector4 was parsed, false otherwise.
      */
-    static bool parseVec4(const char* str, Vec4* out);
+    static bool parseVec4(const char* str, CocVec4* out);
 
     /**
      * Attempts to parse the specified string as an axis-angle value.
@@ -527,7 +527,7 @@ public:
      *
      * @return True if a valid RGB color was parsed, false otherwise.
      */
-    static bool parseColor(const char* str, Vec3* out);
+    static bool parseColor(const char* str, CocVec3* out);
 
     /**
      * Attempts to parse the specified string as an RGBA color value.
@@ -537,7 +537,7 @@ public:
      *
      * @return True if a valid RGBA color was parsed, false otherwise.
      */
-    static bool parseColor(const char* str, Vec4* out);
+    static bool parseColor(const char* str, CocVec4* out);
 
 private:
     

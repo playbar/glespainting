@@ -138,7 +138,7 @@ class GroupCommandManager;
 
 Whenever possible prefer to use `TrianglesCommand` objects since the renderer will automatically batch them.
  */
-class CC_DLL Renderer
+class CC_DLL CocRenderer
 {
 public:
     /**The max number of vertices in a vertex buffer object.*/
@@ -150,9 +150,9 @@ public:
     /**Reserved for material id, which means that the command could not be batched.*/
     static const int MATERIAL_ID_DO_NOT_BATCH = 0;
     /**Constructor.*/
-    Renderer();
+    CocRenderer();
     /**Destructor.*/
-    ~Renderer();
+    ~CocRenderer();
 
     //TODO: manage GLView inside Render itself
     void initGLView();
@@ -205,7 +205,7 @@ public:
     GroupCommandManager* getGroupCommandManager() const { return _groupCommandManager; }
 
     /** returns whether or not a rectangle is visible or not */
-    bool checkVisibility(const Mat4& transform, const Size& size);
+    bool checkVisibility(const CocMat4& transform, const Size& size);
 
 protected:
 

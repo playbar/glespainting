@@ -33,7 +33,7 @@ CustomCommand::CustomCommand()
     _type = RenderCommand::Type::CUSTOM_COMMAND;
 }
 
-void CustomCommand::init(float depth, const cocos2d::Mat4 &modelViewTransform, uint32_t flags)
+void CustomCommand::init(float depth, const cocos2d::CocMat4 &modelViewTransform, uint32_t flags)
 {
     RenderCommand::init(depth, modelViewTransform, flags);
 }

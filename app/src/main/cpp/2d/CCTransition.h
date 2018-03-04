@@ -108,7 +108,7 @@ public:
     //
     // Overrides
     //
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    virtual void draw(CocRenderer *renderer, const CocMat4 &transform, uint32_t flags) override;
     virtual void onEnter() override;
     virtual void onExit() override;
     virtual void cleanup() override;
@@ -819,7 +819,7 @@ public :
     /**
      * @lua NA
      */
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    virtual void draw(CocRenderer *renderer, const CocMat4 &transform, uint32_t flags) override;
     /**
      * @lua NA
      */
@@ -867,7 +867,7 @@ public :
 	/**
 	* @js NA
 	*/
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    virtual void draw(CocRenderer *renderer, const CocMat4 &transform, uint32_t flags) override;
 
 CC_CONSTRUCTOR_ACCESS:
     TransitionTurnOffTiles();
@@ -911,7 +911,7 @@ public:
     virtual void onEnter() override;
     virtual ActionInterval * easeActionWithAction(ActionInterval * action) override;
     virtual void onExit() override;
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    virtual void draw(CocRenderer *renderer, const CocMat4 &transform, uint32_t flags) override;
 
 CC_CONSTRUCTOR_ACCESS:
     TransitionSplitCols();
@@ -984,7 +984,7 @@ public:
     virtual void onEnter() override;
     virtual ActionInterval* easeActionWithAction(ActionInterval * action) override;
     virtual void onExit() override;
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    virtual void draw(CocRenderer *renderer, const CocMat4 &transform, uint32_t flags) override;
 
 CC_CONSTRUCTOR_ACCESS:
     TransitionFadeTR();

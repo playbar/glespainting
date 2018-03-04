@@ -84,7 +84,7 @@ void PageTurn3D::update(float time)
         for (int j = 0; j <= _gridSize.height; ++j)
         {
             // Get original vertex
-            Vec3 p = getOriginalVertex(Vec2(i ,j));
+            CocVec3 p = getOriginalVertex(CocVec2(i ,j));
             
             p.x -= getGridRect().origin.x;
             float R = sqrtf((p.x * p.x) + ((p.y - ay) * (p.y - ay)));
@@ -124,7 +124,7 @@ void PageTurn3D::update(float time)
             
             // Set new coords
             p.x += getGridRect().origin.x;
-            setVertex(Vec2(i, j), p);
+            setVertex(CocVec2(i, j), p);
             
         }
     }

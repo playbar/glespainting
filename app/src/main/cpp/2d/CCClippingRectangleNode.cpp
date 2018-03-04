@@ -26,7 +26,7 @@
 #include "2d/CCClippingRectangleNode.h"
 #include "base/CCDirector.h"
 #include "renderer/CCRenderer.h"
-#include "math/Vec2.h"
+#include "math/CocVec2.h"
 #include "platform/CCGLView.h"
 
 NS_CC_BEGIN
@@ -92,7 +92,7 @@ void ClippingRectangleNode::onAfterVisitScissor()
     }
 }
 
-void ClippingRectangleNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
+void ClippingRectangleNode::visit(CocRenderer *renderer, const CocMat4 &parentTransform, uint32_t parentFlags)
 {
     _beforeVisitCmdScissor.init(_globalZOrder);
     _beforeVisitCmdScissor.func = CC_CALLBACK_0(ClippingRectangleNode::onBeforeVisitScissor, this);

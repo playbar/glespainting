@@ -263,8 +263,8 @@ public:
     void setSprite(Sprite* sprite);
     
     // Overrides
-    virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    virtual void visit(CocRenderer *renderer, const CocMat4 &parentTransform, uint32_t parentFlags) override;
+    virtual void draw(CocRenderer *renderer, const CocMat4 &transform, uint32_t flags) override;
     virtual void setGlobalZOrder(float globalZOrder) override;
 
     /** Flag: Use stack matrix computed from scene hierarchy or generate new modelView and projection matrix.
@@ -278,7 +278,7 @@ public:
      * @param fullRect The total size of screen.
      * @param fullViewport The total viewportSize.
      */
-    void setVirtualViewport(const Vec2& rtBegin, const Rect& fullRect, const Rect& fullViewport);
+    void setVirtualViewport(const CocVec2& rtBegin, const Rect& fullRect, const Rect& fullViewport);
 
 public:
     /** FIXME: should be protected.
@@ -368,8 +368,8 @@ protected:
 
     void setupDepthAndStencil(int powW, int powH);
     
-    Mat4 _oldTransMatrix, _oldProjMatrix;
-    Mat4 _transformMatrix, _projectionMatrix;
+    CocMat4 _oldTransMatrix, _oldProjMatrix;
+    CocMat4 _transformMatrix, _projectionMatrix;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(RenderTexture);
 

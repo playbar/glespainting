@@ -39,7 +39,7 @@
 #include "renderer/CCPass.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCVertexAttribBinding.h"
-#include "math/Mat4.h"
+#include "math/CocMat4.h"
 
 using namespace std;
 
@@ -87,16 +87,16 @@ void Mesh::resetLightUniformValues()
     int maxPointLight = conf->getMaxSupportPointLightInShader();
     int maxSpotLight = conf->getMaxSupportSpotLightInShader();
 
-    _dirLightUniformColorValues.assign(maxDirLight, Vec3::ZERO);
-    _dirLightUniformDirValues.assign(maxDirLight, Vec3::ZERO);
+    _dirLightUniformColorValues.assign(maxDirLight, CocVec3::ZERO);
+    _dirLightUniformDirValues.assign(maxDirLight, CocVec3::ZERO);
 
-    _pointLightUniformColorValues.assign(maxPointLight, Vec3::ZERO);
-    _pointLightUniformPositionValues.assign(maxPointLight, Vec3::ZERO);
+    _pointLightUniformColorValues.assign(maxPointLight, CocVec3::ZERO);
+    _pointLightUniformPositionValues.assign(maxPointLight, CocVec3::ZERO);
     _pointLightUniformRangeInverseValues.assign(maxPointLight, 0.0f);
 
-    _spotLightUniformColorValues.assign(maxSpotLight, Vec3::ZERO);
-    _spotLightUniformPositionValues.assign(maxSpotLight, Vec3::ZERO);
-    _spotLightUniformDirValues.assign(maxSpotLight, Vec3::ZERO);
+    _spotLightUniformColorValues.assign(maxSpotLight, CocVec3::ZERO);
+    _spotLightUniformPositionValues.assign(maxSpotLight, CocVec3::ZERO);
+    _spotLightUniformDirValues.assign(maxSpotLight, CocVec3::ZERO);
     _spotLightUniformInnerAngleCosValues.assign(maxSpotLight, 1.0f);
     _spotLightUniformOuterAngleCosValues.assign(maxSpotLight, 0.0f);
     _spotLightUniformRangeInverseValues.assign(maxSpotLight, 0.0f);
@@ -372,7 +372,7 @@ Material* Mesh::getMaterial() const
     return _material;
 }
 
-void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, uint32_t flags, unsigned int lightMask, const Vec4& color, bool forceDepthWrite)
+void Mesh::draw(CocRenderer* renderer, float globalZOrder, const CocMat4& transform, uint32_t flags, unsigned int lightMask, const CocVec4& color, bool forceDepthWrite)
 {
     if (! isVisible())
         return;
@@ -471,7 +471,7 @@ void Mesh::calculateAABB()
         {
             //get skin root
             Bone3D* root = nullptr;
-            Mat4 invBindPose;
+            CocMat4 invBindPose;
             if (_skin->_skinBones.size())
             {
                 root = _skin->_skinBones.at(0);
@@ -517,7 +517,7 @@ void Mesh::bindMeshCommand()
     }
 }
 
-void Mesh::setLightUniforms(Pass* pass, Scene* scene, const Vec4& color, unsigned int lightmask)
+void Mesh::setLightUniforms(Pass* pass, Scene* scene, const CocVec4& color, unsigned int lightmask)
 {
     CCASSERT(pass, "Invalid Pass");
     CCASSERT(scene, "Invalid scene");
@@ -538,7 +538,7 @@ void Mesh::setLightUniforms(Pass* pass, Scene* scene, const Vec4& color, unsigne
         GLint enabledDirLightNum = 0;
         GLint enabledPointLightNum = 0;
         GLint enabledSpotLightNum = 0;
-        Vec3 ambientColor;
+        CocVec3 ambientColor;
         for (const auto& light : lights)
         {
             bool useLight = light->isEnabled() && ((unsigned int)light->getLightFlag() & lightmask);
@@ -552,7 +552,7 @@ void Mesh::setLightUniforms(Pass* pass, Scene* scene, const Vec4& color, unsigne
                         if(enabledDirLightNum < maxDirLight)
                         {
                             auto dirLight = static_cast<DirectionLight *>(light);
-                            Vec3 dir = dirLight->getDirectionInWorld();
+                            CocVec3 dir = dirLight->getDirectionInWorld();
                             dir.normalize();
                             const Color3B &col = dirLight->getDisplayedColor();
                             _dirLightUniformColorValues[enabledDirLightNum].set(col.r / 255.0f * intensity, col.g / 255.0f * intensity, col.b / 255.0f * intensity);
@@ -567,7 +567,7 @@ void Mesh::setLightUniforms(Pass* pass, Scene* scene, const Vec4& color, unsigne
                         if(enabledPointLightNum < maxPointLight)
                         {
                             auto pointLight = static_cast<PointLight *>(light);
-                            Mat4 mat= pointLight->getNodeToWorldTransform();
+                            CocMat4 mat= pointLight->getNodeToWorldTransform();
                             const Color3B &col = pointLight->getDisplayedColor();
                             _pointLightUniformColorValues[enabledPointLightNum].set(col.r / 255.0f * intensity, col.g / 255.0f * intensity, col.b / 255.0f * intensity);
                             _pointLightUniformPositionValues[enabledPointLightNum].set(mat.m[12], mat.m[13], mat.m[14]);
@@ -581,9 +581,9 @@ void Mesh::setLightUniforms(Pass* pass, Scene* scene, const Vec4& color, unsigne
                         if(enabledSpotLightNum < maxSpotLight)
                         {
                             auto spotLight = static_cast<SpotLight *>(light);
-                            Vec3 dir = spotLight->getDirectionInWorld();
+                            CocVec3 dir = spotLight->getDirectionInWorld();
                             dir.normalize();
-                            Mat4 mat= light->getNodeToWorldTransform();
+                            CocMat4 mat= light->getNodeToWorldTransform();
                             const Color3B &col = spotLight->getDisplayedColor();
                             _spotLightUniformColorValues[enabledSpotLightNum].set(col.r / 255.0f * intensity, col.g / 255.0f * intensity, col.b / 255.0f * intensity);
                             _spotLightUniformPositionValues[enabledSpotLightNum].set(mat.m[12], mat.m[13], mat.m[14]);
@@ -631,11 +631,11 @@ void Mesh::setLightUniforms(Pass* pass, Scene* scene, const Vec4& color, unsigne
             glProgramState->setUniformFloatv(s_spotLightUniformRangeInverseName, _spotLightUniformRangeInverseValues.size(), &_spotLightUniformRangeInverseValues[0]);
         }
 
-        glProgramState->setUniformVec3(s_ambientLightUniformColorName, Vec3(ambientColor.x, ambientColor.y, ambientColor.z));
+        glProgramState->setUniformVec3(s_ambientLightUniformColorName, CocVec3(ambientColor.x, ambientColor.y, ambientColor.z));
     }
     else // normal does not exist
     {
-        Vec3 ambient(0.0f, 0.0f, 0.0f);
+        CocVec3 ambient(0.0f, 0.0f, 0.0f);
         bool hasAmbient = false;
         for (const auto& light : lights)
         {
@@ -656,7 +656,7 @@ void Mesh::setLightUniforms(Pass* pass, Scene* scene, const Vec4& color, unsigne
         {
             ambient.x /= 255.f; ambient.y /= 255.f; ambient.z /= 255.f;
             //override the uniform value of u_color using the calculated color 
-            glProgramState->setUniformVec4("u_color", Vec4(color.x * ambient.x, color.y * ambient.y, color.z * ambient.z, color.w));
+            glProgramState->setUniformVec4("u_color", CocVec4(color.x * ambient.x, color.y * ambient.y, color.z * ambient.z, color.w));
         }
     }
 }

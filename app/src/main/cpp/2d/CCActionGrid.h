@@ -103,13 +103,13 @@ public:
      * @js vertex
      * @lua NA
      */
-    Vec3 getVertex(const Vec2& position) const;
+    CocVec3 getVertex(const CocVec2& position) const;
 
     /** @deprecated Use getVertex() instead 
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE Vec3 vertex(const Vec2& position) { return getVertex(position); }
+    CC_DEPRECATED_ATTRIBUTE CocVec3 vertex(const CocVec2& position) { return getVertex(position); }
 
     /** 
      * @brief Get the non-transformed vertex that belongs to certain position in the grid.
@@ -118,13 +118,13 @@ public:
      * @js originalVertex
      * @lua NA
      */
-    Vec3 getOriginalVertex(const Vec2& position) const;
+    CocVec3 getOriginalVertex(const CocVec2& position) const;
 
     /** @deprecated Use getOriginalVertex() instead 
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE Vec3 originalVertex(const Vec2& position) { return getOriginalVertex(position); }
+    CC_DEPRECATED_ATTRIBUTE CocVec3 originalVertex(const CocVec2& position) { return getOriginalVertex(position); }
 
     /** 
      * @brief Set a new vertex to a certain position of the grid.
@@ -133,7 +133,7 @@ public:
      * @js setVertex
      * @lua NA
      */
-    void setVertex(const Vec2& position, const Vec3& vertex);
+    void setVertex(const CocVec2& position, const CocVec3& vertex);
 
     // Overrides
     virtual Grid3DAction * clone() const override
@@ -171,13 +171,13 @@ public:
      * @js tile
      * @lua NA
      */
-    Quad3 getTile(const Vec2& position) const;
+    Quad3 getTile(const CocVec2& position) const;
 
     /** @deprecated Use getTile() instead 
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE Quad3 tile(const Vec2& position) { return getTile(position); }
+    CC_DEPRECATED_ATTRIBUTE Quad3 tile(const CocVec2& position) { return getTile(position); }
 
     /** 
      * @brief Get the non-transformed tile that belongs to a certain position of the grid.
@@ -186,13 +186,13 @@ public:
      * @js originalTile
      * @lua NA
      */
-    Quad3 getOriginalTile(const Vec2& position) const;
+    Quad3 getOriginalTile(const CocVec2& position) const;
 
     /** @deprecated Use getOriginalTile() instead.
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE Quad3 originalTile(const Vec2& position) { return getOriginalTile(position); }
+    CC_DEPRECATED_ATTRIBUTE Quad3 originalTile(const CocVec2& position) { return getOriginalTile(position); }
 
     /** 
      * @brief Set a new tile to a certain position of the grid.
@@ -200,7 +200,7 @@ public:
      * @param coords The quadrilateral of the new tile.
      * @lua NA
      */
-    void setTile(const Vec2& position, const Quad3& coords);
+    void setTile(const CocVec2& position, const Quad3& coords);
 
     /** returns the grid */
     virtual GridBase* getGrid() override;

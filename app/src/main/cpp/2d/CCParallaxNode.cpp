@@ -33,7 +33,7 @@ NS_CC_BEGIN
 class PointObject : public Ref
 {
 public:
-    static PointObject * create(Vec2 ratio, Vec2 offset)
+    static PointObject * create(CocVec2 ratio, CocVec2 offset)
     {
         PointObject *ret = new (std::nothrow) PointObject();
         ret->initWithPoint(ratio, offset);
@@ -41,7 +41,7 @@ public:
         return ret;
     }
     
-    bool initWithPoint(Vec2 ratio, Vec2 offset)
+    bool initWithPoint(CocVec2 ratio, CocVec2 offset)
     {
         _ratio = ratio;
         _offset = offset;
@@ -49,18 +49,18 @@ public:
         return true;
     }
     
-    const Vec2& getRatio() const { return _ratio; }
-    void setRatio(const Vec2& ratio) { _ratio = ratio; }
+    const CocVec2& getRatio() const { return _ratio; }
+    void setRatio(const CocVec2& ratio) { _ratio = ratio; }
 
-    const Vec2& getOffset() const { return _offset; }
-    void setOffset(const Vec2& offset) { _offset = offset; }
+    const CocVec2& getOffset() const { return _offset; }
+    void setOffset(const CocVec2& offset) { _offset = offset; }
     
     Node* getChild() const { return _child; }
     void setChild(Node* child) { _child = child; }
     
 private:
-    Vec2 _ratio;
-    Vec2 _offset;
+    CocVec2 _ratio;
+    CocVec2 _offset;
     Node *_child; // weak ref
 };
 
@@ -96,14 +96,14 @@ void ParallaxNode::addChild(Node* /*child*/, int /*zOrder*/, const std::string& 
     CCASSERT(0,"ParallaxNode: use addChild:z:parallaxRatio:positionOffset instead");
 }
 
-void ParallaxNode::addChild(Node *child, int z, const Vec2& ratio, const Vec2& offset)
+void ParallaxNode::addChild(Node *child, int z, const CocVec2& ratio, const CocVec2& offset)
 {
     CCASSERT( child != nullptr, "Argument must be non-nil");
     PointObject *obj = PointObject::create(ratio, offset);
     obj->setChild(child);
     ccArrayAppendObjectWithResize(_parallaxArray, (Ref*)obj);
 
-    Vec2 pos = this->absolutePosition();
+    CocVec2 pos = this->absolutePosition();
     pos.x = -pos.x + pos.x * ratio.x + offset.x;
     pos.y = -pos.y + pos.y * ratio.y + offset.y;
     child->setPosition(pos);
@@ -131,9 +131,9 @@ void ParallaxNode::removeAllChildrenWithCleanup(bool cleanup)
     Node::removeAllChildrenWithCleanup(cleanup);
 }
 
-Vec2 ParallaxNode::absolutePosition()
+CocVec2 ParallaxNode::absolutePosition()
 {
-    Vec2 ret = _position;
+    CocVec2 ret = _position;
     Node *cn = this;
     while (cn->getParent() != nullptr)
     {
@@ -148,11 +148,11 @@ The positions are updated at visit because:
 - using a timer is not guaranteed that it will called after all the positions were updated
 - overriding "draw" will only precise if the children have a z > 0
 */
-void ParallaxNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
+void ParallaxNode::visit(CocRenderer *renderer, const CocMat4 &parentTransform, uint32_t parentFlags)
 {
-    //    Vec2 pos = position_;
-    //    Vec2    pos = [self convertToWorldSpace:Vec2::ZERO];
-    Vec2 pos = this->absolutePosition();
+    //    CocVec2 pos = position_;
+    //    CocVec2    pos = [self convertToWorldSpace:CocVec2::ZERO];
+    CocVec2 pos = this->absolutePosition();
     if( ! pos.equals(_lastPosition) )
     {
         for( int i=0; i < _parallaxArray->num; i++ ) 

@@ -29,9 +29,9 @@ THE SOFTWARE.
 #include "base/ccTypes.h"
 #include "base/CCVector.h"
 #include "base/CCMap.h"
-#include "math/Vec2.h"
-#include "math/Vec3.h"
-#include "math/Vec4.h"
+#include "math/CocVec2.h"
+#include "math/CocVec3.h"
+#include "math/CocVec4.h"
 
 /**
  * @addtogroup renderer

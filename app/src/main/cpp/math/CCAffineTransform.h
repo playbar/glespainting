@@ -64,7 +64,7 @@ CC_DLL AffineTransform __CCAffineTransformMake(float a, float b, float c, float 
 #define AffineTransformMake __CCAffineTransformMake
 
 /**Multiply point (x,y,1) by a  affine transform.*/
-CC_DLL Vec2 __CCPointApplyAffineTransform(const Vec2& point, const AffineTransform& t);
+CC_DLL CocVec2 __CCPointApplyAffineTransform(const CocVec2& point, const AffineTransform& t);
 #define PointApplyAffineTransform __CCPointApplyAffineTransform
 
 /**Multiply size (width,height,0) by a  affine transform.*/
@@ -75,10 +75,10 @@ CC_DLL AffineTransform AffineTransformMakeIdentity();
 /**Transform Rect, which will transform the four vertices of the point.*/
 CC_DLL Rect RectApplyAffineTransform(const Rect& rect, const AffineTransform& anAffineTransform);
 /**@{
- Transform vec2 and Rect by Mat4.
+ Transform vec2 and Rect by CocMat4.
  */
-CC_DLL Rect RectApplyTransform(const Rect& rect, const Mat4& transform);
-CC_DLL Vec2 PointApplyTransform(const Vec2& point, const Mat4& transform);
+CC_DLL Rect RectApplyTransform(const Rect& rect, const CocMat4& transform);
+CC_DLL CocVec2 PointApplyTransform(const CocVec2& point, const CocMat4& transform);
 /**@}*/
 /**
  Translation, equals
@@ -107,8 +107,8 @@ CC_DLL AffineTransform AffineTransformConcat(const AffineTransform& t1, const Af
 CC_DLL bool AffineTransformEqualToTransform(const AffineTransform& t1, const AffineTransform& t2);
 /**Get the inverse of affine transform.*/
 CC_DLL AffineTransform AffineTransformInvert(const AffineTransform& t);
-/**Concat Mat4, return t1 * t2.*/
-CC_DLL Mat4 TransformConcat(const Mat4& t1, const Mat4& t2);
+/**Concat CocMat4, return t1 * t2.*/
+CC_DLL CocMat4 TransformConcat(const CocMat4& t1, const CocMat4& t2);
 
 extern CC_DLL const AffineTransform AffineTransformIdentity;
 

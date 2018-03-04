@@ -27,10 +27,10 @@
 
 #include "platform/CCPlatformMacros.h"
 #include "platform/CCFileUtils.h"
-#include "math/Vec2.h"
-#include "math/Vec3.h"
-#include "math/Vec4.h"
-#include "math/Mat4.h"
+#include "math/CocVec2.h"
+#include "math/CocVec3.h"
+#include "math/CocVec4.h"
+#include "math/CocMat4.h"
 #include "math/Quaternion.h"
 #include "base/ccUTF8.h"
 #include "base/CCData.h"
@@ -914,7 +914,7 @@ long Properties::getLong(const char* name) const
     return 0L;
 }
 
-bool Properties::getMat4(const char* name, Mat4* out) const
+bool Properties::getMat4(const char* name, CocMat4* out) const
 {
     CCASSERT(out, "Invalid out");
 
@@ -942,17 +942,17 @@ bool Properties::getMat4(const char* name, Mat4* out) const
     return false;
 }
 
-bool Properties::getVec2(const char* name, Vec2* out) const
+bool Properties::getVec2(const char* name, CocVec2* out) const
 {
     return parseVec2(getString(name), out);
 }
 
-bool Properties::getVec3(const char* name, Vec3* out) const
+bool Properties::getVec3(const char* name, CocVec3* out) const
 {
     return parseVec3(getString(name), out);
 }
 
-bool Properties::getVec4(const char* name, Vec4* out) const
+bool Properties::getVec4(const char* name, CocVec4* out) const
 {
     return parseVec4(getString(name), out);
 }
@@ -962,12 +962,12 @@ bool Properties::getQuaternionFromAxisAngle(const char* name, Quaternion* out) c
     return parseAxisAngle(getString(name), out);
 }
 
-bool Properties::getColor(const char* name, Vec3* out) const
+bool Properties::getColor(const char* name, CocVec3* out) const
 {
     return parseColor(getString(name), out);
 }
 
-bool Properties::getColor(const char* name, Vec4* out) const
+bool Properties::getColor(const char* name, CocVec4* out) const
 {
     return parseColor(getString(name), out);
 }
@@ -1178,7 +1178,7 @@ Properties* getPropertiesFromNamespacePath(Properties* properties, const std::ve
         return properties;
 }
 
-bool Properties::parseVec2(const char* str, Vec2* out)
+bool Properties::parseVec2(const char* str, CocVec2* out)
 {
     if (str)
     {
@@ -1200,7 +1200,7 @@ bool Properties::parseVec2(const char* str, Vec2* out)
     return false;
 }
 
-bool Properties::parseVec3(const char* str, Vec3* out)
+bool Properties::parseVec3(const char* str, CocVec3* out)
 {
     if (str)
     {
@@ -1222,7 +1222,7 @@ bool Properties::parseVec3(const char* str, Vec3* out)
     return false;
 }
 
-bool Properties::parseVec4(const char* str, Vec4* out)
+bool Properties::parseVec4(const char* str, CocVec4* out)
 {
     if (str)
     {
@@ -1252,7 +1252,7 @@ bool Properties::parseAxisAngle(const char* str, Quaternion* out)
         if (sscanf(str, "%f,%f,%f,%f", &x, &y, &z, &theta) == 4)
         {
             if (out)
-                out->set(Vec3(x, y, z), MATH_DEG_TO_RAD(theta));
+                out->set(CocVec3(x, y, z), MATH_DEG_TO_RAD(theta));
             return true;
         }
         else
@@ -1266,7 +1266,7 @@ bool Properties::parseAxisAngle(const char* str, Quaternion* out)
     return false;
 }
 
-bool Properties::parseColor(const char* str, Vec3* out)
+bool Properties::parseColor(const char* str, CocVec3* out)
 {
     if (str)
     {
@@ -1277,7 +1277,7 @@ bool Properties::parseColor(const char* str, Vec3* out)
             if (sscanf(str + 1, "%x", &color) == 1)
             {
                 if (out)
-                    out->set(Vec3::fromColor(color));
+                    out->set(CocVec3::fromColor(color));
                 return true;
             }
             else
@@ -1298,7 +1298,7 @@ bool Properties::parseColor(const char* str, Vec3* out)
     return false;
 }
 
-bool Properties::parseColor(const char* str, Vec4* out)
+bool Properties::parseColor(const char* str, CocVec4* out)
 {
     if (str)
     {
@@ -1309,7 +1309,7 @@ bool Properties::parseColor(const char* str, Vec4* out)
             if (sscanf(str + 1, "%x", &color) == 1)
             {
                 if (out)
-                    out->set(Vec4::fromColor(color));
+                    out->set(CocVec4::fromColor(color));
                 return true;
             }
             else

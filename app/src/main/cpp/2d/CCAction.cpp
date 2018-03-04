@@ -293,7 +293,7 @@ void Follow::step(float /*dt*/)
             return;
         }
 
-        Vec2 tempPos = _halfScreenSize - _followedNode->getPosition();
+        CocVec2 tempPos = _halfScreenSize - _followedNode->getPosition();
 
         _target->setPosition(clampf(tempPos.x, _leftBoundary, _rightBoundary),
                                    clampf(tempPos.y, _bottomBoundary, _topBoundary));

@@ -349,7 +349,7 @@ bool Material::parseUniform(GLProgramState* programState, Properties* properties
 
         case Properties::Type::VECTOR2:
         {
-            Vec2 v2;
+            CocVec2 v2;
             properties->getVec2(uniformName, &v2);
             programState->setUniformVec2(uniformName, v2);
             break;
@@ -357,7 +357,7 @@ bool Material::parseUniform(GLProgramState* programState, Properties* properties
 
         case Properties::Type::VECTOR3:
         {
-            Vec3 v3;
+            CocVec3 v3;
             properties->getVec3(uniformName, &v3);
             programState->setUniformVec3(uniformName, v3);
             break;
@@ -365,7 +365,7 @@ bool Material::parseUniform(GLProgramState* programState, Properties* properties
 
         case Properties::Type::VECTOR4:
         {
-            Vec4 v4;
+            CocVec4 v4;
             properties->getVec4(uniformName, &v4);
             programState->setUniformVec4(uniformName, v4);
             break;
@@ -373,7 +373,7 @@ bool Material::parseUniform(GLProgramState* programState, Properties* properties
 
         case Properties::Type::MATRIX:
         {
-            Mat4 m4;
+            CocMat4 m4;
             properties->getMat4(uniformName, &m4);
             programState->setUniformMat4(uniformName, m4);
             break;

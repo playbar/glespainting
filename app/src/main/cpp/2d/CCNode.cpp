@@ -135,7 +135,7 @@ NS_CC_BEGIN
         ScriptEngineProtocol* engine = ScriptEngineManager::getInstance()->getScriptEngine();
         _scriptType = engine != nullptr ? engine->getScriptType() : kScriptTypeNone;
 #endif
-        _transform = _inverse = Mat4::IDENTITY;
+        _transform = _inverse = CocMat4::IDENTITY;
     }
 
     Node * Node::create()
@@ -328,7 +328,7 @@ NS_CC_BEGIN
         return _rotationZ_X;
     }
 
-    void Node::setRotation3D(const Vec3& rotation)
+    void Node::setRotation3D(const CocVec3& rotation)
     {
         if (_rotationX == rotation.x &&
             _rotationY == rotation.y &&
@@ -346,12 +346,12 @@ NS_CC_BEGIN
         updateRotationQuat();
     }
 
-    Vec3 Node::getRotation3D() const
+    CocVec3 Node::getRotation3D() const
     {
         // rotation Z is decomposed in 2 to simulate Skew for Flash animations
         CCASSERT(_rotationZ_X == _rotationZ_Y, "_rotationZ_X != _rotationZ_Y");
 
-        return Vec3(_rotationX,_rotationY,_rotationZ_X);
+        return CocVec3(_rotationX,_rotationY,_rotationZ_X);
     }
 
     void Node::updateRotationQuat()
@@ -499,13 +499,13 @@ NS_CC_BEGIN
 
 
 /// position getter
-    const Vec2& Node::getPosition() const
+    const CocVec2& Node::getPosition() const
     {
         return _position;
     }
 
 /// position setter
-    void Node::setPosition(const Vec2& position)
+    void Node::setPosition(const CocVec2& position)
     {
         setPosition(position.x, position.y);
     }
@@ -528,15 +528,15 @@ NS_CC_BEGIN
         _usingNormalizedPosition = false;
     }
 
-    void Node::setPosition3D(const Vec3& position)
+    void Node::setPosition3D(const CocVec3& position)
     {
         setPositionZ(position.z);
         setPosition(position.x, position.y);
     }
 
-    Vec3 Node::getPosition3D() const
+    CocVec3 Node::getPosition3D() const
     {
-        return Vec3(_position.x, _position.y, _positionZ);
+        return CocVec3(_position.x, _position.y, _positionZ);
     }
 
     float Node::getPositionX() const
@@ -575,13 +575,13 @@ NS_CC_BEGIN
     }
 
 /// position getter
-    const Vec2& Node::getPositionNormalized() const
+    const CocVec2& Node::getPositionNormalized() const
     {
         return _normalizedPosition;
     }
 
 /// position setter
-    void Node::setPositionNormalized(const Vec2& position)
+    void Node::setPositionNormalized(const CocVec2& position)
     {
         if (_normalizedPosition.equals(position))
             return;
@@ -628,18 +628,18 @@ NS_CC_BEGIN
     }
 
 
-    const Vec2& Node::getAnchorPointInPoints() const
+    const CocVec2& Node::getAnchorPointInPoints() const
     {
         return _anchorPointInPoints;
     }
 
 /// anchorPoint getter
-    const Vec2& Node::getAnchorPoint() const
+    const CocVec2& Node::getAnchorPoint() const
     {
         return _anchorPoint;
     }
 
-    void Node::setAnchorPoint(const Vec2& point)
+    void Node::setAnchorPoint(const CocVec2& point)
     {
         if (! point.equals(_anchorPoint))
         {
@@ -1213,7 +1213,7 @@ NS_CC_BEGIN
         draw(renderer, _modelViewTransform, true);
     }
 
-    void Node::draw(Renderer* /*renderer*/, const Mat4 & /*transform*/, uint32_t /*flags*/)
+    void Node::draw(CocRenderer* /*renderer*/, const CocMat4 & /*transform*/, uint32_t /*flags*/)
     {
     }
 
@@ -1224,7 +1224,7 @@ NS_CC_BEGIN
         visit(renderer, parentTransform, true);
     }
 
-    uint32_t Node::processParentFlags(const Mat4& parentTransform, uint32_t parentFlags)
+    uint32_t Node::processParentFlags(const CocMat4& parentTransform, uint32_t parentFlags)
     {
         if(_usingNormalizedPosition)
         {
@@ -1265,7 +1265,7 @@ NS_CC_BEGIN
         return visibleByCamera;
     }
 
-    void Node::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t parentFlags)
+    void Node::visit(CocRenderer* renderer, const CocMat4 &parentTransform, uint32_t parentFlags)
     {
         // quick return if not visible. children won't be drawn.
         if (!_visible)
@@ -1276,7 +1276,7 @@ NS_CC_BEGIN
         uint32_t flags = processParentFlags(parentTransform, parentFlags);
 
         // IMPORTANT:
-        // To ease the migration to v3.0, we still support the Mat4 stack,
+        // To ease the migration to v3.0, we still support the CocMat4 stack,
         // but it is deprecated and your code should not rely on it
         _director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
         _director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
@@ -1318,7 +1318,7 @@ NS_CC_BEGIN
         // _orderOfArrival = 0;
     }
 
-    Mat4 Node::transform(const Mat4& parentTransform)
+    CocMat4 Node::transform(const CocMat4& parentTransform)
     {
         return parentTransform * this->getNodeToParentTransform();
     }
@@ -1701,9 +1701,9 @@ NS_CC_BEGIN
     }
 
 
-    Mat4 Node::getNodeToParentTransform(Node* ancestor) const
+    CocMat4 Node::getNodeToParentTransform(Node* ancestor) const
     {
-        Mat4 t(this->getNodeToParentTransform());
+        CocMat4 t(this->getNodeToParentTransform());
 
         for (Node *p = _parent;  p != nullptr && p != ancestor ; p = p->getParent())
         {
@@ -1722,7 +1722,7 @@ NS_CC_BEGIN
 
         return t;
     }
-    const Mat4& Node::getNodeToParentTransform() const
+    const CocMat4& Node::getNodeToParentTransform() const
     {
         if (_transformDirty)
         {
@@ -1740,11 +1740,11 @@ NS_CC_BEGIN
             bool needsSkewMatrix = ( _skewX || _skewY );
 
             // Build Transform Matrix = translation * rotation * scale
-            Mat4 translation;
+            CocMat4 translation;
             //move to anchor point first, then rotate
-            Mat4::createTranslation(x, y, z, &translation);
+            CocMat4::createTranslation(x, y, z, &translation);
 
-            Mat4::createRotation(_rotationQuat, &_transform);
+            CocMat4::createRotation(_rotationQuat, &_transform);
 
             if (_rotationZ_X != _rotationZ_Y)
             {
@@ -1788,7 +1788,7 @@ NS_CC_BEGIN
                                 0,  0,  1, 0,
                                 0,  0,  0, 1
                         };
-                Mat4 skewMatrix(skewMatArray);
+                CocMat4 skewMatrix(skewMatArray);
 
                 _transform = _transform * skewMatrix;
             }
@@ -1796,7 +1796,7 @@ NS_CC_BEGIN
             // adjust anchor point
             if (!_anchorPointInPoints.isZero())
             {
-                // FIXME:: Argh, Mat4 needs a "translate" method.
+                // FIXME:: Argh, CocMat4 needs a "translate" method.
                 // FIXME:: Although this is faster than multiplying a vec4 * mat4
                 _transform.m[12] += _transform.m[0] * -_anchorPointInPoints.x + _transform.m[4] * -_anchorPointInPoints.y;
                 _transform.m[13] += _transform.m[1] * -_anchorPointInPoints.x + _transform.m[5] * -_anchorPointInPoints.y;
@@ -1824,7 +1824,7 @@ NS_CC_BEGIN
         return _transform;
     }
 
-    void Node::setNodeToParentTransform(const Mat4& transform)
+    void Node::setNodeToParentTransform(const CocMat4& transform)
     {
         _transform = transform;
         _transformDirty = false;
@@ -1837,12 +1837,12 @@ NS_CC_BEGIN
 
     void Node::setAdditionalTransform(const AffineTransform& additionalTransform)
     {
-        Mat4 tmp;
+        CocMat4 tmp;
         CGAffineToGL(additionalTransform, tmp.m);
         setAdditionalTransform(&tmp);
     }
 
-    void Node::setAdditionalTransform(const Mat4* additionalTransform)
+    void Node::setAdditionalTransform(const CocMat4* additionalTransform)
     {
         if (additionalTransform == nullptr)
         {
@@ -1853,7 +1853,7 @@ NS_CC_BEGIN
         else
         {
             if (!_additionalTransform) {
-                _additionalTransform = new Mat4[2];
+                _additionalTransform = new CocMat4[2];
 
                 // _additionalTransform[1] is used as a backup for _transform
                 _additionalTransform[1] = _transform;
@@ -1864,7 +1864,7 @@ NS_CC_BEGIN
         _transformUpdated = _additionalTransformDirty = _inverseDirty = true;
     }
 
-    void Node::setAdditionalTransform(const Mat4& additionalTransform)
+    void Node::setAdditionalTransform(const CocMat4& additionalTransform)
     {
         setAdditionalTransform(&additionalTransform);
     }
@@ -1877,7 +1877,7 @@ NS_CC_BEGIN
         return ret;
     }
 
-    const Mat4& Node::getParentToNodeTransform() const
+    const CocMat4& Node::getParentToNodeTransform() const
     {
         if ( _inverseDirty )
         {
@@ -1894,7 +1894,7 @@ NS_CC_BEGIN
         return this->getNodeToParentAffineTransform(nullptr);
     }
 
-    Mat4 Node::getNodeToWorldTransform() const
+    CocMat4 Node::getNodeToWorldTransform() const
     {
         return this->getNodeToParentTransform(nullptr);
     }
@@ -1904,57 +1904,57 @@ NS_CC_BEGIN
         return AffineTransformInvert(this->getNodeToWorldAffineTransform());
     }
 
-    Mat4 Node::getWorldToNodeTransform() const
+    CocMat4 Node::getWorldToNodeTransform() const
     {
         return getNodeToWorldTransform().getInversed();
     }
 
 
-    Vec2 Node::convertToNodeSpace(const Vec2& worldPoint) const
+    CocVec2 Node::convertToNodeSpace(const CocVec2& worldPoint) const
     {
-        Mat4 tmp = getWorldToNodeTransform();
-        Vec3 vec3(worldPoint.x, worldPoint.y, 0);
-        Vec3 ret;
+        CocMat4 tmp = getWorldToNodeTransform();
+        CocVec3 vec3(worldPoint.x, worldPoint.y, 0);
+        CocVec3 ret;
         tmp.transformPoint(vec3,&ret);
-        return Vec2(ret.x, ret.y);
+        return CocVec2(ret.x, ret.y);
     }
 
-    Vec2 Node::convertToWorldSpace(const Vec2& nodePoint) const
+    CocVec2 Node::convertToWorldSpace(const CocVec2& nodePoint) const
     {
-        Mat4 tmp = getNodeToWorldTransform();
-        Vec3 vec3(nodePoint.x, nodePoint.y, 0);
-        Vec3 ret;
+        CocMat4 tmp = getNodeToWorldTransform();
+        CocVec3 vec3(nodePoint.x, nodePoint.y, 0);
+        CocVec3 ret;
         tmp.transformPoint(vec3,&ret);
-        return Vec2(ret.x, ret.y);
+        return CocVec2(ret.x, ret.y);
 
     }
 
-    Vec2 Node::convertToNodeSpaceAR(const Vec2& worldPoint) const
+    CocVec2 Node::convertToNodeSpaceAR(const CocVec2& worldPoint) const
     {
-        Vec2 nodePoint(convertToNodeSpace(worldPoint));
+        CocVec2 nodePoint(convertToNodeSpace(worldPoint));
         return nodePoint - _anchorPointInPoints;
     }
 
-    Vec2 Node::convertToWorldSpaceAR(const Vec2& nodePoint) const
+    CocVec2 Node::convertToWorldSpaceAR(const CocVec2& nodePoint) const
     {
         return convertToWorldSpace(nodePoint + _anchorPointInPoints);
     }
 
-    Vec2 Node::convertToWindowSpace(const Vec2& nodePoint) const
+    CocVec2 Node::convertToWindowSpace(const CocVec2& nodePoint) const
     {
-        Vec2 worldPoint(this->convertToWorldSpace(nodePoint));
+        CocVec2 worldPoint(this->convertToWorldSpace(nodePoint));
         return _director->convertToUI(worldPoint);
     }
 
-// convenience methods which take a Touch instead of Vec2
-    Vec2 Node::convertTouchToNodeSpace(Touch *touch) const
+// convenience methods which take a Touch instead of CocVec2
+    CocVec2 Node::convertTouchToNodeSpace(Touch *touch) const
     {
         return this->convertToNodeSpace(touch->getLocation());
     }
 
-    Vec2 Node::convertTouchToNodeSpaceAR(Touch *touch) const
+    CocVec2 Node::convertTouchToNodeSpaceAR(Touch *touch) const
     {
-        Vec2 point = touch->getLocation();
+        CocVec2 point = touch->getLocation();
         return this->convertToNodeSpaceAR(point);
     }
 
@@ -2174,7 +2174,7 @@ NS_CC_BEGIN
         }
     }
 
-    bool isScreenPointInRect(const Vec2 &pt, const Camera* camera, const Mat4& w2l, const Rect& rect, Vec3 *p)
+    bool isScreenPointInRect(const CocVec2 &pt, const Camera* camera, const CocMat4& w2l, const Rect& rect, CocVec3 *p)
     {
         if (nullptr == camera || rect.size.width <= 0 || rect.size.height <= 0)
         {
@@ -2182,7 +2182,7 @@ NS_CC_BEGIN
         }
 
         // first, convert pt to near/far plane, get Pn and Pf
-        Vec3 Pn(pt.x, pt.y, -1), Pf(pt.x, pt.y, 1);
+        CocVec3 Pn(pt.x, pt.y, -1), Pf(pt.x, pt.y, 1);
         Pn = camera->unprojectGL(Pn);
         Pf = camera->unprojectGL(Pf);
 
@@ -2195,9 +2195,9 @@ NS_CC_BEGIN
 
         // second, get three points which define content plane
         //  these points define a plane P(u, w) = A + uB + wC
-        Vec3 A = Vec3(rect.origin.x, rect.origin.y, 0);
-        Vec3 B(rect.origin.x + rect.size.width, rect.origin.y, 0);
-        Vec3 C(rect.origin.x, rect.origin.y + rect.size.height, 0);
+        CocVec3 A = CocVec3(rect.origin.x, rect.origin.y, 0);
+        CocVec3 B(rect.origin.x + rect.size.width, rect.origin.y, 0);
+        CocVec3 C(rect.origin.x, rect.origin.y + rect.size.height, 0);
         B = B - A;
         C = C - A;
 
@@ -2206,18 +2206,18 @@ NS_CC_BEGIN
         //      (BxC).A - (BxC).D
         //  t = -----------------
         //          (BxC).E
-        Vec3 BxC;
-        Vec3::cross(B, C, &BxC);
+        CocVec3 BxC;
+        CocVec3::cross(B, C, &BxC);
         auto BxCdotE = BxC.dot(E);
         if (BxCdotE == 0) {
             return false;
         }
         auto t = (BxC.dot(A) - BxC.dot(Pn)) / BxCdotE;
-        Vec3 P = Pn + t * E;
+        CocVec3 P = Pn + t * E;
         if (p) {
             *p = P;
         }
-        return rect.containsPoint(Vec2(P.x, P.y));
+        return rect.containsPoint(CocVec2(P.x, P.y));
     }
 
 // MARK: Camera

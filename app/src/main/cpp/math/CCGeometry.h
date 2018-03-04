@@ -46,10 +46,10 @@ public:
     /**Height of the Size.*/
     float height;
 public:
-    /**Conversion from Vec2 to Size.*/
-    operator Vec2() const
+    /**Conversion from CocVec2 to Size.*/
+    operator CocVec2() const
     {
-        return Vec2(width, height);
+        return CocVec2(width, height);
     }
 
 public:
@@ -64,7 +64,7 @@ public:
     Size();
     Size(float width, float height);
     Size(const Size& other);
-    explicit Size(const Vec2& point);
+    explicit Size(const CocVec2& point);
     /**@}*/
 
     /**
@@ -76,7 +76,7 @@ public:
      * @js NA
      * @lua NA
      */
-    Size& operator= (const Vec2& point);
+    Size& operator= (const CocVec2& point);
     /**
      * @js NA
      * @lua NA
@@ -117,7 +117,7 @@ class CC_DLL Rect
 {
 public:
     /**Low left point of rect.*/
-    Vec2 origin;
+    CocVec2 origin;
     /**Width and height of the rect.*/
     Size  size;
 
@@ -136,7 +136,7 @@ public:
      Constructor a rect.
      * @js NA
      */
-    Rect(const Vec2& pos, const Size& dimension);
+    Rect(const CocVec2& pos, const Size& dimension);
     /**
     Copy constructor.
      * @js NA
@@ -193,7 +193,7 @@ public:
     Check if the points is contained in the rect.
      * @js NA
      */
-    bool containsPoint(const Vec2& point) const;
+    bool containsPoint(const CocVec2& point) const;
     /**
     Check the intersect status of two rects.
      * @js NA
@@ -203,7 +203,7 @@ public:
     Check the intersect status of the rect and a circle.
      * @js NA
      */
-    bool intersectsCircle(const Vec2& center, float radius) const;
+    bool intersectsCircle(const CocVec2& center, float radius) const;
     /**
     Get the min rect which can contain this and rect.
      * @js NA

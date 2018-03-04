@@ -202,7 +202,7 @@ public:
     */
     static Label* createWithBMFont(const std::string& bmfontPath, const std::string& text,
         const TextHAlignment& hAlignment = TextHAlignment::LEFT, int maxLineWidth = 0,
-        const Vec2& imageOffset = Vec2::ZERO);
+        const CocVec2& imageOffset = CocVec2::ZERO);
 
     /**
     * Allocates and initializes a Label, with char map configuration.
@@ -256,7 +256,7 @@ public:
     virtual const TTFConfig& getTTFConfig() const { return _fontConfig;}
 
     /** Sets a new bitmap font to Label */
-    virtual bool setBMFontFilePath(const std::string& bmfontFilePath, const Vec2& imageOffset = Vec2::ZERO, float fontSize = 0);
+    virtual bool setBMFontFilePath(const std::string& bmfontFilePath, const CocVec2& imageOffset = CocVec2::ZERO, float fontSize = 0);
 
     /** Returns the bitmap font used by the Label.*/
     const std::string& getBMFontFilePath() const { return _bmFontPath;}
@@ -583,8 +583,8 @@ public:
     virtual const Size& getContentSize() const override;
     virtual Rect getBoundingBox() const override;
 
-    virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    virtual void visit(CocRenderer *renderer, const CocMat4 &parentTransform, uint32_t parentFlags) override;
+    virtual void draw(CocRenderer *renderer, const CocMat4 &transform, uint32_t flags) override;
 
     virtual void setCameraMask(unsigned short mask, bool applyChildren = true) override;
 
@@ -643,9 +643,9 @@ protected:
 
     void computeStringNumLines();
 
-    void onDraw(const Mat4& transform, bool transformUpdated);
+    void onDraw(const CocMat4& transform, bool transformUpdated);
     void onDrawShadow(GLProgram* glProgram, const Color4F& shadowColor);
-    void drawSelf(bool visibleByCamera, Renderer* renderer, uint32_t flags);
+    void drawSelf(bool visibleByCamera, CocRenderer* renderer, uint32_t flags);
 
     bool multilineTextWrapByChar();
     bool multilineTextWrapByWord();
@@ -661,7 +661,7 @@ protected:
     void computeAlignmentOffset();
     bool computeHorizontalKernings(const std::u32string& stringToRender);
 
-    void recordLetterInfo(const cocos2d::Vec2& point, char32_t utf32Char, int letterIndex, int lineIndex);
+    void recordLetterInfo(const cocos2d::CocVec2& point, char32_t utf32Char, int letterIndex, int lineIndex);
     void recordPlaceholderInfo(int letterIndex, char32_t utf16Char);
     
     bool updateQuads();
@@ -738,7 +738,7 @@ protected:
 
     QuadCommand _quadCommand;
     CustomCommand _customCommand;
-    Mat4  _shadowTransform;
+    CocMat4  _shadowTransform;
     GLint _uniformEffectColor;
     GLint _uniformEffectType; // 0: None, 1: Outline, 2: Shadow; Only used when outline is enabled.
     GLint _uniformTextColor;

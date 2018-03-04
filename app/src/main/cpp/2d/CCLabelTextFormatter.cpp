@@ -149,7 +149,7 @@ bool Label::multilineTextWrap(const std::function<int(const std::u32string&, int
     float highestY = 0.f;
     float lowestY = 0.f;
     FontLetterDefinition letterDef;
-    Vec2 letterPosition;
+    CocVec2 letterPosition;
     bool nextChangeSize = true;
 
     this->updateBMFontScale();
@@ -371,7 +371,7 @@ void Label::shrinkLabelToContentSize(const std::function<bool(void)>& lambda)
     }
 }
 
-void Label::recordLetterInfo(const cocos2d::Vec2& point, char32_t utf32Char, int letterIndex, int lineIndex)
+void Label::recordLetterInfo(const cocos2d::CocVec2& point, char32_t utf32Char, int letterIndex, int lineIndex)
 {
     if (static_cast<std::size_t>(letterIndex) >= _lettersInfo.size())
     {

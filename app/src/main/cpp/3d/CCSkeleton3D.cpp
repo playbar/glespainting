@@ -33,17 +33,17 @@ NS_CC_BEGIN
  *
  * @param m C3DMatrix representing the inverse bind pose for this Bone.
  */
-void Bone3D::setInverseBindPose(const Mat4& m)
+void Bone3D::setInverseBindPose(const CocMat4& m)
 {
     _invBindPose = m;
 }
 
-const Mat4& Bone3D::getInverseBindPose()
+const CocMat4& Bone3D::getInverseBindPose()
 {
     return _invBindPose;
 }
 
-void Bone3D::setOriPose(const Mat4& m)
+void Bone3D::setOriPose(const CocMat4& m)
 {
     _oriPose = m;
 }
@@ -74,7 +74,7 @@ void Bone3D::updateWorldMat()
     }
 }
 
-const Mat4& Bone3D::getWorldMat()
+const CocMat4& Bone3D::getWorldMat()
 {
     if (_worldDirty)
     {
@@ -139,11 +139,11 @@ Bone3D* Bone3D::create(const std::string& id)
     return bone;
 }
 
-void Bone3D::updateJointMatrix(Vec4* matrixPalette)
+void Bone3D::updateJointMatrix(CocVec4* matrixPalette)
 {
     {
-        static Mat4 t;
-        Mat4::multiply(_world, getInverseBindPose(), &t);
+        static CocMat4 t;
+        CocMat4::multiply(_world, getInverseBindPose(), &t);
 
         matrixPalette[0].set(t.m[0], t.m[4], t.m[8], t.m[12]);
         matrixPalette[1].set(t.m[1], t.m[5], t.m[9], t.m[13]);
@@ -198,7 +198,7 @@ void Bone3D::updateLocalMat()
 {
     if (_blendStates.size())
     {
-        Vec3 translate, scale;
+        CocVec3 translate, scale;
         Quaternion quat(Quaternion::ZERO);
         
         float total = 0.f;
@@ -236,7 +236,7 @@ void Bone3D::updateLocalMat()
             }
         }
         
-        Mat4::createTranslation(translate, &_local);
+        CocMat4::createTranslation(translate, &_local);
         _local.rotate(quat);
         _local.scale(scale);
         

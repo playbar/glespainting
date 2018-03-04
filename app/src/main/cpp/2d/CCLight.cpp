@@ -58,12 +58,12 @@ void BaseLight::onExit()
     Node::onExit();
 }
 
-void BaseLight::setRotationFromDirection( const Vec3 &direction )
+void BaseLight::setRotationFromDirection( const CocVec3 &direction )
 {
     float projLen = sqrt(direction.x * direction.x + direction.z * direction.z);
     float rotY = CC_RADIANS_TO_DEGREES(atan2f(-direction.x, -direction.z));
     float rotX = -CC_RADIANS_TO_DEGREES(atan2f(-direction.y, projLen));
-    setRotation3D(Vec3(rotX, rotY, 0.0f));
+    setRotation3D(CocVec3(rotX, rotY, 0.0f));
 }
 
 BaseLight::BaseLight()
@@ -80,7 +80,7 @@ BaseLight::~BaseLight()
 
 
 ////////////////////////////////////////////////////////////////////
-DirectionLight* DirectionLight::create(const Vec3 &direction, const Color3B &color)
+DirectionLight* DirectionLight::create(const CocVec3 &direction, const Color3B &color)
 {
     auto light = new (std::nothrow) DirectionLight();
     light->setRotationFromDirection(direction);
@@ -89,19 +89,19 @@ DirectionLight* DirectionLight::create(const Vec3 &direction, const Color3B &col
     return light;
 }
 
-void DirectionLight::setDirection(const Vec3 &dir)
+void DirectionLight::setDirection(const CocVec3 &dir)
 {
     setRotationFromDirection(dir);
 }
-Vec3 DirectionLight::getDirection() const
+CocVec3 DirectionLight::getDirection() const
 {
-    Mat4 mat = getNodeToParentTransform();
-    return Vec3(-mat.m[8], -mat.m[9], -mat.m[10]);
+    CocMat4 mat = getNodeToParentTransform();
+    return CocVec3(-mat.m[8], -mat.m[9], -mat.m[10]);
 }
-Vec3 DirectionLight::getDirectionInWorld() const
+CocVec3 DirectionLight::getDirectionInWorld() const
 {
-    Mat4 mat = getNodeToWorldTransform();
-    return Vec3(-mat.m[8], -mat.m[9], -mat.m[10]);
+    CocMat4 mat = getNodeToWorldTransform();
+    return CocVec3(-mat.m[8], -mat.m[9], -mat.m[10]);
 }
 DirectionLight::DirectionLight()
 {
@@ -113,7 +113,7 @@ DirectionLight::~DirectionLight()
 }
 
 //////////////////////////////////////////////////////////////////
-PointLight* PointLight::create(const Vec3 &position, const Color3B &color, float range)
+PointLight* PointLight::create(const CocVec3 &position, const Color3B &color, float range)
 {
     auto light = new (std::nothrow) PointLight();
     light->setPosition3D(position);
@@ -133,7 +133,7 @@ PointLight::~PointLight()
 }
 
 //////////////////////////////////////////////////////////////
-SpotLight* SpotLight::create(const Vec3 &direction, const Vec3 &position, const Color3B &color, float innerAngle, float outerAngle, float range)
+SpotLight* SpotLight::create(const CocVec3 &direction, const CocVec3 &position, const Color3B &color, float innerAngle, float outerAngle, float range)
 {
     auto light = new (std::nothrow) SpotLight();
     light->setRotationFromDirection(direction);
@@ -146,21 +146,21 @@ SpotLight* SpotLight::create(const Vec3 &direction, const Vec3 &position, const 
     return light;
 }
 
-void SpotLight::setDirection(const Vec3 &dir)
+void SpotLight::setDirection(const CocVec3 &dir)
 {
     setRotationFromDirection(dir);
 }
 
-Vec3 SpotLight::getDirection() const
+CocVec3 SpotLight::getDirection() const
 {
-    Mat4 mat = getNodeToParentTransform();
-    return Vec3(-mat.m[8], -mat.m[9], -mat.m[10]);
+    CocMat4 mat = getNodeToParentTransform();
+    return CocVec3(-mat.m[8], -mat.m[9], -mat.m[10]);
 }
 
-Vec3 SpotLight::getDirectionInWorld() const
+CocVec3 SpotLight::getDirectionInWorld() const
 {
-    Mat4 mat = getNodeToWorldTransform();
-    return Vec3(-mat.m[8], -mat.m[9], -mat.m[10]);
+    CocMat4 mat = getNodeToWorldTransform();
+    return CocVec3(-mat.m[8], -mat.m[9], -mat.m[10]);
 }
 
 void SpotLight::setInnerAngle(float angle)

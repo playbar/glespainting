@@ -923,7 +923,7 @@ void GLProgram::setUniformsForBuiltins()
     setUniformsForBuiltins(_director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW));
 }
 
-void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
+void GLProgram::setUniformsForBuiltins(const CocMat4 &matrixMV)
 {
     const auto& matrixP = _director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 
@@ -932,7 +932,7 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
 
     if (_flags.usesMultiViewP)
     {
-        Mat4 mats[4];
+        CocMat4 mats[4];
         const auto stackSize = std::min<size_t>(_director->getProjectionMatrixStackSize(), 4);
         for (size_t i = 0; i < stackSize; ++i) {
             mats[i] = _director->getProjectionMatrix(i);
@@ -945,13 +945,13 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
 
     if (_flags.usesMVP)
     {
-        Mat4 matrixMVP = matrixP * matrixMV;
+        CocMat4 matrixMVP = matrixP * matrixMV;
         setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_MVP_MATRIX], matrixMVP.m, 1);
     }
 
     if (_flags.usesMultiViewMVP)
     {
-        Mat4 mats[4];
+        CocMat4 mats[4];
         const auto stackSize = std::min<size_t>(_director->getProjectionMatrixStackSize(), 4);
         for (size_t i = 0; i < stackSize; ++i) {
             mats[i] = _director->getProjectionMatrix(i) * matrixMV;
@@ -961,7 +961,7 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
 
     if (_flags.usesNormal)
     {
-        Mat4 mvInverse = matrixMV;
+        CocMat4 mvInverse = matrixMV;
         mvInverse.m[12] = mvInverse.m[13] = mvInverse.m[14] = 0.0f;
         mvInverse.inverse();
         mvInverse.transpose();

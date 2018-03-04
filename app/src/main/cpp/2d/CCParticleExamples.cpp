@@ -307,7 +307,7 @@ bool ParticleSun::initWithTotalParticles(int numberOfParticles)
         setEmitterMode(Mode::GRAVITY);
 
         // Gravity Mode: gravity
-        setGravity(Vec2(0,0));
+        setGravity(CocVec2(0,0));
 
         // Gravity mode: radial acceleration
         setRadialAccel(0);
@@ -325,7 +325,7 @@ bool ParticleSun::initWithTotalParticles(int numberOfParticles)
         // emitter position
         Size winSize = Director::getInstance()->getWinSize();
         this->setPosition(winSize.width/2, winSize.height/2);
-        setPosVar(Vec2::ZERO);
+        setPosVar(CocVec2::ZERO);
 
         // life of particles
         _life = 1;
@@ -411,7 +411,7 @@ bool ParticleGalaxy::initWithTotalParticles(int numberOfParticles)
         setEmitterMode(Mode::GRAVITY);
 
         // Gravity Mode: gravity
-        setGravity(Vec2(0,0));
+        setGravity(CocVec2(0,0));
 
         // Gravity Mode: speed of particles
         setSpeed(60);
@@ -432,7 +432,7 @@ bool ParticleGalaxy::initWithTotalParticles(int numberOfParticles)
         // emitter position
         Size winSize = Director::getInstance()->getWinSize();
         this->setPosition(winSize.width/2, winSize.height/2);
-        setPosVar(Vec2::ZERO);
+        setPosVar(CocVec2::ZERO);
 
         // life of particles
         _life = 4;
@@ -520,7 +520,7 @@ bool ParticleFlower::initWithTotalParticles(int numberOfParticles)
         setEmitterMode(Mode::GRAVITY);
 
         // Gravity Mode: gravity
-        setGravity(Vec2(0,0));
+        setGravity(CocVec2(0,0));
 
         // Gravity Mode: speed of particles
         setSpeed(80);
@@ -541,7 +541,7 @@ bool ParticleFlower::initWithTotalParticles(int numberOfParticles)
         // emitter position
         Size winSize = Director::getInstance()->getWinSize();
         this->setPosition(winSize.width/2, winSize.height/2);
-        setPosVar(Vec2::ZERO);
+        setPosVar(CocVec2::ZERO);
 
         // life of particles
         _life = 4;
@@ -628,7 +628,7 @@ bool ParticleMeteor::initWithTotalParticles(int numberOfParticles)
         setEmitterMode(Mode::GRAVITY);
 
         // Gravity Mode: gravity
-        setGravity(Vec2(-200,200));
+        setGravity(CocVec2(-200,200));
 
         // Gravity Mode: speed of particles
         setSpeed(15);
@@ -649,7 +649,7 @@ bool ParticleMeteor::initWithTotalParticles(int numberOfParticles)
         // emitter position
         Size winSize = Director::getInstance()->getWinSize();
         this->setPosition(winSize.width/2, winSize.height/2);
-        setPosVar(Vec2::ZERO);
+        setPosVar(CocVec2::ZERO);
 
         // life of particles
         _life = 2;
@@ -737,7 +737,7 @@ bool ParticleSpiral::initWithTotalParticles(int numberOfParticles)
         setEmitterMode(Mode::GRAVITY);
 
         // Gravity Mode: gravity
-        setGravity(Vec2(0,0));
+        setGravity(CocVec2(0,0));
 
         // Gravity Mode: speed of particles
         setSpeed(150);
@@ -758,7 +758,7 @@ bool ParticleSpiral::initWithTotalParticles(int numberOfParticles)
         // emitter position
         Size winSize = Director::getInstance()->getWinSize();
         this->setPosition(winSize.width/2, winSize.height/2);
-        setPosVar(Vec2::ZERO);
+        setPosVar(CocVec2::ZERO);
 
         // life of particles
         _life = 12;
@@ -845,7 +845,7 @@ bool ParticleExplosion::initWithTotalParticles(int numberOfParticles)
         setEmitterMode(Mode::GRAVITY);
 
         // Gravity Mode: gravity
-        setGravity(Vec2(0,0));
+        setGravity(CocVec2(0,0));
 
         // Gravity Mode: speed of particles
         setSpeed(70);
@@ -866,7 +866,7 @@ bool ParticleExplosion::initWithTotalParticles(int numberOfParticles)
         // emitter position
         Size winSize = Director::getInstance()->getWinSize();
         this->setPosition(winSize.width/2, winSize.height/2);
-        setPosVar(Vec2::ZERO);
+        setPosVar(CocVec2::ZERO);
 
         // life of particles
         _life = 5.0f;
@@ -954,7 +954,7 @@ bool ParticleSmoke::initWithTotalParticles(int numberOfParticles)
         setEmitterMode(Mode::GRAVITY);
 
         // Gravity Mode: gravity
-        setGravity(Vec2(0,0));
+        setGravity(CocVec2(0,0));
 
         // Gravity Mode: radial acceleration
         setRadialAccel(0);
@@ -971,7 +971,7 @@ bool ParticleSmoke::initWithTotalParticles(int numberOfParticles)
         // emitter position
         Size winSize = Director::getInstance()->getWinSize();
         this->setPosition(winSize.width/2, 0);
-        setPosVar(Vec2(20, 0));
+        setPosVar(CocVec2(20, 0));
 
         // life of particles
         _life = 4;
@@ -1059,7 +1059,7 @@ bool ParticleSnow::initWithTotalParticles(int numberOfParticles)
         setEmitterMode(Mode::GRAVITY);
 
         // Gravity Mode: gravity
-        setGravity(Vec2(0,-1));
+        setGravity(CocVec2(0,-1));
 
         // Gravity Mode: speed of particles
         setSpeed(5);
@@ -1076,7 +1076,7 @@ bool ParticleSnow::initWithTotalParticles(int numberOfParticles)
         // emitter position
         Size winSize = Director::getInstance()->getWinSize();
         this->setPosition(winSize.width/2, winSize.height + 10);
-        setPosVar(Vec2(winSize.width/2, 0));
+        setPosVar(CocVec2(winSize.width/2, 0));
 
         // angle
         _angle = -90;
@@ -1166,7 +1166,7 @@ bool ParticleRain::initWithTotalParticles(int numberOfParticles)
         setEmitterMode(Mode::GRAVITY);
 
         // Gravity Mode: gravity
-        setGravity(Vec2(10,-10));
+        setGravity(CocVec2(10,-10));
 
         // Gravity Mode: radial
         setRadialAccel(0);
@@ -1188,7 +1188,7 @@ bool ParticleRain::initWithTotalParticles(int numberOfParticles)
         // emitter position
         Size winSize = Director::getInstance()->getWinSize();
         this->setPosition(winSize.width/2, winSize.height);
-        setPosVar(Vec2(winSize.width/2, 0));
+        setPosVar(CocVec2(winSize.width/2, 0));
 
         // life of particles
         _life = 4.5f;

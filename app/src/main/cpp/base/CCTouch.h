@@ -67,37 +67,37 @@ public:
      *
      * @return The current touch location in OpenGL coordinates.
      */
-    Vec2 getLocation() const;
+    CocVec2 getLocation() const;
     /** Returns the previous touch location in OpenGL coordinates.
      *
      * @return The previous touch location in OpenGL coordinates.
      */
-    Vec2 getPreviousLocation() const;
+    CocVec2 getPreviousLocation() const;
     /** Returns the start touch location in OpenGL coordinates.
      *
      * @return The start touch location in OpenGL coordinates.
      */
-    Vec2 getStartLocation() const;
+    CocVec2 getStartLocation() const;
     /** Returns the delta of 2 current touches locations in screen coordinates.
      *
      * @return The delta of 2 current touches locations in screen coordinates.
      */
-    Vec2 getDelta() const;
+    CocVec2 getDelta() const;
     /** Returns the current touch location in screen coordinates.
      *
      * @return The current touch location in screen coordinates.
      */
-    Vec2 getLocationInView() const;
+    CocVec2 getLocationInView() const;
     /** Returns the previous touch location in screen coordinates. 
      *
      * @return The previous touch location in screen coordinates.
      */
-    Vec2 getPreviousLocationInView() const;
+    CocVec2 getPreviousLocationInView() const;
     /** Returns the start touch location in screen coordinates.
      *
      * @return The start touch location in screen coordinates.
      */
-    Vec2 getStartLocationInView() const;
+    CocVec2 getStartLocationInView() const;
     
     /** Set the touch information. It always used to monitor touch event.
      *
@@ -168,9 +168,9 @@ public:
 private:
     int _id;
     bool _startPointCaptured;
-    Vec2 _startPoint;
-    Vec2 _point;
-    Vec2 _prevPoint;
+    CocVec2 _startPoint;
+    CocVec2 _point;
+    CocVec2 _prevPoint;
     float _curForce;
     float _maxForce;
 };

@@ -101,8 +101,8 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Co
 
 bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Color3B& color, Texture2D* texture)
 {
-    Node::setPosition(Vec2::ZERO);
-    setAnchorPoint(Vec2::ZERO);
+    Node::setPosition(CocVec2::ZERO);
+    setAnchorPoint(CocVec2::ZERO);
     setIgnoreAnchorPointForPosition(true);
     _startingPositionInitialized = false;
 
@@ -119,9 +119,9 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Co
     
     _nuPoints = 0;
     _pointState = (float *)malloc(sizeof(float) * _maxPoints);
-    _pointVertexes = (Vec2*)malloc(sizeof(Vec2) * _maxPoints);
+    _pointVertexes = (CocVec2*)malloc(sizeof(CocVec2) * _maxPoints);
 
-    _vertices = (Vec2*)malloc(sizeof(Vec2) * _maxPoints * 2);
+    _vertices = (CocVec2*)malloc(sizeof(CocVec2) * _maxPoints * 2);
     _texCoords = (Tex2F*)malloc(sizeof(Tex2F) * _maxPoints * 2);
     _colorPointer =  (GLubyte*)malloc(sizeof(GLubyte) * _maxPoints * 2 * 4);
 
@@ -138,7 +138,7 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Co
     return true;
 }
 
-void MotionStreak::setPosition(const Vec2& position)
+void MotionStreak::setPosition(const CocVec2& position)
 {
     if (!_startingPositionInitialized) {
         _startingPositionInitialized = true;
@@ -155,7 +155,7 @@ void MotionStreak::setPosition(float x, float y)
     _positionR.y = y;
 }
 
-const Vec2& MotionStreak::getPosition() const
+const CocVec2& MotionStreak::getPosition() const
 {
     return _positionR;
 }
@@ -171,9 +171,9 @@ float MotionStreak::getPositionX() const
     return _positionR.x;
 }
 
-Vec3 MotionStreak::getPosition3D() const
+CocVec3 MotionStreak::getPosition3D() const
 {
-    return Vec3(_positionR.x, _positionR.y, getPositionZ());
+    return CocVec3(_positionR.x, _positionR.y, getPositionZ());
 }
 
 void MotionStreak::setPositionX(float x)
@@ -378,7 +378,7 @@ void MotionStreak::reset()
     _nuPoints = 0;
 }
 
-void MotionStreak::onDraw(const Mat4 &transform, uint32_t /*flags*/)
+void MotionStreak::onDraw(const CocMat4 &transform, uint32_t /*flags*/)
 {  
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
@@ -396,7 +396,7 @@ void MotionStreak::onDraw(const Mat4 &transform, uint32_t /*flags*/)
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _nuPoints*2);
 }
 
-void MotionStreak::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+void MotionStreak::draw(CocRenderer *renderer, const CocMat4 &transform, uint32_t flags)
 {
     if(_nuPoints <= 1)
         return;

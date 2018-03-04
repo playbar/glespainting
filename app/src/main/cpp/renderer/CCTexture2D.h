@@ -255,7 +255,7 @@ public:
     These functions require GL_TEXTURE_2D and both GL_VERTEX_ARRAY and GL_TEXTURE_COORD_ARRAY client states to be enabled.
     */
     /** Draws a texture at a given point. */
-    void drawAtPoint(const Vec2& point);
+    void drawAtPoint(const CocVec2& point);
     /** Draws a texture inside a rect.*/
     void drawInRect(const Rect& rect);
 

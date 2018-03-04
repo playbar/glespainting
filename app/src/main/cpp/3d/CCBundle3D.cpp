@@ -97,7 +97,7 @@ void getChildMap(std::map<int, std::vector<int> >& map, SkinData* skinData, cons
         return;
 
     // get transform matrix
-    Mat4 transform;
+    CocMat4 transform;
     const rapidjson::Value& parent_transform = val[OLDTRANSFORM];
     for (rapidjson::SizeType j = 0, size = parent_transform.Size(); j < size; ++j)
     {
@@ -474,7 +474,7 @@ bool  Bundle3D::loadMeshDatasBinary(MeshDatas& meshdatas)
                     CCLOG("warning: Failed to read meshdata: aabb '%s'.", _path.c_str());
                     goto FAILED;
                 }
-                meshData->subMeshAABB.push_back(AABB(Vec3(aabb[0], aabb[1], aabb[2]), Vec3(aabb[3], aabb[4], aabb[5])));
+                meshData->subMeshAABB.push_back(AABB(CocVec3(aabb[0], aabb[1], aabb[2]), CocVec3(aabb[3], aabb[4], aabb[5])));
             }
             else
             {
@@ -788,9 +788,9 @@ bool  Bundle3D::loadMeshDatasJson(MeshDatas& meshdatas)
                 const rapidjson::Value& mesh_part_aabb = mesh_part[AABBS];
                 if (mesh_part.HasMember(AABBS) && mesh_part_aabb.Size() == 6)
                 {
-                    Vec3 min(mesh_part_aabb[(rapidjson::SizeType)0].GetDouble(),
+                    CocVec3 min(mesh_part_aabb[(rapidjson::SizeType)0].GetDouble(),
                              mesh_part_aabb[(rapidjson::SizeType)1].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)2].GetDouble());
-                    Vec3 max(mesh_part_aabb[(rapidjson::SizeType)3].GetDouble(),
+                    CocVec3 max(mesh_part_aabb[(rapidjson::SizeType)3].GetDouble(),
                              mesh_part_aabb[(rapidjson::SizeType)4].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)5].GetDouble());
                     meshData->subMeshAABB.push_back(AABB(min, max));
                 }
@@ -1264,7 +1264,7 @@ bool Bundle3D::loadSkinDataJson(SkinData* skindata)
         std::string name = skin_data_bone[NODE].GetString();
         skindata->addSkinBoneNames(name);
 
-        Mat4 mat_bind_pos;
+        CocMat4 mat_bind_pos;
         const rapidjson::Value& bind_pos = skin_data_bone[BINDSHAPE];
         for (rapidjson::SizeType j = 0; j < bind_pos.Size(); ++j)
         {
@@ -1506,7 +1506,7 @@ bool Bundle3D::loadAnimationDataJson(const std::string& id, Animation3DData* ani
                 {
                     const rapidjson::Value&  bone_keyframe_translation =  bone_keyframe[TRANSLATION];
                     float keytime =  bone_keyframe[KEYTIME].GetDouble();
-                    Vec3 val(bone_keyframe_translation[(rapidjson::SizeType)0].GetDouble(), bone_keyframe_translation[1].GetDouble(), bone_keyframe_translation[2].GetDouble());
+                    CocVec3 val(bone_keyframe_translation[(rapidjson::SizeType)0].GetDouble(), bone_keyframe_translation[1].GetDouble(), bone_keyframe_translation[2].GetDouble());
                     animationdata->_translationKeys[bone_name].push_back(Animation3DData::Vec3Key(keytime,val));
                 }
 
@@ -1522,7 +1522,7 @@ bool Bundle3D::loadAnimationDataJson(const std::string& id, Animation3DData* ani
                 {
                     const rapidjson::Value&  bone_keyframe_scale =  bone_keyframe[SCALE];
                     float keytime =  bone_keyframe[KEYTIME].GetDouble();
-                    Vec3 val(bone_keyframe_scale[(rapidjson::SizeType)0].GetDouble(), bone_keyframe_scale[1].GetDouble(), bone_keyframe_scale[2].GetDouble());
+                    CocVec3 val(bone_keyframe_scale[(rapidjson::SizeType)0].GetDouble(), bone_keyframe_scale[1].GetDouble(), bone_keyframe_scale[2].GetDouble());
                     animationdata->_scaleKeys[bone_name].push_back(Animation3DData::Vec3Key(keytime,val));
                 }
             }
@@ -1635,7 +1635,7 @@ bool Bundle3D::loadAnimationDataBinary(const std::string& id, Animation3DData* a
 
                 if (hasScale)
                 {
-                    Vec3 scale;
+                    CocVec3 scale;
                     if (_binaryReader.read(&scale, 4, 3) != 3)
                     {
                         CCLOG("warning: Failed to read AnimationData: scale '%s'.", _path.c_str());
@@ -1651,7 +1651,7 @@ bool Bundle3D::loadAnimationDataBinary(const std::string& id, Animation3DData* a
 
                 if (hasTranslation)
                 {
-                    Vec3 position;
+                    CocVec3 position;
                     if (_binaryReader.read(&position, 4, 3) != 3)
                     {
                         CCLOG("warning: Failed to read AnimationData: position '%s'.", _path.c_str());
@@ -1705,7 +1705,7 @@ NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue, bo
     nodedata->id = jvalue[ID].GetString();
 
     // transform
-    Mat4 transform;
+    CocMat4 transform;
     const rapidjson::Value& jtransform = jvalue[TRANSFORM];
 
     for (rapidjson::SizeType j = 0; j < jtransform.Size(); ++j)
@@ -1757,7 +1757,7 @@ NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue, bo
 
                     modelnodedata->bones.push_back(bone[NODE].GetString());
 
-                    Mat4 invbindpos;
+                    CocMat4 invbindpos;
                     const rapidjson::Value& jinvbindpos = bone[TRANSFORM];
 
                     for (rapidjson::SizeType k = 0; k < jinvbindpos.Size(); ++k)
@@ -1781,7 +1781,7 @@ NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue, bo
     {
        if(isSkin || singleSprite)
        {
-           nodedata->transform = Mat4::IDENTITY;
+           nodedata->transform = CocMat4::IDENTITY;
        }
        else
        {
@@ -1847,7 +1847,7 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton, bool singleSprit
         skeleton = true;
     
     // transform
-    Mat4 transform;
+    CocMat4 transform;
     if (!_binaryReader.readMatrix(transform.m))
     {
         CCLOG("warning: Failed to read transform matrix");
@@ -1900,7 +1900,7 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton, bool singleSprit
                     std::string name = _binaryReader.readString();
                     modelnodedata->bones.push_back(name);
 
-                    Mat4 invbindpos;
+                    CocMat4 invbindpos;
                     if (!_binaryReader.readMatrix(invbindpos.m))
                     {
                         CC_SAFE_DELETE(modelnodedata);
@@ -1950,7 +1950,7 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton, bool singleSprit
    {
        if(isSkin || singleSprite)
        {
-           nodedata->transform = Mat4::IDENTITY;
+           nodedata->transform = CocMat4::IDENTITY;
        }
        else
        {
@@ -2175,9 +2175,9 @@ Reference* Bundle3D::seekToFirstType(unsigned int type, const std::string& id)
     return nullptr;
 }
 
-std::vector<Vec3> Bundle3D::getTrianglesList(const std::string& path)
+std::vector<CocVec3> Bundle3D::getTrianglesList(const std::string& path)
 {
-    std::vector<Vec3> trianglesList;
+    std::vector<CocVec3> trianglesList;
     
     if (path.length() <= 4)
         return trianglesList;
@@ -2212,7 +2212,7 @@ std::vector<Vec3> Bundle3D::getTrianglesList(const std::string& path)
         int preVertexSize = iter->getPerVertexSize() / sizeof(float);
         for (auto indexArray : iter->subMeshIndices){
             for (auto i : indexArray){
-                trianglesList.push_back(Vec3(iter->vertex[i * preVertexSize], iter->vertex[i * preVertexSize + 1], iter->vertex[i * preVertexSize + 2]));
+                trianglesList.push_back(CocVec3(iter->vertex[i * preVertexSize], iter->vertex[i * preVertexSize + 1], iter->vertex[i * preVertexSize + 2]));
             }
         }
     }
@@ -2242,7 +2242,7 @@ cocos2d::AABB Bundle3D::calculateAABB( const std::vector<float>& vertex, int str
     stride /= 4;
     for (const auto& it : index)
     {
-        Vec3 point(vertex[it * stride], vertex[it * stride + 1], vertex[it * stride + 2]);
+        CocVec3 point(vertex[it * stride], vertex[it * stride + 1], vertex[it * stride + 2]);
         aabb.updateMinMax(&point, 1);
     }
     return aabb;

@@ -148,7 +148,7 @@ public:
 
     void shuffle(unsigned int *array, unsigned int len);
     Size getDelta(const Size& pos) const;
-    void placeTile(const Vec2& pos, Tile *t);
+    void placeTile(const CocVec2& pos, Tile *t);
 
     // Overrides
     virtual void startWithTarget(Node *target) override;
@@ -205,20 +205,20 @@ public:
     @brief Show the tile at specified position.
     @param pos The position index of the tile should be shown.
     */
-    void turnOnTile(const Vec2& pos);
+    void turnOnTile(const CocVec2& pos);
 
     /**
     @brief Hide the tile at specified position.
     @param pos The position index of the tile should be hide.
     */
-    void turnOffTile(const Vec2& pos);
+    void turnOffTile(const CocVec2& pos);
 
     /**
     @brief Show part of the tile.
     @param pos The position index of the tile should be shown.
     @param distance The percentage that the tile should be shown.
     */
-    virtual void transformTile(const Vec2& pos, float distance);
+    virtual void transformTile(const CocVec2& pos, float distance);
 
     // Overrides
     virtual void update(float time) override;
@@ -274,7 +274,7 @@ public:
     */
     static FadeOutUpTiles* create(float duration, const Size& gridSize);
 
-    virtual void transformTile(const Vec2& pos, float distance) override;
+    virtual void transformTile(const CocVec2& pos, float distance) override;
 
     // Overrides
     virtual FadeOutUpTiles* clone() const override;
@@ -349,13 +349,13 @@ public:
     @brief Show the tile at specified position.
     @param pos The position index of the tile should be shown.
     */
-    void turnOnTile(const Vec2& pos);
+    void turnOnTile(const CocVec2& pos);
 
     /**
     @brief Hide the tile at specified position.
     @param pos The position index of the tile should be hide.
     */
-    void turnOffTile(const Vec2& pos);
+    void turnOffTile(const CocVec2& pos);
 
     // Overrides
 	virtual TurnOffTiles* clone() const override;

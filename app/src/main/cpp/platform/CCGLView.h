@@ -63,7 +63,7 @@ struct GLContextAttrs
 NS_CC_BEGIN
 
 class Scene;
-class Renderer;
+class CocRenderer;
 
 /**
  * @addtogroup platform
@@ -205,7 +205,7 @@ public:
      *
      * @return The visible origin point of opengl viewport.
      */
-    virtual Vec2 getVisibleOrigin() const;
+    virtual CocVec2 getVisibleOrigin() const;
 
     /**
      * Get the visible rectangle of opengl viewport.
@@ -376,7 +376,7 @@ public:
      * Renders a Scene with a Renderer
      * This method is called directly by the Director
      */
-    void renderScene(Scene* scene, Renderer* renderer);
+    void renderScene(Scene* scene, CocRenderer* renderer);
 
 protected:
     void updateDesignResolutionSize();

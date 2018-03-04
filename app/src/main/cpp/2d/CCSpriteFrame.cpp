@@ -53,7 +53,7 @@ SpriteFrame* SpriteFrame::createWithTexture(Texture2D *texture, const Rect& rect
     return spriteFrame;
 }
 
-SpriteFrame* SpriteFrame::createWithTexture(Texture2D* texture, const Rect& rect, bool rotated, const Vec2& offset, const Size& originalSize)
+SpriteFrame* SpriteFrame::createWithTexture(Texture2D* texture, const Rect& rect, bool rotated, const CocVec2& offset, const Size& originalSize)
 {
     SpriteFrame *spriteFrame = new (std::nothrow) SpriteFrame();
     if (spriteFrame && spriteFrame->initWithTexture(texture, rect, rotated, offset, originalSize)) {
@@ -65,7 +65,7 @@ SpriteFrame* SpriteFrame::createWithTexture(Texture2D* texture, const Rect& rect
     return nullptr;
 }
 
-SpriteFrame* SpriteFrame::create(const std::string& filename, const Rect& rect, bool rotated, const Vec2& offset, const Size& originalSize)
+SpriteFrame* SpriteFrame::create(const std::string& filename, const Rect& rect, bool rotated, const CocVec2& offset, const Size& originalSize)
 {
     SpriteFrame *spriteFrame = new (std::nothrow) SpriteFrame();
     if (spriteFrame && spriteFrame->initWithTextureFilename(filename, rect, rotated, offset, originalSize)) {
@@ -85,16 +85,16 @@ SpriteFrame::SpriteFrame()
 bool SpriteFrame::initWithTexture(Texture2D* texture, const Rect& rect)
 {
     Rect rectInPixels = CC_RECT_POINTS_TO_PIXELS(rect);
-    return initWithTexture(texture, rectInPixels, false, Vec2::ZERO, rectInPixels.size);
+    return initWithTexture(texture, rectInPixels, false, CocVec2::ZERO, rectInPixels.size);
 }
 
 bool SpriteFrame::initWithTextureFilename(const std::string& filename, const Rect& rect)
 {
     Rect rectInPixels = CC_RECT_POINTS_TO_PIXELS( rect );
-    return initWithTextureFilename(filename, rectInPixels, false, Vec2::ZERO, rectInPixels.size);
+    return initWithTextureFilename(filename, rectInPixels, false, CocVec2::ZERO, rectInPixels.size);
 }
 
-bool SpriteFrame::initWithTexture(Texture2D* texture, const Rect& rect, bool rotated, const Vec2& offset, const Size& originalSize)
+bool SpriteFrame::initWithTexture(Texture2D* texture, const Rect& rect, bool rotated, const CocVec2& offset, const Size& originalSize)
 {
     _texture = texture;
 
@@ -110,13 +110,13 @@ bool SpriteFrame::initWithTexture(Texture2D* texture, const Rect& rect, bool rot
     _originalSizeInPixels = originalSize;
     _originalSize = CC_SIZE_PIXELS_TO_POINTS( _originalSizeInPixels );
     _rotated = rotated;
-    _anchorPoint = Vec2(NAN, NAN);
+    _anchorPoint = CocVec2(NAN, NAN);
     _centerRect = Rect(NAN, NAN, NAN, NAN);
 
     return true;
 }
 
-bool SpriteFrame::initWithTextureFilename(const std::string& filename, const Rect& rect, bool rotated, const Vec2& offset, const Size& originalSize)
+bool SpriteFrame::initWithTextureFilename(const std::string& filename, const Rect& rect, bool rotated, const CocVec2& offset, const Size& originalSize)
 {
     if (FileUtils::getInstance()->isFileExist(filename)) {
         _texture = nullptr;
@@ -128,7 +128,7 @@ bool SpriteFrame::initWithTextureFilename(const std::string& filename, const Rec
         _originalSizeInPixels = originalSize;
         _originalSize = CC_SIZE_PIXELS_TO_POINTS( _originalSizeInPixels );
         _rotated = rotated;
-        _anchorPoint = Vec2(NAN, NAN);
+        _anchorPoint = CocVec2(NAN, NAN);
         _centerRect = Rect(NAN, NAN, NAN, NAN);
         return true;
     }
@@ -173,34 +173,34 @@ bool SpriteFrame::hasCenterRect() const
     return !std::isnan(_centerRect.origin.x);
 }
 
-const Vec2& SpriteFrame::getOffset() const
+const CocVec2& SpriteFrame::getOffset() const
 {
     return _offset;
 }
 
-void SpriteFrame::setOffset(const Vec2& offsets)
+void SpriteFrame::setOffset(const CocVec2& offsets)
 {
     _offset = offsets;
     _offsetInPixels = CC_POINT_POINTS_TO_PIXELS( _offset );
 }
 
-const Vec2& SpriteFrame::getOffsetInPixels() const
+const CocVec2& SpriteFrame::getOffsetInPixels() const
 {
     return _offsetInPixels;
 }
 
-void SpriteFrame::setOffsetInPixels(const Vec2& offsetInPixels)
+void SpriteFrame::setOffsetInPixels(const CocVec2& offsetInPixels)
 {
     _offsetInPixels = offsetInPixels;
     _offset = CC_POINT_PIXELS_TO_POINTS( _offsetInPixels );
 }
 
-const Vec2& SpriteFrame::getAnchorPoint() const
+const CocVec2& SpriteFrame::getAnchorPoint() const
 {
     return _anchorPoint;
 }
 
-void SpriteFrame::setAnchorPoint(const Vec2& anchorPoint)
+void SpriteFrame::setAnchorPoint(const CocVec2& anchorPoint)
 {
     _anchorPoint = anchorPoint;
 }

@@ -369,7 +369,7 @@ void Animate3D::update(float t)
                 {
                     auto node = it.first;
                     auto curve = it.second;
-                    Mat4 transform;
+                    CocMat4 transform;
                     if (curve->translateCurve)
                     {
                         curve->translateCurve->evaluate(t, transDst, _translateEvaluate);

@@ -94,7 +94,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~BaseLight();
     
 protected:
-    void setRotationFromDirection( const Vec3 &direction );
+    void setRotationFromDirection( const CocVec3 &direction );
     
 protected:
     float       _intensity;
@@ -115,7 +115,7 @@ public:
      *
      * @return The new direction light.
      */
-    static DirectionLight* create(const Vec3 &direction, const Color3B &color);
+    static DirectionLight* create(const CocVec3 &direction, const Color3B &color);
     
     //get light type
     virtual LightType getLightType() const override { return LightType::DIRECTIONAL; }
@@ -125,17 +125,17 @@ public:
      *
      * @param dir The Direction in parent.
      */
-    void setDirection(const Vec3 &dir);
+    void setDirection(const CocVec3 &dir);
     
     /**
      * Returns the Direction in parent.
      */
-    Vec3 getDirection() const;
+    CocVec3 getDirection() const;
     
     /**
      * Returns direction in world.
      */
-    Vec3 getDirectionInWorld() const;
+    CocVec3 getDirectionInWorld() const;
     
 CC_CONSTRUCTOR_ACCESS:
     DirectionLight();
@@ -157,7 +157,7 @@ public:
      *
      * @return The new point light.
      */
-    static PointLight* create(const Vec3 &position, const Color3B &color, float range);
+    static PointLight* create(const CocVec3 &position, const Color3B &color, float range);
     
     //get light type
     virtual LightType getLightType() const override { return LightType::POINT; }
@@ -191,7 +191,7 @@ public:
      *
      * @return The new spot light.
      */
-    static SpotLight* create(const Vec3 &direction, const Vec3 &position, const Color3B &color, float innerAngle, float outerAngle, float range);
+    static SpotLight* create(const CocVec3 &direction, const CocVec3 &position, const Color3B &color, float innerAngle, float outerAngle, float range);
     
     //get light type
     virtual LightType getLightType() const override { return LightType::SPOT; }
@@ -201,17 +201,17 @@ public:
      *
      * @param dir The Direction in parent.
      */
-    void setDirection(const Vec3 &dir);
+    void setDirection(const CocVec3 &dir);
     
     /**
      * Returns the Direction in parent.
      */
-    Vec3 getDirection() const;
+    CocVec3 getDirection() const;
     
     /**
      * Returns direction in world.
      */
-    Vec3 getDirectionInWorld() const;
+    CocVec3 getDirectionInWorld() const;
     
     /**
      * Sets the range of point or spot light.

@@ -69,10 +69,10 @@ public:
      @param mv ModelView matrix for the command.
      @param flags to indicate that the command is using 3D rendering or not.
      */
-    void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles,const Mat4& mv, uint32_t flags);
+    void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles,const CocMat4& mv, uint32_t flags);
     /**Deprecated function, the params is similar as the upper init function, with flags equals 0.*/
-    CC_DEPRECATED_ATTRIBUTE void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles,const Mat4& mv);
-    void init(float globalOrder, Texture2D* textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles, const Mat4& mv, uint32_t flags);
+    CC_DEPRECATED_ATTRIBUTE void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles,const CocMat4& mv);
+    void init(float globalOrder, Texture2D* textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles, const CocMat4& mv, uint32_t flags);
     /**Apply the texture, shaders, programs, blend functions to GPU pipeline.*/
     void useMaterial() const;
     /**Get the material id of command.*/
@@ -94,7 +94,7 @@ public:
     /**Get the blend function.*/
     BlendFunc getBlendType() const { return _blendType; }
     /**Get the model view matrix.*/
-    const Mat4& getModelView() const { return _mv; }
+    const CocMat4& getModelView() const { return _mv; }
     
 protected:
     /**Generate the material ID by textureID, glProgramState, and blend function.*/
@@ -111,7 +111,7 @@ protected:
     /**Rendered triangles.*/
     Triangles _triangles;
     /**Model view matrix when rendering the triangles.*/
-    Mat4 _mv;
+    CocMat4 _mv;
 
     GLuint _alphaTextureID; // ANDROID ETC1 ALPHA supports.
 };

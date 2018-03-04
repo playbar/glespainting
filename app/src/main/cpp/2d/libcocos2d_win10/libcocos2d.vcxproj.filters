@@ -1476,7 +1476,7 @@
     <ClCompile Include="..\..\math\CCVertex.cpp">
       <Filter>math</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\math\Mat4.cpp">
+    <ClCompile Include="..\..\math\CocMat4.cpp">
       <Filter>math</Filter>
     </ClCompile>
     <ClCompile Include="..\..\math\MathUtil.cpp">
@@ -1488,13 +1488,13 @@
     <ClCompile Include="..\..\math\TransformUtils.cpp">
       <Filter>math</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\math\Vec2.cpp">
+    <ClCompile Include="..\..\math\CocVec2.cpp">
       <Filter>math</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\math\Vec3.cpp">
+    <ClCompile Include="..\..\math\CocVec3.cpp">
       <Filter>math</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\math\Vec4.cpp">
+    <ClCompile Include="..\..\math\CocVec4.cpp">
       <Filter>math</Filter>
     </ClCompile>
     <ClCompile Include="..\..\network\HttpCookie.cpp">
@@ -3335,7 +3335,7 @@
     <ClInclude Include="..\..\math\CCVertex.h">
       <Filter>math</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\math\Mat4.h">
+    <ClInclude Include="..\..\math\CocMat4.h">
       <Filter>math</Filter>
     </ClInclude>
     <ClInclude Include="..\..\math\MathUtil.h">
@@ -3347,13 +3347,13 @@
     <ClInclude Include="..\..\math\TransformUtils.h">
       <Filter>math</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\math\Vec2.h">
+    <ClInclude Include="..\..\math\CocVec2.h">
       <Filter>math</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\math\Vec3.h">
+    <ClInclude Include="..\..\math\CocVec3.h">
       <Filter>math</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\math\Vec4.h">
+    <ClInclude Include="..\..\math\CocVec4.h">
       <Filter>math</Filter>
     </ClInclude>
     <ClInclude Include="..\..\network\HttpClient.h">
@@ -4060,7 +4060,7 @@
     <None Include="..\..\base\CCUserDefault-apple.mm">
       <Filter>base</Filter>
     </None>
-    <None Include="..\..\math\Mat4.inl">
+    <None Include="..\..\math\CocMat4.inl">
       <Filter>math</Filter>
     </None>
     <None Include="..\..\math\MathUtil.inl">
@@ -4078,13 +4078,13 @@
     <None Include="..\..\math\Quaternion.inl">
       <Filter>math</Filter>
     </None>
-    <None Include="..\..\math\Vec2.inl">
+    <None Include="..\..\math\CocVec2.inl">
       <Filter>math</Filter>
     </None>
-    <None Include="..\..\math\Vec3.inl">
+    <None Include="..\..\math\CocVec3.inl">
       <Filter>math</Filter>
     </None>
-    <None Include="..\..\math\Vec4.inl">
+    <None Include="..\..\math\CocVec4.inl">
       <Filter>math</Filter>
     </None>
     <None Include="..\..\renderer\ccShader_3D_Color.frag">

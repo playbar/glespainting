@@ -204,16 +204,16 @@ AutoPolygon::~AutoPolygon()
     CC_SAFE_DELETE(_image);
 }
 
-std::vector<Vec2> AutoPolygon::trace(const Rect& rect, float threshold)
+std::vector<CocVec2> AutoPolygon::trace(const Rect& rect, float threshold)
 {
-    Vec2 first = findFirstNoneTransparentPixel(rect, threshold);
+    CocVec2 first = findFirstNoneTransparentPixel(rect, threshold);
     return marchSquare(rect, first, threshold);
 }
 
-Vec2 AutoPolygon::findFirstNoneTransparentPixel(const Rect& rect, float threshold)
+CocVec2 AutoPolygon::findFirstNoneTransparentPixel(const Rect& rect, float threshold)
 {
 	bool found = false;
-    Vec2 i;
+    CocVec2 i;
     for(i.y = rect.origin.y; i.y < rect.origin.y+rect.size.height; i.y++)
     {
         if(found)break;
@@ -235,7 +235,7 @@ unsigned char AutoPolygon::getAlphaByIndex(unsigned int i)
 {
     return *(_data+i*4+3);
 }
-unsigned char AutoPolygon::getAlphaByPos(const Vec2& pos)
+unsigned char AutoPolygon::getAlphaByPos(const CocVec2& pos)
 {
     return *(_data+((int)pos.y*_width+(int)pos.x)*4+3);
 }
@@ -254,19 +254,19 @@ unsigned int AutoPolygon::getSquareValue(unsigned int x, unsigned int y, const R
     //NOTE: due to the way we pick points from texture, rect needs to be smaller, otherwise it goes outside 1 pixel
     auto fixedRect = Rect(rect.origin, rect.size-Size(2,2));
     
-    Vec2 tl = Vec2(x-1, y-1);
+    CocVec2 tl = CocVec2(x-1, y-1);
     sv += (fixedRect.containsPoint(tl) && getAlphaByPos(tl) > threshold)? 1 : 0;
-    Vec2 tr = Vec2(x, y-1);
+    CocVec2 tr = CocVec2(x, y-1);
     sv += (fixedRect.containsPoint(tr) && getAlphaByPos(tr) > threshold)? 2 : 0;
-    Vec2 bl = Vec2(x-1, y);
+    CocVec2 bl = CocVec2(x-1, y);
     sv += (fixedRect.containsPoint(bl) && getAlphaByPos(bl) > threshold)? 4 : 0;
-    Vec2 br = Vec2(x, y);
+    CocVec2 br = CocVec2(x, y);
     sv += (fixedRect.containsPoint(br) && getAlphaByPos(br) > threshold)? 8 : 0;
     CCASSERT(sv != 0 && sv != 15, "square value should not be 0, or 15");
     return sv;
 }
 
-std::vector<cocos2d::Vec2> AutoPolygon::marchSquare(const Rect& rect, const Vec2& start, float threshold)
+std::vector<cocos2d::CocVec2> AutoPolygon::marchSquare(const Rect& rect, const CocVec2& start, float threshold)
 {
     int stepx = 0;
     int stepy = 0;
@@ -281,7 +281,7 @@ std::vector<cocos2d::Vec2> AutoPolygon::marchSquare(const Rect& rect, const Vec2
     std::vector<int> case6s;
     int i;
     std::vector<int>::iterator it;
-    std::vector<cocos2d::Vec2> _points;
+    std::vector<cocos2d::CocVec2> _points;
     do{
         int sv = getSquareValue(curx, cury, rect, threshold);
         switch(sv){
@@ -416,7 +416,7 @@ std::vector<cocos2d::Vec2> AutoPolygon::marchSquare(const Rect& rect, const Vec2
         }
         else
         {
-            _points.push_back(Vec2((float)(curx - rect.origin.x) / _scaleFactor, (float)(rect.size.height - cury + rect.origin.y) / _scaleFactor));
+            _points.push_back(CocVec2((float)(curx - rect.origin.x) / _scaleFactor, (float)(rect.size.height - cury + rect.origin.y) / _scaleFactor));
         }
 
         count++;
@@ -431,7 +431,7 @@ std::vector<cocos2d::Vec2> AutoPolygon::marchSquare(const Rect& rect, const Vec2
     return _points;
 }
 
-float AutoPolygon::perpendicularDistance(const cocos2d::Vec2& i, const cocos2d::Vec2& start, const cocos2d::Vec2& end)
+float AutoPolygon::perpendicularDistance(const cocos2d::CocVec2& i, const cocos2d::CocVec2& start, const cocos2d::CocVec2& end)
 {
     float res;
     float slope;
@@ -452,7 +452,7 @@ float AutoPolygon::perpendicularDistance(const cocos2d::Vec2& i, const cocos2d::
     }
     return res;
 }
-std::vector<cocos2d::Vec2> AutoPolygon::rdp(const std::vector<cocos2d::Vec2>& v, float optimization)
+std::vector<cocos2d::CocVec2> AutoPolygon::rdp(const std::vector<cocos2d::CocVec2>& v, float optimization)
 {
     if(v.size() < 3)
         return v;
@@ -471,32 +471,32 @@ std::vector<cocos2d::Vec2> AutoPolygon::rdp(const std::vector<cocos2d::Vec2>& v,
     }
     if (dist>optimization)
     {
-        std::vector<Vec2>::const_iterator begin = v.begin();
-        std::vector<Vec2>::const_iterator end   = v.end();
-        std::vector<Vec2> l1(begin, begin+index+1);
-        std::vector<Vec2> l2(begin+index, end);
+        std::vector<CocVec2>::const_iterator begin = v.begin();
+        std::vector<CocVec2>::const_iterator end   = v.end();
+        std::vector<CocVec2> l1(begin, begin+index+1);
+        std::vector<CocVec2> l2(begin+index, end);
         
-        std::vector<Vec2> r1 = rdp(l1, optimization);
-        std::vector<Vec2> r2 = rdp(l2, optimization);
+        std::vector<CocVec2> r1 = rdp(l1, optimization);
+        std::vector<CocVec2> r2 = rdp(l2, optimization);
         
         r1.insert(r1.end(), r2.begin()+1, r2.end());
         return r1;
     }
     else {
-        std::vector<Vec2> ret;
+        std::vector<CocVec2> ret;
         ret.push_back(v.front());
         ret.push_back(v.back());
         return ret;
     }
 }
-std::vector<Vec2> AutoPolygon::reduce(const std::vector<Vec2>& points, const Rect& rect, float epsilon)
+std::vector<CocVec2> AutoPolygon::reduce(const std::vector<CocVec2>& points, const Rect& rect, float epsilon)
 {
     auto size = points.size();
     // if there are less than 3 points, then we have nothing
     if(size<3)
     {
         log("AUTOPOLYGON: cannot reduce points for %s that has less than 3 points in input, e: %f", _filename.c_str(), epsilon);
-        return std::vector<Vec2>();
+        return std::vector<CocVec2>();
     }
     // if there are less than 9 points (but more than 3), then we don't need to reduce it
     else if (size < 9)
@@ -506,7 +506,7 @@ std::vector<Vec2> AutoPolygon::reduce(const std::vector<Vec2>& points, const Rec
     }
     float maxEp = MIN(rect.size.width, rect.size.height);
     float ep = clampf(epsilon, 0.0, maxEp/_scaleFactor/2);
-    std::vector<Vec2> result = rdp(points, ep);
+    std::vector<CocVec2> result = rdp(points, ep);
     
     auto last = result.back();
     if (last.y > result.front().y && last.getDistance(result.front()) < ep * 0.5f)
@@ -517,14 +517,14 @@ std::vector<Vec2> AutoPolygon::reduce(const std::vector<Vec2>& points, const Rec
     return result;
 }
 
-std::vector<Vec2> AutoPolygon::expand(const std::vector<Vec2>& points, const cocos2d::Rect &rect, float epsilon)
+std::vector<CocVec2> AutoPolygon::expand(const std::vector<CocVec2>& points, const cocos2d::Rect &rect, float epsilon)
 {
     auto size = points.size();
     // if there are less than 3 points, then we have nothing
     if(size<3)
     {
         log("AUTOPOLYGON: cannot expand points for %s with less than 3 points, e: %f", _filename.c_str(), epsilon);
-        return std::vector<Vec2>();
+        return std::vector<CocVec2>();
     }
     ClipperLib::Path subj;
     ClipperLib::PolyTree solution;
@@ -562,19 +562,19 @@ std::vector<Vec2> AutoPolygon::expand(const std::vector<Vec2>& points, const coc
     cl.AddPath(clamp, ClipperLib::ptClip, true);
     cl.Execute(ClipperLib::ctIntersection, out);
     
-    std::vector<Vec2> outPoints;
+    std::vector<CocVec2> outPoints;
     ClipperLib::PolyNode* p2 = out.GetFirst();
     while(p2->IsHole()){
         p2 = p2->GetNext();
     }
     for(const auto& pt : p2->Contour)
     {
-        outPoints.push_back(Vec2(pt.X/PRECISION, pt.Y/PRECISION));
+        outPoints.push_back(CocVec2(pt.X/PRECISION, pt.Y/PRECISION));
     }
     return outPoints;
 }
 
-TrianglesCommand::Triangles AutoPolygon::triangulate(const std::vector<Vec2>& points)
+TrianglesCommand::Triangles AutoPolygon::triangulate(const std::vector<CocVec2>& points)
 {
     // if there are less than 3 points, then we can't triangulate
     if(points.size()<3)
@@ -604,7 +604,7 @@ TrianglesCommand::Triangles AutoPolygon::triangulate(const std::vector<Vec2>& po
         for(int i = 0; i < 3; ++i)
         {
             auto p = ite->GetPoint(i);
-            auto v3 = Vec3(p->x, p->y, 0);
+            auto v3 = CocVec3(p->x, p->y, 0);
             bool found = false;
             size_t j;
             size_t length = vdx;

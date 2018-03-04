@@ -92,7 +92,7 @@ FontAtlas* FontAtlasCache::getFontAtlasTTF(const _ttfConfig* config)
     return nullptr;
 }
 
-FontAtlas* FontAtlasCache::getFontAtlasFNT(const std::string& fontFileName, const Vec2& imageOffset /* = Vec2::ZERO */)
+FontAtlas* FontAtlasCache::getFontAtlasFNT(const std::string& fontFileName, const CocVec2& imageOffset /* = CocVec2::ZERO */)
 {
     auto realFontFilename = FileUtils::getInstance()->getNewFilename(fontFileName);  // resolves real file path, to prevent storing multiple atlases for the same file.
     char tmp[ATLAS_MAP_KEY_BUFFER];
@@ -222,7 +222,7 @@ bool FontAtlasCache::releaseFontAtlas(FontAtlas *atlas)
     return false;
 }
 
-void FontAtlasCache::reloadFontAtlasFNT(const std::string& fontFileName, const Vec2& imageOffset/* = Vec2::ZERO*/)
+void FontAtlasCache::reloadFontAtlasFNT(const std::string& fontFileName, const CocVec2& imageOffset/* = CocVec2::ZERO*/)
 {
     char tmp[ATLAS_MAP_KEY_BUFFER];
     snprintf(tmp, ATLAS_MAP_KEY_BUFFER, "%.2f %.2f %s", imageOffset.x, imageOffset.y, fontFileName.c_str());

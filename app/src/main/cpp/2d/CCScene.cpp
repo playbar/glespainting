@@ -52,19 +52,8 @@ NS_CC_BEGIN
 
 Scene::Scene()
 {
-#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
-    _physics3DWorld = nullptr;
-    _physics3dDebugCamera = nullptr;
-#endif
-#if CC_USE_NAVMESH
-    _navMesh = nullptr;
-    _navMeshDebugCamera = nullptr;
-#endif
-#if CC_USE_PHYSICS
-    _physicsWorld = nullptr;
-#endif
     _ignoreAnchorPointForPosition = true;
-    setAnchorPoint(Vec2(0.5f, 0.5f));
+    setAnchorPoint(CocVec2(0.5f, 0.5f));
     
     _cameraOrderDirty = true;
     
@@ -80,40 +69,11 @@ Scene::Scene()
 
 Scene::~Scene()
 {
-#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
-    CC_SAFE_RELEASE(_physics3DWorld);
-    CC_SAFE_RELEASE(_physics3dDebugCamera);
-#endif
-#if CC_USE_NAVMESH
-    CC_SAFE_RELEASE(_navMesh);
-#endif
     Director::getInstance()->getEventDispatcher()->removeEventListener(_event);
     CC_SAFE_RELEASE(_event);
-    
-#if CC_USE_PHYSICS
-    delete _physicsWorld;
-#endif
-    
-#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
-    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
-    if (sEngine)
-    {
-        sEngine->releaseAllChildrenRecursive(this);
-    }
-#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+
 }
 
-#if CC_USE_NAVMESH
-void Scene::setNavMesh(NavMesh* navMesh)
-{
-    if (_navMesh != navMesh)
-    {
-        CC_SAFE_RETAIN(navMesh);
-        CC_SAFE_RELEASE(_navMesh);
-        _navMesh = navMesh;
-    }
-}
-#endif
 
 bool Scene::init()
 {
@@ -185,12 +145,12 @@ const std::vector<Camera*>& Scene::getCameras()
     return _cameras;
 }
 
-void Scene::render(Renderer* renderer, const Mat4& eyeTransform, const Mat4* eyeProjection)
+void Scene::render(CocRenderer* renderer, const CocMat4& eyeTransform, const CocMat4* eyeProjection)
 {
     render(renderer, &eyeTransform, eyeProjection, 1);
 }
 
-void Scene::render(Renderer* renderer, const Mat4* eyeTransforms, const Mat4* eyeProjections, unsigned int multiViewCount)
+void Scene::render(CocRenderer* renderer, const CocMat4* eyeTransforms, const CocMat4* eyeProjections, unsigned int multiViewCount)
 {
     auto director = Director::getInstance();
     Camera* defaultCamera = nullptr;
@@ -245,33 +205,6 @@ void Scene::render(Renderer* renderer, const Mat4* eyeTransforms, const Mat4* ey
         // from "update" or other parts of the game to calculate culling or something else.
 //        camera->setNodeToParentTransform(eyeCopy);
     }
-
-#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
-    if (_physics3DWorld && _physics3DWorld->isDebugDrawEnabled())
-    {
-        Camera *physics3dDebugCamera = _physics3dDebugCamera != nullptr ? _physics3dDebugCamera: defaultCamera;
-        
-        for (unsigned int i = 0; i < multiViewCount; ++i) {
-            if (eyeProjections)
-                physics3dDebugCamera->setAdditionalProjection(eyeProjections[i] * physics3dDebugCamera->getProjectionMatrix().getInversed());
-            if (eyeTransforms)
-                physics3dDebugCamera->setAdditionalTransform(eyeTransforms[i].getInversed());
-            director->pushProjectionMatrix(i);
-            director->loadProjectionMatrix(physics3dDebugCamera->getViewProjectionMatrix(), i);
-        }
-        
-        physics3dDebugCamera->apply();
-        physics3dDebugCamera->clearBackground();
-
-        _physics3DWorld->debugDraw(renderer);
-        renderer->render();
-        
-        physics3dDebugCamera->restore();
-
-        for (unsigned int i = 0; i < multiViewCount; ++i)
-            director->popProjectionMatrix(i);
-    }
-#endif
 
     Camera::_visitingCamera = nullptr;
 //    experimental::FrameBuffer::applyDefaultFBO();

@@ -72,7 +72,7 @@ void MeshCommand::init(float globalZOrder,
                        GLenum primitive,
                        GLenum indexFormat,
                        ssize_t indexCount,
-                       const cocos2d::Mat4 &mv,
+                       const cocos2d::CocMat4 &mv,
                        uint32_t flags)
 {
     CCASSERT(material, "material cannot be null");
@@ -101,7 +101,7 @@ void MeshCommand::init(float globalZOrder,
                        GLenum primitive,
                        GLenum indexFormat,
                        ssize_t indexCount,
-                       const cocos2d::Mat4& mv,
+                       const cocos2d::CocMat4& mv,
                        uint32_t flags)
 {
     CCASSERT(glProgramState, "GLProgramState cannot be null");
@@ -129,14 +129,14 @@ void MeshCommand::init(float globalZOrder,
 }
 
 
-void MeshCommand::setDisplayColor(const Vec4& color)
+void MeshCommand::setDisplayColor(const CocVec4& color)
 {
     CCASSERT(!_material, "If using material, you should set the color as a uniform: use u_color");
 
     _displayColor = color;
 }
 
-void MeshCommand::setMatrixPalette(const Vec4* matrixPalette)
+void MeshCommand::setMatrixPalette(const CocVec4* matrixPalette)
 {
     CCASSERT(!_material, "If using material, you should set the color as a uniform: use u_matrixPalette");
 

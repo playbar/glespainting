@@ -47,9 +47,9 @@ AttachNode::~AttachNode()
     
 }
 
-Mat4 AttachNode::getWorldToNodeTransform() const
+CocMat4 AttachNode::getWorldToNodeTransform() const
 {
-    static Mat4 mat;
+    static CocMat4 mat;
     mat.setIdentity();
     auto parent = getParent();
     if (parent)
@@ -63,19 +63,19 @@ Mat4 AttachNode::getWorldToNodeTransform() const
     return mat;
 }
 
-Mat4 AttachNode::getNodeToWorldTransform() const
+CocMat4 AttachNode::getNodeToWorldTransform() const
 {
     return Node::getNodeToWorldTransform();
 }
 
-const Mat4& AttachNode::getNodeToParentTransform() const
+const CocMat4& AttachNode::getNodeToParentTransform() const
 {
     Node::getNodeToParentTransform();
     _transformToParent = _attachBone->getWorldMat() * _transform;
     return _transformToParent;
 }
 
-void AttachNode::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t /*parentFlags*/)
+void AttachNode::visit(CocRenderer *renderer, const CocMat4& parentTransform, uint32_t /*parentFlags*/)
 {
     Node::visit(renderer, parentTransform, Node::FLAGS_DIRTY_MASK);
 }

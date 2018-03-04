@@ -91,13 +91,13 @@ public:
      *
      * @return The offset position of child objects.
      */
-    const Vec2& getPositionOffset() const { return _positionOffset; }
+    const CocVec2& getPositionOffset() const { return _positionOffset; }
     
     /** Sets the offset position of child objects. 
      *
      * @param offset The offset position of child objects.
      */
-    void setPositionOffset(const Vec2& offset) { _positionOffset = offset; }
+    void setPositionOffset(const CocVec2& offset) { _positionOffset = offset; }
     
     /** Gets the list of properties stored in a dictionary. 
      *
@@ -133,7 +133,7 @@ protected:
     /** name of the group */
     std::string _groupName;
     /** offset position of child objects */
-    Vec2 _positionOffset;
+    CocVec2 _positionOffset;
     /** list of properties stored in a dictionary */
     ValueMap _properties;
     /** array of the objects */

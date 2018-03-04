@@ -10,67 +10,66 @@
 #include "base/CCEventDispatcher.h"
 #include "2d/CCActionCatmullRom.h"
 #include "platform/CCGL.h"
-#include "painter.h"
 
 NS_CC_BEGIN
 
-// Vec2 == CGPoint in 32-bits, but not in 64-bits (OS X)
+// CocVec2 == CGPoint in 32-bits, but not in 64-bits (OS X)
 // that's why the "v2f" functions are needed
-static Vec2 v2fzero(0.0f,0.0f);
+static CocVec2 v2fzero(0.0f,0.0f);
 
-static inline Vec2 v2f(float x, float y)
+static inline CocVec2 v2f(float x, float y)
 {
-    Vec2 ret(x, y);
+    CocVec2 ret(x, y);
     return ret;
 }
 
-static inline Vec2 v2fadd(const Vec2 &v0, const Vec2 &v1)
+static inline CocVec2 v2fadd(const CocVec2 &v0, const CocVec2 &v1)
 {
     return v2f(v0.x+v1.x, v0.y+v1.y);
 }
 
-static inline Vec2 v2fsub(const Vec2 &v0, const Vec2 &v1)
+static inline CocVec2 v2fsub(const CocVec2 &v0, const CocVec2 &v1)
 {
     return v2f(v0.x-v1.x, v0.y-v1.y);
 }
 
-static inline Vec2 v2fmult(const Vec2 &v, float s)
+static inline CocVec2 v2fmult(const CocVec2 &v, float s)
 {
     return v2f(v.x * s, v.y * s);
 }
 
-static inline Vec2 v2fperp(const Vec2 &p0)
+static inline CocVec2 v2fperp(const CocVec2 &p0)
 {
     return v2f(-p0.y, p0.x);
 }
 
-static inline Vec2 v2fneg(const Vec2 &p0)
+static inline CocVec2 v2fneg(const CocVec2 &p0)
 {
     return v2f(-p0.x, - p0.y);
 }
 
-static inline float v2fdot(const Vec2 &p0, const Vec2 &p1)
+static inline float v2fdot(const CocVec2 &p0, const CocVec2 &p1)
 {
     return  p0.x * p1.x + p0.y * p1.y;
 }
 
-static inline Vec2 v2fnormalize(const Vec2 &p)
+static inline CocVec2 v2fnormalize(const CocVec2 &p)
 {
-    Vec2 r(p.x, p.y);
+    CocVec2 r(p.x, p.y);
     r.normalize();
     return v2f(r.x, r.y);
 }
 
-static inline Vec2 __v2f(const Vec2 &v)
+static inline CocVec2 __v2f(const CocVec2 &v)
 {
 //#ifdef __LP64__
     return v2f(v.x, v.y);
 // #else
-//     return * ((Vec2*) &v);
+//     return * ((CocVec2*) &v);
 // #endif
 }
 
-static inline Tex2F __t(const Vec2 &v)
+static inline Tex2F __t(const CocVec2 &v)
 {
     return *(Tex2F*)&v;
 }
@@ -277,7 +276,7 @@ bool DrawLayer::init()
     return true;
 }
 
-void DrawLayer::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+void DrawLayer::draw(CocRenderer *renderer, const CocMat4 &transform, uint32_t flags)
 {
     if(_bufferCount)
     {
@@ -301,7 +300,7 @@ void DrawLayer::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     }
 }
 
-void DrawLayer::onDraw(const Mat4 &transform, uint32_t /*flags*/)
+void DrawLayer::onDraw(const CocMat4 &transform, uint32_t /*flags*/)
 {
     getGLProgramState()->apply(transform);
     auto glProgram = this->getGLProgram();
@@ -344,7 +343,7 @@ void DrawLayer::onDraw(const Mat4 &transform, uint32_t /*flags*/)
     CHECK_GL_ERROR_DEBUG();
 }
 
-void DrawLayer::onDrawGLLine(const Mat4 &transform, uint32_t /*flags*/)
+void DrawLayer::onDrawGLLine(const CocMat4 &transform, uint32_t /*flags*/)
 {
     auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR);
     glProgram->use();
@@ -389,7 +388,7 @@ void DrawLayer::onDrawGLLine(const Mat4 &transform, uint32_t /*flags*/)
     CHECK_GL_ERROR_DEBUG();
 }
 
-void DrawLayer::onDrawGLPoint(const Mat4 &transform, uint32_t /*flags*/)
+void DrawLayer::onDrawGLPoint(const CocMat4 &transform, uint32_t /*flags*/)
 {
     auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_COLOR_TEXASPOINTSIZE);
     glProgram->use();
@@ -437,7 +436,7 @@ void DrawLayer::onDrawGLPoint(const Mat4 &transform, uint32_t /*flags*/)
     CHECK_GL_ERROR_DEBUG();
 }
 
-void DrawLayer::drawPoint(const Vec2& position, const float pointSize, const Color4F &color)
+void DrawLayer::drawPoint(const CocVec2& position, const float pointSize, const Color4F &color)
 {
     if( _block )
         return;
@@ -452,12 +451,12 @@ void DrawLayer::drawPoint(const Vec2& position, const float pointSize, const Col
     _dirtyGLPoint = true;
 }
 
-void DrawLayer::drawPoints(const Vec2 *position, unsigned int numberOfPoints, const Color4F &color)
+void DrawLayer::drawPoints(const CocVec2 *position, unsigned int numberOfPoints, const Color4F &color)
 {
     drawPoints(position, numberOfPoints, 1.0, color);
 }
 
-void DrawLayer::drawPoints(const Vec2 *position, unsigned int numberOfPoints, const float pointSize, const Color4F &color)
+void DrawLayer::drawPoints(const CocVec2 *position, unsigned int numberOfPoints, const float pointSize, const Color4F &color)
 {
     if( _block )
         return;
@@ -475,7 +474,7 @@ void DrawLayer::drawPoints(const Vec2 *position, unsigned int numberOfPoints, co
     _dirtyGLPoint = true;
 }
 
-void DrawLayer::drawLine(const Vec2 &origin, const Vec2 &destination, const Color4F &color)
+void DrawLayer::drawLine(const CocVec2 &origin, const CocVec2 &destination, const Color4F &color)
 {
     if( _block )
         return;
@@ -493,17 +492,17 @@ void DrawLayer::drawLine(const Vec2 &origin, const Vec2 &destination, const Colo
     _dirtyGLLine = true;
 }
 
-void DrawLayer::drawRect(const Vec2 &origin, const Vec2 &destination, const Color4F &color)
+void DrawLayer::drawRect(const CocVec2 &origin, const CocVec2 &destination, const Color4F &color)
 {
     if( _block )
         return;
-    drawLine(Vec2(origin.x, origin.y), Vec2(destination.x, origin.y), color);
-    drawLine(Vec2(destination.x, origin.y), Vec2(destination.x, destination.y), color);
-    drawLine(Vec2(destination.x, destination.y), Vec2(origin.x, destination.y), color);
-    drawLine(Vec2(origin.x, destination.y), Vec2(origin.x, origin.y), color);
+    drawLine(CocVec2(origin.x, origin.y), CocVec2(destination.x, origin.y), color);
+    drawLine(CocVec2(destination.x, origin.y), CocVec2(destination.x, destination.y), color);
+    drawLine(CocVec2(destination.x, destination.y), CocVec2(origin.x, destination.y), color);
+    drawLine(CocVec2(origin.x, destination.y), CocVec2(origin.x, origin.y), color);
 }
 
-void DrawLayer::drawPoly(const Vec2 *poli, unsigned int numberOfPoints, bool closePolygon, const Color4F &color)
+void DrawLayer::drawPoly(const CocVec2 *poli, unsigned int numberOfPoints, bool closePolygon, const Color4F &color)
 {
     if( _block )
         return;
@@ -542,13 +541,13 @@ void DrawLayer::drawPoly(const Vec2 *poli, unsigned int numberOfPoints, bool clo
     _bufferCountGLLine += vertex_count;
 }
 
-void DrawLayer::drawCircle(const Vec2& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY, const Color4F &color)
+void DrawLayer::drawCircle(const CocVec2& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY, const Color4F &color)
 {
     if( _block )
         return;
     const float coef = 2.0f * (float)M_PI/segments;
     
-    Vec2 *vertices = new (std::nothrow) Vec2[segments+2];
+    CocVec2 *vertices = new (std::nothrow) CocVec2[segments+2];
     if( ! vertices )
         return;
     
@@ -572,18 +571,18 @@ void DrawLayer::drawCircle(const Vec2& center, float radius, float angle, unsign
     CC_SAFE_DELETE_ARRAY(vertices);
 }
 
-void DrawLayer::drawCircle(const Vec2 &center, float radius, float angle, unsigned int segments, bool drawLineToCenter, const Color4F &color)
+void DrawLayer::drawCircle(const CocVec2 &center, float radius, float angle, unsigned int segments, bool drawLineToCenter, const Color4F &color)
 {
     if( _block )
         return;
     drawCircle(center, radius, angle, segments, drawLineToCenter, 1.0f, 1.0f, color);
 }
 
-void DrawLayer::drawQuadBezier(const Vec2 &origin, const Vec2 &control, const Vec2 &destination, unsigned int segments, const Color4F &color)
+void DrawLayer::drawQuadBezier(const CocVec2 &origin, const CocVec2 &control, const CocVec2 &destination, unsigned int segments, const Color4F &color)
 {
     if( _block )
         return;
-    Vec2* vertices = new (std::nothrow) Vec2[segments + 1];
+    CocVec2* vertices = new (std::nothrow) CocVec2[segments + 1];
     if( ! vertices )
         return;
     
@@ -602,11 +601,11 @@ void DrawLayer::drawQuadBezier(const Vec2 &origin, const Vec2 &control, const Ve
     CC_SAFE_DELETE_ARRAY(vertices);
 }
 
-void DrawLayer::drawCubicBezier(const Vec2 &origin, const Vec2 &control1, const Vec2 &control2, const Vec2 &destination, unsigned int segments, const Color4F &color)
+void DrawLayer::drawCubicBezier(const CocVec2 &origin, const CocVec2 &control1, const CocVec2 &control2, const CocVec2 &destination, unsigned int segments, const Color4F &color)
 {
     if( _block )
         return;
-    Vec2* vertices = new (std::nothrow) Vec2[segments + 1];
+    CocVec2* vertices = new (std::nothrow) CocVec2[segments + 1];
     if( ! vertices )
         return;
     
@@ -629,7 +628,7 @@ void DrawLayer::drawCardinalSpline(PointArray *config, float tension,  unsigned 
 {
     if( _block )
         return;
-    Vec2* vertices = new (std::nothrow) Vec2[segments + 1];
+    CocVec2* vertices = new (std::nothrow) CocVec2[segments + 1];
     if( ! vertices )
         return;
     
@@ -651,12 +650,12 @@ void DrawLayer::drawCardinalSpline(PointArray *config, float tension,  unsigned 
         }
         
         // Interpolate
-        Vec2 pp0 = config->getControlPointAtIndex(p-1);
-        Vec2 pp1 = config->getControlPointAtIndex(p+0);
-        Vec2 pp2 = config->getControlPointAtIndex(p+1);
-        Vec2 pp3 = config->getControlPointAtIndex(p+2);
+        CocVec2 pp0 = config->getControlPointAtIndex(p-1);
+        CocVec2 pp1 = config->getControlPointAtIndex(p+0);
+        CocVec2 pp2 = config->getControlPointAtIndex(p+1);
+        CocVec2 pp3 = config->getControlPointAtIndex(p+2);
         
-        Vec2 newPos = ccCardinalSplineAt( pp0, pp1, pp2, pp3, tension, lt);
+        CocVec2 newPos = ccCardinalSplineAt( pp0, pp1, pp2, pp3, tension, lt);
         vertices[i].x = newPos.x;
         vertices[i].y = newPos.y;
     }
@@ -673,17 +672,17 @@ void DrawLayer::drawCatmullRom(PointArray *points, unsigned int segments, const 
     drawCardinalSpline( points, 0.5f, segments, color);
 }
 
-void DrawLayer::drawDot(const Vec2 &pos, float radius, const Color4F &color)
+void DrawLayer::drawDot(const CocVec2 &pos, float radius, const Color4F &color)
 {
     if( _block )
         return;
     unsigned int vertex_count = 2*3;
     ensureCapacity(vertex_count);
     
-    V2F_C4B_T2F a = {Vec2(pos.x - radius, pos.y - radius), Color4B(color), Tex2F(-1.0, -1.0) };
-    V2F_C4B_T2F b = {Vec2(pos.x - radius, pos.y + radius), Color4B(color), Tex2F(-1.0,  1.0) };
-    V2F_C4B_T2F c = {Vec2(pos.x + radius, pos.y + radius), Color4B(color), Tex2F( 1.0,  1.0) };
-    V2F_C4B_T2F d = {Vec2(pos.x + radius, pos.y - radius), Color4B(color), Tex2F( 1.0, -1.0) };
+    V2F_C4B_T2F a = {CocVec2(pos.x - radius, pos.y - radius), Color4B(color), Tex2F(-1.0, -1.0) };
+    V2F_C4B_T2F b = {CocVec2(pos.x - radius, pos.y + radius), Color4B(color), Tex2F(-1.0,  1.0) };
+    V2F_C4B_T2F c = {CocVec2(pos.x + radius, pos.y + radius), Color4B(color), Tex2F( 1.0,  1.0) };
+    V2F_C4B_T2F d = {CocVec2(pos.x + radius, pos.y - radius), Color4B(color), Tex2F( 1.0, -1.0) };
     
     V2F_C4B_T2F_Triangle *triangles = (V2F_C4B_T2F_Triangle *)(_buffer + _bufferCount);
     V2F_C4B_T2F_Triangle triangle0 = {a, b, c};
@@ -696,40 +695,40 @@ void DrawLayer::drawDot(const Vec2 &pos, float radius, const Color4F &color)
     _dirty = true;
 }
 
-void DrawLayer::drawRect(const Vec2 &p1, const Vec2 &p2, const Vec2 &p3, const Vec2& p4, const Color4F &color)
+void DrawLayer::drawRect(const CocVec2 &p1, const CocVec2 &p2, const CocVec2 &p3, const CocVec2& p4, const Color4F &color)
 {
     if( _block )
         return;
-    drawLine(Vec2(p1.x, p1.y), Vec2(p2.x, p2.y), color);
-    drawLine(Vec2(p2.x, p2.y), Vec2(p3.x, p3.y), color);
-    drawLine(Vec2(p3.x, p3.y), Vec2(p4.x, p4.y), color);
-    drawLine(Vec2(p4.x, p4.y), Vec2(p1.x, p1.y), color);
+    drawLine(CocVec2(p1.x, p1.y), CocVec2(p2.x, p2.y), color);
+    drawLine(CocVec2(p2.x, p2.y), CocVec2(p3.x, p3.y), color);
+    drawLine(CocVec2(p3.x, p3.y), CocVec2(p4.x, p4.y), color);
+    drawLine(CocVec2(p4.x, p4.y), CocVec2(p1.x, p1.y), color);
 }
 
-void DrawLayer::drawSegment(const Vec2 &from, const Vec2 &to, float radius, const Color4F &color)
+void DrawLayer::drawSegment(const CocVec2 &from, const CocVec2 &to, float radius, const Color4F &color)
 {
     if( _block )
         return;
     unsigned int vertex_count = 6*3;
     ensureCapacity(vertex_count);
     
-    Vec2 a = __v2f(from);
-    Vec2 b = __v2f(to);
+    CocVec2 a = __v2f(from);
+    CocVec2 b = __v2f(to);
     
     
-    Vec2 n = v2fnormalize(v2fperp(v2fsub(b, a)));
-    Vec2 t = v2fperp(n);
+    CocVec2 n = v2fnormalize(v2fperp(v2fsub(b, a)));
+    CocVec2 t = v2fperp(n);
     
-    Vec2 nw = v2fmult(n, radius);
-    Vec2 tw = v2fmult(t, radius);
-    Vec2 v0 = v2fsub(b, v2fadd(nw, tw));
-    Vec2 v1 = v2fadd(b, v2fsub(nw, tw));
-    Vec2 v2 = v2fsub(b, nw);
-    Vec2 v3 = v2fadd(b, nw);
-    Vec2 v4 = v2fsub(a, nw);
-    Vec2 v5 = v2fadd(a, nw);
-    Vec2 v6 = v2fsub(a, v2fsub(nw, tw));
-    Vec2 v7 = v2fadd(a, v2fadd(nw, tw));
+    CocVec2 nw = v2fmult(n, radius);
+    CocVec2 tw = v2fmult(t, radius);
+    CocVec2 v0 = v2fsub(b, v2fadd(nw, tw));
+    CocVec2 v1 = v2fadd(b, v2fsub(nw, tw));
+    CocVec2 v2 = v2fsub(b, nw);
+    CocVec2 v3 = v2fadd(b, nw);
+    CocVec2 v4 = v2fsub(a, nw);
+    CocVec2 v5 = v2fadd(a, nw);
+    CocVec2 v6 = v2fsub(a, v2fsub(nw, tw));
+    CocVec2 v7 = v2fadd(a, v2fadd(nw, tw));
     
     
     V2F_C4B_T2F_Triangle *triangles = (V2F_C4B_T2F_Triangle *)(_buffer + _bufferCount);
@@ -781,7 +780,7 @@ void DrawLayer::drawSegment(const Vec2 &from, const Vec2 &to, float radius, cons
     _dirty = true;
 }
 
-void DrawLayer::drawPolygon(const Vec2 *verts, int count, const Color4F &fillColor, float borderWidth, const Color4F &borderColor)
+void DrawLayer::drawPolygon(const CocVec2 *verts, int count, const Color4F &fillColor, float borderWidth, const Color4F &borderColor)
 {
     if( _block )
         return;
@@ -809,20 +808,20 @@ void DrawLayer::drawPolygon(const Vec2 *verts, int count, const Color4F &fillCol
     
     if(outline)
     {
-        struct ExtrudeVerts {Vec2 offset, n;};
+        struct ExtrudeVerts {CocVec2 offset, n;};
         struct ExtrudeVerts* extrude = (struct ExtrudeVerts*)malloc(sizeof(struct ExtrudeVerts)*count);
         memset(extrude, 0, sizeof(struct ExtrudeVerts)*count);
         
         for (int i = 0; i < count; i++)
         {
-            Vec2 v0 = __v2f(verts[(i-1+count)%count]);
-            Vec2 v1 = __v2f(verts[i]);
-            Vec2 v2 = __v2f(verts[(i+1)%count]);
+            CocVec2 v0 = __v2f(verts[(i-1+count)%count]);
+            CocVec2 v1 = __v2f(verts[i]);
+            CocVec2 v2 = __v2f(verts[(i+1)%count]);
             
-            Vec2 n1 = v2fnormalize(v2fperp(v2fsub(v1, v0)));
-            Vec2 n2 = v2fnormalize(v2fperp(v2fsub(v2, v1)));
+            CocVec2 n1 = v2fnormalize(v2fperp(v2fsub(v1, v0)));
+            CocVec2 n2 = v2fnormalize(v2fperp(v2fsub(v2, v1)));
             
-            Vec2 offset = v2fmult(v2fadd(n1, n2), 1.0f / (v2fdot(n1, n2) + 1.0f));
+            CocVec2 offset = v2fmult(v2fadd(n1, n2), 1.0f / (v2fdot(n1, n2) + 1.0f));
             struct ExtrudeVerts tmp = {offset, n2};
             extrude[i] = tmp;
         }
@@ -830,18 +829,18 @@ void DrawLayer::drawPolygon(const Vec2 *verts, int count, const Color4F &fillCol
         for(int i = 0; i < count; i++)
         {
             int j = (i+1)%count;
-            Vec2 v0 = __v2f(verts[i]);
-            Vec2 v1 = __v2f(verts[j]);
+            CocVec2 v0 = __v2f(verts[i]);
+            CocVec2 v1 = __v2f(verts[j]);
             
-            Vec2 n0 = extrude[i].n;
+            CocVec2 n0 = extrude[i].n;
             
-            Vec2 offset0 = extrude[i].offset;
-            Vec2 offset1 = extrude[j].offset;
+            CocVec2 offset0 = extrude[i].offset;
+            CocVec2 offset1 = extrude[j].offset;
             
-            Vec2 inner0 = v2fsub(v0, v2fmult(offset0, borderWidth));
-            Vec2 inner1 = v2fsub(v1, v2fmult(offset1, borderWidth));
-            Vec2 outer0 = v2fadd(v0, v2fmult(offset0, borderWidth));
-            Vec2 outer1 = v2fadd(v1, v2fmult(offset1, borderWidth));
+            CocVec2 inner0 = v2fsub(v0, v2fmult(offset0, borderWidth));
+            CocVec2 inner1 = v2fsub(v1, v2fmult(offset1, borderWidth));
+            CocVec2 outer0 = v2fadd(v0, v2fmult(offset0, borderWidth));
+            CocVec2 outer1 = v2fadd(v1, v2fmult(offset1, borderWidth));
             
             V2F_C4B_T2F_Triangle tmp1 = {
                 {inner0, Color4B(borderColor), __t(v2fneg(n0))},
@@ -866,34 +865,34 @@ void DrawLayer::drawPolygon(const Vec2 *verts, int count, const Color4F &fillCol
     _dirty = true;
 }
 
-void DrawLayer::drawSolidRect(const Vec2 &origin, const Vec2 &destination, const Color4F &color)
+void DrawLayer::drawSolidRect(const CocVec2 &origin, const CocVec2 &destination, const Color4F &color)
 {
     if( _block )
         return;
-    Vec2 vertices[] = {
+    CocVec2 vertices[] = {
         origin,
-        Vec2(destination.x, origin.y),
+        CocVec2(destination.x, origin.y),
         destination,
-        Vec2(origin.x, destination.y)
+        CocVec2(origin.x, destination.y)
     };
     
     drawSolidPoly(vertices, 4, color );
 }
 
-void DrawLayer::drawSolidPoly(const Vec2 *poli, unsigned int numberOfPoints, const Color4F &color)
+void DrawLayer::drawSolidPoly(const CocVec2 *poli, unsigned int numberOfPoints, const Color4F &color)
 {
     if( _block )
         return;
     drawPolygon(poli, numberOfPoints, color, 0.0, Color4F(0.0, 0.0, 0.0, 0.0));
 }
 
-void DrawLayer::drawSolidCircle(const Vec2& center, float radius, float angle, unsigned int segments, float scaleX, float scaleY, const Color4F &color)
+void DrawLayer::drawSolidCircle(const CocVec2& center, float radius, float angle, unsigned int segments, float scaleX, float scaleY, const Color4F &color)
 {
     if( _block )
         return;
     const float coef = 2.0f * (float)M_PI/segments;
     
-    Vec2 *vertices = new (std::nothrow) Vec2[segments];
+    CocVec2 *vertices = new (std::nothrow) CocVec2[segments];
     if( ! vertices )
         return;
     
@@ -912,14 +911,14 @@ void DrawLayer::drawSolidCircle(const Vec2& center, float radius, float angle, u
     CC_SAFE_DELETE_ARRAY(vertices);
 }
 
-void DrawLayer::drawSolidCircle( const Vec2& center, float radius, float angle, unsigned int segments, const Color4F& color)
+void DrawLayer::drawSolidCircle( const CocVec2& center, float radius, float angle, unsigned int segments, const Color4F& color)
 {
     if( _block )
         return;
     drawSolidCircle(center, radius, angle, segments, 1.0f, 1.0f, color);
 }
 
-void DrawLayer::drawTriangle(const Vec2 &p1, const Vec2 &p2, const Vec2 &p3, const Color4F &color)
+void DrawLayer::drawTriangle(const CocVec2 &p1, const CocVec2 &p2, const CocVec2 &p3, const Color4F &color)
 {
     if( _block )
         return;
@@ -927,9 +926,9 @@ void DrawLayer::drawTriangle(const Vec2 &p1, const Vec2 &p2, const Vec2 &p3, con
     ensureCapacity(vertex_count);
 
     Color4B col = Color4B(color);
-    V2F_C4B_T2F a = {Vec2(p1.x, p1.y), col, Tex2F(0.0, 0.0) };
-    V2F_C4B_T2F b = {Vec2(p2.x, p2.y), col, Tex2F(0.0,  0.0) };
-    V2F_C4B_T2F c = {Vec2(p3.x, p3.y), col, Tex2F(0.0,  0.0) };
+    V2F_C4B_T2F a = {CocVec2(p1.x, p1.y), col, Tex2F(0.0, 0.0) };
+    V2F_C4B_T2F b = {CocVec2(p2.x, p2.y), col, Tex2F(0.0,  0.0) };
+    V2F_C4B_T2F c = {CocVec2(p3.x, p3.y), col, Tex2F(0.0,  0.0) };
 
     V2F_C4B_T2F_Triangle *triangles = (V2F_C4B_T2F_Triangle *)(_buffer + _bufferCount);
     V2F_C4B_T2F_Triangle triangle = {a, b, c};
@@ -939,7 +938,7 @@ void DrawLayer::drawTriangle(const Vec2 &p1, const Vec2 &p2, const Vec2 &p3, con
     _dirty = true;
 }
 
-void DrawLayer::drawQuadraticBezier(const Vec2& from, const Vec2& control, const Vec2& to, unsigned int segments, const Color4F &color)
+void DrawLayer::drawQuadraticBezier(const CocVec2& from, const CocVec2& control, const CocVec2& to, unsigned int segments, const Color4F &color)
 {
     if( _block )
         return;
@@ -1008,8 +1007,8 @@ void DrawLayer::setBlendFunc(const BlendFunc &blendFunc)
         pResule->_inverse = this->_inverse;
         pResule->_inverseDirty = this->_inverseDirty;
         if( this->_additionalTransform) {
-            pResule->_additionalTransform = new Mat4[2];
-            memcpy(pResule->_additionalTransform, this->_additionalTransform, sizeof(Mat4) * 2);
+            pResule->_additionalTransform = new CocMat4[2];
+            memcpy(pResule->_additionalTransform, this->_additionalTransform, sizeof(CocMat4) * 2);
         }
         pResule->_additionalTransformDirty = this->_additionalTransformDirty;
         pResule->_transformUpdated = this->_transformUpdated;

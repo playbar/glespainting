@@ -144,12 +144,12 @@ uint32_t Pass::getHash() const
     return _hash;
 }
 
-void Pass::bind(const Mat4& modelView)
+void Pass::bind(const CocMat4& modelView)
 {
     bind(modelView, true);
 }
 
-void Pass::bind(const Mat4& modelView, bool bindAttributes)
+void Pass::bind(const CocMat4& modelView, bool bindAttributes)
 {
 
     // vertex attribs

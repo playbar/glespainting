@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include <unordered_map>
 #include <functional>
 #include "platform/CCPlatformMacros.h"
-#include "math/Vec3.h"
+#include "math/CocVec3.h"
 
 NS_CC_BEGIN
 
@@ -189,14 +189,14 @@ public:
     }
 
     /**
-    @brief Call of Java static Vec3 method
-    @return JniMethodInfo of Vec3 type if there are proper JniMethodInfo; otherwise Vec3(0, 0, 0).
+    @brief Call of Java static CocVec3 method
+    @return JniMethodInfo of CocVec3 type if there are proper JniMethodInfo; otherwise CocVec3(0, 0, 0).
     */
     template <typename... Ts>
-    static Vec3 callStaticVec3Method(const std::string& className, 
+    static CocVec3 callStaticVec3Method(const std::string& className,
                                        const std::string& methodName, 
                                        Ts... xs) {
-        Vec3 ret;
+        CocVec3 ret;
         cocos2d::JniMethodInfo t;
         std::string signature = "(" + std::string(getJNISignature(xs...)) + ")[F";
         if (cocos2d::JniHelper::getStaticMethodInfo(t, className.c_str(), methodName.c_str(), signature.c_str())) {

@@ -74,7 +74,7 @@ public:
      *@brief    If the sender doesn't want to draw, return true.
      * @js NA
      */
-    virtual bool onVisit(TextFieldTTF* sender, Renderer* renderer, const Mat4& transform, uint32_t flags);
+    virtual bool onVisit(TextFieldTTF* sender, CocRenderer* renderer, const CocMat4& transform, uint32_t flags);
 };
 
 /**
@@ -212,7 +212,7 @@ public:
      */
     virtual bool isSecureTextEntry()const;
 
-    virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
+    virtual void visit(CocRenderer *renderer, const CocMat4 &parentTransform, uint32_t parentFlags) override;
 
     virtual void update(float delta) override;
 
@@ -238,7 +238,7 @@ public:
     * Set cursor position to hit letter, if enabled
     * @js NA
     */
-    void setCursorFromPoint(const Vec2 &point, const Camera* camera);
+    void setCursorFromPoint(const CocVec2 &point, const Camera* camera);
 
 protected:
     //////////////////////////////////////////////////////////////////////////

@@ -32,9 +32,9 @@ THE SOFTWARE.
 
 #include "base/ccTypes.h"
 #include "base/CCVector.h"
-#include "math/Vec2.h"
-#include "math/Vec3.h"
-#include "math/Vec4.h"
+#include "math/CocVec2.h"
+#include "math/CocVec3.h"
+#include "math/CocVec4.h"
 
 /**
  * @addtogroup renderer
@@ -78,19 +78,19 @@ public:
     ~UniformValue();
     /**@{
      Set data to Uniform value. Generally, there are many type of data could be supported,
-     including float, int, Vec2/3/4, Mat4.
-     @param value Value to be sent, support float, int, Vec2/3/4, Mat4.
+     including float, int, CocVec2/3/4, CocMat4.
+     @param value Value to be sent, support float, int, CocVec2/3/4, CocMat4.
      */
     void setFloat(float value);
     void setInt(int value);
     void setFloatv(ssize_t size, const float* pointer);
-    void setVec2(const Vec2& value);
-    void setVec2v(ssize_t size, const Vec2* pointer);
-    void setVec3(const Vec3& value);
-    void setVec3v(ssize_t size, const Vec3* pointer);
-    void setVec4(const Vec4& value);
-    void setVec4v(ssize_t size, const Vec4* pointer);
-    void setMat4(const Mat4& value);
+    void setVec2(const CocVec2& value);
+    void setVec2v(ssize_t size, const CocVec2* pointer);
+    void setVec3(const CocVec3& value);
+    void setVec3v(ssize_t size, const CocVec3* pointer);
+    void setVec4(const CocVec4& value);
+    void setVec4v(ssize_t size, const CocVec4* pointer);
+    void setMat4(const CocMat4& value);
     /**
      @}
      */
@@ -278,13 +278,13 @@ public:
      Apply GLProgram, attributes and uniforms.
      @param modelView The applied modelView matrix to shader.
      */
-    void apply(const Mat4& modelView);
+    void apply(const CocMat4& modelView);
 
     /**
      Apply GLProgram, and built in uniforms.
      @param modelView The applied modelView matrix to shader.
      */
-    void applyGLProgram(const Mat4& modelView);
+    void applyGLProgram(const CocMat4& modelView);
     /**
      Apply attributes.
      @param applyAttribFlags Call GL::enableVertexAttribs(_vertexAttribsFlags) or not.
@@ -323,13 +323,13 @@ public:
     void setUniformInt(const std::string& uniformName, int value);
     void setUniformFloat(const std::string& uniformName, float value);
     void setUniformFloatv(const std::string& uniformName, ssize_t size, const float* pointer);
-    void setUniformVec2(const std::string& uniformName, const Vec2& value);
-    void setUniformVec2v(const std::string& uniformName, ssize_t size, const Vec2* pointer);
-    void setUniformVec3(const std::string& uniformName, const Vec3& value);
-    void setUniformVec3v(const std::string& uniformName, ssize_t size, const Vec3* pointer);
-    void setUniformVec4(const std::string& uniformName, const Vec4& value);
-    void setUniformVec4v(const std::string& uniformName, ssize_t size, const Vec4* pointer);
-    void setUniformMat4(const std::string& uniformName, const Mat4& value);
+    void setUniformVec2(const std::string& uniformName, const CocVec2& value);
+    void setUniformVec2v(const std::string& uniformName, ssize_t size, const CocVec2* pointer);
+    void setUniformVec3(const std::string& uniformName, const CocVec3& value);
+    void setUniformVec3v(const std::string& uniformName, ssize_t size, const CocVec3* pointer);
+    void setUniformVec4(const std::string& uniformName, const CocVec4& value);
+    void setUniformVec4v(const std::string& uniformName, ssize_t size, const CocVec4* pointer);
+    void setUniformMat4(const std::string& uniformName, const CocMat4& value);
     void setUniformCallback(const std::string& uniformName, const std::function<void(GLProgram*, Uniform*)> &callback);
     void setUniformTexture(const std::string& uniformName, Texture2D *texture);
     /**
@@ -345,13 +345,13 @@ public:
     void setUniformInt(GLint uniformLocation, int value);
     void setUniformFloat(GLint uniformLocation, float value);
     void setUniformFloatv(GLint uniformLocation, ssize_t size, const float* pointer);
-    void setUniformVec2(GLint uniformLocation, const Vec2& value);
-    void setUniformVec2v(GLint uniformLocation, ssize_t size, const Vec2* pointer);
-    void setUniformVec3(GLint uniformLocation, const Vec3& value);
-    void setUniformVec3v(GLint uniformLocation, ssize_t size, const Vec3* pointer);
-    void setUniformVec4(GLint uniformLocation, const Vec4& value);
-    void setUniformVec4v(GLint uniformLocation, ssize_t size, const Vec4* pointer);
-    void setUniformMat4(GLint uniformLocation, const Mat4& value);
+    void setUniformVec2(GLint uniformLocation, const CocVec2& value);
+    void setUniformVec2v(GLint uniformLocation, ssize_t size, const CocVec2* pointer);
+    void setUniformVec3(GLint uniformLocation, const CocVec3& value);
+    void setUniformVec3v(GLint uniformLocation, ssize_t size, const CocVec3* pointer);
+    void setUniformVec4(GLint uniformLocation, const CocVec4& value);
+    void setUniformVec4v(GLint uniformLocation, ssize_t size, const CocVec4* pointer);
+    void setUniformMat4(GLint uniformLocation, const CocMat4& value);
     void setUniformCallback(GLint uniformLocation, const std::function<void(GLProgram*, Uniform*)> &callback);
     void setUniformTexture(GLint uniformLocation, Texture2D *texture);
     /**

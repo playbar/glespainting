@@ -190,7 +190,7 @@ void ClippingNode::onExit()
 }
 
 
-void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
+void ClippingNode::visit(CocRenderer *renderer, const CocMat4 &parentTransform, uint32_t parentFlags)
 {
     if (!_visible || !hasContent())
         return;
@@ -198,7 +198,7 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
     uint32_t flags = processParentFlags(parentTransform, parentFlags);
 
     // IMPORTANT:
-    // To ease the migration to v3.0, we still support the Mat4 stack,
+    // To ease the migration to v3.0, we still support the CocMat4 stack,
     // but it is deprecated and your code should not rely on it
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when setting matrix stack");

@@ -42,43 +42,43 @@ EventMouse::EventMouse(MouseEventType mouseEventCode)
 };
 
 // returns the current touch location in screen coordinates
-Vec2 EventMouse::getLocationInView() const 
+CocVec2 EventMouse::getLocationInView() const
 { 
     return _point; 
 }
 
 // returns the previous touch location in screen coordinates
-Vec2 EventMouse::getPreviousLocationInView() const 
+CocVec2 EventMouse::getPreviousLocationInView() const
 { 
     return _prevPoint; 
 }
 
 // returns the start touch location in screen coordinates
-Vec2 EventMouse::getStartLocationInView() const 
+CocVec2 EventMouse::getStartLocationInView() const
 { 
     return _startPoint; 
 }
 
 // returns the current touch location in OpenGL coordinates
-Vec2 EventMouse::getLocation() const
+CocVec2 EventMouse::getLocation() const
 { 
     return Director::getInstance()->convertToGL(_point); 
 }
 
 // returns the previous touch location in OpenGL coordinates
-Vec2 EventMouse::getPreviousLocation() const
+CocVec2 EventMouse::getPreviousLocation() const
 { 
     return Director::getInstance()->convertToGL(_prevPoint);  
 }
 
 // returns the start touch location in OpenGL coordinates
-Vec2 EventMouse::getStartLocation() const
+CocVec2 EventMouse::getStartLocation() const
 { 
     return Director::getInstance()->convertToGL(_startPoint);  
 }
 
 // returns the delta position between the current location and the previous location in OpenGL coordinates
-Vec2 EventMouse::getDelta() const
+CocVec2 EventMouse::getDelta() const
 {     
     return getLocation() - getPreviousLocation();
 }

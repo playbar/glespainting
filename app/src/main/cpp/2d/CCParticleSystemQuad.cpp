@@ -259,7 +259,7 @@ void ParticleSystemQuad::initIndices()
     }
 }
 
-inline void updatePosWithParticle(V3F_C4B_T2F_Quad *quad, const Vec2& newPosition,float size,float rotation)
+inline void updatePosWithParticle(V3F_C4B_T2F_Quad *quad, const CocVec2& newPosition,float size,float rotation)
 {
     // vertices
     GLfloat size_2 = size/2;
@@ -306,10 +306,10 @@ void ParticleSystemQuad::updateParticleQuads()
         return;
     }
  
-    Vec2 currentPosition;
+    CocVec2 currentPosition;
     if (_positionType == PositionType::FREE)
     {
-        currentPosition = this->convertToWorldSpace(Vec2::ZERO);
+        currentPosition = this->convertToWorldSpace(CocVec2::ZERO);
     }
     else if (_positionType == PositionType::RELATIVE)
     {
@@ -317,7 +317,7 @@ void ParticleSystemQuad::updateParticleQuads()
     }
     
     V3F_C4B_T2F_Quad *startQuad;
-    Vec2 pos = Vec2::ZERO;
+    CocVec2 pos = CocVec2::ZERO;
     if (_batchNode)
     {
         V3F_C4B_T2F_Quad *batchQuads = _batchNode->getTextureAtlas()->getQuads();
@@ -331,11 +331,11 @@ void ParticleSystemQuad::updateParticleQuads()
     
     if( _positionType == PositionType::FREE )
     {
-        Vec3 p1(currentPosition.x, currentPosition.y, 0);
-        Mat4 worldToNodeTM = getWorldToNodeTransform();
+        CocVec3 p1(currentPosition.x, currentPosition.y, 0);
+        CocMat4 worldToNodeTM = getWorldToNodeTransform();
         worldToNodeTM.transformPoint(&p1);
-        Vec3 p2;
-        Vec2 newPos;
+        CocVec3 p2;
+        CocVec2 newPos;
         float* startX = _particleData.startPosX;
         float* startY = _particleData.startPosY;
         float* x = _particleData.posx;
@@ -356,7 +356,7 @@ void ParticleSystemQuad::updateParticleQuads()
     }
     else if( _positionType == PositionType::RELATIVE )
     {
-        Vec2 newPos;
+        CocVec2 newPos;
         float* startX = _particleData.startPosX;
         float* startY = _particleData.startPosY;
         float* x = _particleData.posx;
@@ -375,7 +375,7 @@ void ParticleSystemQuad::updateParticleQuads()
     }
     else
     {
-        Vec2 newPos;
+        CocVec2 newPos;
         float* startX = _particleData.startPosX;
         float* startY = _particleData.startPosY;
         float* x = _particleData.posx;
@@ -455,7 +455,7 @@ void ParticleSystemQuad::postStep()
 }
 
 // overriding draw method
-void ParticleSystemQuad::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+void ParticleSystemQuad::draw(CocRenderer *renderer, const CocMat4 &transform, uint32_t flags)
 {
     //quad command
     if(_particleCount > 0)

@@ -29,10 +29,10 @@ NS_CC_BEGIN
 
 #define ROTATE(a,i,j,k,l) g=a.m[i + 4 * j]; h=a.m[k + 4 * l]; a.m[i + 4 * j]=(float)(g-s*(h+g*tau)); a.m[k + 4 * l]=(float)(h+s*(g-h*tau));
 
-static Mat4 _getConvarianceMatrix(const Vec3* vertPos, int vertCount)
+static CocMat4 _getConvarianceMatrix(const CocVec3* vertPos, int vertCount)
 {
     int i;
-    Mat4 Cov;
+    CocMat4 Cov;
 
     double S1[3];
     double S2[3][3];
@@ -72,7 +72,7 @@ static Mat4 _getConvarianceMatrix(const Vec3* vertPos, int vertCount)
     return Cov;
 }
 
-static float& _getElement( Vec3& point, int index)
+static float& _getElement( CocVec3& point, int index)
 {
     if (index == 0)
         return point.x;
@@ -85,18 +85,18 @@ static float& _getElement( Vec3& point, int index)
     return point.x;
 }
 
-static void _getEigenVectors(Mat4* vout, Vec3* dout, Mat4 a)
+static void _getEigenVectors(CocMat4* vout, CocVec3* dout, CocMat4 a)
 {
     int n = 3;
     int j,iq,ip,i;
     double tresh, theta, tau, t, sm, s, h, g, c;
     int nrot;
-    Vec3 b;
-    Vec3 z;
-    Mat4 v;
-    Vec3 d;
+    CocVec3 b;
+    CocVec3 z;
+    CocMat4 v;
+    CocVec3 d;
 
-    v = Mat4::IDENTITY;
+    v = CocMat4::IDENTITY;
     for(ip = 0; ip < n; ip++)
     {
         _getElement(b, ip) = a.m[ip + 4 * ip];
@@ -180,18 +180,18 @@ static void _getEigenVectors(Mat4* vout, Vec3* dout, Mat4 a)
     return;
 }
 
-static Mat4 _getOBBOrientation(const Vec3* vertPos, int num)
+static CocMat4 _getOBBOrientation(const CocVec3* vertPos, int num)
 {
-    Mat4 Cov;
+    CocMat4 Cov;
 
     if (num <= 0)
-        return Mat4::IDENTITY;
+        return CocMat4::IDENTITY;
 
     Cov = _getConvarianceMatrix(vertPos, num);
 
     // now get eigenvectors
-    Mat4 Evecs;
-    Vec3 Evals;
+    CocMat4 Evecs;
+    CocVec3 Evals;
     _getEigenVectors(&Evecs, &Evals, Cov);
 
     Evecs.transpose();
@@ -220,24 +220,24 @@ OBB::OBB(const AABB& aabb)
     computeExtAxis();
 }
 
-OBB::OBB(const Vec3* verts, int num)
+OBB::OBB(const CocVec3* verts, int num)
 {
     if (!verts) return;
     
     reset();
     
-    Mat4 matTransform = _getOBBOrientation(verts, num);
+    CocMat4 matTransform = _getOBBOrientation(verts, num);
     
     //	For matTransform is orthogonal, so the inverse matrix is just rotate it;
     matTransform.transpose();
     
-    Vec3 vecMax = matTransform * Vec3(verts[0].x, verts[0].y, verts[0].z);
+    CocVec3 vecMax = matTransform * CocVec3(verts[0].x, verts[0].y, verts[0].z);
     
-    Vec3 vecMin = vecMax;
+    CocVec3 vecMin = vecMax;
     
     for (int i = 1; i < num; i++)
     {
-        Vec3 vect = matTransform * Vec3(verts[i].x, verts[i].y, verts[i].z);
+        CocVec3 vect = matTransform * CocVec3(verts[i].x, verts[i].y, verts[i].z);
         
         vecMax.x = vecMax.x > vect.x ? vecMax.x : vect.x;
         vecMax.y = vecMax.y > vect.y ? vecMax.y : vect.y;
@@ -266,9 +266,9 @@ OBB::OBB(const Vec3* verts, int num)
     computeExtAxis();
 }
 
-bool OBB::containPoint(const Vec3& point) const
+bool OBB::containPoint(const CocVec3& point) const
 {
-    Vec3 vd = point - _center;
+    CocVec3 vd = point - _center;
 
     float d = vd.dot(_xAxis);
     if (d > _extents.x || d < -_extents.x)
@@ -285,7 +285,7 @@ bool OBB::containPoint(const Vec3& point) const
     return true;
 }
 
-void OBB::set(const Vec3& center, const Vec3& xAxis, const Vec3& yAxis, const Vec3& zAxis, const Vec3& extents)
+void OBB::set(const CocVec3& center, const CocVec3& xAxis, const CocVec3& yAxis, const CocVec3& zAxis, const CocVec3& extents)
 {
     _center = center;
     _xAxis = xAxis;
@@ -299,7 +299,7 @@ void OBB::reset()
     memset(this, 0, sizeof(OBB));
 }
 
-void OBB::getCorners(Vec3* verts) const
+void OBB::getCorners(CocVec3* verts) const
 {
     verts[0] = _center - _extentX + _extentY + _extentZ;     // left top front
     verts[1] = _center - _extentX - _extentY + _extentZ;     // left bottom front
@@ -312,16 +312,16 @@ void OBB::getCorners(Vec3* verts) const
     verts[7] = _center - _extentX + _extentY - _extentZ;     // left top back
 }
 
-float OBB::projectPoint(const Vec3& point, const Vec3& axis)const
+float OBB::projectPoint(const CocVec3& point, const CocVec3& axis)const
 {
     float dot = axis.dot(point);
     float ret = dot * point.length();
     return ret;
 }
 
-void OBB::getInterval(const OBB& box, const Vec3& axis, float &min, float &max)const
+void OBB::getInterval(const OBB& box, const CocVec3& axis, float &min, float &max)const
 {
-    Vec3 corners[8];
+    CocVec3 corners[8];
     box.getCorners(corners);
     float value;
     min = max = projectPoint(axis, corners[0]);
@@ -333,12 +333,12 @@ void OBB::getInterval(const OBB& box, const Vec3& axis, float &min, float &max)c
     }
 }
 
-Vec3 OBB::getEdgeDirection(int index)const
+CocVec3 OBB::getEdgeDirection(int index)const
 {
-    Vec3 corners[8];
+    CocVec3 corners[8];
     getCorners(corners);
     
-    Vec3 tmpLine;
+    CocVec3 tmpLine;
     switch(index)
     {
         case 0:// edge with x axis
@@ -360,30 +360,30 @@ Vec3 OBB::getEdgeDirection(int index)const
     return tmpLine;
 }
 
-Vec3 OBB::getFaceDirection(int index) const
+CocVec3 OBB::getFaceDirection(int index) const
 {
-    Vec3 corners[8];
+    CocVec3 corners[8];
     getCorners(corners);
     
-    Vec3 faceDirection, v0, v1;
+    CocVec3 faceDirection, v0, v1;
     switch(index)
     {
         case 0:// front and back
             v0 = corners[2] - corners[1];
             v1 = corners[0] - corners[1];
-            Vec3::cross(v0, v1, &faceDirection);
+            CocVec3::cross(v0, v1, &faceDirection);
             faceDirection.normalize();
             break;
         case 1:// left and right
             v0 = corners[5] - corners[2];
             v1 = corners[3] - corners[2];
-            Vec3::cross(v0, v1, &faceDirection);
+            CocVec3::cross(v0, v1, &faceDirection);
             faceDirection.normalize();
             break;
         case 2:// top and bottom
             v0 = corners[1] - corners[2];
             v1 = corners[5] - corners[2];
-            Vec3::cross(v0, v1, &faceDirection);
+            CocVec3::cross(v0, v1, &faceDirection);
             faceDirection.normalize();
             break;
         default:
@@ -414,8 +414,8 @@ bool OBB::intersects(const OBB& box) const
     {
         for (int j = 0; j < 3; j++)
         {
-            Vec3 axis;
-            Vec3::cross(getEdgeDirection(i), box.getEdgeDirection(j), &axis);
+            CocVec3 axis;
+            CocVec3::cross(getEdgeDirection(i), box.getEdgeDirection(j), &axis);
             getInterval(*this, axis, min1, max1);
             getInterval(box, axis, min2, max2);
             if (max1 < min2 || max2 < min1) return false;
@@ -426,9 +426,9 @@ bool OBB::intersects(const OBB& box) const
 }
 
 
-void OBB::transform(const Mat4& mat)
+void OBB::transform(const CocMat4& mat)
 {
-    Vec4 newcenter = mat * Vec4(_center.x, _center.y, _center.z, 1.0f);// center;
+    CocVec4 newcenter = mat * CocVec4(_center.x, _center.y, _center.z, 1.0f);// center;
     _center.x = newcenter.x;
     _center.y = newcenter.y;
     _center.z = newcenter.z;
@@ -441,7 +441,7 @@ void OBB::transform(const Mat4& mat)
     _yAxis.normalize();
     _zAxis.normalize();
 
-    Vec3 scale, trans;
+    CocVec3 scale, trans;
     Quaternion quat;
     mat.decompose(&scale, &quat, &trans);
 

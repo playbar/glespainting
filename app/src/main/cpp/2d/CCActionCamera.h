@@ -69,47 +69,47 @@ public:
      * @param eye The Eye value of the Camera.
      * @js NA
      */
-    void setEye(const Vec3 &eye);
+    void setEye(const CocVec3 &eye);
     void setEye(float x, float y, float z);
     /* Returns the Eye value of the Camera. 
      *
      * @return The Eye value of the Camera.
      * @js NA
      */
-    const Vec3& getEye() const { return _eye; }
+    const CocVec3& getEye() const { return _eye; }
     /* Sets the Center value of the Camera. 
      *
      * @param center The Center value of the Camera.
      * @js NA
      */
-    void setCenter(const Vec3 &center);
+    void setCenter(const CocVec3 &center);
     /* Returns the Center value of the Camera. 
      *
      * @return The Center value of the Camera.
      * @js NA
      */
-    const Vec3& getCenter() const { return _center; }
+    const CocVec3& getCenter() const { return _center; }
     /* Sets the Up value of the Camera. 
      *
      * @param up The Up value of the Camera.
      * @js NA
      */
-    void setUp(const Vec3 &up);
+    void setUp(const CocVec3 &up);
     /* Returns the Up value of the Camera. 
      *
      * @return The Up value of the Camera.
      * @js NA
      */
-    const Vec3& getUp() const { return _up; }
+    const CocVec3& getUp() const { return _up; }
 
 protected:
 
     void restore();
     void updateTransform();
 
-    Vec3 _center;
-    Vec3 _eye;
-    Vec3 _up;
+    CocVec3 _center;
+    CocVec3 _eye;
+    CocVec3 _up;
 };
 
 /** @class OrbitCamera

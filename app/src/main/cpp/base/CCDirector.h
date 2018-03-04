@@ -31,7 +31,7 @@ class EventDispatcher;
 class EventCustom;
 class EventListenerCustom;
 class TextureCache;
-class Renderer;
+class CocRenderer;
 class Camera;
 
 class Console;
@@ -228,7 +228,7 @@ public:
     Size getVisibleSize() const;
     
     /** Returns visible origin coordinate of the OpenGL view in points. */
-    Vec2 getVisibleOrigin() const;
+    CocVec2 getVisibleOrigin() const;
 
     /**
      * Returns safe area rectangle of the OpenGL view in points.
@@ -239,13 +239,13 @@ public:
      * Converts a screen coordinate to an OpenGL coordinate.
      * Useful to convert (multi) touch coordinates to the current layout (portrait or landscape).
      */
-    Vec2 convertToGL(const Vec2& point);
+    CocVec2 convertToGL(const CocVec2& point);
 
     /** 
      * Converts an OpenGL coordinate to a screen coordinate.
      * Useful to convert node points to window points for calls such as glScissor.
      */
-    Vec2 convertToUI(const Vec2& point);
+    CocVec2 convertToUI(const CocVec2& point);
 
     /** 
      * Gets the distance between camera and near clipping frame.
@@ -404,7 +404,7 @@ public:
     /** Returns the Renderer associated with this director.
      * @since v3.0
      */
-    Renderer* getRenderer() const { return _renderer; }
+    CocRenderer* getRenderer() const { return _renderer; }
 
     /* Gets delta time since last tick to main loop. */
 	float getDeltaTime() const;
@@ -457,7 +457,7 @@ public:
      * @param mat The matrix that to be added.
      * @js NA
      */
-    void loadMatrix(MATRIX_STACK_TYPE type, const Mat4& mat);
+    void loadMatrix(MATRIX_STACK_TYPE type, const CocMat4& mat);
 
     /**
      * Adds a matrix to the top of projection matrix stack.
@@ -466,7 +466,7 @@ public:
      * @param index The index of projection matrix stack.
      * @js NA
      */
-    void loadProjectionMatrix(const Mat4& mat, size_t index);
+    void loadProjectionMatrix(const CocMat4& mat, size_t index);
 
     /**
      * Multiplies a matrix to the top of specified type of matrix stack.
@@ -475,7 +475,7 @@ public:
      * @param mat The matrix that to be multiplied.
      * @js NA
      */
-    void multiplyMatrix(MATRIX_STACK_TYPE type, const Mat4& mat);
+    void multiplyMatrix(MATRIX_STACK_TYPE type, const CocMat4& mat);
 
     /**
      * Multiplies a matrix to the top of projection matrix stack.
@@ -484,20 +484,20 @@ public:
      * @param index The index of projection matrix stack.
      * @js NA
      */
-    void multiplyProjectionMatrix(const Mat4& mat, size_t index);
+    void multiplyProjectionMatrix(const CocMat4& mat, size_t index);
 
     /**
      * Gets the top matrix of specified type of matrix stack.
      * @js NA
      */
-    const Mat4& getMatrix(MATRIX_STACK_TYPE type) const;
+    const CocMat4& getMatrix(MATRIX_STACK_TYPE type) const;
 
     /**
      * Gets the top matrix of projection matrix stack.
      * @param index The index of projection matrix stack.
      * @js NA
      */
-    const Mat4& getProjectionMatrix(size_t index) const;
+    const CocMat4& getProjectionMatrix(size_t index) const;
 
     /**
      * Clear all types of matrix stack, and add identity matrix to these matrix stacks.
@@ -559,12 +559,12 @@ protected:
 
     void initMatrixStack();
 
-    std::stack<Mat4> _modelViewMatrixStack;
+    std::stack<CocMat4> _modelViewMatrixStack;
     /** In order to support GL MultiView features, we need to use the matrix array,
         but we don't know the number of MultiView, so using the vector instead.
      */
-    std::vector< std::stack<Mat4> > _projectionMatrixStackList;
-    std::stack<Mat4> _textureMatrixStack;
+    std::vector< std::stack<CocMat4> > _projectionMatrixStackList;
+    std::stack<CocMat4> _textureMatrixStack;
 
     /** Scheduler associated with this director
      @since v2.0
@@ -655,7 +655,7 @@ protected:
     Node *_notificationNode;
 
     /* Renderer for the Director */
-    Renderer *_renderer;
+    CocRenderer *_renderer;
     
     /* Default FrameBufferObject*/
     experimental::FrameBuffer* _defaultFBO;

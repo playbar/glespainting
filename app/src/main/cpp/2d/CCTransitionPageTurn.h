@@ -70,7 +70,7 @@ public:
     // Overrides
     // @js NA
     //
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    virtual void draw(CocRenderer *renderer, const CocMat4 &transform, uint32_t flags) override;
 
     /**
      * Creates a base transition with duration and incoming scene.

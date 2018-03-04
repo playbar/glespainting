@@ -88,7 +88,7 @@ bool TMXLayer::initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *la
         _hexSideLength = mapInfo->getHexSideLength();
 
         // offset (after layer orientation is set);
-        Vec2 offset = this->calculateLayerOffset(layerInfo->_offset);
+        CocVec2 offset = this->calculateLayerOffset(layerInfo->_offset);
         this->setPosition(CC_POINT_PIXELS_TO_POINTS(offset));
 
         _atlasIndexArray = ccCArrayNew(totalNumberOfTiles);
@@ -217,7 +217,7 @@ void TMXLayer::setupTiles()
             // FIXME:: gid == 0 --> empty tile
             if (gid != 0) 
             {
-                this->appendTileForGID(gid, Vec2(newX, y));
+                this->appendTileForGID(gid, CocVec2(newX, y));
             }
         }
     }
@@ -264,24 +264,24 @@ void TMXLayer::parseInternalProperties()
     }
 }
 
-void TMXLayer::setupTileSprite(Sprite* sprite, const Vec2& pos, uint32_t gid)
+void TMXLayer::setupTileSprite(Sprite* sprite, const CocVec2& pos, uint32_t gid)
 {
     sprite->setPosition(getPositionAt(pos));
     sprite->setPositionZ((float)getVertexZForPos(pos));
-    sprite->setAnchorPoint(Vec2::ZERO);
+    sprite->setAnchorPoint(CocVec2::ZERO);
     sprite->setOpacity(_opacity);
 
     //issue 1264, flip can be undone as well
     sprite->setFlippedX(false);
     sprite->setFlippedY(false);
     sprite->setRotation(0.0f);
-    sprite->setAnchorPoint(Vec2(0,0));
+    sprite->setAnchorPoint(CocVec2(0,0));
 
     // Rotation in tiled is achieved using 3 flipped states, flipping across the horizontal, vertical, and diagonal axes of the tiles.
     if (gid & kTMXTileDiagonalFlag)
     {
         // put the anchor in the middle for ease of rotation.
-        sprite->setAnchorPoint(Vec2(0.5f,0.5f));
+        sprite->setAnchorPoint(CocVec2(0.5f,0.5f));
         sprite->setPosition(getPositionAt(pos).x + sprite->getContentSize().height/2,
            getPositionAt(pos).y + sprite->getContentSize().width/2 );
 
@@ -346,7 +346,7 @@ Sprite* TMXLayer::reusedTileWithRect(const Rect& rect)
 }
 
 // TMXLayer - obtaining tiles/gids
-Sprite * TMXLayer::getTileAt(const Vec2& pos)
+Sprite * TMXLayer::getTileAt(const CocVec2& pos)
 {
     CCASSERT(pos.x < _layerSize.width && pos.y < _layerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
     CCASSERT(_tiles && _atlasIndexArray, "TMXLayer: the tiles map has been released");
@@ -370,7 +370,7 @@ Sprite * TMXLayer::getTileAt(const Vec2& pos)
             tile->setBatchNode(this);
             tile->setPosition(getPositionAt(pos));
             tile->setPositionZ((float)getVertexZForPos(pos));
-            tile->setAnchorPoint(Vec2::ZERO);
+            tile->setAnchorPoint(CocVec2::ZERO);
             tile->setOpacity(_opacity);
 
             ssize_t indexForZ = atlasIndexForExistantZ(z);
@@ -381,7 +381,7 @@ Sprite * TMXLayer::getTileAt(const Vec2& pos)
     return tile;
 }
 
-uint32_t TMXLayer::getTileGIDAt(const Vec2& pos, TMXTileFlags* flags/* = nullptr*/)
+uint32_t TMXLayer::getTileGIDAt(const CocVec2& pos, TMXTileFlags* flags/* = nullptr*/)
 {
     CCASSERT(pos.x < _layerSize.width && pos.y < _layerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
     CCASSERT(_tiles && _atlasIndexArray, "TMXLayer: the tiles map has been released");
@@ -400,7 +400,7 @@ uint32_t TMXLayer::getTileGIDAt(const Vec2& pos, TMXTileFlags* flags/* = nullptr
 }
 
 // TMXLayer - adding helper methods
-Sprite * TMXLayer::insertTileForGID(uint32_t gid, const Vec2& pos)
+Sprite * TMXLayer::insertTileForGID(uint32_t gid, const CocVec2& pos)
 {
     if (gid != 0 && (static_cast<int>((gid & kTMXFlippedMask)) - _tileSet->_firstGid) >= 0)
     {
@@ -440,7 +440,7 @@ Sprite * TMXLayer::insertTileForGID(uint32_t gid, const Vec2& pos)
     return nullptr;
 }
 
-Sprite * TMXLayer::updateTileForGID(uint32_t gid, const Vec2& pos)
+Sprite * TMXLayer::updateTileForGID(uint32_t gid, const CocVec2& pos)
 {
     Rect rect = _tileSet->getRectForGID(gid);
     rect = Rect(rect.origin.x / _contentScaleFactor, rect.origin.y / _contentScaleFactor, rect.size.width/ _contentScaleFactor, rect.size.height/ _contentScaleFactor);
@@ -460,7 +460,7 @@ Sprite * TMXLayer::updateTileForGID(uint32_t gid, const Vec2& pos)
     return tile;
 }
 
-intptr_t TMXLayer::getZForPos(const Vec2& pos) const
+intptr_t TMXLayer::getZForPos(const CocVec2& pos) const
 {
     intptr_t z = -1;
     // fix correct render ordering in Hexagonal maps when stagger axis == x
@@ -491,7 +491,7 @@ intptr_t TMXLayer::getZForPos(const Vec2& pos) const
 
 // used only when parsing the map. useless after the map was parsed
 // since lot's of assumptions are no longer true
-Sprite * TMXLayer::appendTileForGID(uint32_t gid, const Vec2& pos)
+Sprite * TMXLayer::appendTileForGID(uint32_t gid, const CocVec2& pos)
 {
     if (gid != 0 && (static_cast<int>((gid & kTMXFlippedMask)) - _tileSet->_firstGid) >= 0)
     {
@@ -566,12 +566,12 @@ ssize_t TMXLayer::atlasIndexForNewZ(int z)
 }
 
 // TMXLayer - adding / remove tiles
-void TMXLayer::setTileGID(uint32_t gid, const Vec2& pos)
+void TMXLayer::setTileGID(uint32_t gid, const CocVec2& pos)
 {
     setTileGID(gid, pos, (TMXTileFlags)0);
 }
 
-void TMXLayer::setTileGID(uint32_t gid, const Vec2& pos, TMXTileFlags flags)
+void TMXLayer::setTileGID(uint32_t gid, const CocVec2& pos, TMXTileFlags flags)
 {
     CCASSERT(pos.x < _layerSize.width && pos.y < _layerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
     CCASSERT(_tiles && _atlasIndexArray, "TMXLayer: the tiles map has been released");
@@ -642,7 +642,7 @@ void TMXLayer::removeChild(Node* node, bool cleanup)
     SpriteBatchNode::removeChild(sprite, cleanup);
 }
 
-void TMXLayer::removeTileAt(const Vec2& pos)
+void TMXLayer::removeTileAt(const CocVec2& pos)
 {
     CCASSERT(pos.x < _layerSize.width && pos.y < _layerSize.height && pos.x >=0 && pos.y >=0, "TMXLayer: invalid position");
     CCASSERT(_tiles && _atlasIndexArray, "TMXLayer: the tiles map has been released");
@@ -684,9 +684,9 @@ void TMXLayer::removeTileAt(const Vec2& pos)
 }
 
 //CCTMXLayer - obtaining positions, offset
-Vec2 TMXLayer::calculateLayerOffset(const Vec2& pos)
+CocVec2 TMXLayer::calculateLayerOffset(const CocVec2& pos)
 {
-    Vec2 ret;
+    CocVec2 ret;
     switch (_layerOrientation)
     {
         case TMXOrientationOrtho:
@@ -725,9 +725,9 @@ Vec2 TMXLayer::calculateLayerOffset(const Vec2& pos)
     return ret;    
 }
 
-Vec2 TMXLayer::getPositionAt(const Vec2& pos)
+CocVec2 TMXLayer::getPositionAt(const CocVec2& pos)
 {
-    Vec2 ret;
+    CocVec2 ret;
     switch (_layerOrientation)
     {
     case TMXOrientationOrtho:
@@ -747,22 +747,22 @@ Vec2 TMXLayer::getPositionAt(const Vec2& pos)
     return ret;
 }
 
-Vec2 TMXLayer::getPositionForOrthoAt(const Vec2& pos)
+CocVec2 TMXLayer::getPositionForOrthoAt(const CocVec2& pos)
 {
-    return Vec2(pos.x * _mapTileSize.width,
+    return CocVec2(pos.x * _mapTileSize.width,
                             (_layerSize.height - pos.y - 1) * _mapTileSize.height);
 }
 
-Vec2 TMXLayer::getPositionForIsoAt(const Vec2& pos)
+CocVec2 TMXLayer::getPositionForIsoAt(const CocVec2& pos)
 {
-    return Vec2(_mapTileSize.width /2 * (_layerSize.width + pos.x - pos.y - 1),
+    return CocVec2(_mapTileSize.width /2 * (_layerSize.width + pos.x - pos.y - 1),
                              _mapTileSize.height /2 * ((_layerSize.height * 2 - pos.x - pos.y) - 2));
 }
 
-Vec2 TMXLayer::getPositionForHexAt(const Vec2& pos)
+CocVec2 TMXLayer::getPositionForHexAt(const CocVec2& pos)
 {
-    Vec2 xy;
-    Vec2 offset = _tileSet->_tileOffset;
+    CocVec2 xy;
+    CocVec2 offset = _tileSet->_tileOffset;
 
     int odd_even = (_staggerIndex == TMXStaggerIndex_Odd) ? 1 : -1;
     switch (_staggerAxis)
@@ -774,7 +774,7 @@ Vec2 TMXLayer::getPositionForHexAt(const Vec2& pos)
             {
                 diffX = _mapTileSize.width/2 * odd_even;
             }
-            xy = Vec2(pos.x * _mapTileSize.width+diffX+offset.x,
+            xy = CocVec2(pos.x * _mapTileSize.width+diffX+offset.x,
                       (_layerSize.height - pos.y - 1) * (_mapTileSize.height-(_mapTileSize.height-_hexSideLength)/2)-offset.y);
             break;
         }
@@ -787,7 +787,7 @@ Vec2 TMXLayer::getPositionForHexAt(const Vec2& pos)
                 diffY = _mapTileSize.height/2 * -odd_even;
             }
             
-            xy = Vec2(pos.x * (_mapTileSize.width-(_mapTileSize.width-_hexSideLength)/2)+offset.x,
+            xy = CocVec2(pos.x * (_mapTileSize.width-(_mapTileSize.width-_hexSideLength)/2)+offset.x,
                       (_layerSize.height - pos.y - 1) * _mapTileSize.height + diffY-offset.y);
             break;
         }
@@ -795,18 +795,18 @@ Vec2 TMXLayer::getPositionForHexAt(const Vec2& pos)
     return xy;
 }
 
-Vec2 TMXLayer::getPositionForStaggeredAt(const Vec2 &pos)
+CocVec2 TMXLayer::getPositionForStaggeredAt(const CocVec2 &pos)
 {
     float diffX = 0;
     if ((int)pos.y % 2 == 1)
     {
         diffX = _mapTileSize.width/2;
     }
-    return Vec2(pos.x * _mapTileSize.width + diffX,
+    return CocVec2(pos.x * _mapTileSize.width + diffX,
                 (_layerSize.height - pos.y - 1) * _mapTileSize.height/2);
 }
 
-int TMXLayer::getVertexZForPos(const Vec2& pos)
+int TMXLayer::getVertexZForPos(const CocVec2& pos)
 {
     int ret = 0;
     int maxVal = 0;

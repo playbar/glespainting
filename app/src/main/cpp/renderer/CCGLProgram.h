@@ -513,7 +513,7 @@ public:
      Update the builtin uniforms if they are different than the previous call for this same shader program.
      @param modelView modelView matrix applied to the built in uniform of the shader.
      */
-    void setUniformsForBuiltins(const Mat4 &modelView);
+    void setUniformsForBuiltins(const CocMat4 &modelView);
     /**
      Update the builtin uniforms if they are different than the previous call for this same shader program.
      */

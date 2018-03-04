@@ -375,10 +375,10 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
             float x = dictionary["sourcePositionx"].asFloat();
             float y = dictionary["sourcePositiony"].asFloat();
 	    if(!_sourcePositionCompatible) {
-                this->setSourcePosition(Vec2(x, y));
+                this->setSourcePosition(CocVec2(x, y));
 	    }
             else {
-		this->setPosition(Vec2(x, y));
+		this->setPosition(CocVec2(x, y));
 	    }
             _posVar.x = dictionary["sourcePositionVariancex"].asFloat();
             _posVar.y = dictionary["sourcePositionVariancey"].asFloat();
@@ -699,10 +699,10 @@ dc[i] = (dc[i] - c[i]) / _particleData.timeToLive[i];\
     }
     
     // position
-    Vec2 pos;
+    CocVec2 pos;
     if (_positionType == PositionType::FREE)
     {
-        pos = this->convertToWorldSpace(Vec2::ZERO);
+        pos = this->convertToWorldSpace(CocVec2::ZERO);
     }
     else if (_positionType == PositionType::RELATIVE)
     {
@@ -739,9 +739,9 @@ dc[i] = (dc[i] - c[i]) / _particleData.timeToLive[i];\
             for (int i = start; i < _particleCount; ++i)
             {
                 float a = CC_DEGREES_TO_RADIANS( _angle + _angleVar * RANDOM_M11(&RANDSEED) );
-                Vec2 v(cosf( a ), sinf( a ));
+                CocVec2 v(cosf( a ), sinf( a ));
                 float s = modeA.speed + modeA.speedVar * RANDOM_M11(&RANDSEED);
-                Vec2 dir = v * s;
+                CocVec2 dir = v * s;
                 _particleData.modeA.dirX[i] = dir.x;//v * s ;
                 _particleData.modeA.dirY[i] = dir.y;
                 _particleData.rotation[i] = -CC_RADIANS_TO_DEGREES(dir.getAngle());
@@ -752,9 +752,9 @@ dc[i] = (dc[i] - c[i]) / _particleData.timeToLive[i];\
             for (int i = start; i < _particleCount; ++i)
             {
                 float a = CC_DEGREES_TO_RADIANS( _angle + _angleVar * RANDOM_M11(&RANDSEED) );
-                Vec2 v(cosf( a ), sinf( a ));
+                CocVec2 v(cosf( a ), sinf( a ));
                 float s = modeA.speed + modeA.speedVar * RANDOM_M11(&RANDSEED);
-                Vec2 dir = v * s;
+                CocVec2 dir = v * s;
                 _particleData.modeA.dirX[i] = dir.x;//v * s ;
                 _particleData.modeA.dirY[i] = dir.y;
             }
@@ -1176,13 +1176,13 @@ bool ParticleSystem::getRotationIsDir() const
     return modeA.rotationIsDir;
 }
 
-void ParticleSystem::setGravity(const Vec2& g)
+void ParticleSystem::setGravity(const CocVec2& g)
 {
     CCASSERT(_emitterMode == Mode::GRAVITY, "Particle Mode should be Gravity");
     modeA.gravity = g;
 }
 
-const Vec2& ParticleSystem::getGravity()
+const CocVec2& ParticleSystem::getGravity()
 {
     CCASSERT(_emitterMode == Mode::GRAVITY, "Particle Mode should be Gravity");
     return modeA.gravity;

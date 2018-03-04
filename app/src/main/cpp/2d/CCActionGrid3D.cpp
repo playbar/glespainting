@@ -71,10 +71,10 @@ void Waves3D::update(float time)
     {
         for (j = 0; j < _gridSize.height + 1; ++j)
         {
-            Vec3 v = getOriginalVertex(Vec2(i ,j));
+            CocVec3 v = getOriginalVertex(CocVec2(i ,j));
             v.z += (sinf((float)M_PI * time * _waves * 2 + (v.y+v.x) * 0.01f) * _amplitude * _amplitudeRate);
             //CCLOG("v.z offset is %f\n", (sinf((float)M_PI * time * _waves * 2 + (v.y+v.x) * .01f) * _amplitude * _amplitudeRate));
-            setVertex(Vec2(i, j), v);
+            setVertex(CocVec2(i, j), v);
         }
     }
 }
@@ -129,15 +129,15 @@ void FlipX3D::update(float time)
     angle = angle / 2.0f; // x calculates degrees from 0 to 90
     float mx = cosf(angle);
 
-    Vec3 v0, v1, v, diff;
+    CocVec3 v0, v1, v, diff;
 
-    v0 = getOriginalVertex(Vec2(1.0f, 1.0f));
-    v1 = getOriginalVertex(Vec2());
+    v0 = getOriginalVertex(CocVec2(1.0f, 1.0f));
+    v1 = getOriginalVertex(CocVec2());
 
     float    x0 = v0.x;
     float    x1 = v1.x;
     float    x;
-    Vec2    a, b, c, d;
+    CocVec2    a, b, c, d;
 
     if ( x0 > x1 )
     {
@@ -223,15 +223,15 @@ void FlipY3D::update(float time)
     angle = angle / 2.0f;     // x calculates degrees from 0 to 90
     float my = cosf(angle);
     
-    Vec3    v0, v1, v, diff;
+    CocVec3    v0, v1, v, diff;
     
-    v0 = getOriginalVertex(Vec2(1.0f, 1.0f));
-    v1 = getOriginalVertex(Vec2());
+    v0 = getOriginalVertex(CocVec2(1.0f, 1.0f));
+    v1 = getOriginalVertex(CocVec2());
     
     float    y0 = v0.y;
     float    y1 = v1.y;
     float y;
-    Vec2    a, b, c, d;
+    CocVec2    a, b, c, d;
     
     if (y0 > y1)
     {
@@ -283,7 +283,7 @@ void FlipY3D::update(float time)
 
 // implementation of Lens3D
 
-Lens3D* Lens3D::create(float duration, const Size& gridSize, const Vec2& position, float radius)
+Lens3D* Lens3D::create(float duration, const Size& gridSize, const CocVec2& position, float radius)
 {
     Lens3D *action = new (std::nothrow) Lens3D();
 
@@ -302,7 +302,7 @@ Lens3D* Lens3D::create(float duration, const Size& gridSize, const Vec2& positio
     return action;
 }
 
-bool Lens3D::initWithDuration(float duration, const Size& gridSize, const Vec2& position, float radius)
+bool Lens3D::initWithDuration(float duration, const Size& gridSize, const CocVec2& position, float radius)
 {
     if (Grid3DAction::initWithDuration(duration, gridSize))
     {
@@ -328,7 +328,7 @@ Lens3D* Lens3D::clone() const
     return a;
 }
 
-void Lens3D::setPosition(const Vec2& pos)
+void Lens3D::setPosition(const CocVec2& pos)
 {
     if( !pos.equals(_position))
     {
@@ -347,8 +347,8 @@ void Lens3D::update(float /*time*/)
         {
             for (j = 0; j < _gridSize.height + 1; ++j)
             {
-                Vec3 v = getOriginalVertex(Vec2(i, j));
-                Vec2 vect = _position - Vec2(v.x, v.y);
+                CocVec3 v = getOriginalVertex(CocVec2(i, j));
+                CocVec2 vect = _position - CocVec2(v.x, v.y);
                 float r = vect.getLength();
                 
                 if (r < _radius)
@@ -366,12 +366,12 @@ void Lens3D::update(float /*time*/)
                     if (vect.getLength() > 0)
                     {
                         vect.normalize();
-                        Vec2 new_vect = vect * new_r;
+                        CocVec2 new_vect = vect * new_r;
                         v.z += (_concave ? -1.0f : 1.0f) * new_vect.getLength() * _lensEffect;
                     }
                 }
                 
-                setVertex(Vec2(i, j), v);
+                setVertex(CocVec2(i, j), v);
             }
         }
         
@@ -381,7 +381,7 @@ void Lens3D::update(float /*time*/)
 
 // implementation of Ripple3D
 
-Ripple3D* Ripple3D::create(float duration, const Size& gridSize, const Vec2& position, float radius, unsigned int waves, float amplitude)
+Ripple3D* Ripple3D::create(float duration, const Size& gridSize, const CocVec2& position, float radius, unsigned int waves, float amplitude)
 {
     Ripple3D *action = new (std::nothrow) Ripple3D();
 
@@ -400,7 +400,7 @@ Ripple3D* Ripple3D::create(float duration, const Size& gridSize, const Vec2& pos
     return action;
 }
 
-bool Ripple3D::initWithDuration(float duration, const Size& gridSize, const Vec2& position, float radius, unsigned int waves, float amplitude)
+bool Ripple3D::initWithDuration(float duration, const Size& gridSize, const CocVec2& position, float radius, unsigned int waves, float amplitude)
 {
     if (Grid3DAction::initWithDuration(duration, gridSize))
     {
@@ -416,7 +416,7 @@ bool Ripple3D::initWithDuration(float duration, const Size& gridSize, const Vec2
     return false;
 }
 
-void Ripple3D::setPosition(const Vec2& position)
+void Ripple3D::setPosition(const CocVec2& position)
 {
     _position = position;
 }
@@ -439,8 +439,8 @@ void Ripple3D::update(float time)
     {
         for (j = 0; j < (_gridSize.height+1); ++j)
         {
-            Vec3 v = getOriginalVertex(Vec2(i, j));
-            Vec2 vect = _position - Vec2(v.x,v.y);
+            CocVec3 v = getOriginalVertex(CocVec2(i, j));
+            CocVec2 vect = _position - CocVec2(v.x,v.y);
             float r = vect.getLength();
             
             if (r < _radius)
@@ -450,7 +450,7 @@ void Ripple3D::update(float time)
                 v.z += (sinf( time*(float)M_PI * _waves * 2 + r * 0.1f) * _amplitude * _amplitudeRate * rate);
             }
             
-            setVertex(Vec2(i, j), v);
+            setVertex(CocVec2(i, j), v);
         }
     }
 }
@@ -506,7 +506,7 @@ void Shaky3D::update(float /*time*/)
     {
         for (j = 0; j < (_gridSize.height+1); ++j)
         {
-            Vec3 v = getOriginalVertex(Vec2(i ,j));
+            CocVec3 v = getOriginalVertex(CocVec2(i ,j));
             v.x += (rand() % (_randrange*2)) - _randrange;
             v.y += (rand() % (_randrange*2)) - _randrange;
             if (_shakeZ)
@@ -514,7 +514,7 @@ void Shaky3D::update(float /*time*/)
                 v.z += (rand() % (_randrange*2)) - _randrange;
             }
             
-            setVertex(Vec2(i, j), v);
+            setVertex(CocVec2(i, j), v);
         }
     }
 }
@@ -571,10 +571,10 @@ void Liquid::update(float time)
     {
         for (j = 1; j < _gridSize.height; ++j)
         {
-            Vec3 v = getOriginalVertex(Vec2(i, j));
+            CocVec3 v = getOriginalVertex(CocVec2(i, j));
             v.x = (v.x + (sinf(time * (float)M_PI * _waves * 2 + v.x * .01f) * _amplitude * _amplitudeRate));
             v.y = (v.y + (sinf(time * (float)M_PI * _waves * 2 + v.y * .01f) * _amplitude * _amplitudeRate));
-            setVertex(Vec2(i, j), v);
+            setVertex(CocVec2(i, j), v);
         }
     }
 }
@@ -633,7 +633,7 @@ void Waves::update(float time)
     {
         for (j = 0; j < _gridSize.height + 1; ++j)
         {
-            Vec3 v = getOriginalVertex(Vec2(i, j));
+            CocVec3 v = getOriginalVertex(CocVec2(i, j));
 
             if (_vertical)
             {
@@ -645,14 +645,14 @@ void Waves::update(float time)
                 v.y = (v.y + (sinf(time * (float)M_PI * _waves * 2 + v.x * .01f) * _amplitude * _amplitudeRate));
             }
 
-            setVertex(Vec2(i, j), v);
+            setVertex(CocVec2(i, j), v);
         }
     }
 }
 
 // implementation of Twirl
 
-Twirl* Twirl::create(float duration, const Size& gridSize, const Vec2& position, unsigned int twirls, float amplitude)
+Twirl* Twirl::create(float duration, const Size& gridSize, const CocVec2& position, unsigned int twirls, float amplitude)
 {
     Twirl *action = new (std::nothrow) Twirl();
 
@@ -671,7 +671,7 @@ Twirl* Twirl::create(float duration, const Size& gridSize, const Vec2& position,
     return action;
 }
 
-bool Twirl::initWithDuration(float duration, const Size& gridSize, const Vec2& position, unsigned int twirls, float amplitude)
+bool Twirl::initWithDuration(float duration, const Size& gridSize, const CocVec2& position, unsigned int twirls, float amplitude)
 {
     if (Grid3DAction::initWithDuration(duration, gridSize))
     {
@@ -686,7 +686,7 @@ bool Twirl::initWithDuration(float duration, const Size& gridSize, const Vec2& p
     return false;
 }
 
-void Twirl::setPosition(const Vec2& position)
+void Twirl::setPosition(const CocVec2& position)
 {
     _position = position;
 }
@@ -703,28 +703,28 @@ Twirl *Twirl::clone() const
 void Twirl::update(float time)
 {
     int i, j;
-    Vec2    c = _position;
+    CocVec2    c = _position;
     
     for (i = 0; i < (_gridSize.width+1); ++i)
     {
         for (j = 0; j < (_gridSize.height+1); ++j)
         {
-            Vec3 v = getOriginalVertex(Vec2(i ,j));
+            CocVec3 v = getOriginalVertex(CocVec2(i ,j));
             
-            Vec2 avg(i-(_gridSize.width/2.0f), j-(_gridSize.height/2.0f));
+            CocVec2 avg(i-(_gridSize.width/2.0f), j-(_gridSize.height/2.0f));
             float r = avg.getLength();
             
             float amp = 0.1f * _amplitude * _amplitudeRate;
             float a = r * cosf( (float)M_PI/2.0f + time * (float)M_PI * _twirls * 2 ) * amp;
             
-            Vec2 d(
+            CocVec2 d(
                 sinf(a) * (v.y-c.y) + cosf(a) * (v.x-c.x),
                 cosf(a) * (v.y-c.y) - sinf(a) * (v.x-c.x));
             
             v.x = c.x + d.x;
             v.y = c.y + d.y;
 
-            setVertex(Vec2(i ,j), v);
+            setVertex(CocVec2(i ,j), v);
         }
     }
 }

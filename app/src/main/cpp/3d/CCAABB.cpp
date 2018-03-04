@@ -32,7 +32,7 @@ AABB::AABB()
     reset();
 }
 
-AABB::AABB(const Vec3& min, const Vec3& max)
+AABB::AABB(const CocVec3& min, const CocVec3& max)
 {
     set(min, max);
 }
@@ -42,9 +42,9 @@ AABB::AABB(const AABB& box)
 	set(box._min,box._max);
 }
 
-Vec3 AABB::getCenter()
+CocVec3 AABB::getCenter()
 {
-    Vec3 center;
+    CocVec3 center;
 	center.x = 0.5f*(_min.x+_max.x);
 	center.y = 0.5f*(_min.y+_max.y);
 	center.z = 0.5f*(_min.z+_max.z);
@@ -52,7 +52,7 @@ Vec3 AABB::getCenter()
     return center;
 }
 
-void AABB::getCorners(Vec3 *dst) const
+void AABB::getCorners(CocVec3 *dst) const
 {
     assert(dst);
     
@@ -84,7 +84,7 @@ bool AABB::intersects(const AABB& aabb) const
            ((_min.z >= aabb._min.z && _min.z <= aabb._max.z) || (aabb._min.z >= _min.z && aabb._min.z <= _max.z));
 }
 
-bool AABB::containPoint(const Vec3& point) const
+bool AABB::containPoint(const CocVec3& point) const
 {
 	if (point.x < _min.x) return false;
 	if (point.y < _min.y) return false;
@@ -108,7 +108,7 @@ void AABB::merge(const AABB& box)
     _max.z = std::max(_max.z, box._max.z);
 }
 
-void AABB::set(const Vec3& min, const Vec3& max)
+void AABB::set(const CocVec3& min, const CocVec3& max)
 {
     this->_min = min;
     this->_max = max;
@@ -125,7 +125,7 @@ bool AABB::isEmpty() const
     return _min.x > _max.x || _min.y > _max.y || _min.z > _max.z;
 }
 
-void AABB::updateMinMax(const Vec3* point, ssize_t num)
+void AABB::updateMinMax(const CocVec3* point, ssize_t num)
 {
     for (ssize_t i = 0; i < num; i++)
     {
@@ -155,9 +155,9 @@ void AABB::updateMinMax(const Vec3* point, ssize_t num)
     }
 }
 
-void AABB::transform(const Mat4& mat)
+void AABB::transform(const CocMat4& mat)
 {
-    Vec3 corners[8];
+    CocVec3 corners[8];
 	 // Near face, specified counter-clockwise
     // Left-top-front.
     corners[0].set(_min.x, _max.y, _max.z);

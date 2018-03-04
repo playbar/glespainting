@@ -125,38 +125,38 @@ public:
      *    If you're using radials type then the midpoint changes the center point.
      *    If you're using bar type then the midpoint changes the bar growth.
      *        it expands from the center but clamps to the sprites edge so:
-     *        you want a left to right then set the midpoint all the way to Vec2(0,y).
-     *        you want a right to left then set the midpoint all the way to Vec2(1,y).
-     *        you want a bottom to top then set the midpoint all the way to Vec2(x,0).
-     *        you want a top to bottom then set the midpoint all the way to Vec2(x,1).
-     * @param point A Vec2 point.
+     *        you want a left to right then set the midpoint all the way to CocVec2(0,y).
+     *        you want a right to left then set the midpoint all the way to CocVec2(1,y).
+     *        you want a bottom to top then set the midpoint all the way to CocVec2(x,0).
+     *        you want a top to bottom then set the midpoint all the way to CocVec2(x,1).
+     * @param point A CocVec2 point.
      */
-    void setMidpoint(const Vec2& point);
+    void setMidpoint(const CocVec2& point);
     
     /** Returns the Midpoint. 
      *
-     * @return A Vec2.
+     * @return A CocVec2.
      */
-    Vec2 getMidpoint() const;
+    CocVec2 getMidpoint() const;
 
     /**
      *    This allows the bar type to move the component at a specific rate.
      *    Set the component to 0 to make sure it stays at 100%.
      *    For example you want a left to right bar but not have the height stay 100%.
-     *    Set the rate to be Vec2(0,1); and set the midpoint to = Vec2(0,.5f).
-     * @param barChangeRate A Vec2.
+     *    Set the rate to be CocVec2(0,1); and set the midpoint to = CocVec2(0,.5f).
+     * @param barChangeRate A CocVec2.
      */
-    void setBarChangeRate(const Vec2& barChangeRate ) { _barChangeRate = barChangeRate; }
+    void setBarChangeRate(const CocVec2& barChangeRate ) { _barChangeRate = barChangeRate; }
     
     /** Returns the BarChangeRate.
      *
      * @return A barChangeRate.
      */
-    Vec2 getBarChangeRate() const { return _barChangeRate; }
+    CocVec2 getBarChangeRate() const { return _barChangeRate; }
 
     // Overrides
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
-    virtual void setAnchorPoint(const Vec2& anchorPoint) override;
+    virtual void draw(CocRenderer *renderer, const CocMat4 &transform, uint32_t flags) override;
+    virtual void setAnchorPoint(const CocVec2& anchorPoint) override;
     virtual void setColor(const Color3B &color) override;
     virtual const Color3B& getColor() const override;
     virtual void setOpacity(GLubyte opacity) override;
@@ -177,19 +177,19 @@ CC_CONSTRUCTOR_ACCESS:
     bool initWithSprite(Sprite* sp);
     
 protected:
-    void onDraw(const Mat4 &transform, uint32_t flags);
+    void onDraw(const CocMat4 &transform, uint32_t flags);
     
-    Tex2F textureCoordFromAlphaPoint(Vec2 alpha);
-    Vec2 vertexFromAlphaPoint(Vec2 alpha);
+    Tex2F textureCoordFromAlphaPoint(CocVec2 alpha);
+    CocVec2 vertexFromAlphaPoint(CocVec2 alpha);
     void updateProgress(void);
     void updateBar(void);
     void updateRadial(void);
     virtual void updateColor(void) override;
-    Vec2 boundaryTexCoord(char index);
+    CocVec2 boundaryTexCoord(char index);
 
     Type _type;
-    Vec2 _midpoint;
-    Vec2 _barChangeRate;
+    CocVec2 _midpoint;
+    CocVec2 _barChangeRate;
     float _percentage;
     Sprite *_sprite;
     int _vertexDataCount;

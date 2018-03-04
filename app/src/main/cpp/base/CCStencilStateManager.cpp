@@ -70,11 +70,11 @@ void StencilStateManager::drawFullScreenQuadClearStencil()
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     
-    Vec2 vertices[] = {
-        Vec2(-1.0f, -1.0f),
-        Vec2(1.0f, -1.0f),
-        Vec2(1.0f, 1.0f),
-        Vec2(-1.0f, 1.0f)
+    CocVec2 vertices[] = {
+        CocVec2(-1.0f, -1.0f),
+        CocVec2(1.0f, -1.0f),
+        CocVec2(1.0f, 1.0f),
+        CocVec2(-1.0f, 1.0f)
     };
     
     auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
@@ -184,7 +184,7 @@ void StencilStateManager::onBeforeVisit()
     glStencilOp(!_inverted ? GL_ZERO : GL_REPLACE, GL_KEEP, GL_KEEP);
     
     // draw a fullscreen solid rectangle to clear the stencil buffer
-    //ccDrawSolidRect(Vec2::ZERO, ccpFromSize([[Director sharedDirector] winSize]), Color4F(1, 1, 1, 1));
+    //ccDrawSolidRect(CocVec2::ZERO, ccpFromSize([[Director sharedDirector] winSize]), Color4F(1, 1, 1, 1));
     drawFullScreenQuadClearStencil();
     
     ///////////////////////////////////

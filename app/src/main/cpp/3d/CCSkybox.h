@@ -65,7 +65,7 @@ public:
     void setTexture(TextureCube*);
 
     /** draw Skybox object */
-    virtual void draw(Renderer* renderer, const Mat4& transform, uint32_t flags) override;
+    virtual void draw(CocRenderer* renderer, const CocMat4& transform, uint32_t flags) override;
 
     /** reload sky box after GLESContext reconstructed.*/
     void reload();
@@ -100,7 +100,7 @@ protected:
     */
     void initBuffers();
 
-    void onDraw(const Mat4& transform, uint32_t flags);
+    void onDraw(const CocMat4& transform, uint32_t flags);
 
     GLuint      _vao;
     GLuint      _vertexBuffer;

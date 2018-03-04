@@ -168,38 +168,38 @@ public:
      * @code
      * auto ap = AutoPolygon("grossini.png");
      * auto rect = Rect(100, 100, 200, 200);
-     * std::vector<Vec2> points = ap.trace(rect);//default threshold is 0.0
+     * std::vector<CocVec2> points = ap.trace(rect);//default threshold is 0.0
      * @endcode
      */
-     std::vector<Vec2> trace(const cocos2d::Rect& rect, float threshold = 0.0f);
+     std::vector<CocVec2> trace(const cocos2d::Rect& rect, float threshold = 0.0f);
     
     /**
      * reduce the amount of points so its faster for GPU to process and draw
      * based on Ramer-Douglas-Peucker algorithm
-     * @param   points  a vector of Vec2 points as input
+     * @param   points  a vector of CocVec2 points as input
      * @param   rect    a texture rect for specify an area of the image to avoid over reduction
      * @param   epsilon the perpendicular distance where points smaller than this value will be discarded
-     * @return  a vector of Vec2 of the remaining points in clockwise order
+     * @return  a vector of CocVec2 of the remaining points in clockwise order
      * @code
      * auto ap = AutoPolygon();
-     * std::vector<Vec2> reduced = ap.reduce(inputPoints, rect);//default epsilon is 2
+     * std::vector<CocVec2> reduced = ap.reduce(inputPoints, rect);//default epsilon is 2
      * @endcode
      */
-    std::vector<Vec2> reduce(const std::vector<Vec2>& points, const Rect& rect, float epsilon = 2.0f);
+    std::vector<CocVec2> reduce(const std::vector<CocVec2>& points, const Rect& rect, float epsilon = 2.0f);
     
     /**
      * expand the points along their edge, useful after you reduce the points that cuts into the sprite
      * using ClipperLib
-     * @param   points  a vector of Vec2 points as input
+     * @param   points  a vector of CocVec2 points as input
      * @param   rect    a texture rect for specify an area of the image, the expanded points will be clamped in this rect, ultimately resulting in a quad if the expansion is too great
      * @param   epsilon the distance which the edges will expand
-     * @return  a vector of Vec2 as the result of the expansion
+     * @return  a vector of CocVec2 as the result of the expansion
      * @code
      * auto ap = AutoPolygon();
-     * std::vector<Vec2> expanded = ap.expand(inputPoints, rect, 2.0);
+     * std::vector<CocVec2> expanded = ap.expand(inputPoints, rect, 2.0);
      * @endcode
      */
-    std::vector<Vec2> expand(const std::vector<Vec2>& points, const Rect& rect, float epsilon);
+    std::vector<CocVec2> expand(const std::vector<CocVec2>& points, const Rect& rect, float epsilon);
     
     /**
      * Triangulate the input points into triangles for rendering
@@ -212,7 +212,7 @@ public:
      * TrianglesCommand::Triangles myPolygons = ap.triangulate(myPoints);
      * @endcode
      */
-    TrianglesCommand::Triangles triangulate(const std::vector<Vec2>& points);
+    TrianglesCommand::Triangles triangulate(const std::vector<CocVec2>& points);
     
     /**
      * calculate the UV coordinates for each points based on a texture rect
@@ -258,18 +258,18 @@ public:
      */
     static PolygonInfo generatePolygon(const std::string& filename, const Rect& rect = Rect::ZERO, float epsilon = 2.0f, float threshold = 0.05f);
 protected:
-    Vec2 findFirstNoneTransparentPixel(const Rect& rect, float threshold);
-    std::vector<cocos2d::Vec2> marchSquare(const Rect& rect, const Vec2& first, float threshold);
+    CocVec2 findFirstNoneTransparentPixel(const Rect& rect, float threshold);
+    std::vector<cocos2d::CocVec2> marchSquare(const Rect& rect, const CocVec2& first, float threshold);
     unsigned int getSquareValue(unsigned int x, unsigned int y, const Rect& rect, float threshold);
 
     unsigned char getAlphaByIndex(unsigned int i);
-    unsigned char getAlphaByPos(const Vec2& pos);
+    unsigned char getAlphaByPos(const CocVec2& pos);
 
     int getIndexFromPos(unsigned int x, unsigned int y) { return y*_width+x; }
-    cocos2d::Vec2 getPosFromIndex(unsigned int i) { return cocos2d::Vec2(static_cast<float>(i%_width), static_cast<float>(i/_width)); }
+    cocos2d::CocVec2 getPosFromIndex(unsigned int i) { return cocos2d::CocVec2(static_cast<float>(i%_width), static_cast<float>(i/_width)); }
 
-    std::vector<cocos2d::Vec2> rdp(const std::vector<cocos2d::Vec2>& v, float optimization);
-    float perpendicularDistance(const cocos2d::Vec2& i, const cocos2d::Vec2& start, const cocos2d::Vec2& end);
+    std::vector<cocos2d::CocVec2> rdp(const std::vector<cocos2d::CocVec2>& v, float optimization);
+    float perpendicularDistance(const cocos2d::CocVec2& i, const cocos2d::CocVec2& start, const cocos2d::CocVec2& end);
 
     //real rect is the size that is in scale with the texture file
     Rect getRealRect(const Rect& rect);

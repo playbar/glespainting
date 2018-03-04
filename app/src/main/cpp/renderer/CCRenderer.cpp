@@ -197,7 +197,7 @@ static const int DEFAULT_RENDER_QUEUE = 0;
 //
 // constructors, destructor, init
 //
-Renderer::Renderer()
+CocRenderer::CocRenderer()
 :_lastBatchedMeshCommand(nullptr)
 ,_filledVertex(0)
 ,_filledIndex(0)
@@ -226,7 +226,7 @@ Renderer::Renderer()
     _triBatchesToDraw = (TriBatchToDraw*) malloc(sizeof(_triBatchesToDraw[0]) * _triBatchesToDrawCapacity);
 }
 
-Renderer::~Renderer()
+CocRenderer::~CocRenderer()
 {
     _renderGroups.clear();
     _groupCommandManager->release();
@@ -245,7 +245,7 @@ Renderer::~Renderer()
 #endif
 }
 
-void Renderer::initGLView()
+void CocRenderer::initGLView()
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     _cacheTextureListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom* event){
@@ -261,7 +261,7 @@ void Renderer::initGLView()
     _glViewAssigned = true;
 }
 
-void Renderer::setupBuffer()
+void CocRenderer::setupBuffer()
 {
     if(Configuration::getInstance()->supportsShareableVAO())
     {
@@ -273,7 +273,7 @@ void Renderer::setupBuffer()
     }
 }
 
-void Renderer::setupVBOAndVAO()
+void CocRenderer::setupVBOAndVAO()
 {
     //generate vbo and vao for trianglesCommand
     glGenVertexArrays(1, &_buffersVAO);
@@ -314,7 +314,7 @@ void Renderer::setupVBOAndVAO()
     CHECK_GL_ERROR_DEBUG();
 }
 
-void Renderer::setupVBO()
+void CocRenderer::setupVBO()
 {
     glGenBuffers(2, &_buffersVBO[0]);
     // Issue #15652
@@ -327,7 +327,7 @@ void Renderer::setupVBO()
 //    mapBuffers();
 }
 
-void Renderer::mapBuffers()
+void CocRenderer::mapBuffers()
 {
     // Avoid changing the element buffer for whatever VAO might be bound.
     GL::bindVAO(0);
@@ -346,13 +346,13 @@ void Renderer::mapBuffers()
     CHECK_GL_ERROR_DEBUG();
 }
 
-void Renderer::addCommand(RenderCommand* command)
+void CocRenderer::addCommand(RenderCommand* command)
 {
     int renderQueueID =_commandGroupStack.top();
     addCommand(command, renderQueueID);
 }
 
-void Renderer::addCommand(RenderCommand* command, int renderQueueID)
+void CocRenderer::addCommand(RenderCommand* command, int renderQueueID)
 {
     CCASSERT(!_isRendering, "Cannot add command while rendering");
     CCASSERT(renderQueueID >=0, "Invalid render queue");
@@ -361,26 +361,26 @@ void Renderer::addCommand(RenderCommand* command, int renderQueueID)
     _renderGroups[renderQueueID].push_back(command);
 }
 
-void Renderer::pushGroup(int renderQueueID)
+void CocRenderer::pushGroup(int renderQueueID)
 {
     CCASSERT(!_isRendering, "Cannot change render queue while rendering");
     _commandGroupStack.push(renderQueueID);
 }
 
-void Renderer::popGroup()
+void CocRenderer::popGroup()
 {
     CCASSERT(!_isRendering, "Cannot change render queue while rendering");
     _commandGroupStack.pop();
 }
 
-int Renderer::createRenderQueue()
+int CocRenderer::createRenderQueue()
 {
     RenderQueue newRenderQueue;
     _renderGroups.push_back(newRenderQueue);
     return (int)_renderGroups.size() - 1;
 }
 
-void Renderer::processRenderCommand(RenderCommand* command)
+void CocRenderer::processRenderCommand(RenderCommand* command)
 {
     auto commandType = command->getType();
     if( RenderCommand::Type::TRIANGLES_COMMAND == commandType)
@@ -469,7 +469,7 @@ void Renderer::processRenderCommand(RenderCommand* command)
     }
 }
 
-void Renderer::visitRenderQueue(RenderQueue& queue)
+void CocRenderer::visitRenderQueue(RenderQueue& queue)
 {
     queue.saveRenderState();
     
@@ -629,7 +629,7 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
     queue.restoreRenderState();
 }
 
-void Renderer::render()
+void CocRenderer::render()
 {
     //Uncomment this once everything is rendered by new renderer
     //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -651,7 +651,7 @@ void Renderer::render()
     _isRendering = false;
 }
 
-void Renderer::clean()
+void CocRenderer::clean()
 {
     // Clear render group
     for (size_t j = 0, size = _renderGroups.size() ; j < size; j++)
@@ -671,7 +671,7 @@ void Renderer::clean()
     _lastBatchedMeshCommand = nullptr;
 }
 
-void Renderer::clear()
+void CocRenderer::clear()
 {
     //Enable Depth mask to make sure glClear clear the depth buffer correctly
     glDepthMask(true);
@@ -682,7 +682,7 @@ void Renderer::clear()
     RenderState::StateBlock::_defaultState->setDepthWrite(false);
 }
 
-void Renderer::setDepthTest(bool enable)
+void CocRenderer::setDepthTest(bool enable)
 {
     if (enable)
     {
@@ -706,12 +706,12 @@ void Renderer::setDepthTest(bool enable)
     CHECK_GL_ERROR_DEBUG();
 }
 
-void Renderer::fillVerticesAndIndices(const TrianglesCommand* cmd)
+void CocRenderer::fillVerticesAndIndices(const TrianglesCommand* cmd)
 {
     memcpy(&_verts[_filledVertex], cmd->getVertices(), sizeof(V3F_C4B_T2F) * cmd->getVertexCount());
 
     // fill vertex, and convert them to world coordinates
-    const Mat4& modelView = cmd->getModelView();
+    const CocMat4& modelView = cmd->getModelView();
     for(ssize_t i=0; i < cmd->getVertexCount(); ++i)
     {
         modelView.transformPoint(&(_verts[i + _filledVertex].vertices));
@@ -728,7 +728,7 @@ void Renderer::fillVerticesAndIndices(const TrianglesCommand* cmd)
     _filledIndex += cmd->getIndexCount();
 }
 
-void Renderer::drawBatchedTriangles()
+void CocRenderer::drawBatchedTriangles()
 {
     if(_queuedTriangleCommands.empty())
         return;
@@ -868,18 +868,18 @@ void Renderer::drawBatchedTriangles()
     _filledIndex = 0;
 }
 
-void Renderer::flush()
+void CocRenderer::flush()
 {
     flush2D();
     flush3D();
 }
 
-void Renderer::flush2D()
+void CocRenderer::flush2D()
 {
     flushTriangles();
 }
 
-void Renderer::flush3D()
+void CocRenderer::flush3D()
 {
     if (_lastBatchedMeshCommand)
     {
@@ -890,13 +890,13 @@ void Renderer::flush3D()
     }
 }
 
-void Renderer::flushTriangles()
+void CocRenderer::flushTriangles()
 {
     drawBatchedTriangles();
 }
 
 // helpers
-bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
+bool CocRenderer::checkVisibility(const CocMat4 &transform, const Size &size)
 {
     auto director = Director::getInstance();
     auto scene = director->getLayerManager();
@@ -911,9 +911,9 @@ bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
     // transform center point to screen space
     float hSizeX = size.width/2;
     float hSizeY = size.height/2;
-    Vec3 v3p(hSizeX, hSizeY, 0);
+    CocVec3 v3p(hSizeX, hSizeY, 0);
     transform.transformPoint(&v3p);
-    Vec2 v2p = Camera::getVisitingCamera()->projectGL(v3p);
+    CocVec2 v2p = Camera::getVisitingCamera()->projectGL(v3p);
 
     // convert content size to world coordinates
     float wshw = std::max(fabsf(hSizeX * transform.m[0] + hSizeY * transform.m[4]), fabsf(hSizeX * transform.m[0] - hSizeY * transform.m[4]));
@@ -929,7 +929,7 @@ bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
 }
 
 
-void Renderer::setClearColor(const Color4F &clearColor)
+void CocRenderer::setClearColor(const Color4F &clearColor)
 {
     _clearColor = clearColor;
 }

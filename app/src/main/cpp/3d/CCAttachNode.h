@@ -53,10 +53,10 @@ public:
     static AttachNode* create(Bone3D* attachBone);
     
     //override
-    virtual Mat4 getWorldToNodeTransform() const override;
-    virtual Mat4 getNodeToWorldTransform() const override;
-    virtual const Mat4& getNodeToParentTransform() const override;
-    virtual void visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags) override;
+    virtual CocMat4 getWorldToNodeTransform() const override;
+    virtual CocMat4 getNodeToWorldTransform() const override;
+    virtual const CocMat4& getNodeToParentTransform() const override;
+    virtual void visit(CocRenderer *renderer, const CocMat4& parentTransform, uint32_t parentFlags) override;
 
 CC_CONSTRUCTOR_ACCESS:
     
@@ -66,7 +66,7 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     Bone3D* _attachBone;
-    mutable Mat4    _transformToParent;
+    mutable CocMat4    _transformToParent;
 };
 
 // end of 3d group

@@ -101,24 +101,24 @@ public:
     }
 
     // Overrides
-    virtual void setPosition(const Vec2& position) override;
+    virtual void setPosition(const CocVec2& position) override;
     virtual void setPosition(float x, float y) override;
-    virtual void setPosition3D(const Vec3& position) override;
-    virtual void setRotation3D(const Vec3& rotation) override;
+    virtual void setPosition3D(const CocVec3& position) override;
+    virtual void setRotation3D(const CocVec3& rotation) override;
     virtual void setRotationQuat(const Quaternion& quat) override;
     
-    virtual const Vec2& getPosition() const override;
+    virtual const CocVec2& getPosition() const override;
     virtual void getPosition(float* x, float* y) const override;
     virtual void setPositionX(float x) override;
     virtual void setPositionY(float y) override;
     virtual float getPositionX(void) const override;
     virtual float getPositionY(void) const override;
-    virtual Vec3 getPosition3D() const override;
+    virtual CocVec3 getPosition3D() const override;
     /**
     * @js NA
     * @lua NA
     */
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    virtual void draw(CocRenderer *renderer, const CocMat4 &transform, uint32_t flags) override;
     /**
     * @lua NA
     */
@@ -144,12 +144,12 @@ public:
      * Set the direction of sweeping line segment.
      * @param sweepAxis Direction of sweeping line segment
      */
-    void setSweepAxis(const Vec3& sweepAxis) { _sweepAxis = sweepAxis.getNormalized(); }
+    void setSweepAxis(const CocVec3& sweepAxis) { _sweepAxis = sweepAxis.getNormalized(); }
     
     /**
      * Get the direction of sweeping line segment
      */
-    const Vec3& getSweepAxis() const { return _sweepAxis; }
+    const CocVec3& getSweepAxis() const { return _sweepAxis; }
     
 CC_CONSTRUCTOR_ACCESS:
     MotionStreak3D();
@@ -163,16 +163,16 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     //renderer callback
-    void onDraw(const Mat4 &transform, uint32_t flags);
+    void onDraw(const CocMat4 &transform, uint32_t flags);
 
     bool _startingPositionInitialized;
 
     /** texture used for the motion streak */
     Texture2D* _texture;
     BlendFunc _blendFunc;
-    Vec3 _positionR;
-    mutable Vec2 _positionR2D;
-    Vec3         _sweepAxis;
+    CocVec3 _positionR;
+    mutable CocVec2 _positionR2D;
+    CocVec3         _sweepAxis;
     
 
     float _stroke;
@@ -184,11 +184,11 @@ protected:
     unsigned int _previousNuPoints;
 
     /** Pointers */
-    Vec3* _pointVertexes;
+    CocVec3* _pointVertexes;
     float* _pointState;
 
     // Opengl
-    Vec3* _vertices;
+    CocVec3* _vertices;
     GLubyte* _colorPointer;
     Tex2F* _texCoords;
     

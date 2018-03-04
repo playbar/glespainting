@@ -291,7 +291,7 @@ public:
      * @param pos  A certain position.
      * @return  An autoreleased Place object.
      */
-    static Place * create(const Vec2& pos);
+    static Place * create(const CocVec2& pos);
 
     //
     // Overrides
@@ -308,10 +308,10 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~Place(){}
 
     /** Initializes a Place action with a position */
-    bool initWithPosition(const Vec2& pos);
+    bool initWithPosition(const CocVec2& pos);
 
 protected:
-    Vec2 _position;
+    CocVec2 _position;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Place);

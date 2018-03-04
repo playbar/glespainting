@@ -104,7 +104,7 @@ public:
      * @param flags A TMXTileFlags.
      * @return The tile gid at a given tile coordinate. It also returns the tile flags.
      */
-    int getTileGIDAt(const Vec2& tileCoordinate, TMXTileFlags* flags = nullptr);
+    int getTileGIDAt(const CocVec2& tileCoordinate, TMXTileFlags* flags = nullptr);
 
     /** Sets the tile gid (gid = tile global id) at a given tile coordinate.
      * The Tile GID can be obtained by using the method "tileGIDAt" or by using the TMX editor -> Tileset Mgr +1.
@@ -112,7 +112,7 @@ public:
      * @param gid The gid value.
      * @param tileCoordinate The tile coordinate.
      */
-    void setTileGID(int gid, const Vec2& tileCoordinate);
+    void setTileGID(int gid, const CocVec2& tileCoordinate);
 
     /** Sets the tile gid (gid = tile global id) at a given tile coordinate.
      * The Tile GID can be obtained by using the method "tileGIDAt" or by using the TMX editor -> Tileset Mgr +1.
@@ -123,20 +123,20 @@ public:
      * @param tileCoordinate The tile coordinate.
      * @param flags A TMXTileFlags.
      */
-    void setTileGID(int gid, const Vec2& tileCoordinate, TMXTileFlags flags);
+    void setTileGID(int gid, const CocVec2& tileCoordinate, TMXTileFlags flags);
 
     /** Removes a tile at given tile coordinate.
      *
      * @param tileCoordinate The tile Coordinate.
      */
-    void removeTileAt(const Vec2& tileCoordinate);
+    void removeTileAt(const CocVec2& tileCoordinate);
 
     /** Returns the position in points of a given tile coordinate.
      *
      * @param tileCoordinate The tile Coordinate.
      * @return The position in points of a given tile coordinate.
      */
-    Vec2 getPositionAt(const Vec2& tileCoordinate);
+    CocVec2 getPositionAt(const CocVec2& tileCoordinate);
 
     /** Return the value for the specific property name.
      *
@@ -254,7 +254,7 @@ public:
      *
      * @return Returns the tile (Sprite) at a given a tile coordinate.
      */
-    Sprite* getTileAt(const Vec2& tileCoordinate);
+    Sprite* getTileAt(const CocVec2& tileCoordinate);
     
     /** Set an sprite to the tile,with the tile coordinate and gid.
      *
@@ -262,28 +262,28 @@ public:
      * @param pos The tile coordinate.
      * @param gid The tile gid.
      */
-    void setupTileSprite(Sprite* sprite, const Vec2& pos, uint32_t gid);
+    void setupTileSprite(Sprite* sprite, const CocVec2& pos, uint32_t gid);
 
     //
     // Override
     //
     virtual std::string getDescription() const override;
-    virtual void draw(Renderer *renderer, const Mat4& transform, uint32_t flags) override;
+    virtual void draw(CocRenderer *renderer, const CocMat4& transform, uint32_t flags) override;
     void removeChild(Node* child, bool cleanup = true) override;
 
 protected:
 
     bool initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
     void updateTiles(const Rect& culledRect);
-    Vec2 calculateLayerOffset(const Vec2& offset);
+    CocVec2 calculateLayerOffset(const CocVec2& offset);
 
     /* The layer recognizes some special properties, like cc_vertexz */
     void parseInternalProperties();
     
-    Mat4 tileToNodeTransform();
-    Rect tileBoundsForClipTransform(const Mat4 &tileToClip);
+    CocMat4 tileToNodeTransform();
+    Rect tileBoundsForClipTransform(const CocMat4 &tileToClip);
     
-    int getVertexZForPos(const Vec2& pos);
+    int getVertexZForPos(const CocVec2& pos);
     
     //Flip flags is packed into gid
     void setFlaggedTileGIDByIndex(int index, uint32_t gid);
@@ -330,7 +330,7 @@ protected:
     bool _useAutomaticVertexZ;
     
     /** tile coordinate to node coordinate transform */
-    Mat4 _tileToNodeTransform;
+    CocMat4 _tileToNodeTransform;
     /** data for rendering */
     bool _quadsDirty;
     std::vector<int> _tileToQuadIndex;

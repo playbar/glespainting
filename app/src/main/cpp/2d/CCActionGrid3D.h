@@ -188,7 +188,7 @@ public:
     @param radius Specify the radius of the lens.
     @return If the creation success, return a pointer of Lens3D action; otherwise, return nil.
     */
-    static Lens3D* create(float duration, const Size& gridSize, const Vec2& position, float radius);
+    static Lens3D* create(float duration, const Size& gridSize, const CocVec2& position, float radius);
 
     /**
     @brief Get the value of lens effect. Default value is 0.7.
@@ -212,13 +212,13 @@ public:
     @brief Get the center position of lens effect.
     @return The center position of lens effect.
     */
-    const Vec2& getPosition() const { return _position; }
+    const CocVec2& getPosition() const { return _position; }
 
     /**
     @brief Set the center position of lens effect.
     @param position The center position will be set.
     */
-    void setPosition(const Vec2& position);
+    void setPosition(const CocVec2& position);
 
     // Overrides
     virtual Lens3D* clone() const override;
@@ -236,11 +236,11 @@ CC_CONSTRUCTOR_ACCESS:
     @param radius Specify the radius of the lens effect.
     @return If the initialization success, return true; otherwise, return false.
     */
-    bool initWithDuration(float duration, const Size& gridSize, const Vec2& position, float radius);
+    bool initWithDuration(float duration, const Size& gridSize, const CocVec2& position, float radius);
 
 protected:
     /* lens center position */
-    Vec2 _position;
+    CocVec2 _position;
     float _radius;
     /** lens effect. Defaults to 0.7 - 0 means no effect, 1 is very strong effect */
     float _lensEffect;
@@ -273,18 +273,18 @@ public:
     @param amplitude Specify the amplitude of the ripple effect.
     @return If the creation success, return a pointer of Ripple3D action; otherwise, return nil.
     */
-    static Ripple3D* create(float duration, const Size& gridSize, const Vec2& position, float radius, unsigned int waves, float amplitude);
+    static Ripple3D* create(float duration, const Size& gridSize, const CocVec2& position, float radius, unsigned int waves, float amplitude);
 
     /**
     @brief Get the center position of ripple effect.
     @return The center position of ripple effect.
     */
-    const Vec2& getPosition() const { return _position; }
+    const CocVec2& getPosition() const { return _position; }
     /**
     @brief Set the center position of ripple effect.
     @param position The center position of ripple effect will be set.
     */
-    void setPosition(const Vec2& position);
+    void setPosition(const CocVec2& position);
 
     /**
     @brief Get the amplitude of ripple effect.
@@ -326,11 +326,11 @@ CC_CONSTRUCTOR_ACCESS:
     @param amplitude Specify the amplitude of the ripple effect.
     @return If the initialization success, return true; otherwise, return false.
      */
-    bool initWithDuration(float duration, const Size& gridSize, const Vec2& position, float radius, unsigned int waves, float amplitude);
+    bool initWithDuration(float duration, const Size& gridSize, const CocVec2& position, float radius, unsigned int waves, float amplitude);
 
 protected:
     /* center position */
-    Vec2 _position;
+    CocVec2 _position;
     float _radius;
     unsigned int _waves;
     float _amplitude;
@@ -546,18 +546,18 @@ public:
     @param amplitude Specify the amplitude of the Twirl action.
     @return If the creation success, return a pointer of Twirl action; otherwise, return nil.
     */
-    static Twirl* create(float duration, const Size& gridSize, const Vec2& position, unsigned int twirls, float amplitude);
+    static Twirl* create(float duration, const Size& gridSize, const CocVec2& position, unsigned int twirls, float amplitude);
 
     /**
     @brief Get the center position of twirl action.
     @return The center position of twirl action.
     */
-    const Vec2& getPosition() const { return _position; }
+    const CocVec2& getPosition() const { return _position; }
     /**
     @brief Set the center position of twirl action.
     @param position The center position of twirl action will be set.
     */
-    void setPosition(const Vec2& position);
+    void setPosition(const CocVec2& position);
 
     /**
     @brief Get the amplitude of the effect.
@@ -599,11 +599,11 @@ CC_CONSTRUCTOR_ACCESS:
     @param amplitude Specify the amplitude of the Twirl action.
     @return If the initialization success, return true; otherwise, return false.
     */
-    bool initWithDuration(float duration, const Size& gridSize, const Vec2& position, unsigned int twirls, float amplitude);
+    bool initWithDuration(float duration, const Size& gridSize, const CocVec2& position, unsigned int twirls, float amplitude);
 
 protected:
     /* twirl center */
-    Vec2 _position;
+    CocVec2 _position;
     unsigned int _twirls;
     float _amplitude;
     float _amplitudeRate;

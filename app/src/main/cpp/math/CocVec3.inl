@@ -18,73 +18,73 @@
  This file was modified to fit the cocos2d-x project
  */
 
-#include "math/Vec3.h"
-#include "math/Mat4.h"
+#include "math/CocVec3.h"
+#include "math/CocMat4.h"
 
 NS_CC_MATH_BEGIN
 
 
-inline bool Vec3::isZero() const
+inline bool CocVec3::isZero() const
 {
     return x == 0.0f && y == 0.0f && z == 0.0f;
 }
 
-inline bool Vec3::isOne() const
+inline bool CocVec3::isOne() const
 {
     return x == 1.0f && y == 1.0f && z == 1.0f;
 }
 
-inline void Vec3::add(const Vec3& v)
+inline void CocVec3::add(const CocVec3& v)
 {
     x += v.x;
     y += v.y;
     z += v.z;
 }
 
-inline void Vec3::add(float xx, float yy, float zz)
+inline void CocVec3::add(float xx, float yy, float zz)
 {
     x += xx;
     y += yy;
     z += zz;
 }
 
-inline float Vec3::length() const
+inline float CocVec3::length() const
 {
     return std::sqrt(x * x + y * y + z * z);
 }
 
-inline float Vec3::lengthSquared() const
+inline float CocVec3::lengthSquared() const
 {
     return (x * x + y * y + z * z);
 }
 
-inline void Vec3::negate()
+inline void CocVec3::negate()
 {
     x = -x;
     y = -y;
     z = -z;
 }
 
-inline void Vec3::scale(float scalar)
+inline void CocVec3::scale(float scalar)
 {
     x *= scalar;
     y *= scalar;
     z *= scalar;
 }
 
-inline Vec3 Vec3::lerp(const Vec3 &target, float alpha) const
+inline CocVec3 CocVec3::lerp(const CocVec3 &target, float alpha) const
 {
     return *this * (1.f - alpha) + target * alpha;
 }
 
-inline void Vec3::set(float xx, float yy, float zz)
+inline void CocVec3::set(float xx, float yy, float zz)
 {
     this->x = xx;
     this->y = yy;
     this->z = zz;
 }
 
-inline void Vec3::set(const float* array)
+inline void CocVec3::set(const float* array)
 {
     GP_ASSERT(array);
 
@@ -93,96 +93,96 @@ inline void Vec3::set(const float* array)
     z = array[2];
 }
 
-inline void Vec3::set(const Vec3& v)
+inline void CocVec3::set(const CocVec3& v)
 {
     this->x = v.x;
     this->y = v.y;
     this->z = v.z;
 }
 
-inline void Vec3::set(const Vec3& p1, const Vec3& p2)
+inline void CocVec3::set(const CocVec3& p1, const CocVec3& p2)
 {
     x = p2.x - p1.x;
     y = p2.y - p1.y;
     z = p2.z - p1.z;
 }
 
-inline void Vec3::setZero()
+inline void CocVec3::setZero()
 {
     x = y = z = 0.0f;
 }
 
-inline void Vec3::subtract(const Vec3& v)
+inline void CocVec3::subtract(const CocVec3& v)
 {
     x -= v.x;
     y -= v.y;
     z -= v.z;
 }
 
-inline Vec3 Vec3::operator+(const Vec3& v) const
+inline CocVec3 CocVec3::operator+(const CocVec3& v) const
 {
-    Vec3 result(*this);
+    CocVec3 result(*this);
     result.add(v);
     return result;
 }
 
-inline Vec3& Vec3::operator+=(const Vec3& v)
+inline CocVec3& CocVec3::operator+=(const CocVec3& v)
 {
     add(v);
     return *this;
 }
 
-inline Vec3 Vec3::operator-(const Vec3& v) const
+inline CocVec3 CocVec3::operator-(const CocVec3& v) const
 {
-    Vec3 result(*this);
+    CocVec3 result(*this);
     result.subtract(v);
     return result;
 }
 
-inline Vec3& Vec3::operator-=(const Vec3& v)
+inline CocVec3& CocVec3::operator-=(const CocVec3& v)
 {
     subtract(v);
     return *this;
 }
 
-inline Vec3 Vec3::operator-() const
+inline CocVec3 CocVec3::operator-() const
 {
-    Vec3 result(*this);
+    CocVec3 result(*this);
     result.negate();
     return result;
 }
 
-inline Vec3 Vec3::operator*(float s) const
+inline CocVec3 CocVec3::operator*(float s) const
 {
-    Vec3 result(*this);
+    CocVec3 result(*this);
     result.scale(s);
     return result;
 }
 
-inline Vec3& Vec3::operator*=(float s)
+inline CocVec3& CocVec3::operator*=(float s)
 {
     scale(s);
     return *this;
 }
 
-inline Vec3 Vec3::operator/(const float s) const
+inline CocVec3 CocVec3::operator/(const float s) const
 {
-    return Vec3(this->x / s, this->y / s, this->z / s);
+    return CocVec3(this->x / s, this->y / s, this->z / s);
 }
 
-inline bool Vec3::operator==(const Vec3& v) const
+inline bool CocVec3::operator==(const CocVec3& v) const
 {
     return x==v.x && y==v.y && z==v.z;
 }
 
-inline bool Vec3::operator!=(const Vec3& v) const
+inline bool CocVec3::operator!=(const CocVec3& v) const
 {
     return x!=v.x || y!=v.y || z!=v.z;
 }
 
-inline Vec3 operator*(float x, const Vec3& v)
+inline CocVec3 operator*(float x, const CocVec3& v)
 {
-    Vec3 result(v);
+    CocVec3 result(v);
     result.scale(x);
     return result;
 }

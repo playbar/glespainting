@@ -19,38 +19,38 @@
  This file was modified to fit the cocos2d-x project
  */
 
-#include "math/Vec3.h"
+#include "math/CocVec3.h"
 #include "math/MathUtil.h"
 #include "base/ccMacros.h"
 
 NS_CC_MATH_BEGIN
 
-Vec3::Vec3()
+CocVec3::CocVec3()
     : x(0.0f), y(0.0f), z(0.0f)
 {
 }
 
-Vec3::Vec3(float xx, float yy, float zz)
+CocVec3::CocVec3(float xx, float yy, float zz)
     : x(xx), y(yy), z(zz)
 {
 }
 
-Vec3::Vec3(const float* array)
+CocVec3::CocVec3(const float* array)
 {
     set(array);
 }
 
-Vec3::Vec3(const Vec3& p1, const Vec3& p2)
+CocVec3::CocVec3(const CocVec3& p1, const CocVec3& p2)
 {
     set(p1, p2);
 }
 
-Vec3::Vec3(const Vec3& copy)
+CocVec3::CocVec3(const CocVec3& copy)
 {
     set(copy);
 }
 
-Vec3 Vec3::fromColor(unsigned int color)
+CocVec3 CocVec3::fromColor(unsigned int color)
 {
     float components[3];
     int componentIndex = 0;
@@ -61,15 +61,15 @@ Vec3 Vec3::fromColor(unsigned int color)
         components[componentIndex++] = static_cast<float>(component) / 255.0f;
     }
 
-    Vec3 value(components);
+    CocVec3 value(components);
     return value;
 }
 
-Vec3::~Vec3()
+CocVec3::~CocVec3()
 {
 }
 
-float Vec3::angle(const Vec3& v1, const Vec3& v2)
+float CocVec3::angle(const CocVec3& v1, const CocVec3& v2)
 {
     float dx = v1.y * v2.z - v1.z * v2.y;
     float dy = v1.z * v2.x - v1.x * v2.z;
@@ -78,7 +78,7 @@ float Vec3::angle(const Vec3& v1, const Vec3& v2)
     return std::atan2(std::sqrt(dx * dx + dy * dy + dz * dz) + MATH_FLOAT_SMALL, dot(v1, v2));
 }
 
-void Vec3::add(const Vec3& v1, const Vec3& v2, Vec3* dst)
+void CocVec3::add(const CocVec3& v1, const CocVec3& v2, CocVec3* dst)
 {
     GP_ASSERT(dst);
 
@@ -87,7 +87,7 @@ void Vec3::add(const Vec3& v1, const Vec3& v2, Vec3* dst)
     dst->z = v1.z + v2.z;
 }
 
-void Vec3::clamp(const Vec3& min, const Vec3& max)
+void CocVec3::clamp(const CocVec3& min, const CocVec3& max)
 {
     GP_ASSERT(!(min.x > max.x || min.y > max.y || min.z > max.z));
 
@@ -110,7 +110,7 @@ void Vec3::clamp(const Vec3& min, const Vec3& max)
         z = max.z;
 }
 
-void Vec3::clamp(const Vec3& v, const Vec3& min, const Vec3& max, Vec3* dst)
+void CocVec3::clamp(const CocVec3& v, const CocVec3& min, const CocVec3& max, CocVec3* dst)
 {
     GP_ASSERT(dst);
     GP_ASSERT(!(min.x > max.x || min.y > max.y || min.z > max.z));
@@ -137,22 +137,22 @@ void Vec3::clamp(const Vec3& v, const Vec3& min, const Vec3& max, Vec3* dst)
         dst->z = max.z;
 }
 
-void Vec3::cross(const Vec3& v)
+void CocVec3::cross(const CocVec3& v)
 {
     cross(*this, v, this);
 }
 
-void Vec3::cross(const Vec3& v1, const Vec3& v2, Vec3* dst)
+void CocVec3::cross(const CocVec3& v1, const CocVec3& v2, CocVec3* dst)
 {
     GP_ASSERT(dst);
 
-    // NOTE: This code assumes Vec3 struct members are contiguous floats in memory.
+    // NOTE: This code assumes CocVec3 struct members are contiguous floats in memory.
     // We might want to revisit this (and other areas of code that make this assumption)
     // later to guarantee 100% safety/compatibility.
     MathUtil::crossVec3(&v1.x, &v2.x, &dst->x);
 }
 
-float Vec3::distance(const Vec3& v) const
+float CocVec3::distance(const CocVec3& v) const
 {
     float dx = v.x - x;
     float dy = v.y - y;
@@ -161,7 +161,7 @@ float Vec3::distance(const Vec3& v) const
     return std::sqrt(dx * dx + dy * dy + dz * dz);
 }
 
-float Vec3::distanceSquared(const Vec3& v) const
+float CocVec3::distanceSquared(const CocVec3& v) const
 {
     float dx = v.x - x;
     float dy = v.y - y;
@@ -170,17 +170,17 @@ float Vec3::distanceSquared(const Vec3& v) const
     return (dx * dx + dy * dy + dz * dz);
 }
 
-float Vec3::dot(const Vec3& v) const
+float CocVec3::dot(const CocVec3& v) const
 {
     return (x * v.x + y * v.y + z * v.z);
 }
 
-float Vec3::dot(const Vec3& v1, const Vec3& v2)
+float CocVec3::dot(const CocVec3& v1, const CocVec3& v2)
 {
     return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
 }
 
-void Vec3::normalize()
+void CocVec3::normalize()
 {
     float n = x * x + y * y + z * z;
     // Already normalized.
@@ -198,14 +198,14 @@ void Vec3::normalize()
     z *= n;
 }
 
-Vec3 Vec3::getNormalized() const
+CocVec3 CocVec3::getNormalized() const
 {
-    Vec3 v(*this);
+    CocVec3 v(*this);
     v.normalize();
     return v;
 }
 
-void Vec3::subtract(const Vec3& v1, const Vec3& v2, Vec3* dst)
+void CocVec3::subtract(const CocVec3& v1, const CocVec3& v2, CocVec3* dst)
 {
     GP_ASSERT(dst);
 
@@ -214,7 +214,7 @@ void Vec3::subtract(const Vec3& v1, const Vec3& v2, Vec3* dst)
     dst->z = v1.z - v2.z;
 }
 
-void Vec3::smooth(const Vec3& target, float elapsedTime, float responseTime)
+void CocVec3::smooth(const CocVec3& target, float elapsedTime, float responseTime)
 {
     if (elapsedTime > 0)
     {
@@ -222,10 +222,10 @@ void Vec3::smooth(const Vec3& target, float elapsedTime, float responseTime)
     }
 }
 
-const Vec3 Vec3::ZERO(0.0f, 0.0f, 0.0f);
-const Vec3 Vec3::ONE(1.0f, 1.0f, 1.0f);
-const Vec3 Vec3::UNIT_X(1.0f, 0.0f, 0.0f);
-const Vec3 Vec3::UNIT_Y(0.0f, 1.0f, 0.0f);
-const Vec3 Vec3::UNIT_Z(0.0f, 0.0f, 1.0f);
+const CocVec3 CocVec3::ZERO(0.0f, 0.0f, 0.0f);
+const CocVec3 CocVec3::ONE(1.0f, 1.0f, 1.0f);
+const CocVec3 CocVec3::UNIT_X(1.0f, 0.0f, 0.0f);
+const CocVec3 CocVec3::UNIT_Y(0.0f, 1.0f, 0.0f);
+const CocVec3 CocVec3::UNIT_Z(0.0f, 0.0f, 1.0f);
 
 NS_CC_MATH_END

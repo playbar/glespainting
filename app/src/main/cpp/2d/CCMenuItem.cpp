@@ -76,7 +76,7 @@ bool MenuItem::initWithTarget(cocos2d::Ref *target, SEL_MenuHandler selector )
 
 bool MenuItem::initWithCallback(const ccMenuCallback& callback)
 {
-    setAnchorPoint(Vec2(0.5f, 0.5f));
+    setAnchorPoint(CocVec2(0.5f, 0.5f));
     _callback = callback;
     _enabled = true;
     _selected = false;
@@ -162,7 +162,7 @@ void MenuItemLabel::setLabel(Node* var)
 {
     if (var)
     {
-        var->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+        var->setAnchorPoint(CocVec2::ANCHOR_BOTTOM_LEFT);
         setContentSize(var->getContentSize()); 
         addChild(var);
     }
@@ -466,7 +466,7 @@ void MenuItemSprite::setNormalImage(Node* image)
         if (image)
         {
             addChild(image);
-            image->setAnchorPoint(Vec2(0, 0));
+            image->setAnchorPoint(CocVec2(0, 0));
         }
 
         if (_normalImage)
@@ -490,7 +490,7 @@ void MenuItemSprite::setSelectedImage(Node* image)
         if (image)
         {
             addChild(image);
-            image->setAnchorPoint(Vec2(0, 0));
+            image->setAnchorPoint(CocVec2(0, 0));
         }
 
         if (_selectedImage)
@@ -510,7 +510,7 @@ void MenuItemSprite::setDisabledImage(Node* image)
         if (image)
         {
             addChild(image);
-            image->setAnchorPoint(Vec2(0, 0));
+            image->setAnchorPoint(CocVec2(0, 0));
         }
 
         if (_disabledImage)

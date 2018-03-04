@@ -113,20 +113,20 @@ public:
     }
 
     // Overrides
-    virtual void setPosition(const Vec2& position) override;
+    virtual void setPosition(const CocVec2& position) override;
     virtual void setPosition(float x, float y) override;
-    virtual const Vec2& getPosition() const override;
+    virtual const CocVec2& getPosition() const override;
     virtual void getPosition(float* x, float* y) const override;
     virtual void setPositionX(float x) override;
     virtual void setPositionY(float y) override;
     virtual float getPositionX(void) const override;
     virtual float getPositionY(void) const override;
-    virtual Vec3 getPosition3D() const override;
+    virtual CocVec3 getPosition3D() const override;
     /**
     * @js NA
     * @lua NA
     */
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    virtual void draw(CocRenderer *renderer, const CocMat4 &transform, uint32_t flags) override;
     /**
     * @lua NA
     */
@@ -160,7 +160,7 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     //renderer callback
-    void onDraw(const Mat4 &transform, uint32_t flags);
+    void onDraw(const CocMat4 &transform, uint32_t flags);
 
     bool _fastMode;
     bool _startingPositionInitialized;
@@ -168,7 +168,7 @@ protected:
     /** texture used for the motion streak */
     Texture2D* _texture;
     BlendFunc _blendFunc;
-    Vec2 _positionR;
+    CocVec2 _positionR;
 
     float _stroke;
     float _fadeDelta;
@@ -179,11 +179,11 @@ protected:
     unsigned int _previousNuPoints;
 
     /** Pointers */
-    Vec2* _pointVertexes;
+    CocVec2* _pointVertexes;
     float* _pointState;
 
     // Opengl
-    Vec2* _vertices;
+    CocVec2* _vertices;
     GLubyte* _colorPointer;
     Tex2F* _texCoords;
     

@@ -95,14 +95,14 @@ public:
     //override
     
     /** update billboard's transform and turn it towards camera */
-    virtual void visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags) override;
+    virtual void visit(CocRenderer *renderer, const CocMat4& parentTransform, uint32_t parentFlags) override;
     
     /** 
      * draw BillBoard object.
      *
      * @lua NA
      */
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    virtual void draw(CocRenderer *renderer, const CocMat4 &transform, uint32_t flags) override;
 
 
 CC_CONSTRUCTOR_ACCESS:
@@ -119,8 +119,8 @@ protected:
     /** @deprecated Use calculateBillboardTransform instead. */
     CC_DEPRECATED_ATTRIBUTE bool calculateBillbaordTransform();
     
-    Mat4 _camWorldMat;
-    Mat4 _mvTransform;
+    CocMat4 _camWorldMat;
+    CocMat4 _mvTransform;
 
     Mode _mode;
     bool _modeDirty;

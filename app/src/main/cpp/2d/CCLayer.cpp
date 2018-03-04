@@ -60,7 +60,7 @@ Layer::Layer()
 , _swallowsTouches(true)
 {
     _ignoreAnchorPointForPosition = true;
-    setAnchorPoint(Vec2(0.5f, 0.5f));
+    setAnchorPoint(CocVec2(0.5f, 0.5f));
 }
 
 Layer::~Layer()
@@ -598,7 +598,7 @@ void LayerColor::updateColor()
     }
 }
 
-void LayerColor::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+void LayerColor::draw(CocRenderer *renderer, const CocMat4 &transform, uint32_t flags)
 {
     _customCommand.init(_globalZOrder, transform, flags);
     _customCommand.func = CC_CALLBACK_0(LayerColor::onDraw, this, transform, flags);
@@ -606,15 +606,15 @@ void LayerColor::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     
     for(int i = 0; i < 4; ++i)
     {
-        Vec4 pos;
+        CocVec4 pos;
         pos.x = _squareVertices[i].x; pos.y = _squareVertices[i].y; pos.z = _positionZ;
         pos.w = 1;
         _modelViewTransform.transformVector(&pos);
-        _noMVPVertices[i] = Vec3(pos.x,pos.y,pos.z)/pos.w;
+        _noMVPVertices[i] = CocVec3(pos.x,pos.y,pos.z)/pos.w;
     }
 }
 
-void LayerColor::onDraw(const Mat4& transform, uint32_t /*flags*/)
+void LayerColor::onDraw(const CocMat4& transform, uint32_t /*flags*/)
 {
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
@@ -648,7 +648,7 @@ LayerGradient::LayerGradient()
 , _endColor(Color4B::BLACK)
 , _startOpacity(255)
 , _endOpacity(255)
-, _alongVector(Vec2(0, -1))
+, _alongVector(CocVec2(0, -1))
 , _compressedInterpolation(true)
 {
     
@@ -670,7 +670,7 @@ LayerGradient* LayerGradient::create(const Color4B& start, const Color4B& end)
     return nullptr;
 }
 
-LayerGradient* LayerGradient::create(const Color4B& start, const Color4B& end, const Vec2& v)
+LayerGradient* LayerGradient::create(const Color4B& start, const Color4B& end, const CocVec2& v)
 {
     LayerGradient * layer = new (std::nothrow) LayerGradient();
     if( layer && layer->initWithColor(start, end, v))
@@ -703,10 +703,10 @@ bool LayerGradient::init()
 
 bool LayerGradient::initWithColor(const Color4B& start, const Color4B& end)
 {
-    return initWithColor(start, end, Vec2(0, -1));
+    return initWithColor(start, end, CocVec2(0, -1));
 }
 
-bool LayerGradient::initWithColor(const Color4B& start, const Color4B& end, const Vec2& v)
+bool LayerGradient::initWithColor(const Color4B& start, const Color4B& end, const CocVec2& v)
 {
     _endColor.r  = end.r;
     _endColor.g  = end.g;
@@ -730,7 +730,7 @@ void LayerGradient::updateColor()
         return;
 
     float c = sqrtf(2.0f);
-    Vec2 u(_alongVector.x / h, _alongVector.y / h);
+    CocVec2 u(_alongVector.x / h, _alongVector.y / h);
 
     // Compressed Interpolation mode
     if (_compressedInterpolation)
@@ -820,13 +820,13 @@ GLubyte LayerGradient::getEndOpacity() const
     return _endOpacity;
 }
 
-void LayerGradient::setVector(const Vec2& var)
+void LayerGradient::setVector(const CocVec2& var)
 {
     _alongVector = var;
     updateColor();
 }
 
-const Vec2& LayerGradient::getVector() const
+const CocVec2& LayerGradient::getVector() const
 {
     return _alongVector;
 }
@@ -850,7 +850,7 @@ std::string LayerGradient::getDescription() const
 /**
  * LayerRadialGradient
  */
-LayerRadialGradient* LayerRadialGradient::create(const Color4B& startColor, const Color4B& endColor, float radius, const Vec2& center, float expand)
+LayerRadialGradient* LayerRadialGradient::create(const Color4B& startColor, const Color4B& endColor, float radius, const CocVec2& center, float expand)
 {
     auto layerGradient = new LayerRadialGradient();
     if (layerGradient && layerGradient->initWithColor(startColor, endColor, radius, center, expand))
@@ -866,7 +866,7 @@ LayerRadialGradient* LayerRadialGradient::create(const Color4B& startColor, cons
 LayerRadialGradient* LayerRadialGradient::create()
 {
     auto layerGradient = new LayerRadialGradient();
-    if (layerGradient && layerGradient->initWithColor(Color4B::BLACK, Color4B::BLACK, 0, Vec2(0,0), 0))
+    if (layerGradient && layerGradient->initWithColor(Color4B::BLACK, Color4B::BLACK, 0, CocVec2(0,0), 0))
     {
         layerGradient->autorelease();
         return layerGradient;
@@ -883,7 +883,7 @@ LayerRadialGradient::LayerRadialGradient()
 , _endColorRend(Color4F::BLACK)
 , _radius(0.f)
 , _expand(0.f)
-, _center(Vec2(0,0))
+, _center(CocVec2(0,0))
 , _uniformLocationCenter(0)
 , _uniformLocationRadius(0)
 , _uniformLocationExpand(0)
@@ -895,7 +895,7 @@ LayerRadialGradient::LayerRadialGradient()
 LayerRadialGradient::~LayerRadialGradient()
 {}
 
-bool LayerRadialGradient::initWithColor(const cocos2d::Color4B &startColor, const cocos2d::Color4B &endColor, float radius, const Vec2& center, float expand)
+bool LayerRadialGradient::initWithColor(const cocos2d::Color4B &startColor, const cocos2d::Color4B &endColor, float radius, const CocVec2& center, float expand)
 {
     // should do it before Layer::init()
     for (int i = 0; i < 4; ++i)
@@ -928,14 +928,14 @@ bool LayerRadialGradient::initWithColor(const cocos2d::Color4B &startColor, cons
     return false;
 }
 
-void LayerRadialGradient::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+void LayerRadialGradient::draw(CocRenderer *renderer, const CocMat4 &transform, uint32_t flags)
 {
     _customCommand.init(_globalZOrder, transform, flags);
     _customCommand.func = CC_CALLBACK_0(LayerRadialGradient::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
 }
 
-void LayerRadialGradient::onDraw(const Mat4& transform, uint32_t /*flags*/)
+void LayerRadialGradient::onDraw(const CocMat4& transform, uint32_t /*flags*/)
 {
     auto program = getGLProgram();
     program->use();
@@ -1005,12 +1005,12 @@ float LayerRadialGradient::getRadius() const
     return _radius;
 }
 
-void LayerRadialGradient::setCenter(const Vec2& center)
+void LayerRadialGradient::setCenter(const CocVec2& center)
 {
     _center = center;
 }
 
-Vec2 LayerRadialGradient::getCenter() const
+CocVec2 LayerRadialGradient::getCenter() const
 {
     return _center;
 }

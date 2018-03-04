@@ -56,7 +56,7 @@ public:
     /**create a new meshskin if do not want to share meshskin*/
     static MeshSkin* create(Skeleton3D* skeleton, const std::string& filename, const std::string& name);
     
-    static MeshSkin* create(Skeleton3D* skeleton, const std::vector<std::string>& boneNames, const std::vector<Mat4>& invBindPose);
+    static MeshSkin* create(Skeleton3D* skeleton, const std::vector<std::string>& boneNames, const std::vector<CocMat4>& invBindPose);
     
     /**get total bone count, skin bone + node bone*/
     ssize_t getBoneCount() const;
@@ -69,7 +69,7 @@ public:
     int getBoneIndex(Bone3D* bone) const;
     
     /**compute matrix palette used by gpu skin*/
-    Vec4* getMatrixPalette();
+    CocVec4* getMatrixPalette();
     
     /**getSkinBoneCount() * 3*/
     ssize_t getMatrixPaletteSize() const;
@@ -90,21 +90,21 @@ CC_CONSTRUCTOR_ACCESS:
     void addSkinBone(Bone3D* bone);
     
     /** get inverse bind pose */
-    const Mat4& getInvBindPose(const Bone3D* bone);
+    const CocMat4& getInvBindPose(const Bone3D* bone);
     
 protected:
     
     Vector<Bone3D*>    _skinBones; // bones with skin
-    std::vector<Mat4>  _invBindPoses; //inverse bind pose of bone
+    std::vector<CocMat4>  _invBindPoses; //inverse bind pose of bone
 
     Bone3D* _rootBone;
     Skeleton3D*     _skeleton; //skeleton the skin referred
     
     // Pointer to the array of palette matrices.
     // This array is passed to the vertex shader as a uniform.
-    // Each 4x3 row-wise matrix is represented as 3 Vec4's.
-    // The number of Vec4's is (_skinBones.size() * 3).
-    Vec4* _matrixPalette;
+    // Each 4x3 row-wise matrix is represented as 3 CocVec4's.
+    // The number of CocVec4's is (_skinBones.size() * 3).
+    CocVec4* _matrixPalette;
 };
 
 // end of 3d group

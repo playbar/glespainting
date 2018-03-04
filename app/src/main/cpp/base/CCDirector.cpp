@@ -151,7 +151,7 @@ bool Director::init(void)
     initTextureCache();
     initMatrixStack();
 
-    _renderer = new (std::nothrow) Renderer;
+    _renderer = new (std::nothrow) CocRenderer;
     RenderState::initialize();
 
     return true;
@@ -279,7 +279,7 @@ void Director::drawScene()
     // draw the notifications node
     if (_notificationNode)
     {
-        _notificationNode->visit(_renderer, Mat4::IDENTITY, 0);
+        _notificationNode->visit(_renderer, CocMat4::IDENTITY, 0);
     }
 
     updateFrameRate();
@@ -421,11 +421,11 @@ void Director::initMatrixStack()
         _textureMatrixStack.pop();
     }
 
-    _modelViewMatrixStack.push(Mat4::IDENTITY);
-    std::stack<Mat4> projectionMatrixStack;
-    projectionMatrixStack.push(Mat4::IDENTITY);
+    _modelViewMatrixStack.push(CocMat4::IDENTITY);
+    std::stack<CocMat4> projectionMatrixStack;
+    projectionMatrixStack.push(CocMat4::IDENTITY);
     _projectionMatrixStackList.push_back(projectionMatrixStack);
-    _textureMatrixStack.push(Mat4::IDENTITY);
+    _textureMatrixStack.push(CocMat4::IDENTITY);
 }
 
 void Director::resetMatrixStack()
@@ -436,8 +436,8 @@ void Director::resetMatrixStack()
 void Director::initProjectionMatrixStack(size_t stackCount)
 {
     _projectionMatrixStackList.clear();
-    std::stack<Mat4> projectionMatrixStack;
-    projectionMatrixStack.push(Mat4::IDENTITY);
+    std::stack<CocMat4> projectionMatrixStack;
+    projectionMatrixStack.push(CocMat4::IDENTITY);
     for (size_t i = 0; i < stackCount; ++i)
         _projectionMatrixStackList.push_back(projectionMatrixStack);
 }
@@ -476,15 +476,15 @@ void Director::loadIdentityMatrix(MATRIX_STACK_TYPE type)
 {
     if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
     {
-        _modelViewMatrixStack.top() = Mat4::IDENTITY;
+        _modelViewMatrixStack.top() = CocMat4::IDENTITY;
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
     {
-        _projectionMatrixStackList[0].top() = Mat4::IDENTITY;
+        _projectionMatrixStackList[0].top() = CocMat4::IDENTITY;
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
     {
-        _textureMatrixStack.top() = Mat4::IDENTITY;
+        _textureMatrixStack.top() = CocMat4::IDENTITY;
     }
     else
     {
@@ -494,10 +494,10 @@ void Director::loadIdentityMatrix(MATRIX_STACK_TYPE type)
 
 void Director::loadProjectionIdentityMatrix(size_t index)
 {
-    _projectionMatrixStackList[index].top() = Mat4::IDENTITY;
+    _projectionMatrixStackList[index].top() = CocMat4::IDENTITY;
 }
 
-void Director::loadMatrix(MATRIX_STACK_TYPE type, const Mat4& mat)
+void Director::loadMatrix(MATRIX_STACK_TYPE type, const CocMat4& mat)
 {
     if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
     {
@@ -517,12 +517,12 @@ void Director::loadMatrix(MATRIX_STACK_TYPE type, const Mat4& mat)
     }
 }
 
-void Director::loadProjectionMatrix(const Mat4& mat, size_t index)
+void Director::loadProjectionMatrix(const CocMat4& mat, size_t index)
 {
     _projectionMatrixStackList[index].top() = mat;
 }
 
-void Director::multiplyMatrix(MATRIX_STACK_TYPE type, const Mat4& mat)
+void Director::multiplyMatrix(MATRIX_STACK_TYPE type, const CocMat4& mat)
 {
     if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
     {
@@ -542,7 +542,7 @@ void Director::multiplyMatrix(MATRIX_STACK_TYPE type, const Mat4& mat)
     }
 }
 
-void Director::multiplyProjectionMatrix(const Mat4& mat, size_t index)
+void Director::multiplyProjectionMatrix(const CocMat4& mat, size_t index)
 {
     _projectionMatrixStackList[index].top() *= mat;
 }
@@ -572,7 +572,7 @@ void Director::pushProjectionMatrix(size_t index)
     _projectionMatrixStackList[index].push(_projectionMatrixStackList[index].top());
 }
 
-const Mat4& Director::getMatrix(MATRIX_STACK_TYPE type) const
+const CocMat4& Director::getMatrix(MATRIX_STACK_TYPE type) const
 {
     if(type == MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW)
     {
@@ -591,7 +591,7 @@ const Mat4& Director::getMatrix(MATRIX_STACK_TYPE type) const
     return  _modelViewMatrixStack.top();
 }
 
-const Mat4& Director::getProjectionMatrix(size_t index) const
+const CocMat4& Director::getProjectionMatrix(size_t index) const
 {
     return _projectionMatrixStackList[index].top();
 }
@@ -612,8 +612,8 @@ void Director::setProjection(Projection projection)
     {
         case Projection::_2D:
         {
-            Mat4 orthoMatrix;
-            Mat4::createOrthographicOffCenter(0, size.width, 0, size.height, -1024, 1024, &orthoMatrix);
+            CocMat4 orthoMatrix;
+            CocMat4::createOrthographicOffCenter(0, size.width, 0, size.height, -1024, 1024, &orthoMatrix);
             loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
             loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
             break;
@@ -623,14 +623,14 @@ void Director::setProjection(Projection projection)
         {
             float zeye = this->getZEye();
 
-            Mat4 matrixPerspective, matrixLookup;
+            CocMat4 matrixPerspective, matrixLookup;
 
             // issue #1334
-            Mat4::createPerspective(60, (GLfloat)size.width/size.height, 10, zeye+size.height/2, &matrixPerspective);
+            CocMat4::createPerspective(60, (GLfloat)size.width/size.height, 10, zeye+size.height/2, &matrixPerspective);
 
-            Vec3 eye(size.width/2, size.height/2, zeye), center(size.width/2, size.height/2, 0.0f), up(0.0f, 1.0f, 0.0f);
-            Mat4::createLookAt(eye, center, up, &matrixLookup);
-            Mat4 proj3d = matrixPerspective * matrixLookup;
+            CocVec3 eye(size.width/2, size.height/2, zeye), center(size.width/2, size.height/2, 0.0f), up(0.0f, 1.0f, 0.0f);
+            CocMat4::createLookAt(eye, center, up, &matrixLookup);
+            CocMat4 proj3d = matrixPerspective * matrixLookup;
 
             loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, proj3d);
             loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
@@ -702,7 +702,7 @@ void Director::setClearColor(const Color4F& clearColor)
     if(defaultFBO) defaultFBO->setClearColor(clearColor);
 }
 
-static void GLToClipTransform(Mat4 *transformOut)
+static void GLToClipTransform(CocMat4 *transformOut)
 {
     if(nullptr == transformOut) return;
     
@@ -714,34 +714,34 @@ static void GLToClipTransform(Mat4 *transformOut)
     *transformOut = projection * modelview;
 }
 
-Vec2 Director::convertToGL(const Vec2& uiPoint)
+CocVec2 Director::convertToGL(const CocVec2& uiPoint)
 {
-    Mat4 transform;
+    CocMat4 transform;
     GLToClipTransform(&transform);
 
-    Mat4 transformInv = transform.getInversed();
+    CocMat4 transformInv = transform.getInversed();
 
     // Calculate z=0 using -> transform*[0, 0, 0, 1]/w
     float zClip = transform.m[14]/transform.m[15];
 
     Size glSize = _openGLView->getDesignResolutionSize();
-    Vec4 clipCoord(2.0f*uiPoint.x/glSize.width - 1.0f, 1.0f - 2.0f*uiPoint.y/glSize.height, zClip, 1);
+    CocVec4 clipCoord(2.0f*uiPoint.x/glSize.width - 1.0f, 1.0f - 2.0f*uiPoint.y/glSize.height, zClip, 1);
 
-    Vec4 glCoord;
+    CocVec4 glCoord;
     //transformInv.transformPoint(clipCoord, &glCoord);
     transformInv.transformVector(clipCoord, &glCoord);
     float factor = 1.0f / glCoord.w;
-    return Vec2(glCoord.x * factor, glCoord.y * factor);
+    return CocVec2(glCoord.x * factor, glCoord.y * factor);
 }
 
-Vec2 Director::convertToUI(const Vec2& glPoint)
+CocVec2 Director::convertToUI(const CocVec2& glPoint)
 {
-    Mat4 transform;
+    CocMat4 transform;
     GLToClipTransform(&transform);
 
-    Vec4 clipCoord;
+    CocVec4 clipCoord;
     // Need to calculate the zero depth from the transform.
-    Vec4 glCoord(glPoint.x, glPoint.y, 0.0, 1);
+    CocVec4 glCoord(glPoint.x, glPoint.y, 0.0, 1);
     transform.transformVector(glCoord, &clipCoord);
 
 	/*
@@ -758,7 +758,7 @@ Vec2 Director::convertToUI(const Vec2& glPoint)
 
     Size glSize = _openGLView->getDesignResolutionSize();
     float factor = 1.0f / glCoord.w;
-    return Vec2(glSize.width * (clipCoord.x * 0.5f + 0.5f) * factor, glSize.height * (-clipCoord.y * 0.5f + 0.5f) * factor);
+    return CocVec2(glSize.width * (clipCoord.x * 0.5f + 0.5f) * factor, glSize.height * (-clipCoord.y * 0.5f + 0.5f) * factor);
 }
 
 const Size& Director::getWinSize(void) const
@@ -783,7 +783,7 @@ Size Director::getVisibleSize() const
     }
 }
 
-Vec2 Director::getVisibleOrigin() const
+CocVec2 Director::getVisibleOrigin() const
 {
     if (_openGLView)
     {
@@ -791,7 +791,7 @@ Vec2 Director::getVisibleOrigin() const
     }
     else
     {
-        return Vec2::ZERO;
+        return CocVec2::ZERO;
     }
 }
 
@@ -1031,7 +1031,7 @@ void Director::showStats()
             prevVerts = currentVerts;
         }
 
-        const Mat4& identity = Mat4::IDENTITY;
+        const CocMat4& identity = CocMat4::IDENTITY;
         _drawnVerticesLabel->visit(_renderer, identity, 0);
         _drawnBatchesLabel->visit(_renderer, identity, 0);
         _FPSLabel->visit(_renderer, identity, 0);
@@ -1124,9 +1124,9 @@ void Director::createStatsLabel()
     Texture2D::setDefaultAlphaPixelFormat(currentFormat);
 
     const int height_spacing = 22 / CC_CONTENT_SCALE_FACTOR();
-    _drawnVerticesLabel->setPosition(Vec2(0, height_spacing*2) + CC_DIRECTOR_STATS_POSITION);
-    _drawnBatchesLabel->setPosition(Vec2(0, height_spacing*1) + CC_DIRECTOR_STATS_POSITION);
-    _FPSLabel->setPosition(Vec2(0, height_spacing*0)+CC_DIRECTOR_STATS_POSITION);
+    _drawnVerticesLabel->setPosition(CocVec2(0, height_spacing*2) + CC_DIRECTOR_STATS_POSITION);
+    _drawnBatchesLabel->setPosition(CocVec2(0, height_spacing*1) + CC_DIRECTOR_STATS_POSITION);
+    _FPSLabel->setPosition(CocVec2(0, height_spacing*0)+CC_DIRECTOR_STATS_POSITION);
 }
 
 

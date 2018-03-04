@@ -64,7 +64,7 @@ THE SOFTWARE.
  - ccPointSize()
  - glLineWidth()
  
- @warning These functions draws the Line, Vec2, Polygon, immediately. They aren't batched. If you are going to make a game that depends on these primitives, I suggest creating a batch. Instead you should use DrawLayer
+ @warning These functions draws the Line, CocVec2, Polygon, immediately. They aren't batched. If you are going to make a game that depends on these primitives, I suggest creating a batch. Instead you should use DrawLayer
  
  */
 
@@ -96,9 +96,9 @@ namespace DrawPrimitives
 
     /** Draws a point given x and y coordinate measured in points
      *
-     * @param point A Vec2 with a point given x and y coordinate.
+     * @param point A CocVec2 with a point given x and y coordinate.
      */
-    CC_DEPRECATED_ATTRIBUTE void CC_DLL drawPoint(const Vec2& point);
+    CC_DEPRECATED_ATTRIBUTE void CC_DLL drawPoint(const CocVec2& point);
 
     /** Draws an array of points.
      *
@@ -106,14 +106,14 @@ namespace DrawPrimitives
      * @param numberOfPoints The number of points.
      * @since v0.7.2
      */
-    CC_DEPRECATED_ATTRIBUTE void CC_DLL drawPoints(const Vec2 *points, unsigned int numberOfPoints);
+    CC_DEPRECATED_ATTRIBUTE void CC_DLL drawPoints(const CocVec2 *points, unsigned int numberOfPoints);
 
     /** Draws a line given the origin and destination point measured in points
      *
-     * @param origin A Vec2 Type point used to the line origin.
-     * @param destination A Vec2 Type point used to the line destination.
+     * @param origin A CocVec2 Type point used to the line origin.
+     * @param destination A CocVec2 Type point used to the line destination.
      */
-    CC_DEPRECATED_ATTRIBUTE void CC_DLL drawLine(const Vec2& origin, const Vec2& destination);
+    CC_DEPRECATED_ATTRIBUTE void CC_DLL drawLine(const CocVec2& origin, const CocVec2& destination);
 
     /** Draws a rectangle given the origin and destination point measured in points.
      * The origin and the destination can not have the same x and y coordinate.
@@ -121,7 +121,7 @@ namespace DrawPrimitives
      * @param origin The rectangle origin.
      * @param destination The rectangle destination.
      */
-    CC_DEPRECATED_ATTRIBUTE void CC_DLL drawRect(Vec2 origin, Vec2 destination);
+    CC_DEPRECATED_ATTRIBUTE void CC_DLL drawRect(CocVec2 origin, CocVec2 destination);
 
     /** Draws a solid rectangle given the origin and destination point measured in points.
      * The origin and the destination can not have the same x and y coordinate.
@@ -131,7 +131,7 @@ namespace DrawPrimitives
      * @param color The rectangle color.
      * @since 1.1
      */
-    CC_DEPRECATED_ATTRIBUTE void CC_DLL drawSolidRect(Vec2 origin, Vec2 destination, Color4F color);
+    CC_DEPRECATED_ATTRIBUTE void CC_DLL drawSolidRect(CocVec2 origin, CocVec2 destination, Color4F color);
 
     /** Draws a polygon given a pointer to point coordinates and the number of vertices measured in points.
      * The polygon can be closed or open.
@@ -140,7 +140,7 @@ namespace DrawPrimitives
      * @param numOfVertices The number of vertices measured in points.
      * @param closePolygon The polygon can be closed or open.
      */
-    CC_DEPRECATED_ATTRIBUTE void CC_DLL drawPoly(const Vec2 *vertices, unsigned int numOfVertices, bool closePolygon);
+    CC_DEPRECATED_ATTRIBUTE void CC_DLL drawPoly(const CocVec2 *vertices, unsigned int numOfVertices, bool closePolygon);
 
     /** Draws a solid polygon given a pointer to CGPoint coordinates, the number of vertices measured in points, and a color.
      *
@@ -148,7 +148,7 @@ namespace DrawPrimitives
      * @param numberOfPoints The number of vertices measured in points.
      * @param color The solid polygon color.
      */
-    CC_DEPRECATED_ATTRIBUTE void CC_DLL drawSolidPoly(const Vec2 *poli, unsigned int numberOfPoints, Color4F color);
+    CC_DEPRECATED_ATTRIBUTE void CC_DLL drawSolidPoly(const CocVec2 *poli, unsigned int numberOfPoints, Color4F color);
 
     /** Draws a circle given the center, radius and number of segments. 
      *
@@ -160,7 +160,7 @@ namespace DrawPrimitives
      * @param scaleX The scale value in x.
      * @param scaleY The scale value in y.
      */
-    CC_DEPRECATED_ATTRIBUTE void CC_DLL drawCircle(const Vec2& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY);
+    CC_DEPRECATED_ATTRIBUTE void CC_DLL drawCircle(const CocVec2& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY);
     
     /** Draws a circle given the center, radius and number of segments.
      *
@@ -170,7 +170,7 @@ namespace DrawPrimitives
      * @param segments The number of segments.
      * @param drawLineToCenter Whether or not draw the line from the origin to center.
      */
-    CC_DEPRECATED_ATTRIBUTE void CC_DLL drawCircle(const Vec2& center, float radius, float angle, unsigned int segments, bool drawLineToCenter);
+    CC_DEPRECATED_ATTRIBUTE void CC_DLL drawCircle(const CocVec2& center, float radius, float angle, unsigned int segments, bool drawLineToCenter);
 
     /** Draws a solid circle given the center, radius and number of segments.
      * @param center The circle center point.
@@ -181,7 +181,7 @@ namespace DrawPrimitives
      * @param scaleY The scale value in y.
      * @js NA
      */
-    CC_DEPRECATED_ATTRIBUTE void CC_DLL drawSolidCircle(const Vec2& center, float radius, float angle, unsigned int segments, float scaleX, float scaleY);
+    CC_DEPRECATED_ATTRIBUTE void CC_DLL drawSolidCircle(const CocVec2& center, float radius, float angle, unsigned int segments, float scaleX, float scaleY);
     
     /** Draws a solid circle given the center, radius and number of segments.
      * @param center The circle center point.
@@ -190,7 +190,7 @@ namespace DrawPrimitives
      * @param segments The number of segments.
      * @js NA
      */
-    CC_DEPRECATED_ATTRIBUTE void CC_DLL drawSolidCircle(const Vec2& center, float radius, float angle, unsigned int segments);
+    CC_DEPRECATED_ATTRIBUTE void CC_DLL drawSolidCircle(const CocVec2& center, float radius, float angle, unsigned int segments);
 
     /** Draws a quad bezier path.
      *
@@ -201,7 +201,7 @@ namespace DrawPrimitives
      * @warning This function could be pretty slow. Use it only for debugging purposes.
      * @since v0.8
      */
-    CC_DEPRECATED_ATTRIBUTE void CC_DLL drawQuadBezier(const Vec2& origin, const Vec2& control, const Vec2& destination, unsigned int segments);
+    CC_DEPRECATED_ATTRIBUTE void CC_DLL drawQuadBezier(const CocVec2& origin, const CocVec2& control, const CocVec2& destination, unsigned int segments);
 
     /** Draws a cubic bezier path.
      *
@@ -213,7 +213,7 @@ namespace DrawPrimitives
      * @warning This function could be pretty slow. Use it only for debugging purposes.
      * @since v0.8
      */
-    CC_DEPRECATED_ATTRIBUTE void CC_DLL drawCubicBezier(const Vec2& origin, const Vec2& control1, const Vec2& control2, const Vec2& destination, unsigned int segments);
+    CC_DEPRECATED_ATTRIBUTE void CC_DLL drawCubicBezier(const CocVec2& origin, const CocVec2& control1, const CocVec2& control2, const CocVec2& destination, unsigned int segments);
 
     /** Draws a Catmull Rom path.
      *

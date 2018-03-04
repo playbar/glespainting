@@ -53,13 +53,13 @@ public:
      *
      * @return Inverse bind pose matrix.
      */
-    const Mat4& getInverseBindPose();
+    const CocMat4& getInverseBindPose();
     
     /**update own world matrix and children's*/
     void updateWorldMat();
     
     /**get world matrix*/
-    const Mat4& getWorldMat();
+    const CocMat4& getWorldMat();
     
     /**get bone name*/
     const std::string& getName() const { return _name; }
@@ -84,16 +84,16 @@ public:
     /**
      * Sets the inverse bind pose matrix.
      *
-     * @param m Mat4 representing the inverse bind pose for this Bone.
+     * @param m CocMat4 representing the inverse bind pose for this Bone.
      */
-    void setInverseBindPose(const Mat4& m);
+    void setInverseBindPose(const CocMat4& m);
     
     /**
      * Sets the bone's original pose.
      *
-     * @param m Mat4 representing the original pose for this Bone.
+     * @param m CocMat4 representing the original pose for this Bone.
      */
-    void setOriPose(const Mat4& m);
+    void setOriPose(const CocMat4& m);
     
     /**
      * reset pose to origin
@@ -105,7 +105,7 @@ public:
      *
      * @param matrixPalette The matrix palette to update.
      */
-    void updateJointMatrix(Vec4* matrixPalette);
+    void updateJointMatrix(CocVec4* matrixPalette);
     
     /**bone tree, we do not inherit from Node, Node has too many properties that we do not need. A clean Node is needed.*/
     Bone3D* getParentBone();
@@ -131,14 +131,14 @@ protected:
      */
     struct BoneBlendState
     {
-        Vec3          localTranslate;
+        CocVec3          localTranslate;
         Quaternion    localRot;
-        Vec3          localScale;
+        CocVec3          localScale;
         float         weight;
         void*         tag; //
         BoneBlendState()
         : localRot(Quaternion::identity())
-        , localScale(Vec3::ONE)
+        , localScale(CocVec3::ONE)
         , weight(1.f)
         , tag(nullptr)
         {
@@ -165,19 +165,19 @@ protected:
     
     std::string _name; // bone name
     /**
-     * The Mat4 representation of the Joint's bind pose.
+     * The CocMat4 representation of the Joint's bind pose.
      */
-    Mat4 _invBindPose;
+    CocMat4 _invBindPose;
     
-    Mat4 _oriPose; //original bone pose
+    CocMat4 _oriPose; //original bone pose
     
     Bone3D* _parent; //parent bone
     
     Vector<Bone3D*> _children;
     
     bool          _worldDirty;
-    Mat4          _world;
-    Mat4          _local;
+    CocMat4          _world;
+    CocMat4          _local;
     
     std::vector<BoneBlendState> _blendStates;
     

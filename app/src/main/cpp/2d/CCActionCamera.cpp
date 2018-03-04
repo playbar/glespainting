@@ -71,7 +71,7 @@ void ActionCamera::restore()
     _up.set(0.0f, 1.0f, 0.0f);
 }
 
-void ActionCamera::setEye(const Vec3& eye)
+void ActionCamera::setEye(const CocVec3& eye)
 {
     _eye = eye;
     updateTransform();
@@ -83,13 +83,13 @@ void ActionCamera::setEye(float x, float y, float z)
     updateTransform();
 }
 
-void ActionCamera::setCenter(const Vec3& center)
+void ActionCamera::setCenter(const CocVec3& center)
 {
     _center = center;
     updateTransform();
 }
 
-void ActionCamera::setUp(const Vec3& up)
+void ActionCamera::setUp(const CocVec3& up)
 {
     _up = up;
     updateTransform();
@@ -97,19 +97,19 @@ void ActionCamera::setUp(const Vec3& up)
 
 void ActionCamera::updateTransform()
 {
-    Mat4 lookupMatrix;
-    Mat4::createLookAt(_eye.x, _eye.y, _eye.z, _center.x, _center.y, _center.z, _up.x, _up.y, _up.z, &lookupMatrix);
+    CocMat4 lookupMatrix;
+    CocMat4::createLookAt(_eye.x, _eye.y, _eye.z, _center.x, _center.y, _center.z, _up.x, _up.y, _up.z, &lookupMatrix);
 
-    Vec2 anchorPoint = _target->getAnchorPointInPoints();
+    CocVec2 anchorPoint = _target->getAnchorPointInPoints();
 
     bool needsTranslation = !anchorPoint.isZero();
 
-    Mat4 mv = Mat4::IDENTITY;
+    CocMat4 mv = CocMat4::IDENTITY;
 
     if(needsTranslation)
     {
-        Mat4 t;
-        Mat4::createTranslation(anchorPoint.x, anchorPoint.y, 0, &t);
+        CocMat4 t;
+        CocMat4::createTranslation(anchorPoint.x, anchorPoint.y, 0, &t);
         mv = mv * t;
     }
     
@@ -117,8 +117,8 @@ void ActionCamera::updateTransform()
 
     if(needsTranslation)
     {
-        Mat4 t;
-        Mat4::createTranslation(-anchorPoint.x, -anchorPoint.y, 0, &t);
+        CocMat4 t;
+        CocMat4::createTranslation(-anchorPoint.x, -anchorPoint.y, 0, &t);
         mv = mv * t;
     }
 

@@ -80,7 +80,7 @@ bool Skybox::init()
     // create and set our custom shader
     auto shader = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_SKYBOX);
     auto state = GLProgramState::create(shader);
-    state->setVertexAttribPointer(GLProgram::ATTRIBUTE_NAME_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(Vec3), nullptr);
+    state->setVertexAttribPointer(GLProgram::ATTRIBUTE_NAME_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(CocVec3), nullptr);
     setGLProgramState(state);
 
     initBuffers();
@@ -132,9 +132,9 @@ void Skybox::initBuffers()
 	// to the camera's world transformation before sending it to the shader.
 
     // init vertex buffer object
-    Vec3 vexBuf[] =
+    CocVec3 vexBuf[] =
     {
-        Vec3(1, -1, -1), Vec3(1, 1, -1), Vec3(-1, 1, -1), Vec3(-1, -1, -1)
+        CocVec3(1, -1, -1), CocVec3(1, 1, -1), CocVec3(-1, 1, -1), CocVec3(-1, -1, -1)
     };
 
     glGenBuffers(1, &_vertexBuffer);
@@ -157,7 +157,7 @@ void Skybox::initBuffers()
     }
 }
 
-void Skybox::draw(Renderer* renderer, const Mat4& transform, uint32_t flags)
+void Skybox::draw(CocRenderer* renderer, const CocMat4& transform, uint32_t flags)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(Skybox::onDraw, this, transform, flags);
@@ -166,12 +166,12 @@ void Skybox::draw(Renderer* renderer, const Mat4& transform, uint32_t flags)
     renderer->addCommand(&_customCommand);
 }
 
-void Skybox::onDraw(const Mat4& transform, uint32_t /*flags*/)
+void Skybox::onDraw(const CocMat4& transform, uint32_t /*flags*/)
 {
     auto camera = Camera::getVisitingCamera();
     
-    Mat4 cameraModelMat = camera->getNodeToWorldTransform();
-    Mat4 projectionMat = camera->getProjectionMatrix();
+    CocMat4 cameraModelMat = camera->getNodeToWorldTransform();
+    CocMat4 projectionMat = camera->getProjectionMatrix();
     // Ignore the translation
     cameraModelMat.m[12] = cameraModelMat.m[13] = cameraModelMat.m[14] = 0;
     // prescale the matrix to account for the camera fov
@@ -180,7 +180,7 @@ void Skybox::onDraw(const Mat4& transform, uint32_t /*flags*/)
     auto state = getGLProgramState();
     state->apply(transform);
 
-    Vec4 color(_displayedColor.r / 255.f, _displayedColor.g / 255.f, _displayedColor.b / 255.f, 1.f);
+    CocVec4 color(_displayedColor.r / 255.f, _displayedColor.g / 255.f, _displayedColor.b / 255.f, 1.f);
     state->setUniformVec4("u_color", color);
     state->setUniformMat4("u_cameraRot", cameraModelMat);
 
@@ -208,7 +208,7 @@ void Skybox::onDraw(const Mat4& transform, uint32_t /*flags*/)
         GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION);
 
         glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(Vec3), nullptr);
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(CocVec3), nullptr);
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
     }

@@ -30,7 +30,7 @@
 
 NS_CC_BEGIN
 
-void ccVertexLineToPolygon(Vec2 *points, float stroke, Vec2 *vertices, unsigned int offset, unsigned int nuPoints)
+void ccVertexLineToPolygon(CocVec2 *points, float stroke, CocVec2 *vertices, unsigned int offset, unsigned int nuPoints)
 {
     nuPoints += offset;
     if(nuPoints<=1) return;
@@ -43,8 +43,8 @@ void ccVertexLineToPolygon(Vec2 *points, float stroke, Vec2 *vertices, unsigned 
     for(unsigned int i = offset; i<nuPoints; i++)
     {
         idx = i*2;
-        Vec2 p1 = points[i];
-        Vec2 perpVector;
+        CocVec2 p1 = points[i];
+        CocVec2 perpVector;
 
         if(i == 0)
             perpVector = (p1 - points[i+1]).getNormalized().getPerp();
@@ -52,11 +52,11 @@ void ccVertexLineToPolygon(Vec2 *points, float stroke, Vec2 *vertices, unsigned 
             perpVector = (points[i-1] - p1).getNormalized().getPerp();
         else
         {
-            Vec2 p2 = points[i+1];
-            Vec2 p0 = points[i-1];
+            CocVec2 p2 = points[i+1];
+            CocVec2 p0 = points[i-1];
 
-            Vec2 p2p1 = (p2 - p1).getNormalized();
-            Vec2 p0p1 = (p0 - p1).getNormalized();
+            CocVec2 p2p1 = (p2 - p1).getNormalized();
+            CocVec2 p0p1 = (p0 - p1).getNormalized();
 
             // Calculate angle between vectors
             float angle = acosf(p2p1.dot(p0p1));
@@ -82,13 +82,13 @@ void ccVertexLineToPolygon(Vec2 *points, float stroke, Vec2 *vertices, unsigned 
         idx = i*2;
         const unsigned int idx1 = idx+2;
 
-        Vec2 p1 = vertices[idx];
-        Vec2 p2 = vertices[idx+1];
-        Vec2 p3 = vertices[idx1];
-        Vec2 p4 = vertices[idx1+1];
+        CocVec2 p1 = vertices[idx];
+        CocVec2 p2 = vertices[idx+1];
+        CocVec2 p3 = vertices[idx1];
+        CocVec2 p4 = vertices[idx1+1];
 
         float s;
-        //BOOL fixVertex = !ccpLineIntersect(Vec2(p1.x, p1.y), Vec2(p4.x, p4.y), Vec2(p2.x, p2.y), Vec2(p3.x, p3.y), &s, &t);
+        //BOOL fixVertex = !ccpLineIntersect(CocVec2(p1.x, p1.y), CocVec2(p4.x, p4.y), CocVec2(p2.x, p2.y), CocVec2(p3.x, p3.y), &s, &t);
         bool fixVertex = !ccVertexLineIntersect(p1.x, p1.y, p4.x, p4.y, p2.x, p2.y, p3.x, p3.y, &s);
         if(!fixVertex)
             if (s<0.0f || s>1.0f)

@@ -116,7 +116,7 @@ public:
     bool                _visible;
     unsigned char       _opacity;
     bool                _ownTiles;
-    Vec2               _offset;
+    CocVec2               _offset;
 };
 
 /** @brief TMXTilesetInfo contains the information about the tilesets like:
@@ -137,7 +137,7 @@ public:
     Size            _tileSize;
     int             _spacing;
     int             _margin;
-    Vec2            _tileOffset;
+    CocVec2            _tileOffset;
     //! filename containing the tiles (should be spritesheet / texture atlas)
     std::string     _sourceImage;
     //! size in pixels of the image

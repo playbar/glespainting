@@ -147,9 +147,9 @@ Rect RectFromString(const std::string& str)
     return result;
 }
 
-Vec2 PointFromString(const std::string& str)
+CocVec2 PointFromString(const std::string& str)
 {
-    Vec2 ret;
+    CocVec2 ret;
 
     do 
     {

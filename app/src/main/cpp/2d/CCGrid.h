@@ -90,9 +90,9 @@ public:
     void setGridSize(const Size& gridSize) { _gridSize = gridSize; }
 
     /** Pixels between the grids. */
-    const Vec2& getStep() const { return _step; }
+    const CocVec2& getStep() const { return _step; }
     /**Get the pixels between the grids.*/
-    void setStep(const Vec2& step) { _step = step; }
+    void setStep(const CocVec2& step) { _step = step; }
 
     /** is texture flipped. */
     bool isTextureFlipped() const { return _isTextureFlipped; }
@@ -140,7 +140,7 @@ protected:
     int  _reuseGrid;
     Size _gridSize;
     Texture2D *_texture;
-    Vec2 _step;
+    CocVec2 _step;
     Grabber *_grabber;
     bool _isTextureFlipped;
     GLProgram* _shaderProgram;
@@ -178,25 +178,25 @@ public:
      * @js NA
      * @lua NA
      */
-    Vec3 getVertex(const Vec2& pos) const;
+    CocVec3 getVertex(const CocVec2& pos) const;
     /** @deprecated Use getVertex() instead 
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE Vec3 vertex(const Vec2& pos) const { return getVertex(pos); }
+    CC_DEPRECATED_ATTRIBUTE CocVec3 vertex(const CocVec2& pos) const { return getVertex(pos); }
     /** Returns the original (non-transformed) vertex at a given position.
      * @js NA
      * @lua NA
      */
-    Vec3 getOriginalVertex(const Vec2& pos) const;
+    CocVec3 getOriginalVertex(const CocVec2& pos) const;
     /** @deprecated Use getOriginalVertex() instead 
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE Vec3 originalVertex(const Vec2& pos) const { return getOriginalVertex(pos); }
+    CC_DEPRECATED_ATTRIBUTE CocVec3 originalVertex(const CocVec2& pos) const { return getOriginalVertex(pos); }
 
     /** Sets a new vertex at a given position.
      * @lua NA
      */
-    void setVertex(const Vec2& pos, const Vec3& vertex);
+    void setVertex(const CocVec2& pos, const CocVec3& vertex);
     /**@{
      Implementations for interfaces in base class.
      */
@@ -255,25 +255,25 @@ public:
      * @js NA
      * @lua NA
      */
-    Quad3 getTile(const Vec2& pos) const;
+    Quad3 getTile(const CocVec2& pos) const;
     /** returns the tile at the given position 
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE Quad3 tile(const Vec2& pos) const { return getTile(pos); }
+    CC_DEPRECATED_ATTRIBUTE Quad3 tile(const CocVec2& pos) const { return getTile(pos); }
     /** Returns the original tile (untransformed) at the given position.
      * @js NA
      * @lua NA
      */
-    Quad3 getOriginalTile(const Vec2& pos) const;
+    Quad3 getOriginalTile(const CocVec2& pos) const;
     /** returns the original tile (untransformed) at the given position 
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE Quad3 originalTile(const Vec2& pos) const { return getOriginalTile(pos); }
+    CC_DEPRECATED_ATTRIBUTE Quad3 originalTile(const CocVec2& pos) const { return getOriginalTile(pos); }
 
     /** Sets a new tile.
      * @lua NA
      */
-    void setTile(const Vec2& pos, const Quad3& coords);
+    void setTile(const CocVec2& pos, const Quad3& coords);
 
     /**@{
      Implementations for interfaces in base class.

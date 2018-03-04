@@ -116,7 +116,7 @@ void SpriteFrameCache::initializePolygonInfo(const Size &textureSize,
     for (size_t i = 0; i < vertexCount/2; i++)
     {
         vertexData[i].colors = Color4B::WHITE;
-        vertexData[i].vertices = Vec3(vertices[i*2] / scaleFactor,
+        vertexData[i].vertices = CocVec3(vertices[i*2] / scaleFactor,
                                       (spriteSize.height - vertices[i*2+1]) / scaleFactor,
                                       0);
         vertexData[i].texCoords = Tex2F(verticesUV[i*2] / textureSize.width,
@@ -207,7 +207,7 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
             spriteFrame = SpriteFrame::createWithTexture(texture,
                                                          Rect(x, y, w, h),
                                                          false,
-                                                         Vec2(ox, oy),
+                                                         CocVec2(ox, oy),
                                                          Size((float)ow, (float)oh)
                                                          );
         } 
@@ -222,7 +222,7 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
                 rotated = frameDict["rotated"].asBool();
             }
 
-            Vec2 offset = PointFromString(frameDict["offset"].asString());
+            CocVec2 offset = PointFromString(frameDict["offset"].asString());
             Size sourceSize = SizeFromString(frameDict["sourceSize"].asString());
 
             // create frame
@@ -237,7 +237,7 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
         {
             // get values
             Size spriteSize = SizeFromString(frameDict["spriteSize"].asString());
-            Vec2 spriteOffset = PointFromString(frameDict["spriteOffset"].asString());
+            CocVec2 spriteOffset = PointFromString(frameDict["spriteOffset"].asString());
             Size spriteSourceSize = SizeFromString(frameDict["spriteSourceSize"].asString());
             Rect textureRect = RectFromString(frameDict["textureRect"].asString());
             bool textureRotated = frameDict["textureRotated"].asBool();
@@ -650,7 +650,7 @@ void SpriteFrameCache::reloadSpriteFramesWithDictionary(ValueMap& dictionary, Te
             spriteFrame = SpriteFrame::createWithTexture(texture,
                 Rect(x, y, w, h),
                 false,
-                Vec2(ox, oy),
+                CocVec2(ox, oy),
                 Size((float)ow, (float)oh)
                 );
         }
@@ -665,7 +665,7 @@ void SpriteFrameCache::reloadSpriteFramesWithDictionary(ValueMap& dictionary, Te
                 rotated = frameDict["rotated"].asBool();
             }
 
-            Vec2 offset = PointFromString(frameDict["offset"].asString());
+            CocVec2 offset = PointFromString(frameDict["offset"].asString());
             Size sourceSize = SizeFromString(frameDict["sourceSize"].asString());
 
             // create frame
@@ -680,7 +680,7 @@ void SpriteFrameCache::reloadSpriteFramesWithDictionary(ValueMap& dictionary, Te
         {
             // get values
             Size spriteSize = SizeFromString(frameDict["spriteSize"].asString());
-            Vec2 spriteOffset = PointFromString(frameDict["spriteOffset"].asString());
+            CocVec2 spriteOffset = PointFromString(frameDict["spriteOffset"].asString());
             Size spriteSourceSize = SizeFromString(frameDict["spriteSourceSize"].asString());
             Rect textureRect = RectFromString(frameDict["textureRect"].asString());
             bool textureRotated = frameDict["textureRotated"].asBool();

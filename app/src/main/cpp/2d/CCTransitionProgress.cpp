@@ -73,9 +73,9 @@ void TransitionProgress::onEnter()
 
     // create the second render texture for outScene
     RenderTexture *texture = RenderTexture::create((int)size.width, (int)size.height,Texture2D::PixelFormat::RGBA8888,GL_DEPTH24_STENCIL8);
-    texture->getSprite()->setAnchorPoint(Vec2(0.5f,0.5f));
+    texture->getSprite()->setAnchorPoint(CocVec2(0.5f,0.5f));
     texture->setPosition(size.width/2, size.height/2);
-    texture->setAnchorPoint(Vec2(0.5f,0.5f));
+    texture->setAnchorPoint(CocVec2(0.5f,0.5f));
 
     // render outScene to its texturebuffer
     texture->beginWithClear(0, 0, 0, 1);
@@ -146,7 +146,7 @@ ProgressTimer* TransitionProgressRadialCCW::progressTimerNodeWithRenderTexture(R
     node->setReverseDirection(false);
     node->setPercentage(100);
     node->setPosition(size.width/2, size.height/2);
-    node->setAnchorPoint(Vec2(0.5f,0.5f));
+    node->setAnchorPoint(CocVec2(0.5f,0.5f));
     
     return node;
 }
@@ -190,7 +190,7 @@ ProgressTimer* TransitionProgressRadialCW::progressTimerNodeWithRenderTexture(Re
     node->setReverseDirection(true);
     node->setPercentage(100);
     node->setPosition(size.width/2, size.height/2);
-    node->setAnchorPoint(Vec2(0.5f,0.5f));
+    node->setAnchorPoint(CocVec2(0.5f,0.5f));
     
     return node;
 }
@@ -218,12 +218,12 @@ ProgressTimer* TransitionProgressHorizontal::progressTimerNodeWithRenderTexture(
     node->getSprite()->setFlippedY(true);
     node->setType( ProgressTimer::Type::BAR);
     
-    node->setMidpoint(Vec2(1, 0));
-    node->setBarChangeRate(Vec2(1,0));
+    node->setMidpoint(CocVec2(1, 0));
+    node->setBarChangeRate(CocVec2(1,0));
     
     node->setPercentage(100);
     node->setPosition(size.width/2, size.height/2);
-    node->setAnchorPoint(Vec2(0.5f,0.5f));
+    node->setAnchorPoint(CocVec2(0.5f,0.5f));
 
     return node;
 }
@@ -251,12 +251,12 @@ ProgressTimer* TransitionProgressVertical::progressTimerNodeWithRenderTexture(Re
     node->getSprite()->setFlippedY(true);
     node->setType(ProgressTimer::Type::BAR);
     
-    node->setMidpoint(Vec2(0, 0));
-    node->setBarChangeRate(Vec2(0,1));
+    node->setMidpoint(CocVec2(0, 0));
+    node->setBarChangeRate(CocVec2(0,1));
     
     node->setPercentage(100);
     node->setPosition(size.width/2, size.height/2);
-    node->setAnchorPoint(Vec2(0.5f,0.5f));
+    node->setAnchorPoint(CocVec2(0.5f,0.5f));
     
     return node;
 }
@@ -297,12 +297,12 @@ ProgressTimer* TransitionProgressInOut::progressTimerNodeWithRenderTexture(Rende
     node->getSprite()->setFlippedY(true);
     node->setType( ProgressTimer::Type::BAR);
     
-    node->setMidpoint(Vec2(0.5f, 0.5f));
-    node->setBarChangeRate(Vec2(1, 1));
+    node->setMidpoint(CocVec2(0.5f, 0.5f));
+    node->setBarChangeRate(CocVec2(1, 1));
     
     node->setPercentage(0);
     node->setPosition(size.width/2, size.height/2);
-    node->setAnchorPoint(Vec2(0.5f,0.5f));
+    node->setAnchorPoint(CocVec2(0.5f,0.5f));
     
     return node;
 }
@@ -331,12 +331,12 @@ ProgressTimer* TransitionProgressOutIn::progressTimerNodeWithRenderTexture(Rende
     node->getSprite()->setFlippedY(true);
     node->setType( ProgressTimer::Type::BAR );
     
-    node->setMidpoint(Vec2(0.5f, 0.5f));
-    node->setBarChangeRate(Vec2(1, 1));
+    node->setMidpoint(CocVec2(0.5f, 0.5f));
+    node->setBarChangeRate(CocVec2(1, 1));
     
     node->setPercentage(100);
     node->setPosition(size.width/2, size.height/2);
-    node->setAnchorPoint(Vec2(0.5f,0.5f));
+    node->setAnchorPoint(CocVec2(0.5f,0.5f));
     
     return node;
 }

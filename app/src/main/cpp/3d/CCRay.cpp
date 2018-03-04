@@ -35,7 +35,7 @@ Ray::Ray(const Ray& ray)
     set(ray._origin, ray._direction);
 }
 
-Ray::Ray(const Vec3& origin, const Vec3& direction)
+Ray::Ray(const CocVec3& origin, const CocVec3& direction)
 {
     set(origin, direction);
 }
@@ -49,11 +49,11 @@ bool Ray::intersects(const AABB& box, float* distance) const
     float lowt = 0.0f;
     float t;
     bool hit = false;
-    Vec3 hitpoint;
-    const Vec3& min = box._min;
-    const Vec3& max = box._max;
-    const Vec3& rayorig = _origin;
-    const Vec3& raydir = _direction;
+    CocVec3 hitpoint;
+    const CocVec3& min = box._min;
+    const CocVec3& max = box._max;
+    const CocVec3& rayorig = _origin;
+    const CocVec3& raydir = _direction;
     
     // Check origin inside first
     if (rayorig > min && rayorig < max)
@@ -182,7 +182,7 @@ bool Ray::intersects(const OBB& obb, float* distance) const
     ray._direction = _direction;
     ray._origin = _origin;
     
-    Mat4 mat = Mat4::IDENTITY;
+    CocMat4 mat = CocMat4::IDENTITY;
     mat.m[0] = obb._xAxis.x;
     mat.m[1] = obb._xAxis.y;
     mat.m[2] = obb._xAxis.z;
@@ -209,27 +209,27 @@ bool Ray::intersects(const OBB& obb, float* distance) const
 
 float Ray::dist(const Plane& plane) const
 {
-    float ndd = Vec3::dot(plane.getNormal(), _direction);
+    float ndd = CocVec3::dot(plane.getNormal(), _direction);
     if(ndd == 0)
         return 0.0f;
-    float ndo = Vec3::dot(plane.getNormal(), _origin);
+    float ndo = CocVec3::dot(plane.getNormal(), _origin);
     return (plane.getDist() - ndo) / ndd;
 }
 
-Vec3 Ray::intersects(const Plane& plane) const
+CocVec3 Ray::intersects(const Plane& plane) const
 {
     float dis = this->dist(plane);
     return _origin + dis * _direction;
 }
 
-void Ray::set(const Vec3& origin, const Vec3& direction)
+void Ray::set(const CocVec3& origin, const CocVec3& direction)
 {
     _origin = origin;
     _direction = direction;
     _direction.normalize();
 }
 
-void Ray::transform(const Mat4& matrix)
+void Ray::transform(const CocMat4& matrix)
 {
     matrix.transformPoint(&_origin);
     matrix.transformVector(&_direction);

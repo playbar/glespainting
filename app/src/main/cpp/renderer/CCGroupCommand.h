@@ -48,7 +48,7 @@ public:
     void releaseGroupID(int groupID);
 
 protected:
-    friend class Renderer;
+    friend class CocRenderer;
     GroupCommandManager();
     ~GroupCommandManager();
     bool init();

@@ -63,7 +63,7 @@ then running it again in Reverse mode.
 Example:
 
 @code
-auto action = MoveBy::create(1.0f, Vec2::ONE);
+auto action = MoveBy::create(1.0f, CocVec2::ONE);
 auto pingPongAction = Sequence::create(action, action->reverse(), nullptr);
 @endcode
 */
@@ -463,10 +463,10 @@ public:
     /** 
      * Creates the action with 3D rotation angles.
      * @param duration Duration time, in seconds.
-     * @param dstAngle3D A Vec3 angle.
+     * @param dstAngle3D A CocVec3 angle.
      * @return An autoreleased RotateTo object.
      */
-    static RotateTo* create(float duration, const Vec3& dstAngle3D);
+    static RotateTo* create(float duration, const CocVec3& dstAngle3D);
 
     //
     // Overrides
@@ -494,7 +494,7 @@ CC_CONSTRUCTOR_ACCESS:
      * initializes the action
      * @param duration in seconds
      */
-    bool initWithDuration(float duration, const Vec3& dstAngle3D);
+    bool initWithDuration(float duration, const CocVec3& dstAngle3D);
 
     /** 
      * calculates the start and diff angles
@@ -504,9 +504,9 @@ CC_CONSTRUCTOR_ACCESS:
     
 protected:
     bool _is3D;
-    Vec3 _dstAngle;
-    Vec3 _startAngle;
-    Vec3 _diffAngle;
+    CocVec3 _dstAngle;
+    CocVec3 _startAngle;
+    CocVec3 _diffAngle;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(RotateTo);
@@ -539,10 +539,10 @@ public:
     /** Creates the action with 3D rotation angles.
      *
      * @param duration Duration time, in seconds.
-     * @param deltaAngle3D A Vec3 angle.
+     * @param deltaAngle3D A CocVec3 angle.
      * @return An autoreleased RotateBy object.
      */
-    static RotateBy* create(float duration, const Vec3& deltaAngle3D);
+    static RotateBy* create(float duration, const CocVec3& deltaAngle3D);
 
     //
     // Override
@@ -567,12 +567,12 @@ CC_CONSTRUCTOR_ACCESS:
      * @param deltaAngleZ_Y in degreesCW
      */
     bool initWithDuration(float duration, float deltaAngleZ_X, float deltaAngleZ_Y);
-    bool initWithDuration(float duration, const Vec3& deltaAngle3D);
+    bool initWithDuration(float duration, const CocVec3& deltaAngle3D);
     
 protected:
     bool _is3D;
-    Vec3 _deltaAngle;
-    Vec3 _startAngle;
+    CocVec3 _deltaAngle;
+    CocVec3 _startAngle;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(RotateBy);
@@ -592,18 +592,18 @@ public:
      * Creates the action.
      *
      * @param duration Duration time, in seconds.
-     * @param deltaPosition The delta distance in 2d, it's a Vec2 type.
+     * @param deltaPosition The delta distance in 2d, it's a CocVec2 type.
      * @return An autoreleased MoveBy object.
      */
-    static MoveBy* create(float duration, const Vec2& deltaPosition);
+    static MoveBy* create(float duration, const CocVec2& deltaPosition);
     /**
      * Creates the action.
      *
      * @param duration Duration time, in seconds.
-     * @param deltaPosition The delta distance in 3d, it's a Vec3 type.
+     * @param deltaPosition The delta distance in 3d, it's a CocVec3 type.
      * @return An autoreleased MoveBy object.
      */
-    static MoveBy* create(float duration, const Vec3& deltaPosition);
+    static MoveBy* create(float duration, const CocVec3& deltaPosition);
 
     //
     // Overrides
@@ -621,14 +621,14 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~MoveBy() {}
 
     /** initializes the action */
-    bool initWithDuration(float duration, const Vec2& deltaPosition);
-    bool initWithDuration(float duration, const Vec3& deltaPosition);
+    bool initWithDuration(float duration, const CocVec2& deltaPosition);
+    bool initWithDuration(float duration, const CocVec3& deltaPosition);
 
 protected:
     bool _is3D;
-    Vec3 _positionDelta;
-    Vec3 _startPosition;
-    Vec3 _previousPosition;
+    CocVec3 _positionDelta;
+    CocVec3 _startPosition;
+    CocVec3 _previousPosition;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(MoveBy);
@@ -649,14 +649,14 @@ public:
      * @param position The destination position in 2d.
      * @return An autoreleased MoveTo object.
      */
-    static MoveTo* create(float duration, const Vec2& position);
+    static MoveTo* create(float duration, const CocVec2& position);
     /**
      * Creates the action.
      * @param duration Duration time, in seconds.
      * @param position The destination position in 3d.
      * @return An autoreleased MoveTo object.
      */
-    static MoveTo* create(float duration, const Vec3& position);
+    static MoveTo* create(float duration, const CocVec3& position);
 
     //
     // Overrides
@@ -673,15 +673,15 @@ CC_CONSTRUCTOR_ACCESS:
      * initializes the action
      * @param duration in seconds
      */
-    bool initWithDuration(float duration, const Vec2& position);
+    bool initWithDuration(float duration, const CocVec2& position);
     /**
      * initializes the action
      * @param duration in seconds
      */
-    bool initWithDuration(float duration, const Vec3& position);
+    bool initWithDuration(float duration, const CocVec3& position);
 
 protected:
-    Vec3 _endPosition;
+    CocVec3 _endPosition;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(MoveTo);
@@ -871,7 +871,7 @@ public:
      * @param jumps The jumping times.
      * @return An autoreleased JumpBy object.
      */
-    static JumpBy* create(float duration, const Vec2& position, float height, int jumps);
+    static JumpBy* create(float duration, const CocVec2& position, float height, int jumps);
 
     //
     // Overrides
@@ -892,14 +892,14 @@ CC_CONSTRUCTOR_ACCESS:
      * initializes the action
      * @param duration in seconds
      */
-    bool initWithDuration(float duration, const Vec2& position, float height, int jumps);
+    bool initWithDuration(float duration, const CocVec2& position, float height, int jumps);
 
 protected:
-    Vec2           _startPosition;
-    Vec2           _delta;
+    CocVec2           _startPosition;
+    CocVec2           _delta;
     float           _height;
     int             _jumps;
-    Vec2           _previousPos;
+    CocVec2           _previousPos;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(JumpBy);
@@ -919,7 +919,7 @@ public:
      * @param jumps The jumping times.
      * @return An autoreleased JumpTo object.
      */
-    static JumpTo* create(float duration, const Vec2& position, float height, int jumps);
+    static JumpTo* create(float duration, const CocVec2& position, float height, int jumps);
 
     //
     // Override
@@ -936,10 +936,10 @@ CC_CONSTRUCTOR_ACCESS:
      * initializes the action
      * @param duration In seconds.
      */
-    bool initWithDuration(float duration, const Vec2& position, float height, int jumps);
+    bool initWithDuration(float duration, const CocVec2& position, float height, int jumps);
 
 protected:
-    Vec2 _endPosition;
+    CocVec2 _endPosition;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(JumpTo);
@@ -949,11 +949,11 @@ private:
  */
 typedef struct _ccBezierConfig {
     //! end position of the bezier
-    Vec2 endPosition;
+    CocVec2 endPosition;
     //! Bezier control point 1
-    Vec2 controlPoint_1;
+    CocVec2 controlPoint_1;
     //! Bezier control point 2
-    Vec2 controlPoint_2;
+    CocVec2 controlPoint_2;
 } ccBezierConfig;
 
 /** @class BezierBy
@@ -997,8 +997,8 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     ccBezierConfig _config;
-    Vec2 _startPosition;
-    Vec2 _previousPosition;
+    CocVec2 _startPosition;
+    CocVec2 _previousPosition;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(BezierBy);

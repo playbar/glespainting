@@ -73,7 +73,7 @@ bool TextFieldDelegate::onTextFieldDeleteBackward(TextFieldTTF* /*sender*/, cons
     return false;
 }
 
-bool TextFieldDelegate::onVisit(TextFieldTTF* /*sender*/, Renderer* /*renderer*/, const Mat4& /*transform*/, uint32_t /*flags*/)
+bool TextFieldDelegate::onVisit(TextFieldTTF* /*sender*/, CocRenderer* /*renderer*/, const CocMat4& /*transform*/, uint32_t /*flags*/)
 {
     return false;
 }
@@ -366,7 +366,7 @@ void TextFieldTTF::setCursorPosition(std::size_t cursorPosition)
     }
 }
 
-void TextFieldTTF::setCursorFromPoint(const Vec2 &point, const Camera* camera)
+void TextFieldTTF::setCursorFromPoint(const CocVec2 &point, const Camera* camera)
 {
     if (_cursorEnabled)
     {
@@ -441,7 +441,7 @@ void TextFieldTTF::setTextColor(const Color4B &color)
     }
 }
 
-void TextFieldTTF::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
+void TextFieldTTF::visit(CocRenderer *renderer, const CocMat4 &parentTransform, uint32_t parentFlags)
 {
     if (_delegate && _delegate->onVisit(this,renderer,parentTransform,parentFlags))
     {

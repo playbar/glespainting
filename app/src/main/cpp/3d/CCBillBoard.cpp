@@ -36,7 +36,7 @@ BillBoard::BillBoard()
 : _mode(Mode::VIEW_POINT_ORIENTED)
 , _modeDirty(false)
 {
-    Node::setAnchorPoint(Vec2(0.5f,0.5f));
+    Node::setAnchorPoint(CocVec2(0.5f,0.5f));
 }
 
 BillBoard::~BillBoard()
@@ -96,7 +96,7 @@ BillBoard* BillBoard::create(Mode mode)
     return nullptr;
 }
 
-void BillBoard::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags)
+void BillBoard::visit(CocRenderer *renderer, const CocMat4& parentTransform, uint32_t parentFlags)
 {
     // quick return if not visible. children won't be drawn.
     if (!_visible)
@@ -160,25 +160,25 @@ bool BillBoard::calculateBillboardTransform()
 {
     //Get camera world position
     auto camera = Camera::getVisitingCamera();
-    const Mat4& camWorldMat = camera->getNodeToWorldTransform();
+    const CocMat4& camWorldMat = camera->getNodeToWorldTransform();
     
     //TODO: use math lib to calculate math lib Make it easier to read and maintain
     if (memcmp(_camWorldMat.m, camWorldMat.m, sizeof(float) * 16) != 0 || memcmp(_mvTransform.m, _modelViewTransform.m, sizeof(float) * 16) != 0 || _modeDirty || true)
     {
         //Rotate based on anchor point
-        Vec3 anchorPoint(_anchorPointInPoints.x , _anchorPointInPoints.y , 0.0f);
-        Mat4 localToWorld = _modelViewTransform;
+        CocVec3 anchorPoint(_anchorPointInPoints.x , _anchorPointInPoints.y , 0.0f);
+        CocMat4 localToWorld = _modelViewTransform;
         localToWorld.translate(anchorPoint);
         
         //Decide billboard mode
-        Vec3 camDir;
+        CocVec3 camDir;
         switch (_mode)
         {
             case Mode::VIEW_POINT_ORIENTED:
                 camDir.set(localToWorld.m[12] - camWorldMat.m[12], localToWorld.m[13] - camWorldMat.m[13], localToWorld.m[14] - camWorldMat.m[14]);
                 break;
             case Mode::VIEW_PLANE_ORIENTED:
-                camWorldMat.transformVector(Vec3(0.0f, 0.0f, -1.0f), &camDir);
+                camWorldMat.transformVector(CocVec3(0.0f, 0.0f, -1.0f), &camDir);
                 break;
             default:
                 CCASSERT(false, "invalid billboard mode");
@@ -192,22 +192,22 @@ bool BillBoard::calculateBillboardTransform()
         }
         camDir.normalize();
 
-        Mat4 rotationMatrix;
+        CocMat4 rotationMatrix;
         rotationMatrix.setIdentity();
 
-        Vec3 upAxis(rotationMatrix.m[4],rotationMatrix.m[5],rotationMatrix.m[6]);
-        Vec3 x, y;
+        CocVec3 upAxis(rotationMatrix.m[4],rotationMatrix.m[5],rotationMatrix.m[6]);
+        CocVec3 x, y;
         camWorldMat.transformVector(upAxis, &y);
-        Vec3::cross(camDir, y, &x);
+        CocVec3::cross(camDir, y, &x);
         x.normalize();
-        Vec3::cross(x, camDir, &y);
+        CocVec3::cross(x, camDir, &y);
         y.normalize();
         
         float xlen = sqrtf(localToWorld.m[0] * localToWorld.m[0] + localToWorld.m[1] * localToWorld.m[1] + localToWorld.m[2] * localToWorld.m[2]);
         float ylen = sqrtf(localToWorld.m[4] * localToWorld.m[4] + localToWorld.m[5] * localToWorld.m[5] + localToWorld.m[6] * localToWorld.m[6]);
         float zlen = sqrtf(localToWorld.m[8] * localToWorld.m[8] + localToWorld.m[9] * localToWorld.m[9] + localToWorld.m[10] * localToWorld.m[10]);
         
-        Mat4 billboardTransform;
+        CocMat4 billboardTransform;
         
         billboardTransform.m[0] = x.x * xlen; billboardTransform.m[1] = x.y * xlen; billboardTransform.m[2] = x.z * xlen;
         billboardTransform.m[4] = y.x * ylen; billboardTransform.m[5] = y.y * ylen; billboardTransform.m[6] = y.z * ylen;
@@ -230,7 +230,7 @@ bool BillBoard::calculateBillbaordTransform()
     return calculateBillboardTransform();
 }
 
-void BillBoard::draw(Renderer *renderer, const Mat4 &/*transform*/, uint32_t flags)
+void BillBoard::draw(CocRenderer *renderer, const CocMat4 &/*transform*/, uint32_t flags)
 {
     //FIXME: frustum culling here
     flags |= Node::FLAGS_RENDER_AS_3D;

@@ -139,7 +139,7 @@ bool Menu::initWithArray(const Vector<MenuItem*>& arrayOfItems)
         Size s = Director::getInstance()->getWinSize();
 
         this->setIgnoreAnchorPointForPosition(true);
-        setAnchorPoint(Vec2(0.5f, 0.5f));
+        setAnchorPoint(CocVec2(0.5f, 0.5f));
         this->setContentSize(s);
 
         setPosition(s.width/2, s.height/2);
@@ -558,7 +558,7 @@ void Menu::alignItemsInRowsWithArray(const ValueVector& columns)
 
 MenuItem* Menu::getItemForTouch(Touch *touch, const Camera *camera)
 {
-    Vec2 touchLocation = touch->getLocation();
+    CocVec2 touchLocation = touch->getLocation();
     for (const auto &item: _children)
     {
         MenuItem* child = dynamic_cast<MenuItem*>(item);

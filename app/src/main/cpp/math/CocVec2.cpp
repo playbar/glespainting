@@ -19,7 +19,7 @@
  This file was modified to fit the cocos2d-x project
  */
 
-#include "math/Vec2.h"
+#include "math/CocVec2.h"
 #include "math/MathUtil.h"
 #include "base/ccMacros.h"
 
@@ -63,18 +63,18 @@ bool isOneDimensionSegmentOverlap(float A, float B, float C, float D, float *S, 
 }
 
 // cross product of 2 vector. A->B X C->D
-float crossProduct2Vector(const Vec2& A, const Vec2& B, const Vec2& C, const Vec2& D)
+float crossProduct2Vector(const CocVec2& A, const CocVec2& B, const CocVec2& C, const CocVec2& D)
 {
     return (D.y - C.y) * (B.x - A.x) - (D.x - C.x) * (B.y - A.y);
 }
 
-float Vec2::angle(const Vec2& v1, const Vec2& v2)
+float CocVec2::angle(const CocVec2& v1, const CocVec2& v2)
 {
     float dz = v1.x * v2.y - v1.y * v2.x;
     return atan2f(fabsf(dz) + MATH_FLOAT_SMALL, dot(v1, v2));
 }
 
-void Vec2::add(const Vec2& v1, const Vec2& v2, Vec2* dst)
+void CocVec2::add(const CocVec2& v1, const CocVec2& v2, CocVec2* dst)
 {
     GP_ASSERT(dst);
 
@@ -82,7 +82,7 @@ void Vec2::add(const Vec2& v1, const Vec2& v2, Vec2* dst)
     dst->y = v1.y + v2.y;
 }
 
-void Vec2::clamp(const Vec2& min, const Vec2& max)
+void CocVec2::clamp(const CocVec2& min, const CocVec2& max)
 {
     GP_ASSERT(!(min.x > max.x || min.y > max.y ));
 
@@ -99,7 +99,7 @@ void Vec2::clamp(const Vec2& min, const Vec2& max)
         y = max.y;
 }
 
-void Vec2::clamp(const Vec2& v, const Vec2& min, const Vec2& max, Vec2* dst)
+void CocVec2::clamp(const CocVec2& v, const CocVec2& min, const CocVec2& max, CocVec2* dst)
 {
     GP_ASSERT(dst);
     GP_ASSERT(!(min.x > max.x || min.y > max.y ));
@@ -119,7 +119,7 @@ void Vec2::clamp(const Vec2& v, const Vec2& min, const Vec2& max, Vec2* dst)
         dst->y = max.y;
 }
 
-float Vec2::distance(const Vec2& v) const
+float CocVec2::distance(const CocVec2& v) const
 {
     float dx = v.x - x;
     float dy = v.y - y;
@@ -127,17 +127,17 @@ float Vec2::distance(const Vec2& v) const
     return std::sqrt(dx * dx + dy * dy);
 }
 
-float Vec2::dot(const Vec2& v1, const Vec2& v2)
+float CocVec2::dot(const CocVec2& v1, const CocVec2& v2)
 {
     return (v1.x * v2.x + v1.y * v2.y);
 }
 
-float Vec2::length() const
+float CocVec2::length() const
 {
     return std::sqrt(x * x + y * y);
 }
 
-void Vec2::normalize()
+void CocVec2::normalize()
 {
     float n = x * x + y * y;
     // Already normalized.
@@ -154,14 +154,14 @@ void Vec2::normalize()
     y *= n;
 }
 
-Vec2 Vec2::getNormalized() const
+CocVec2 CocVec2::getNormalized() const
 {
-    Vec2 v(*this);
+    CocVec2 v(*this);
     v.normalize();
     return v;
 }
 
-void Vec2::rotate(const Vec2& point, float angle)
+void CocVec2::rotate(const CocVec2& point, float angle)
 {
     float sinAngle = std::sin(angle);
     float cosAngle = std::cos(angle);
@@ -182,7 +182,7 @@ void Vec2::rotate(const Vec2& point, float angle)
     }
 }
 
-void Vec2::set(const float* array)
+void CocVec2::set(const float* array)
 {
     GP_ASSERT(array);
 
@@ -190,7 +190,7 @@ void Vec2::set(const float* array)
     y = array[1];
 }
 
-void Vec2::subtract(const Vec2& v1, const Vec2& v2, Vec2* dst)
+void CocVec2::subtract(const CocVec2& v1, const CocVec2& v2, CocVec2* dst)
 {
     GP_ASSERT(dst);
 
@@ -198,13 +198,13 @@ void Vec2::subtract(const Vec2& v1, const Vec2& v2, Vec2* dst)
     dst->y = v1.y - v2.y;
 }
 
-bool Vec2::equals(const Vec2& target) const
+bool CocVec2::equals(const CocVec2& target) const
 {
     return (std::abs(this->x - target.x) < FLT_EPSILON)
         && (std::abs(this->y - target.y) < FLT_EPSILON);
 }
 
-bool Vec2::fuzzyEquals(const Vec2& b, float var) const
+bool CocVec2::fuzzyEquals(const CocVec2& b, float var) const
 {
     if(x - var <= b.x && b.x <= x + var)
         if(y - var <= b.y && b.y <= y + var)
@@ -212,22 +212,22 @@ bool Vec2::fuzzyEquals(const Vec2& b, float var) const
     return false;
 }
 
-float Vec2::getAngle(const Vec2& other) const
+float CocVec2::getAngle(const CocVec2& other) const
 {
-    Vec2 a2 = getNormalized();
-    Vec2 b2 = other.getNormalized();
+    CocVec2 a2 = getNormalized();
+    CocVec2 b2 = other.getNormalized();
     float angle = atan2f(a2.cross(b2), a2.dot(b2));
     if (std::abs(angle) < FLT_EPSILON) return 0.f;
     return angle;
 }
 
-Vec2 Vec2::rotateByAngle(const Vec2& pivot, float angle) const
+CocVec2 CocVec2::rotateByAngle(const CocVec2& pivot, float angle) const
 {
-    return pivot + (*this - pivot).rotate(Vec2::forAngle(angle));
+    return pivot + (*this - pivot).rotate(CocVec2::forAngle(angle));
 }
 
-bool Vec2::isLineIntersect(const Vec2& A, const Vec2& B,
-                            const Vec2& C, const Vec2& D,
+bool CocVec2::isLineIntersect(const CocVec2& A, const CocVec2& B,
+                            const CocVec2& C, const CocVec2& D,
                             float *S, float *T)
 {
     // FAIL: Line undefined
@@ -250,8 +250,8 @@ bool Vec2::isLineIntersect(const Vec2& A, const Vec2& B,
     return true;
 }
 
-bool Vec2::isLineParallel(const Vec2& A, const Vec2& B,
-                           const Vec2& C, const Vec2& D)
+bool CocVec2::isLineParallel(const CocVec2& A, const CocVec2& B,
+                           const CocVec2& C, const CocVec2& D)
 {
     // FAIL: Line undefined
     if ( (A.x==B.x && A.y==B.y) || (C.x==D.x && C.y==D.y) )
@@ -273,8 +273,8 @@ bool Vec2::isLineParallel(const Vec2& A, const Vec2& B,
     return false;
 }
 
-bool Vec2::isLineOverlap(const Vec2& A, const Vec2& B,
-                            const Vec2& C, const Vec2& D)
+bool CocVec2::isLineOverlap(const CocVec2& A, const CocVec2& B,
+                            const CocVec2& C, const CocVec2& D)
 {
     // FAIL: Line undefined
     if ( (A.x==B.x && A.y==B.y) || (C.x==D.x && C.y==D.y) )
@@ -291,7 +291,7 @@ bool Vec2::isLineOverlap(const Vec2& A, const Vec2& B,
     return false;
 }
 
-bool Vec2::isSegmentOverlap(const Vec2& A, const Vec2& B, const Vec2& C, const Vec2& D, Vec2* S, Vec2* E)
+bool CocVec2::isSegmentOverlap(const CocVec2& A, const CocVec2& B, const CocVec2& C, const CocVec2& D, CocVec2* S, CocVec2* E)
 {
     
     if (isLineOverlap(A, B, C, D))
@@ -303,7 +303,7 @@ bool Vec2::isSegmentOverlap(const Vec2& A, const Vec2& B, const Vec2& C, const V
     return false;
 }
 
-bool Vec2::isSegmentIntersect(const Vec2& A, const Vec2& B, const Vec2& C, const Vec2& D)
+bool CocVec2::isSegmentIntersect(const CocVec2& A, const CocVec2& B, const CocVec2& C, const CocVec2& D)
 {
     float S, T;
     
@@ -316,34 +316,34 @@ bool Vec2::isSegmentIntersect(const Vec2& A, const Vec2& B, const Vec2& C, const
     return false;
 }
 
-Vec2 Vec2::getIntersectPoint(const Vec2& A, const Vec2& B, const Vec2& C, const Vec2& D)
+CocVec2 CocVec2::getIntersectPoint(const CocVec2& A, const CocVec2& B, const CocVec2& C, const CocVec2& D)
 {
     float S, T;
     
     if (isLineIntersect(A, B, C, D, &S, &T))
     {
-        // Vec2 of intersection
-        Vec2 P;
+        // CocVec2 of intersection
+        CocVec2 P;
         P.x = A.x + S * (B.x - A.x);
         P.y = A.y + S * (B.y - A.y);
         return P;
     }
     
-    return Vec2::ZERO;
+    return CocVec2::ZERO;
 }
 
-const Vec2 Vec2::ZERO(0.0f, 0.0f);
-const Vec2 Vec2::ONE(1.0f, 1.0f);
-const Vec2 Vec2::UNIT_X(1.0f, 0.0f);
-const Vec2 Vec2::UNIT_Y(0.0f, 1.0f);
-const Vec2 Vec2::ANCHOR_MIDDLE(0.5f, 0.5f);
-const Vec2 Vec2::ANCHOR_BOTTOM_LEFT(0.0f, 0.0f);
-const Vec2 Vec2::ANCHOR_TOP_LEFT(0.0f, 1.0f);
-const Vec2 Vec2::ANCHOR_BOTTOM_RIGHT(1.0f, 0.0f);
-const Vec2 Vec2::ANCHOR_TOP_RIGHT(1.0f, 1.0f);
-const Vec2 Vec2::ANCHOR_MIDDLE_RIGHT(1.0f, 0.5f);
-const Vec2 Vec2::ANCHOR_MIDDLE_LEFT(0.0f, 0.5f);
-const Vec2 Vec2::ANCHOR_MIDDLE_TOP(0.5f, 1.0f);
-const Vec2 Vec2::ANCHOR_MIDDLE_BOTTOM(0.5f, 0.0f);
+const CocVec2 CocVec2::ZERO(0.0f, 0.0f);
+const CocVec2 CocVec2::ONE(1.0f, 1.0f);
+const CocVec2 CocVec2::UNIT_X(1.0f, 0.0f);
+const CocVec2 CocVec2::UNIT_Y(0.0f, 1.0f);
+const CocVec2 CocVec2::ANCHOR_MIDDLE(0.5f, 0.5f);
+const CocVec2 CocVec2::ANCHOR_BOTTOM_LEFT(0.0f, 0.0f);
+const CocVec2 CocVec2::ANCHOR_TOP_LEFT(0.0f, 1.0f);
+const CocVec2 CocVec2::ANCHOR_BOTTOM_RIGHT(1.0f, 0.0f);
+const CocVec2 CocVec2::ANCHOR_TOP_RIGHT(1.0f, 1.0f);
+const CocVec2 CocVec2::ANCHOR_MIDDLE_RIGHT(1.0f, 0.5f);
+const CocVec2 CocVec2::ANCHOR_MIDDLE_LEFT(0.0f, 0.5f);
+const CocVec2 CocVec2::ANCHOR_MIDDLE_TOP(0.5f, 1.0f);
+const CocVec2 CocVec2::ANCHOR_MIDDLE_BOTTOM(0.5f, 0.0f);
 
 NS_CC_MATH_END

@@ -103,8 +103,8 @@ bool MotionStreak3D::initWithFade(float fade, float minSeg, float stroke, const 
 
 bool MotionStreak3D::initWithFade(float fade, float minSeg, float stroke, const Color3B& color, Texture2D* texture)
 {
-    Node::setPosition(Vec2::ZERO);
-    setAnchorPoint(Vec2::ZERO);
+    Node::setPosition(CocVec2::ZERO);
+    setAnchorPoint(CocVec2::ZERO);
     setIgnoreAnchorPointForPosition(true);
     _startingPositionInitialized = false;
 
@@ -118,9 +118,9 @@ bool MotionStreak3D::initWithFade(float fade, float minSeg, float stroke, const 
     _maxPoints = (int)(fade*60.0f)+2;
     _nuPoints = 0;
     _pointState = (float *)malloc(sizeof(float) * _maxPoints);
-    _pointVertexes = (Vec3*)malloc(sizeof(Vec3) * _maxPoints);
+    _pointVertexes = (CocVec3*)malloc(sizeof(CocVec3) * _maxPoints);
 
-    _vertices = (Vec3*)malloc(sizeof(Vec3) * _maxPoints * 2);
+    _vertices = (CocVec3*)malloc(sizeof(CocVec3) * _maxPoints * 2);
     _texCoords = (Tex2F*)malloc(sizeof(Tex2F) * _maxPoints * 2);
     _colorPointer =  (GLubyte*)malloc(sizeof(GLubyte) * _maxPoints * 2 * 4);
 
@@ -137,12 +137,12 @@ bool MotionStreak3D::initWithFade(float fade, float minSeg, float stroke, const 
     return true;
 }
 
-void MotionStreak3D::setPosition(const Vec2& position)
+void MotionStreak3D::setPosition(const CocVec2& position)
 {
     if (!_startingPositionInitialized) {
         _startingPositionInitialized = true;
     }
-    _positionR = Vec3(position.x, position.y, 0);
+    _positionR = CocVec3(position.x, position.y, 0);
 }
 
 void MotionStreak3D::setPosition(float x, float y)
@@ -154,7 +154,7 @@ void MotionStreak3D::setPosition(float x, float y)
     _positionR.y = y;
 }
 
-void MotionStreak3D::setPosition3D(const Vec3& position)
+void MotionStreak3D::setPosition3D(const CocVec3& position)
 {
     if (!_startingPositionInitialized) {
         _startingPositionInitialized = true;
@@ -162,13 +162,13 @@ void MotionStreak3D::setPosition3D(const Vec3& position)
     _positionR = position;
 }
 
-void MotionStreak3D::setRotation3D(const Vec3& /*rotation*/)
+void MotionStreak3D::setRotation3D(const CocVec3& /*rotation*/)
 {}
 
 void MotionStreak3D::setRotationQuat(const Quaternion& /*quat*/)
 {}
 
-const Vec2& MotionStreak3D::getPosition() const
+const CocVec2& MotionStreak3D::getPosition() const
 {
     _positionR2D.x = _positionR.x;
     _positionR2D.y = _positionR.y;
@@ -186,9 +186,9 @@ float MotionStreak3D::getPositionX() const
     return _positionR.x;
 }
 
-Vec3 MotionStreak3D::getPosition3D() const
+CocVec3 MotionStreak3D::getPosition3D() const
 {
-    return Vec3(_positionR.x, _positionR.y, getPositionZ());
+    return CocVec3(_positionR.x, _positionR.y, getPositionZ());
 }
 
 void MotionStreak3D::setPositionX(float x)
@@ -382,7 +382,7 @@ void MotionStreak3D::reset()
     _nuPoints = 0;
 }
 
-void MotionStreak3D::onDraw(const Mat4 &transform, uint32_t /*flags*/)
+void MotionStreak3D::onDraw(const CocMat4 &transform, uint32_t /*flags*/)
 {  
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
@@ -405,7 +405,7 @@ void MotionStreak3D::onDraw(const Mat4 &transform, uint32_t /*flags*/)
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _nuPoints*2);
 }
 
-void MotionStreak3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+void MotionStreak3D::draw(CocRenderer *renderer, const CocMat4 &transform, uint32_t flags)
 {
     if(_nuPoints <= 1)
         return;

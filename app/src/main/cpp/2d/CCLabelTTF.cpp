@@ -40,9 +40,9 @@ NS_CC_BEGIN
 LabelTTF::LabelTTF()
 {
     _renderLabel = Label::create();
-    _renderLabel->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+    _renderLabel->setAnchorPoint(CocVec2::ANCHOR_BOTTOM_LEFT);
     this->addChild(_renderLabel);
-    this->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    this->setAnchorPoint(CocVec2::ANCHOR_MIDDLE);
 
     _contentDirty = false;
     _cascadeColorEnabled = true;
@@ -265,7 +265,7 @@ void LabelTTF::setFlippedY(bool flippedY)
     }
 }
 
-void LabelTTF::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
+void LabelTTF::visit(CocRenderer *renderer, const CocMat4 &parentTransform, uint32_t parentFlags)
 {
     if (_contentDirty)
     {

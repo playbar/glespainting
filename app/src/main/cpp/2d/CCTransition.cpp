@@ -115,7 +115,7 @@ void TransitionScene::sceneOrder()
     _isInSceneOnTop = true;
 }
 
-void TransitionScene::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+void TransitionScene::draw(CocRenderer *renderer, const CocMat4 &transform, uint32_t flags)
 {
     Scene::draw(renderer, transform, flags);
 
@@ -301,8 +301,8 @@ void TransitionRotoZoom:: onEnter()
     _inScene->setScale(0.001f);
     _outScene->setScale(1.0f);
 
-    _inScene->setAnchorPoint(Vec2(0.5f, 0.5f));
-    _outScene->setAnchorPoint(Vec2(0.5f, 0.5f));
+    _inScene->setAnchorPoint(CocVec2(0.5f, 0.5f));
+    _outScene->setAnchorPoint(CocVec2(0.5f, 0.5f));
 
     auto rotozoom = Sequence::create
     (
@@ -357,10 +357,10 @@ void TransitionJumpZoom::onEnter()
 
     _inScene->setScale(0.5f);
     _inScene->setPosition(s.width, 0);
-    _inScene->setAnchorPoint(Vec2(0.5f, 0.5f));
-    _outScene->setAnchorPoint(Vec2(0.5f, 0.5f));
+    _inScene->setAnchorPoint(CocVec2(0.5f, 0.5f));
+    _outScene->setAnchorPoint(CocVec2(0.5f, 0.5f));
 
-    ActionInterval *jump = JumpBy::create(_duration/4, Vec2(-s.width,0), s.width/4, 2);
+    ActionInterval *jump = JumpBy::create(_duration/4, CocVec2(-s.width,0), s.width/4, 2);
     ActionInterval *scaleIn = ScaleTo::create(_duration/4, 1.0f);
     ActionInterval *scaleOut = ScaleTo::create(_duration/4, 0.5f);
 
@@ -425,7 +425,7 @@ void TransitionMoveInL::onEnter()
  
 ActionInterval* TransitionMoveInL::action()
 {
-    return MoveTo::create(_duration, Vec2(0,0));
+    return MoveTo::create(_duration, CocVec2(0,0));
 }
 
 ActionInterval* TransitionMoveInL::easeActionWithAction(ActionInterval* action)
@@ -575,7 +575,7 @@ void TransitionSlideInL:: initScenes()
 ActionInterval* TransitionSlideInL::action()
 {
     Size s = Director::getInstance()->getWinSize();
-    return MoveBy::create(_duration, Vec2(s.width-ADJUST_FACTOR,0));
+    return MoveBy::create(_duration, CocVec2(s.width-ADJUST_FACTOR,0));
 }
 
 ActionInterval* TransitionSlideInL::easeActionWithAction(ActionInterval* action)
@@ -632,7 +632,7 @@ void TransitionSlideInR::initScenes()
 ActionInterval* TransitionSlideInR:: action()
 {
     Size s = Director::getInstance()->getWinSize();
-    return MoveBy::create(_duration, Vec2(-(s.width-ADJUST_FACTOR),0));
+    return MoveBy::create(_duration, CocVec2(-(s.width-ADJUST_FACTOR),0));
 }
 
 
@@ -673,7 +673,7 @@ void TransitionSlideInT::initScenes()
 ActionInterval* TransitionSlideInT::action()
 {
     Size s = Director::getInstance()->getWinSize();
-    return MoveBy::create(_duration, Vec2(0,-(s.height-ADJUST_FACTOR)));
+    return MoveBy::create(_duration, CocVec2(0,-(s.height-ADJUST_FACTOR)));
 }
 
 //
@@ -713,7 +713,7 @@ void TransitionSlideInB:: initScenes()
 ActionInterval* TransitionSlideInB:: action()
 {
     Size s = Director::getInstance()->getWinSize();
-    return MoveBy::create(_duration, Vec2(0,s.height-ADJUST_FACTOR));
+    return MoveBy::create(_duration, CocVec2(0,s.height-ADJUST_FACTOR));
 }
 
 //
@@ -745,8 +745,8 @@ void TransitionShrinkGrow::onEnter()
     _inScene->setScale(0.001f);
     _outScene->setScale(1.0f);
 
-    _inScene->setAnchorPoint(Vec2(2/3.0f,0.5f));
-    _outScene->setAnchorPoint(Vec2(1/3.0f,0.5f));    
+    _inScene->setAnchorPoint(CocVec2(2/3.0f,0.5f));
+    _outScene->setAnchorPoint(CocVec2(1/3.0f,0.5f));
 
     ActionInterval* scaleOut = ScaleTo::create(_duration, 0.01f);
     ActionInterval* scaleIn = ScaleTo::create(_duration, 1.0f);
@@ -1301,7 +1301,7 @@ TransitionCrossFade* TransitionCrossFade::create(float t, Scene* scene)
     return nullptr;
 }
 
-void TransitionCrossFade::draw(Renderer* /*renderer*/, const Mat4 &/*transform*/, uint32_t /*flags*/)
+void TransitionCrossFade::draw(CocRenderer* /*renderer*/, const CocMat4 &/*transform*/, uint32_t /*flags*/)
 {
     // override draw since both scenes (textures) are rendered in 1 scene
 }
@@ -1324,9 +1324,9 @@ void TransitionCrossFade::onEnter()
         return;
     }
 
-    inTexture->getSprite()->setAnchorPoint( Vec2(0.5f,0.5f) );
+    inTexture->getSprite()->setAnchorPoint( CocVec2(0.5f,0.5f) );
     inTexture->setPosition(size.width/2, size.height/2);
-    inTexture->setAnchorPoint( Vec2(0.5f,0.5f) );
+    inTexture->setAnchorPoint( CocVec2(0.5f,0.5f) );
 
     // render inScene to its texturebuffer
     inTexture->begin();
@@ -1335,9 +1335,9 @@ void TransitionCrossFade::onEnter()
 
     // create the second render texture for outScene
     RenderTexture* outTexture = RenderTexture::create((int)size.width, (int)size.height,Texture2D::PixelFormat::RGBA8888,GL_DEPTH24_STENCIL8);
-    outTexture->getSprite()->setAnchorPoint( Vec2(0.5f,0.5f) );
+    outTexture->getSprite()->setAnchorPoint( CocVec2(0.5f,0.5f) );
     outTexture->setPosition(size.width/2, size.height/2);
-    outTexture->setAnchorPoint( Vec2(0.5f,0.5f) );
+    outTexture->setAnchorPoint( CocVec2(0.5f,0.5f) );
 
     // render outScene to its texturebuffer
     outTexture->begin();
@@ -1447,7 +1447,7 @@ void TransitionTurnOffTiles::onExit()
     TransitionScene::onExit();
 }
 
-void TransitionTurnOffTiles::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+void TransitionTurnOffTiles::draw(CocRenderer *renderer, const CocMat4 &transform, uint32_t flags)
 {
     Scene::draw(renderer, transform, flags);
     
@@ -1527,7 +1527,7 @@ void TransitionSplitCols::switchTargetToInscene()
     _gridProxy->setTarget(_inScene);
 }
 
-void TransitionSplitCols::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+void TransitionSplitCols::draw(CocRenderer *renderer, const CocMat4 &transform, uint32_t flags)
 {
     Scene::draw(renderer, transform, flags);
     _gridProxy->visit(renderer, transform, flags);
@@ -1643,7 +1643,7 @@ void TransitionFadeTR::onExit()
     TransitionScene::onExit();
 }
 
-void TransitionFadeTR::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+void TransitionFadeTR::draw(CocRenderer *renderer, const CocMat4 &transform, uint32_t flags)
 {
     Scene::draw(renderer, transform, flags);
     

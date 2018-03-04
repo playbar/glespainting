@@ -62,7 +62,7 @@ struct ModelData
     std::string subMeshId;
     std::string materialId;
     std::vector<std::string> bones;
-    std::vector<Mat4>        invBindPose;
+    std::vector<CocMat4>        invBindPose;
     
     virtual ~ModelData()
     {
@@ -82,7 +82,7 @@ struct ModelData
 struct NodeData
 {
     std::string id;
-    Mat4        transform;
+    CocMat4        transform;
     std::vector<ModelData*> modelNodeDatas;
     std::vector<NodeData*>  children;
 
@@ -224,9 +224,9 @@ struct SkinData
 {
     std::vector<std::string> skinBoneNames; //skin bones affect skin
     std::vector<std::string> nodeBoneNames; //node bones don't affect skin, all bones [skinBone, nodeBone]
-    std::vector<Mat4>        inverseBindPoseMatrices; //bind pose of skin bone, only for skin bone
-    std::vector<Mat4>        skinBoneOriginMatrices; // original bone transform, for skin bone
-    std::vector<Mat4>        nodeBoneOriginMatrices; // original bone transform, for node bone
+    std::vector<CocMat4>        inverseBindPoseMatrices; //bind pose of skin bone, only for skin bone
+    std::vector<CocMat4>        skinBoneOriginMatrices; // original bone transform, for skin bone
+    std::vector<CocMat4>        nodeBoneOriginMatrices; // original bone transform, for node bone
     
     //bone child info, both skinbone and node bone
     std::map<int, std::vector<int> > boneChild;//key parent, value child
@@ -376,14 +376,14 @@ public:
         {
         }
         
-        Vec3Key(float time, const Vec3& v)
+        Vec3Key(float time, const CocVec3& v)
         : _time(time)
         , _key(v)
         {
         }
         
         float _time;
-        Vec3 _key;
+        CocVec3 _key;
     };
     
     struct QuatKey

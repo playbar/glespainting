@@ -104,16 +104,16 @@ public:
      * The Sprite can be treated like any other Sprite: rotated, scaled, translated, opacity, color, etc.
      * You can remove either by calling:
      * - layer->removeChild(sprite, cleanup);
-     * - or layer->removeTileAt(Vec2(x,y));
+     * - or layer->removeTileAt(CocVec2(x,y));
      *
      * @param tileCoordinate A tile coordinate.
      * @return Returns the tile (Sprite) at a given a tile coordinate.
      */
-    Sprite* getTileAt(const Vec2& tileCoordinate);
+    Sprite* getTileAt(const CocVec2& tileCoordinate);
     /**
      * @js NA
      */
-    CC_DEPRECATED_ATTRIBUTE Sprite* tileAt(const Vec2& tileCoordinate) { return getTileAt(tileCoordinate); };
+    CC_DEPRECATED_ATTRIBUTE Sprite* tileAt(const CocVec2& tileCoordinate) { return getTileAt(tileCoordinate); };
     
     /** Returns the tile gid at a given tile coordinate. It also returns the tile flags.
      * This method requires the tile map has not been previously released (eg. don't call [layer releaseMap]).
@@ -122,11 +122,11 @@ public:
      * @param flags Tile flags.
      * @return Returns the tile gid at a given tile coordinate. It also returns the tile flags.
      */
-	uint32_t getTileGIDAt(const Vec2& tileCoordinate, TMXTileFlags* flags = nullptr);
+	uint32_t getTileGIDAt(const CocVec2& tileCoordinate, TMXTileFlags* flags = nullptr);
     /**
      * @js NA
      */
-    CC_DEPRECATED_ATTRIBUTE uint32_t tileGIDAt(const Vec2& tileCoordinate, TMXTileFlags* flags = nullptr){
+    CC_DEPRECATED_ATTRIBUTE uint32_t tileGIDAt(const CocVec2& tileCoordinate, TMXTileFlags* flags = nullptr){
         return getTileGIDAt(tileCoordinate, flags);
     }
 
@@ -137,7 +137,7 @@ public:
      * @param gid The tile gid.
      * @param tileCoordinate The tile coordinate.
      */
-    void setTileGID(uint32_t gid, const Vec2& tileCoordinate);
+    void setTileGID(uint32_t gid, const CocVec2& tileCoordinate);
 
     /** Sets the tile gid (gid = tile global id) at a given tile coordinate.
      * The Tile GID can be obtained by using the method "tileGIDAt" or by using the TMX editor -> Tileset Mgr +1.
@@ -149,24 +149,24 @@ public:
      * @param flags The tile flags.
      */
 
-    void setTileGID(uint32_t gid, const Vec2& tileCoordinate, TMXTileFlags flags);
+    void setTileGID(uint32_t gid, const CocVec2& tileCoordinate, TMXTileFlags flags);
 
     /** Removes a tile at given tile coordinate. 
      *
      * @param tileCoordinate The tile coordinate.
      */
-    void removeTileAt(const Vec2& tileCoordinate);
+    void removeTileAt(const CocVec2& tileCoordinate);
 
     /** Returns the position in points of a given tile coordinate.
      *
      * @param tileCoordinate The tile coordinate.
      * @return The position in points of a given tile coordinate.
      */
-	Vec2 getPositionAt(const Vec2& tileCoordinate);
+	CocVec2 getPositionAt(const CocVec2& tileCoordinate);
     /**
     * @js NA
     */
-    CC_DEPRECATED_ATTRIBUTE Vec2 positionAt(const Vec2& tileCoordinate) { return getPositionAt(tileCoordinate); };
+    CC_DEPRECATED_ATTRIBUTE CocVec2 positionAt(const CocVec2& tileCoordinate) { return getPositionAt(tileCoordinate); };
 
     /** Return the value for the specific property name.
      *
@@ -295,24 +295,24 @@ public:
     virtual std::string getDescription() const override;
 
 protected:
-    Vec2 getPositionForIsoAt(const Vec2& pos);
-    Vec2 getPositionForOrthoAt(const Vec2& pos);
-    Vec2 getPositionForHexAt(const Vec2& pos);
-    Vec2 getPositionForStaggeredAt(const Vec2& pos);
-    Vec2 calculateLayerOffset(const Vec2& offset);
+    CocVec2 getPositionForIsoAt(const CocVec2& pos);
+    CocVec2 getPositionForOrthoAt(const CocVec2& pos);
+    CocVec2 getPositionForHexAt(const CocVec2& pos);
+    CocVec2 getPositionForStaggeredAt(const CocVec2& pos);
+    CocVec2 calculateLayerOffset(const CocVec2& offset);
 
     /* optimization methods */
-    Sprite* appendTileForGID(uint32_t gid, const Vec2& pos);
-    Sprite* insertTileForGID(uint32_t gid, const Vec2& pos);
-    Sprite* updateTileForGID(uint32_t gid, const Vec2& pos);
+    Sprite* appendTileForGID(uint32_t gid, const CocVec2& pos);
+    Sprite* insertTileForGID(uint32_t gid, const CocVec2& pos);
+    Sprite* updateTileForGID(uint32_t gid, const CocVec2& pos);
 
-    intptr_t getZForPos(const Vec2& pos) const;
+    intptr_t getZForPos(const CocVec2& pos) const;
 
     /* The layer recognizes some special properties, like cc_vertexz */
     void parseInternalProperties();
-    void setupTileSprite(Sprite* sprite, const Vec2& pos, uint32_t gid);
+    void setupTileSprite(Sprite* sprite, const CocVec2& pos, uint32_t gid);
     Sprite* reusedTileWithRect(const Rect& rect);
-    int getVertexZForPos(const Vec2& pos);
+    int getVertexZForPos(const CocVec2& pos);
 
     // index
     ssize_t atlasIndexForExistantZ(int z);

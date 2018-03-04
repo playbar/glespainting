@@ -19,7 +19,7 @@
  This file was modified to fit the cocos2d-x project
  */
 
-#include "math/Mat4.h"
+#include "math/CocMat4.h"
 
 #include <cmath>
 #include "math/Quaternion.h"
@@ -28,58 +28,58 @@
 
 NS_CC_MATH_BEGIN
 
-Mat4::Mat4()
+CocMat4::CocMat4()
 {
     *this = IDENTITY;
 }
 
-Mat4::Mat4(float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24,
+CocMat4::CocMat4(float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24,
                float m31, float m32, float m33, float m34, float m41, float m42, float m43, float m44)
 {
     set(m11, m12, m13, m14, m21, m22, m23, m24, m31, m32, m33, m34, m41, m42, m43, m44);
 }
 
-Mat4::Mat4(const float* mat)
+CocMat4::CocMat4(const float* mat)
 {
     set(mat);
 }
 
-Mat4::Mat4(const Mat4& copy)
+CocMat4::CocMat4(const CocMat4& copy)
 {
     memcpy(m, copy.m, MATRIX_SIZE);
 }
 
-Mat4::~Mat4()
+CocMat4::~CocMat4()
 {
 }
 
-void Mat4::createLookAt(const Vec3& eyePosition, const Vec3& targetPosition, const Vec3& up, Mat4* dst)
+void CocMat4::createLookAt(const CocVec3& eyePosition, const CocVec3& targetPosition, const CocVec3& up, CocMat4* dst)
 {
     createLookAt(eyePosition.x, eyePosition.y, eyePosition.z, targetPosition.x, targetPosition.y, targetPosition.z,
                  up.x, up.y, up.z, dst);
 }
 
-void Mat4::createLookAt(float eyePositionX, float eyePositionY, float eyePositionZ,
+void CocMat4::createLookAt(float eyePositionX, float eyePositionY, float eyePositionZ,
                           float targetPositionX, float targetPositionY, float targetPositionZ,
-                          float upX, float upY, float upZ, Mat4* dst)
+                          float upX, float upY, float upZ, CocMat4* dst)
 {
     GP_ASSERT(dst);
 
-    Vec3 eye(eyePositionX, eyePositionY, eyePositionZ);
-    Vec3 target(targetPositionX, targetPositionY, targetPositionZ);
-    Vec3 up(upX, upY, upZ);
+    CocVec3 eye(eyePositionX, eyePositionY, eyePositionZ);
+    CocVec3 target(targetPositionX, targetPositionY, targetPositionZ);
+    CocVec3 up(upX, upY, upZ);
     up.normalize();
 
-    Vec3 zaxis;
-    Vec3::subtract(eye, target, &zaxis);
+    CocVec3 zaxis;
+    CocVec3::subtract(eye, target, &zaxis);
     zaxis.normalize();
 
-    Vec3 xaxis;
-    Vec3::cross(up, zaxis, &xaxis);
+    CocVec3 xaxis;
+    CocVec3::cross(up, zaxis, &xaxis);
     xaxis.normalize();
 
-    Vec3 yaxis;
-    Vec3::cross(zaxis, xaxis, &yaxis);
+    CocVec3 yaxis;
+    CocVec3::cross(zaxis, xaxis, &yaxis);
     yaxis.normalize();
 
     dst->m[0] = xaxis.x;
@@ -97,14 +97,14 @@ void Mat4::createLookAt(float eyePositionX, float eyePositionY, float eyePositio
     dst->m[10] = zaxis.z;
     dst->m[11] = 0.0f;
 
-    dst->m[12] = -Vec3::dot(xaxis, eye);
-    dst->m[13] = -Vec3::dot(yaxis, eye);
-    dst->m[14] = -Vec3::dot(zaxis, eye);
+    dst->m[12] = -CocVec3::dot(xaxis, eye);
+    dst->m[13] = -CocVec3::dot(yaxis, eye);
+    dst->m[14] = -CocVec3::dot(zaxis, eye);
     dst->m[15] = 1.0f;
 }
 
-void Mat4::createPerspective(float fieldOfView, float aspectRatio,
-                                     float zNearPlane, float zFarPlane, Mat4* dst)
+void CocMat4::createPerspective(float fieldOfView, float aspectRatio,
+                                     float zNearPlane, float zFarPlane, CocMat4* dst)
 {
     GP_ASSERT(dst);
     GP_ASSERT(zFarPlane != zNearPlane);
@@ -130,15 +130,15 @@ void Mat4::createPerspective(float fieldOfView, float aspectRatio,
     dst->m[14] = -2.0f * zFarPlane * zNearPlane * f_n;
 }
 
-void Mat4::createOrthographic(float width, float height, float zNearPlane, float zFarPlane, Mat4* dst)
+void CocMat4::createOrthographic(float width, float height, float zNearPlane, float zFarPlane, CocMat4* dst)
 {
     float halfWidth = width / 2.0f;
     float halfHeight = height / 2.0f;
     createOrthographicOffCenter(-halfWidth, halfWidth, -halfHeight, halfHeight, zNearPlane, zFarPlane, dst);
 }
 
-void Mat4::createOrthographicOffCenter(float left, float right, float bottom, float top,
-                                         float zNearPlane, float zFarPlane, Mat4* dst)
+void CocMat4::createOrthographicOffCenter(float left, float right, float bottom, float top,
+                                         float zNearPlane, float zFarPlane, CocMat4* dst)
 {
     GP_ASSERT(dst);
     GP_ASSERT(right != left);
@@ -156,24 +156,24 @@ void Mat4::createOrthographicOffCenter(float left, float right, float bottom, fl
     dst->m[15] = 1;
 }
     
-void Mat4::createBillboard(const Vec3& objectPosition, const Vec3& cameraPosition,
-                             const Vec3& cameraUpVector, Mat4* dst)
+void CocMat4::createBillboard(const CocVec3& objectPosition, const CocVec3& cameraPosition,
+                             const CocVec3& cameraUpVector, CocMat4* dst)
 {
     createBillboardHelper(objectPosition, cameraPosition, cameraUpVector, nullptr, dst);
 }
 
-void Mat4::createBillboard(const Vec3& objectPosition, const Vec3& cameraPosition,
-                             const Vec3& cameraUpVector, const Vec3& cameraForwardVector,
-                             Mat4* dst)
+void CocMat4::createBillboard(const CocVec3& objectPosition, const CocVec3& cameraPosition,
+                             const CocVec3& cameraUpVector, const CocVec3& cameraForwardVector,
+                             CocMat4* dst)
 {
     createBillboardHelper(objectPosition, cameraPosition, cameraUpVector, &cameraForwardVector, dst);
 }
 
-void Mat4::createBillboardHelper(const Vec3& objectPosition, const Vec3& cameraPosition,
-                                   const Vec3& cameraUpVector, const Vec3* cameraForwardVector,
-                                   Mat4* dst)
+void CocMat4::createBillboardHelper(const CocVec3& objectPosition, const CocVec3& cameraPosition,
+                                   const CocVec3& cameraUpVector, const CocVec3* cameraForwardVector,
+                                   CocMat4* dst)
 {
-    Vec3 delta(objectPosition, cameraPosition);
+    CocVec3 delta(objectPosition, cameraPosition);
     bool isSufficientDelta = delta.lengthSquared() > MATH_EPSILON;
 
     dst->setIdentity();
@@ -185,10 +185,10 @@ void Mat4::createBillboardHelper(const Vec3& objectPosition, const Vec3& cameraP
     // either a safe default or a sufficient distance between object and camera.
     if (cameraForwardVector || isSufficientDelta)
     {
-        Vec3 target = isSufficientDelta ? cameraPosition : (objectPosition - *cameraForwardVector);
+        CocVec3 target = isSufficientDelta ? cameraPosition : (objectPosition - *cameraForwardVector);
 
         // A billboard is the inverse of a lookAt rotation
-        Mat4 lookAt;
+        CocMat4 lookAt;
         createLookAt(objectPosition, target, cameraUpVector, &lookAt);
         dst->m[0] = lookAt.m[0];
         dst->m[1] = lookAt.m[4];
@@ -202,9 +202,9 @@ void Mat4::createBillboardHelper(const Vec3& objectPosition, const Vec3& cameraP
     }
 }
     
-// void Mat4::createReflection(const Plane& plane, Mat4* dst)
+// void CocMat4::createReflection(const Plane& plane, CocMat4* dst)
 // {
-//     Vec3 normal(plane.getNormal());
+//     CocVec3 normal(plane.getNormal());
 //     float k = -2.0f * plane.getDistance();
 
 //     dst->setIdentity();
@@ -221,7 +221,7 @@ void Mat4::createBillboardHelper(const Vec3& objectPosition, const Vec3& cameraP
 //     dst->m[11] = k * normal.z;
 // }
 
-void Mat4::createScale(const Vec3& scale, Mat4* dst)
+void CocMat4::createScale(const CocVec3& scale, CocMat4* dst)
 {
     GP_ASSERT(dst);
 
@@ -232,7 +232,7 @@ void Mat4::createScale(const Vec3& scale, Mat4* dst)
     dst->m[10] = scale.z;
 }
 
-void Mat4::createScale(float xScale, float yScale, float zScale, Mat4* dst)
+void CocMat4::createScale(float xScale, float yScale, float zScale, CocMat4* dst)
 {
     GP_ASSERT(dst);
 
@@ -244,7 +244,7 @@ void Mat4::createScale(float xScale, float yScale, float zScale, Mat4* dst)
 }
 
 
-void Mat4::createRotation(const Quaternion& q, Mat4* dst)
+void CocMat4::createRotation(const Quaternion& q, CocMat4* dst)
 {
     GP_ASSERT(dst);
 
@@ -283,7 +283,7 @@ void Mat4::createRotation(const Quaternion& q, Mat4* dst)
     dst->m[15] = 1.0f;
 }
 
-void Mat4::createRotation(const Vec3& axis, float angle, Mat4* dst)
+void CocMat4::createRotation(const CocVec3& axis, float angle, CocMat4* dst)
 {
     GP_ASSERT(dst);
 
@@ -342,7 +342,7 @@ void Mat4::createRotation(const Vec3& axis, float angle, Mat4* dst)
     dst->m[15] = 1.0f;
 }
 
-void Mat4::createRotationX(float angle, Mat4* dst)
+void CocMat4::createRotationX(float angle, CocMat4* dst)
 {
     GP_ASSERT(dst);
 
@@ -357,7 +357,7 @@ void Mat4::createRotationX(float angle, Mat4* dst)
     dst->m[10] = c;
 }
 
-void Mat4::createRotationY(float angle, Mat4* dst)
+void CocMat4::createRotationY(float angle, CocMat4* dst)
 {
     GP_ASSERT(dst);
 
@@ -372,7 +372,7 @@ void Mat4::createRotationY(float angle, Mat4* dst)
     dst->m[10] = c;
 }
 
-void Mat4::createRotationZ(float angle, Mat4* dst)
+void CocMat4::createRotationZ(float angle, CocMat4* dst)
 {
     GP_ASSERT(dst);
 
@@ -387,7 +387,7 @@ void Mat4::createRotationZ(float angle, Mat4* dst)
     dst->m[5] = c;
 }
 
-void Mat4::createTranslation(const Vec3& translation, Mat4* dst)
+void CocMat4::createTranslation(const CocVec3& translation, CocMat4* dst)
 {
     GP_ASSERT(dst);
 
@@ -398,7 +398,7 @@ void Mat4::createTranslation(const Vec3& translation, Mat4* dst)
     dst->m[14] = translation.z;
 }
 
-void Mat4::createTranslation(float xTranslation, float yTranslation, float zTranslation, Mat4* dst)
+void CocMat4::createTranslation(float xTranslation, float yTranslation, float zTranslation, CocMat4* dst)
 {
     GP_ASSERT(dst);
 
@@ -409,12 +409,12 @@ void Mat4::createTranslation(float xTranslation, float yTranslation, float zTran
     dst->m[14] = zTranslation;
 }
 
-void Mat4::add(float scalar)
+void CocMat4::add(float scalar)
 {
     add(scalar, this);
 }
 
-void Mat4::add(float scalar, Mat4* dst)
+void CocMat4::add(float scalar, CocMat4* dst)
 {
     GP_ASSERT(dst);
 #ifdef __SSE__
@@ -424,12 +424,12 @@ void Mat4::add(float scalar, Mat4* dst)
 #endif
 }
 
-void Mat4::add(const Mat4& mat)
+void CocMat4::add(const CocMat4& mat)
 {
     add(*this, mat, this);
 }
 
-void Mat4::add(const Mat4& m1, const Mat4& m2, Mat4* dst)
+void CocMat4::add(const CocMat4& m1, const CocMat4& m2, CocMat4* dst)
 {
     GP_ASSERT(dst);
 #ifdef __SSE__
@@ -439,7 +439,7 @@ void Mat4::add(const Mat4& m1, const Mat4& m2, Mat4* dst)
 #endif
 }
 
-bool Mat4::decompose(Vec3* scale, Quaternion* rotation, Vec3* translation) const
+bool CocMat4::decompose(CocVec3* scale, Quaternion* rotation, CocVec3* translation) const
 {
     if (translation)
     {
@@ -455,13 +455,13 @@ bool Mat4::decompose(Vec3* scale, Quaternion* rotation, Vec3* translation) const
 
     // Extract the scale.
     // This is simply the length of each axis (row/column) in the matrix.
-    Vec3 xaxis(m[0], m[1], m[2]);
+    CocVec3 xaxis(m[0], m[1], m[2]);
     float scaleX = xaxis.length();
 
-    Vec3 yaxis(m[4], m[5], m[6]);
+    CocVec3 yaxis(m[4], m[5], m[6]);
     float scaleY = yaxis.length();
 
-    Vec3 zaxis(m[8], m[9], m[10]);
+    CocVec3 zaxis(m[8], m[9], m[10]);
     float scaleZ = zaxis.length();
 
     // Determine if we have a negative scale (true if determinant is less than zero).
@@ -547,7 +547,7 @@ bool Mat4::decompose(Vec3* scale, Quaternion* rotation, Vec3* translation) const
     return true;
 }
 
-float Mat4::determinant() const
+float CocMat4::determinant() const
 {
     float a0 = m[0] * m[5] - m[1] * m[4];
     float a1 = m[0] * m[6] - m[2] * m[4];
@@ -566,22 +566,22 @@ float Mat4::determinant() const
     return (a0 * b5 - a1 * b4 + a2 * b3 + a3 * b2 - a4 * b1 + a5 * b0);
 }
 
-void Mat4::getScale(Vec3* scale) const
+void CocMat4::getScale(CocVec3* scale) const
 {
     decompose(scale, nullptr, nullptr);
 }
 
-bool Mat4::getRotation(Quaternion* rotation) const
+bool CocMat4::getRotation(Quaternion* rotation) const
 {
     return decompose(nullptr, rotation, nullptr);
 }
 
-void Mat4::getTranslation(Vec3* translation) const
+void CocMat4::getTranslation(CocVec3* translation) const
 {
     decompose(nullptr, nullptr, translation);
 }
 
-void Mat4::getUpVector(Vec3* dst) const
+void CocMat4::getUpVector(CocVec3* dst) const
 {
     GP_ASSERT(dst);
 
@@ -590,7 +590,7 @@ void Mat4::getUpVector(Vec3* dst) const
     dst->z = m[6];
 }
 
-void Mat4::getDownVector(Vec3* dst) const
+void CocMat4::getDownVector(CocVec3* dst) const
 {
     GP_ASSERT(dst);
     
@@ -599,7 +599,7 @@ void Mat4::getDownVector(Vec3* dst) const
     dst->z = -m[6];
 }
 
-void Mat4::getLeftVector(Vec3* dst) const
+void CocMat4::getLeftVector(CocVec3* dst) const
 {
     GP_ASSERT(dst);
 
@@ -608,7 +608,7 @@ void Mat4::getLeftVector(Vec3* dst) const
     dst->z = -m[2];
 }
 
-void Mat4::getRightVector(Vec3* dst) const
+void CocMat4::getRightVector(CocVec3* dst) const
 {
     GP_ASSERT(dst);
 
@@ -617,7 +617,7 @@ void Mat4::getRightVector(Vec3* dst) const
     dst->z = m[2];
 }
 
-void Mat4::getForwardVector(Vec3* dst) const
+void CocMat4::getForwardVector(CocVec3* dst) const
 {
     GP_ASSERT(dst);
 
@@ -626,7 +626,7 @@ void Mat4::getForwardVector(Vec3* dst) const
     dst->z = -m[10];
 }
 
-void Mat4::getBackVector(Vec3* dst) const
+void CocMat4::getBackVector(CocVec3* dst) const
 {
     GP_ASSERT(dst);
 
@@ -635,14 +635,14 @@ void Mat4::getBackVector(Vec3* dst) const
     dst->z = m[10];
 }
 
-Mat4 Mat4::getInversed() const
+CocMat4 CocMat4::getInversed() const
 {
-    Mat4 mat(*this);
+    CocMat4 mat(*this);
     mat.inverse();
     return mat;
 }
 
-bool Mat4::inverse()
+bool CocMat4::inverse()
 {
     float a0 = m[0] * m[5] - m[1] * m[4];
     float a1 = m[0] * m[6] - m[2] * m[4];
@@ -665,7 +665,7 @@ bool Mat4::inverse()
         return false;
 
     // Support the case where m == dst.
-    Mat4 inverse;
+    CocMat4 inverse;
     inverse.m[0]  = m[5] * b5 - m[6] * b4 + m[7] * b3;
     inverse.m[1]  = -m[1] * b5 + m[2] * b4 - m[3] * b3;
     inverse.m[2]  = m[13] * a5 - m[14] * a4 + m[15] * a3;
@@ -691,22 +691,22 @@ bool Mat4::inverse()
     return true;
 }
 
-bool Mat4::isIdentity() const
+bool CocMat4::isIdentity() const
 {
     return (memcmp(m, &IDENTITY, MATRIX_SIZE) == 0);
 }
 
-void Mat4::multiply(float scalar)
+void CocMat4::multiply(float scalar)
 {
     multiply(scalar, this);
 }
 
-void Mat4::multiply(float scalar, Mat4* dst) const
+void CocMat4::multiply(float scalar, CocMat4* dst) const
 {
     multiply(*this, scalar, dst);
 }
 
-void Mat4::multiply(const Mat4& m, float scalar, Mat4* dst)
+void CocMat4::multiply(const CocMat4& m, float scalar, CocMat4* dst)
 {
     GP_ASSERT(dst);
 #ifdef __SSE__
@@ -716,12 +716,12 @@ void Mat4::multiply(const Mat4& m, float scalar, Mat4* dst)
 #endif
 }
 
-void Mat4::multiply(const Mat4& mat)
+void CocMat4::multiply(const CocMat4& mat)
 {
     multiply(*this, mat, this);
 }
 
-void Mat4::multiply(const Mat4& m1, const Mat4& m2, Mat4* dst)
+void CocMat4::multiply(const CocMat4& m1, const CocMat4& m2, CocMat4* dst)
 {
     GP_ASSERT(dst);
 #ifdef __SSE__
@@ -731,7 +731,7 @@ void Mat4::multiply(const Mat4& m1, const Mat4& m2, Mat4* dst)
 #endif
 }
 
-void Mat4::negate()
+void CocMat4::negate()
 {
 #ifdef __SSE__
     MathUtil::negateMatrix(col, col);
@@ -740,106 +740,106 @@ void Mat4::negate()
 #endif
 }
 
-Mat4 Mat4::getNegated() const
+CocMat4 CocMat4::getNegated() const
 {
-    Mat4 mat(*this);
+    CocMat4 mat(*this);
     mat.negate();
     return mat;
 }
 
-void Mat4::rotate(const Quaternion& q)
+void CocMat4::rotate(const Quaternion& q)
 {
     rotate(q, this);
 }
 
-void Mat4::rotate(const Quaternion& q, Mat4* dst) const
+void CocMat4::rotate(const Quaternion& q, CocMat4* dst) const
 {
-    Mat4 r;
+    CocMat4 r;
     createRotation(q, &r);
     multiply(*this, r, dst);
 }
 
-void Mat4::rotate(const Vec3& axis, float angle)
+void CocMat4::rotate(const CocVec3& axis, float angle)
 {
     rotate(axis, angle, this);
 }
 
-void Mat4::rotate(const Vec3& axis, float angle, Mat4* dst) const
+void CocMat4::rotate(const CocVec3& axis, float angle, CocMat4* dst) const
 {
-    Mat4 r;
+    CocMat4 r;
     createRotation(axis, angle, &r);
     multiply(*this, r, dst);
 }
 
-void Mat4::rotateX(float angle)
+void CocMat4::rotateX(float angle)
 {
     rotateX(angle, this);
 }
 
-void Mat4::rotateX(float angle, Mat4* dst) const
+void CocMat4::rotateX(float angle, CocMat4* dst) const
 {
-    Mat4 r;
+    CocMat4 r;
     createRotationX(angle, &r);
     multiply(*this, r, dst);
 }
 
-void Mat4::rotateY(float angle)
+void CocMat4::rotateY(float angle)
 {
     rotateY(angle, this);
 }
 
-void Mat4::rotateY(float angle, Mat4* dst) const
+void CocMat4::rotateY(float angle, CocMat4* dst) const
 {
-    Mat4 r;
+    CocMat4 r;
     createRotationY(angle, &r);
     multiply(*this, r, dst);
 }
 
-void Mat4::rotateZ(float angle)
+void CocMat4::rotateZ(float angle)
 {
     rotateZ(angle, this);
 }
 
-void Mat4::rotateZ(float angle, Mat4* dst) const
+void CocMat4::rotateZ(float angle, CocMat4* dst) const
 {
-    Mat4 r;
+    CocMat4 r;
     createRotationZ(angle, &r);
     multiply(*this, r, dst);
 }
 
-void Mat4::scale(float value)
+void CocMat4::scale(float value)
 {
     scale(value, this);
 }
 
-void Mat4::scale(float value, Mat4* dst) const
+void CocMat4::scale(float value, CocMat4* dst) const
 {
     scale(value, value, value, dst);
 }
 
-void Mat4::scale(float xScale, float yScale, float zScale)
+void CocMat4::scale(float xScale, float yScale, float zScale)
 {
     scale(xScale, yScale, zScale, this);
 }
 
-void Mat4::scale(float xScale, float yScale, float zScale, Mat4* dst) const
+void CocMat4::scale(float xScale, float yScale, float zScale, CocMat4* dst) const
 {
-    Mat4 s;
+    CocMat4 s;
     createScale(xScale, yScale, zScale, &s);
     multiply(*this, s, dst);
 }
 
-void Mat4::scale(const Vec3& s)
+void CocMat4::scale(const CocVec3& s)
 {
     scale(s.x, s.y, s.z, this);
 }
 
-void Mat4::scale(const Vec3& s, Mat4* dst) const
+void CocMat4::scale(const CocVec3& s, CocMat4* dst) const
 {
     scale(s.x, s.y, s.z, dst);
 }
 
-void Mat4::set(float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24,
+void CocMat4::set(float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24,
                  float m31, float m32, float m33, float m34, float m41, float m42, float m43, float m44)
 {
     m[0]  = m11;
@@ -860,33 +860,33 @@ void Mat4::set(float m11, float m12, float m13, float m14, float m21, float m22,
     m[15] = m44;
 }
 
-void Mat4::set(const float* mat)
+void CocMat4::set(const float* mat)
 {
     GP_ASSERT(mat);
     memcpy(this->m, mat, MATRIX_SIZE);
 }
 
-void Mat4::set(const Mat4& mat)
+void CocMat4::set(const CocMat4& mat)
 {
     memcpy(this->m, mat.m, MATRIX_SIZE);
 }
 
-void Mat4::setIdentity()
+void CocMat4::setIdentity()
 {
     memcpy(m, &IDENTITY, MATRIX_SIZE);
 }
 
-void Mat4::setZero()
+void CocMat4::setZero()
 {
     memset(m, 0, MATRIX_SIZE);
 }
 
-void Mat4::subtract(const Mat4& mat)
+void CocMat4::subtract(const CocMat4& mat)
 {
     subtract(*this, mat, this);
 }
 
-void Mat4::subtract(const Mat4& m1, const Mat4& m2, Mat4* dst)
+void CocMat4::subtract(const CocMat4& m1, const CocMat4& m2, CocMat4* dst)
 {
     GP_ASSERT(dst);
 #ifdef __SSE__
@@ -896,31 +896,31 @@ void Mat4::subtract(const Mat4& m1, const Mat4& m2, Mat4* dst)
 #endif
 }
 
-void Mat4::transformVector(Vec3* vector) const
+void CocMat4::transformVector(CocVec3* vector) const
 {
     GP_ASSERT(vector);
     transformVector(vector->x, vector->y, vector->z, 0.0f, vector);
 }
 
-void Mat4::transformVector(const Vec3& vector, Vec3* dst) const
+void CocMat4::transformVector(const CocVec3& vector, CocVec3* dst) const
 {
     transformVector(vector.x, vector.y, vector.z, 0.0f, dst);
 }
 
-void Mat4::transformVector(float x, float y, float z, float w, Vec3* dst) const
+void CocMat4::transformVector(float x, float y, float z, float w, CocVec3* dst) const
 {
     GP_ASSERT(dst);
 
     MathUtil::transformVec4(m, x, y, z, w, (float*)dst);
 }
 
-void Mat4::transformVector(Vec4* vector) const
+void CocMat4::transformVector(CocVec4* vector) const
 {
     GP_ASSERT(vector);
     transformVector(*vector, vector);
 }
 
-void Mat4::transformVector(const Vec4& vector, Vec4* dst) const
+void CocMat4::transformVector(const CocVec4& vector, CocVec4* dst) const
 {
     GP_ASSERT(dst);
 #ifdef __SSE__
@@ -930,29 +930,29 @@ void Mat4::transformVector(const Vec4& vector, Vec4* dst) const
 #endif
 }
 
-void Mat4::translate(float x, float y, float z)
+void CocMat4::translate(float x, float y, float z)
 {
     translate(x, y, z, this);
 }
 
-void Mat4::translate(float x, float y, float z, Mat4* dst) const
+void CocMat4::translate(float x, float y, float z, CocMat4* dst) const
 {
-    Mat4 t;
+    CocMat4 t;
     createTranslation(x, y, z, &t);
     multiply(*this, t, dst);
 }
 
-void Mat4::translate(const Vec3& t)
+void CocMat4::translate(const CocVec3& t)
 {
     translate(t.x, t.y, t.z, this);
 }
 
-void Mat4::translate(const Vec3& t, Mat4* dst) const
+void CocMat4::translate(const CocVec3& t, CocMat4* dst) const
 {
     translate(t.x, t.y, t.z, dst);
 }
 
-void Mat4::transpose()
+void CocMat4::transpose()
 {
 #ifdef __SSE__
     MathUtil::transposeMatrix(col, col);
@@ -961,20 +961,20 @@ void Mat4::transpose()
 #endif
 }
 
-Mat4 Mat4::getTransposed() const
+CocMat4 CocMat4::getTransposed() const
 {
-    Mat4 mat(*this);
+    CocMat4 mat(*this);
     mat.transpose();
     return mat;
 }
 
-const Mat4 Mat4::IDENTITY = Mat4(
+const CocMat4 CocMat4::IDENTITY = CocMat4(
                     1.0f, 0.0f, 0.0f, 0.0f,
                     0.0f, 1.0f, 0.0f, 0.0f,
                     0.0f, 0.0f, 1.0f, 0.0f,
                     0.0f, 0.0f, 0.0f, 1.0f);
 
-const Mat4 Mat4::ZERO = Mat4(
+const CocMat4 CocMat4::ZERO = CocMat4(
                     0, 0, 0, 0,
                     0, 0, 0, 0,
                     0, 0, 0, 0,

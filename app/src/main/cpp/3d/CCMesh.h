@@ -49,7 +49,7 @@ class MeshIndexData;
 class GLProgramState;
 class GLProgram;
 class Material;
-class Renderer;
+class CocRenderer;
 class Scene;
 class Pass;
 
@@ -201,7 +201,7 @@ public:
     /** Returns the Material being used by the Mesh */
     Material* getMaterial() const;
 
-    void draw(Renderer* renderer, float globalZ, const Mat4& transform, uint32_t flags, unsigned int lightMask, const Vec4& color, bool forceDepthWrite);
+    void draw(CocRenderer* renderer, float globalZ, const CocMat4& transform, uint32_t flags, unsigned int lightMask, const CocVec4& color, bool forceDepthWrite);
 
     /** 
      * Get the MeshCommand.
@@ -235,7 +235,7 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     void resetLightUniformValues();
-    void setLightUniforms(Pass* pass, Scene* scene, const Vec4& color, unsigned int lightmask);
+    void setLightUniforms(Pass* pass, Scene* scene, const CocVec4& color, unsigned int lightmask);
     void bindMeshCommand();
 
     std::map<NTextureData::Usage, Texture2D*> _textures; //textures that submesh is using
@@ -255,16 +255,16 @@ protected:
     std::function<void()> _visibleChanged;
     
     ///light parameters
-    std::vector<Vec3> _dirLightUniformColorValues;
-    std::vector<Vec3> _dirLightUniformDirValues;
+    std::vector<CocVec3> _dirLightUniformColorValues;
+    std::vector<CocVec3> _dirLightUniformDirValues;
     
-    std::vector<Vec3> _pointLightUniformColorValues;
-    std::vector<Vec3> _pointLightUniformPositionValues;
+    std::vector<CocVec3> _pointLightUniformColorValues;
+    std::vector<CocVec3> _pointLightUniformPositionValues;
     std::vector<float> _pointLightUniformRangeInverseValues;
     
-    std::vector<Vec3> _spotLightUniformColorValues;
-    std::vector<Vec3> _spotLightUniformPositionValues;
-    std::vector<Vec3> _spotLightUniformDirValues;
+    std::vector<CocVec3> _spotLightUniformColorValues;
+    std::vector<CocVec3> _spotLightUniformPositionValues;
+    std::vector<CocVec3> _spotLightUniformDirValues;
     std::vector<float> _spotLightUniformInnerAngleCosValues;
     std::vector<float> _spotLightUniformOuterAngleCosValues;
     std::vector<float> _spotLightUniformRangeInverseValues;

@@ -401,7 +401,7 @@ void TMXMapInfo::startElement(void* /*ctx*/, const char *name, const char **atts
     {
         TMXObjectGroup *objectGroup = new (std::nothrow) TMXObjectGroup();
         objectGroup->setGroupName(attributeDict["name"].asString());
-        Vec2 positionOffset;
+        CocVec2 positionOffset;
         positionOffset.x = attributeDict["x"].asFloat() * tmxMapInfo->getTileSize().width;
         positionOffset.y = attributeDict["y"].asFloat() * tmxMapInfo->getTileSize().height;
         objectGroup->setPositionOffset(positionOffset);
@@ -420,7 +420,7 @@ void TMXMapInfo::startElement(void* /*ctx*/, const char *name, const char **atts
         
         double tileOffsetY = attributeDict["y"].asDouble();
         
-        tileset->_tileOffset = Vec2(tileOffsetX, tileOffsetY);
+        tileset->_tileOffset = CocVec2(tileOffsetX, tileOffsetY);
         
     }
     else if (elementName == "image")
@@ -507,7 +507,7 @@ void TMXMapInfo::startElement(void* /*ctx*/, const char *name, const char **atts
         // Y
         int y = attributeDict["y"].asInt();
         
-        Vec2 p(x + objectGroup->getPositionOffset().x, _mapSize.height * _tileSize.height - y  - objectGroup->getPositionOffset().y - attributeDict["height"].asInt());
+        CocVec2 p(x + objectGroup->getPositionOffset().x, _mapSize.height * _tileSize.height - y  - objectGroup->getPositionOffset().y - attributeDict["height"].asInt());
         p = CC_POINT_PIXELS_TO_POINTS(p);
         dict["x"] = Value(p.x);
         dict["y"] = Value(p.y);

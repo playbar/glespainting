@@ -159,7 +159,7 @@ public:
     }
     
     //LabelLetter doesn't need to draw directly.
-    void draw(Renderer* /*renderer*/, const Mat4 & /*transform*/, uint32_t /*flags*/) override
+    void draw(CocRenderer* /*renderer*/, const CocMat4 & /*transform*/, uint32_t /*flags*/) override
     {
     }
     
@@ -238,7 +238,7 @@ Label* Label::createWithTTF(const TTFConfig& ttfConfig, const std::string& text,
     return nullptr;
 }
 
-Label* Label::createWithBMFont(const std::string& bmfontFilePath, const std::string& text,const TextHAlignment& hAlignment /* = TextHAlignment::LEFT */, int maxLineWidth /* = 0 */, const Vec2& imageOffset /* = Vec2::ZERO */)
+Label* Label::createWithBMFont(const std::string& bmfontFilePath, const std::string& text,const TextHAlignment& hAlignment /* = TextHAlignment::LEFT */, int maxLineWidth /* = 0 */, const CocVec2& imageOffset /* = CocVec2::ZERO */)
 {
     auto ret = new (std::nothrow) Label(hAlignment);
 
@@ -386,7 +386,7 @@ Label::Label(TextHAlignment hAlignment /* = TextHAlignment::LEFT */,
 , _underlineNode(nullptr)
 , _strikethroughEnabled(false)
 {
-    setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    setAnchorPoint(CocVec2::ANCHOR_MIDDLE);
     reset();
     _hAlignment = hAlignment;
     _vAlignment = vAlignment;
@@ -604,7 +604,7 @@ void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false *
         _reusedLetter = Sprite::create();
         _reusedLetter->setOpacityModifyRGB(_isOpacityModifyRGB);            
         _reusedLetter->retain();
-        _reusedLetter->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
+        _reusedLetter->setAnchorPoint(CocVec2::ANCHOR_TOP_LEFT);
     }
 
     if (_fontAtlas)
@@ -629,7 +629,7 @@ bool Label::setTTFConfig(const TTFConfig& ttfConfig)
     return setTTFConfigInternal(ttfConfig);
 }
 
-bool Label::setBMFontFilePath(const std::string& bmfontFilePath, const Vec2& imageOffset, float fontSize)
+bool Label::setBMFontFilePath(const std::string& bmfontFilePath, const CocVec2& imageOffset, float fontSize)
 {
     FontAtlas *newAtlas = FontAtlasCache::getFontAtlasFNT(bmfontFilePath,imageOffset);
     
@@ -814,8 +814,8 @@ bool Label::alignText()
                 {
                     _isOpacityModifyRGB = batchNode->getTexture()->hasPremultipliedAlpha();
                     _blendFunc = batchNode->getBlendFunc();
-                    batchNode->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
-                    batchNode->setPosition(Vec2::ZERO);
+                    batchNode->setAnchorPoint(CocVec2::ANCHOR_TOP_LEFT);
+                    batchNode->setPosition(CocVec2::ZERO);
                     _batchNodes.pushBack(batchNode);
                 }
             }
@@ -1014,7 +1014,7 @@ bool Label::setTTFConfigInternal(const TTFConfig& ttfConfig)
 void Label::setBMFontSizeInternal(float fontSize)
 {
     if(_currentLabelType == LabelType::BMFONT){
-        this->setBMFontFilePath(_bmFontPath, Vec2::ZERO, fontSize);
+        this->setBMFontFilePath(_bmFontPath, CocVec2::ZERO, fontSize);
         _contentDirty = true;
     }
 }
@@ -1266,7 +1266,7 @@ void Label::createSpriteForSystemFont(const FontDefinition& fontDef)
     //set camera mask using label's camera mask, because _textSprite may be null when setting camera mask to label
     _textSprite->setCameraMask(getCameraMask());
     _textSprite->setGlobalZOrder(getGlobalZOrder());
-    _textSprite->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+    _textSprite->setAnchorPoint(CocVec2::ANCHOR_BOTTOM_LEFT);
     this->setContentSize(_textSprite->getContentSize());
     texture->release();
     if (_blendFuncDirty)
@@ -1311,7 +1311,7 @@ void Label::createShadowSpriteForSystemFont(const FontDefinition& fontDef)
         }
         _shadowNode->setCameraMask(getCameraMask());
         _shadowNode->setGlobalZOrder(getGlobalZOrder());
-        _shadowNode->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+        _shadowNode->setAnchorPoint(CocVec2::ANCHOR_BOTTOM_LEFT);
         _shadowNode->setPosition(_shadowOffset.width, _shadowOffset.height);
 
         _shadowNode->retain();
@@ -1428,7 +1428,7 @@ void Label::updateContent()
 
                 // Github issue #15214. Uses _displayedColor instead of _textColor for the underline.
                 // This is to have the same behavior of SystemFonts.
-                _underlineNode->drawLine(Vec2(_linesOffsetX[i],y), Vec2(_linesWidth[i] + _linesOffsetX[i],y), Color4F(_displayedColor));
+                _underlineNode->drawLine(CocVec2(_linesOffsetX[i],y), CocVec2(_linesWidth[i] + _linesOffsetX[i],y), Color4F(_displayedColor));
             }
         }
         else if (_textSprite)
@@ -1442,7 +1442,7 @@ void Label::updateContent()
                 // FIXME: system fonts don't report the height of the font correctly. only the size of the texture, which is POT
                 y += spriteSize.height / 2;
             // FIXME: Might not work with different vertical alignments
-            _underlineNode->drawLine(Vec2(0,y), Vec2(spriteSize.width,y), Color4F(_textSprite->getDisplayedColor()));
+            _underlineNode->drawLine(CocVec2(0,y), CocVec2(spriteSize.width,y), Color4F(_textSprite->getDisplayedColor()));
         }
     }
 
@@ -1452,12 +1452,12 @@ void Label::updateContent()
 
 #if CC_LABEL_DEBUG_DRAW
     _debugDrawNode->clear();
-    Vec2 vertices[4] =
+    CocVec2 vertices[4] =
     {
-        Vec2::ZERO,
-        Vec2(_contentSize.width, 0),
-        Vec2(_contentSize.width, _contentSize.height),
-        Vec2(0, _contentSize.height)
+        CocVec2::ZERO,
+        CocVec2(_contentSize.width, 0),
+        CocVec2(_contentSize.width, _contentSize.height),
+        CocVec2(0, _contentSize.height)
     };
     _debugDrawNode->drawPoly(vertices, 4, true, Color4F::WHITE);
 #endif
@@ -1524,7 +1524,7 @@ void Label::onDrawShadow(GLProgram* glProgram, const Color4F& shadowColor)
     }
 }
 
-void Label::onDraw(const Mat4& transform, bool /*transformUpdated*/)
+void Label::onDraw(const CocMat4& transform, bool /*transformUpdated*/)
 {
     auto glprogram = getGLProgram();
     glprogram->use();
@@ -1579,7 +1579,7 @@ void Label::onDraw(const Mat4& transform, bool /*transformUpdated*/)
     }
 }
 
-void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+void Label::draw(CocRenderer *renderer, const CocMat4 &transform, uint32_t flags)
 {
     if (_batchNodes.empty() || _lengthOfString <= 0)
     {
@@ -1624,7 +1624,7 @@ void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     }
 }
 
-void Label::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
+void Label::visit(CocRenderer *renderer, const CocMat4 &parentTransform, uint32_t parentFlags)
 {
     if (! _visible || (_utf8Text.empty() && _children.empty()) )
     {
@@ -1660,7 +1660,7 @@ void Label::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t pare
     }
 
     // IMPORTANT:
-    // To ease the migration to v3.0, we still support the Mat4 stack,
+    // To ease the migration to v3.0, we still support the CocMat4 stack,
     // but it is deprecated and your code should not rely on it
     _director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     _director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
@@ -1697,7 +1697,7 @@ void Label::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t pare
     _director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
-void Label::drawSelf(bool visibleByCamera, Renderer* renderer, uint32_t flags)
+void Label::drawSelf(bool visibleByCamera, CocRenderer* renderer, uint32_t flags)
 {
     if (_textSprite)
     {

@@ -130,23 +130,23 @@ public:
     * @param target The target camera is point at
     * @param up The up vector, usually it's Y axis
     */
-    virtual void lookAt(const Vec3& target, const Vec3& up = Vec3::UNIT_Y);
+    virtual void lookAt(const CocVec3& target, const CocVec3& up = CocVec3::UNIT_Y);
 
     /**
     * Gets the camera's projection matrix.
     *
     * @return The camera projection matrix.
     */
-    const Mat4& getProjectionMatrix() const;
+    const CocMat4& getProjectionMatrix() const;
     /**
     * Gets the camera's view matrix.
     *
     * @return The camera view matrix.
     */
-    const Mat4& getViewMatrix() const;
+    const CocMat4& getViewMatrix() const;
 
     /**get view projection matrix*/
-    const Mat4& getViewProjectionMatrix() const;
+    const CocMat4& getViewProjectionMatrix() const;
     
     /* convert the specified point in 3D world-space coordinates into the screen-space coordinates.
      *
@@ -154,7 +154,7 @@ public:
      * @param src The world-space position.
      * @return The screen-space position.
      */
-    Vec2 project(const Vec3& src) const;
+    CocVec2 project(const CocVec3& src) const;
     
     /* convert the specified point in 3D world-space coordinates into the GL-screen-space coordinates.
      *
@@ -162,7 +162,7 @@ public:
      * @param src The 3D world-space position.
      * @return The GL-screen-space position.
      */
-    Vec2 projectGL(const Vec3& src) const;
+    CocVec2 projectGL(const CocVec3& src) const;
     
     /**
      * Convert the specified point of screen-space coordinate into the 3D world-space coordinate.
@@ -171,7 +171,7 @@ public:
      * @param src The screen-space position.
      * @return The 3D world-space position.
      */
-    Vec3 unproject(const Vec3& src) const;
+    CocVec3 unproject(const CocVec3& src) const;
     
     /**
      * Convert the specified point of GL-screen-space coordinate into the 3D world-space coordinate.
@@ -180,7 +180,7 @@ public:
      * @param src The GL-screen-space position.
      * @return The 3D world-space position.
      */
-    Vec3 unprojectGL(const Vec3& src) const;
+    CocVec3 unprojectGL(const CocVec3& src) const;
     
     /**
      * Convert the specified point of screen-space coordinate into the 3D world-space coordinate.
@@ -190,7 +190,7 @@ public:
      * @param src  The screen-space position.
      * @param dst  The 3D world-space position.
      */
-    void unproject(const Size& size, const Vec3* src, Vec3* dst) const;
+    void unproject(const Size& size, const CocVec3* src, CocVec3* dst) const;
     
     /**
      * Convert the specified point of GL-screen-space coordinate into the 3D world-space coordinate.
@@ -200,7 +200,7 @@ public:
      * @param src  The GL-screen-space position.
      * @param dst  The 3D world-space position.
      */
-    void unprojectGL(const Size& size, const Vec3* src, Vec3* dst) const;
+    void unprojectGL(const Size& size, const CocVec3* src, CocVec3* dst) const;
 
     /**
      * Is this aabb visible in frustum
@@ -210,7 +210,7 @@ public:
     /**
      * Get object depth towards camera
      */
-    float getDepthInView(const Mat4& transform) const;
+    float getDepthInView(const CocMat4& transform) const;
     
     /**
      * set depth, camera with larger depth is drawn on top of camera with smaller depth, the depth of camera with CameraFlag::DEFAULT is 0, user defined camera is -1 by default
@@ -280,7 +280,7 @@ public:
      */
     CameraBackgroundBrush* getBackgroundBrush() const { return _clearBrush; }
 
-    virtual void visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
+    virtual void visit(CocRenderer* renderer, const CocMat4 &parentTransform, uint32_t parentFlags) override;
 
     bool isBrushValid();
 
@@ -294,7 +294,7 @@ CC_CONSTRUCTOR_ACCESS:
     void setScene(Scene* scene);
 
     /**set additional matrix for the projection matrix, it multiplies mat to projection matrix when called, used by WP8*/
-    void setAdditionalProjection(const Mat4& mat);
+    void setAdditionalProjection(const CocMat4& mat);
 
     /** init camera */
     bool initDefault();
@@ -310,12 +310,12 @@ protected:
     static experimental::Viewport _defaultViewport;
 
     Scene* _scene; //Scene camera belongs to
-    Mat4 _projection;
-    mutable Mat4 _view;
-    mutable Mat4 _viewInv;
-    mutable Mat4 _viewProjection;
+    CocMat4 _projection;
+    mutable CocMat4 _view;
+    mutable CocMat4 _viewInv;
+    mutable CocMat4 _viewProjection;
 
-    Vec3 _up;
+    CocVec3 _up;
     Camera::Type _type;
     float _fieldOfView;
     float _zoom[2];

@@ -124,7 +124,7 @@ void TileMapAtlas::loadTGAfile(const std::string& file)
 }
 
 // TileMapAtlas - Atlas generation / updates
-void TileMapAtlas::setTile(const Color3B& tile, const Vec2& position)
+void TileMapAtlas::setTile(const Color3B& tile, const CocVec2& position)
 {
     CCASSERT(_TGAInfo != nullptr, "tgaInfo must not be nil");
     CCASSERT(position.x < _TGAInfo->width, "Invalid position.x");
@@ -150,7 +150,7 @@ void TileMapAtlas::setTile(const Color3B& tile, const Vec2& position)
     }    
 }
 
-Color3B TileMapAtlas::getTileAt(const Vec2& position) const
+Color3B TileMapAtlas::getTileAt(const CocVec2& position) const
 {
     CCASSERT( _TGAInfo != nullptr, "tgaInfo must not be nil");
     CCASSERT( position.x < _TGAInfo->width, "Invalid position.x");
@@ -162,7 +162,7 @@ Color3B TileMapAtlas::getTileAt(const Vec2& position) const
     return value;    
 }
 
-void TileMapAtlas::updateAtlasValueAt(const Vec2& pos, const Color3B& value, int index)
+void TileMapAtlas::updateAtlasValueAt(const CocVec2& pos, const Color3B& value, int index)
 {
     CCASSERT( index >= 0 && index < _textureAtlas->getCapacity(), "updateAtlasValueAt: Invalid index");
 
@@ -243,7 +243,7 @@ void TileMapAtlas::updateAtlasValues()
 
                 if( value.r != 0 )
                 {
-                    this->updateAtlasValueAt(Vec2(x,y), value, total);
+                    this->updateAtlasValueAt(CocVec2(x,y), value, total);
 
                     std::string key = StringUtils::toString(x) + "," + StringUtils::toString(y);
                     _posToAtlasIndex[key] = total;

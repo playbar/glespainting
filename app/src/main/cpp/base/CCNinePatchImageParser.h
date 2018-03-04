@@ -106,8 +106,8 @@ private:
         VERTICAL
     };
     int getPixelOriginOffset(Direction direction)const;
-    Vec2 parseHorizontalMargin()const;
-    Vec2 parseVerticalMargin()const;
+    CocVec2 parseHorizontalMargin()const;
+    CocVec2 parseVerticalMargin()const;
     int getFrameWidth()const;
     int getFrameHeight()const;
 

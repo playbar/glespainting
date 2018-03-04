@@ -45,7 +45,7 @@ MeshSkin::~MeshSkin()
     CC_SAFE_RELEASE(_skeleton);
 }
 
-MeshSkin* MeshSkin::create(Skeleton3D* skeleton, const std::vector<std::string>& boneNames, const std::vector<Mat4>& invBindPose)
+MeshSkin* MeshSkin::create(Skeleton3D* skeleton, const std::vector<std::string>& boneNames, const std::vector<CocMat4>& invBindPose)
 {
     auto skin = new (std::nothrow) MeshSkin();
     skin->_skeleton = skeleton;
@@ -99,17 +99,17 @@ int MeshSkin::getBoneIndex(Bone3D* bone) const
 }
 
 //compute matrix palette used by gpu skin
-Vec4* MeshSkin::getMatrixPalette()
+CocVec4* MeshSkin::getMatrixPalette()
 {
     if (_matrixPalette == nullptr)
     {
-        _matrixPalette = new (std::nothrow) Vec4[_skinBones.size() * PALETTE_ROWS];
+        _matrixPalette = new (std::nothrow) CocVec4[_skinBones.size() * PALETTE_ROWS];
     }
     int i = 0, paletteIndex = 0;
-    static Mat4 t;
+    static CocMat4 t;
     for (auto it : _skinBones )
     {
-        Mat4::multiply(it->getWorldMat(), _invBindPoses[i++], &t);
+        CocMat4::multiply(it->getWorldMat(), _invBindPoses[i++], &t);
         _matrixPalette[paletteIndex++].set(t.m[0], t.m[4], t.m[8], t.m[12]);
         _matrixPalette[paletteIndex++].set(t.m[1], t.m[5], t.m[9], t.m[13]);
         _matrixPalette[paletteIndex++].set(t.m[2], t.m[6], t.m[10], t.m[14]);
@@ -148,7 +148,7 @@ Bone3D* MeshSkin::getRootBone() const
     return root;
 }
 
-const Mat4& MeshSkin::getInvBindPose(const Bone3D* bone)
+const CocMat4& MeshSkin::getInvBindPose(const Bone3D* bone)
 {
     for (ssize_t i = 0, size = _skinBones.size(); i < size; ++i) {
         if (_skinBones.at(i) == bone)
@@ -156,7 +156,7 @@ const Mat4& MeshSkin::getInvBindPose(const Bone3D* bone)
             return _invBindPoses.at(i);
         }
     }
-    return Mat4::IDENTITY;
+    return CocMat4::IDENTITY;
 }
 
 NS_CC_END

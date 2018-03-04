@@ -418,9 +418,9 @@ Sprite3D* Sprite3D::createSprite3DNode(NodeData* nodedata,ModelData* modeldata,c
         }
 
         // set locale transform
-        Vec3 pos;
+        CocVec3 pos;
         Quaternion qua;
-        Vec3 scale;
+        CocVec3 scale;
         nodedata->transform.decompose(&scale, &qua, &pos);
         sprite->setPosition3D(pos);
         sprite->setRotationQuat(qua);
@@ -581,9 +581,9 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
                         }
                     }
                     
-                    Vec3 pos;
+                    CocVec3 pos;
                     Quaternion qua;
-                    Vec3 scale;
+                    CocVec3 scale;
                     nodedata->transform.decompose(&scale, &qua, &pos);
                     setPosition3D(pos);
                     setRotationQuat(qua);
@@ -616,9 +616,9 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
             node->setName(nodedata->id);
             
             // set locale transform
-            Vec3 pos;
+            CocVec3 pos;
             Quaternion qua;
-            Vec3 scale;
+            CocVec3 scale;
             nodedata->transform.decompose(&scale, &qua, &pos);
             node->setPosition3D(pos);
             node->setRotationQuat(qua);
@@ -708,7 +708,7 @@ void Sprite3D::removeAllAttachNode()
     _attachments.clear();
 }
 
-void Sprite3D::visit(cocos2d::Renderer *renderer, const cocos2d::Mat4 &parentTransform, uint32_t parentFlags)
+void Sprite3D::visit(cocos2d::CocRenderer *renderer, const cocos2d::CocMat4 &parentTransform, uint32_t parentFlags)
 {
     // quick return if not visible. children won't be drawn.
     if (!_visible)
@@ -756,7 +756,7 @@ void Sprite3D::visit(cocos2d::Renderer *renderer, const cocos2d::Mat4 &parentTra
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
-void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+void Sprite3D::draw(CocRenderer *renderer, const CocMat4 &transform, uint32_t flags)
 {
 #if CC_USE_CULLING
     // camera clipping
@@ -796,7 +796,7 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
                    transform,
                    flags,
                    _lightMask,
-                   Vec4(color.r, color.g, color.b, color.a),
+                   CocVec4(color.r, color.g, color.b, color.a),
                    _forceDepthWrite);
 
     }
@@ -839,10 +839,10 @@ AABB Sprite3D::getAABBRecursively()
 
 const AABB& Sprite3D::getAABB() const
 {
-    Mat4 nodeToWorldTransform(getNodeToWorldTransform());
+    CocMat4 nodeToWorldTransform(getNodeToWorldTransform());
     
     // If nodeToWorldTransform matrix isn't changed, we don't need to transform aabb.
-    if (memcmp(_nodeToWorldTransform.m, nodeToWorldTransform.m, sizeof(Mat4)) == 0 && !_aabbDirty)
+    if (memcmp(_nodeToWorldTransform.m, nodeToWorldTransform.m, sizeof(CocMat4)) == 0 && !_aabbDirty)
     {
         return _aabb;
     }
@@ -851,7 +851,7 @@ const AABB& Sprite3D::getAABB() const
         _aabb.reset();
         if (_meshes.size())
         {
-            Mat4 transform(nodeToWorldTransform);
+            CocMat4 transform(nodeToWorldTransform);
             for (const auto& it : _meshes) {
                 if (it->isVisible())
                     _aabb.merge(it->getAABB());

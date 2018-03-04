@@ -65,7 +65,7 @@ public:
      * @param parallaxRatio A given parallax ratio.
      * @param positionOffset A given position offset.
      */
-    void addChild(Node * child, int z, const Vec2& parallaxRatio, const Vec2& positionOffset);
+    void addChild(Node * child, int z, const CocVec2& parallaxRatio, const CocVec2& positionOffset);
 
     /** Sets an array of layers for the Parallax node.
      *
@@ -86,7 +86,7 @@ public:
     virtual void addChild(Node * child, int zOrder, const std::string &name) override;
     virtual void removeChild(Node* child, bool cleanup) override;
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
-    virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
+    virtual void visit(CocRenderer *renderer, const CocMat4 &parentTransform, uint32_t parentFlags) override;
 
 CC_CONSTRUCTOR_ACCESS:
     /** Adds a child to the container with a z-order, a parallax ratio and a position offset
@@ -102,9 +102,9 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~ParallaxNode();
 
 protected:
-    Vec2 absolutePosition();
+    CocVec2 absolutePosition();
 
-    Vec2    _lastPosition;
+    CocVec2    _lastPosition;
     struct _ccArray* _parallaxArray;
 
 private:

@@ -127,13 +127,13 @@ Camera::~Camera()
     CC_SAFE_RELEASE(_clearBrush);
 }
 
-const Mat4& Camera::getProjectionMatrix() const
+const CocMat4& Camera::getProjectionMatrix() const
 {
     return _projection;
 }
-const Mat4& Camera::getViewMatrix() const
+const CocMat4& Camera::getViewMatrix() const
 {
-    Mat4 viewInv(getNodeToWorldTransform());
+    CocMat4 viewInv(getNodeToWorldTransform());
     static int count = sizeof(float) * 16;
     if (memcmp(viewInv.m, _viewInv.m, count) != 0)
     {
@@ -144,22 +144,22 @@ const Mat4& Camera::getViewMatrix() const
     }
     return _view;
 }
-void Camera::lookAt(const Vec3& lookAtPos, const Vec3& up)
+void Camera::lookAt(const CocVec3& lookAtPos, const CocVec3& up)
 {
-    Vec3 upv = up;
+    CocVec3 upv = up;
     upv.normalize();
-    Vec3 zaxis;
-    Vec3::subtract(this->getPosition3D(), lookAtPos, &zaxis);
+    CocVec3 zaxis;
+    CocVec3::subtract(this->getPosition3D(), lookAtPos, &zaxis);
     zaxis.normalize();
     
-    Vec3 xaxis;
-    Vec3::cross(upv, zaxis, &xaxis);
+    CocVec3 xaxis;
+    CocVec3::cross(upv, zaxis, &xaxis);
     xaxis.normalize();
     
-    Vec3 yaxis;
-    Vec3::cross(zaxis, xaxis, &yaxis);
+    CocVec3 yaxis;
+    CocVec3::cross(zaxis, xaxis, &yaxis);
     yaxis.normalize();
-    Mat4  rotation;
+    CocMat4  rotation;
     rotation.m[0] = xaxis.x;
     rotation.m[1] = xaxis.y;
     rotation.m[2] = xaxis.z;
@@ -180,19 +180,19 @@ void Camera::lookAt(const Vec3& lookAtPos, const Vec3& up)
     setRotationQuat(quaternion);
 }
 
-const Mat4& Camera::getViewProjectionMatrix() const
+const CocMat4& Camera::getViewProjectionMatrix() const
 {
     getViewMatrix();
     if (_viewProjectionDirty)
     {
         _viewProjectionDirty = false;
-        Mat4::multiply(_projection, _view, &_viewProjection);
+        CocMat4::multiply(_projection, _view, &_viewProjection);
     }
     
     return _viewProjection;
 }
 
-void Camera::setAdditionalProjection(const Mat4& mat)
+void Camera::setAdditionalProjection(const CocMat4& mat)
 {
     _projection = mat * _projection;
     getViewProjectionMatrix();
@@ -208,15 +208,15 @@ bool Camera::initDefault()
         case Director::Projection::_2D:
         {
             initOrthographic(size.width, size.height, -1024, 1024);
-            setPosition3D(Vec3(0.0f, 0.0f, 0.0f));
-            setRotation3D(Vec3(0.f, 0.f, 0.f));
+            setPosition3D(CocVec3(0.0f, 0.0f, 0.0f));
+            setRotation3D(CocVec3(0.f, 0.f, 0.f));
             break;
         }
         case Director::Projection::_3D:
         {
             float zeye = Director::getInstance()->getZEye();
             initPerspective(60, (GLfloat)size.width / size.height, 10, zeye + size.height / 2.0f);
-            Vec3 eye(size.width/2, size.height/2.0f, zeye), center(size.width/2, size.height/2, 0.0f), up(0.0f, 1.0f, 0.0f);
+            CocVec3 eye(size.width/2, size.height/2.0f, zeye), center(size.width/2, size.height/2, 0.0f), up(0.0f, 1.0f, 0.0f);
             setPosition3D(eye);
             lookAt(center, up);
             break;
@@ -234,7 +234,7 @@ bool Camera::initPerspective(float fieldOfView, float aspectRatio, float nearPla
     _aspectRatio = aspectRatio;
     _nearPlane = nearPlane;
     _farPlane = farPlane;
-    Mat4::createPerspective(_fieldOfView, _aspectRatio, _nearPlane, _farPlane, &_projection);
+    CocMat4::createPerspective(_fieldOfView, _aspectRatio, _nearPlane, _farPlane, &_projection);
     _viewProjectionDirty = true;
     _frustumDirty = true;
     _type = Type::PERSPECTIVE;
@@ -248,7 +248,7 @@ bool Camera::initOrthographic(float zoomX, float zoomY, float nearPlane, float f
     _zoom[1] = zoomY;
     _nearPlane = nearPlane;
     _farPlane = farPlane;
-    Mat4::createOrthographicOffCenter(0, _zoom[0], 0, _zoom[1], _nearPlane, _farPlane, &_projection);
+    CocMat4::createOrthographicOffCenter(0, _zoom[0], 0, _zoom[1], _nearPlane, _farPlane, &_projection);
     _viewProjectionDirty = true;
     _frustumDirty = true;
     _type = Type::ORTHOGRAPHIC;
@@ -256,13 +256,13 @@ bool Camera::initOrthographic(float zoomX, float zoomY, float nearPlane, float f
     return true;
 }
 
-Vec2 Camera::project(const Vec3& src) const
+CocVec2 Camera::project(const CocVec3& src) const
 {
-    Vec2 screenPos;
+    CocVec2 screenPos;
     
     auto viewport = Director::getInstance()->getWinSize();
-    Vec4 clipPos;
-    getViewProjectionMatrix().transformVector(Vec4(src.x, src.y, src.z, 1.0f), &clipPos);
+    CocVec4 clipPos;
+    getViewProjectionMatrix().transformVector(CocVec4(src.x, src.y, src.z, 1.0f), &clipPos);
     
     CCASSERT(clipPos.w != 0.0f, "clipPos.w can't be 0.0f!");
     float ndcX = clipPos.x / clipPos.w;
@@ -273,13 +273,13 @@ Vec2 Camera::project(const Vec3& src) const
     return screenPos;
 }
 
-Vec2 Camera::projectGL(const Vec3& src) const
+CocVec2 Camera::projectGL(const CocVec3& src) const
 {
-    Vec2 screenPos;
+    CocVec2 screenPos;
     
     auto viewport = Director::getInstance()->getWinSize();
-    Vec4 clipPos;
-    getViewProjectionMatrix().transformVector(Vec4(src.x, src.y, src.z, 1.0f), &clipPos);
+    CocVec4 clipPos;
+    getViewProjectionMatrix().transformVector(CocVec4(src.x, src.y, src.z, 1.0f), &clipPos);
     
     CCASSERT(clipPos.w != 0.0f, "clipPos.w can't be 0.0f!");
     float ndcX = clipPos.x / clipPos.w;
@@ -290,25 +290,25 @@ Vec2 Camera::projectGL(const Vec3& src) const
     return screenPos;
 }
 
-Vec3 Camera::unproject(const Vec3& src) const
+CocVec3 Camera::unproject(const CocVec3& src) const
 {
-    Vec3 dst;
+    CocVec3 dst;
     unproject(Director::getInstance()->getWinSize(), &src, &dst);
     return dst;
 }
 
-Vec3 Camera::unprojectGL(const Vec3& src) const
+CocVec3 Camera::unprojectGL(const CocVec3& src) const
 {
-    Vec3 dst;
+    CocVec3 dst;
     unprojectGL(Director::getInstance()->getWinSize(), &src, &dst);
     return dst;
 }
 
-void Camera::unproject(const Size& viewport, const Vec3* src, Vec3* dst) const
+void Camera::unproject(const Size& viewport, const CocVec3* src, CocVec3* dst) const
 {
     CCASSERT(src && dst, "vec3 can not be null");
     
-    Vec4 screen(src->x / viewport.width, ((viewport.height - src->y)) / viewport.height, src->z, 1.0f);
+    CocVec4 screen(src->x / viewport.width, ((viewport.height - src->y)) / viewport.height, src->z, 1.0f);
     screen.x = screen.x * 2.0f - 1.0f;
     screen.y = screen.y * 2.0f - 1.0f;
     screen.z = screen.z * 2.0f - 1.0f;
@@ -324,11 +324,11 @@ void Camera::unproject(const Size& viewport, const Vec3* src, Vec3* dst) const
     dst->set(screen.x, screen.y, screen.z);
 }
 
-void Camera::unprojectGL(const Size& viewport, const Vec3* src, Vec3* dst) const
+void Camera::unprojectGL(const Size& viewport, const CocVec3* src, CocVec3* dst) const
 {
     CCASSERT(src && dst, "vec3 can not be null");
     
-    Vec4 screen(src->x / viewport.width, src->y / viewport.height, src->z, 1.0f);
+    CocVec4 screen(src->x / viewport.width, src->y / viewport.height, src->z, 1.0f);
     screen.x = screen.x * 2.0f - 1.0f;
     screen.y = screen.y * 2.0f - 1.0f;
     screen.z = screen.z * 2.0f - 1.0f;
@@ -354,10 +354,10 @@ bool Camera::isVisibleInFrustum(const AABB* aabb) const
     return !_frustum.isOutOfFrustum(*aabb);
 }
 
-float Camera::getDepthInView(const Mat4& transform) const
+float Camera::getDepthInView(const CocMat4& transform) const
 {
-    Mat4 camWorldMat = getNodeToWorldTransform();
-    const Mat4 &viewMat = camWorldMat.getInversed();
+    CocMat4 camWorldMat = getNodeToWorldTransform();
+    const CocMat4 &viewMat = camWorldMat.getInversed();
     float depth = -(viewMat.m[2] * transform.m[12] + viewMat.m[6] * transform.m[13] + viewMat.m[10] * transform.m[14] + viewMat.m[14]);
     return depth;
 }
@@ -524,7 +524,7 @@ int Camera::getRenderOrder() const
     return result;
 }
 
-void Camera::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t parentFlags)
+void Camera::visit(CocRenderer* renderer, const CocMat4 &parentTransform, uint32_t parentFlags)
 {
     _viewProjectionUpdated = _transformUpdated;
     return Node::visit(renderer, parentTransform, parentFlags);

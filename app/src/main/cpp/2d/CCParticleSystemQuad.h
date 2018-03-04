@@ -130,7 +130,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    virtual void draw(CocRenderer *renderer, const CocMat4 &transform, uint32_t flags) override;
 
     /**
      * @js NA

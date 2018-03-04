@@ -115,14 +115,14 @@ public:
      */
     struct Triangle
     {
-        Triangle(const Vec3& p1, const Vec3& p2, const Vec3& p3);
-        bool getIntersectPoint(const Ray& ray, Vec3& intersectPoint) const;
+        Triangle(const CocVec3& p1, const CocVec3& p2, const CocVec3& p3);
+        bool getIntersectPoint(const Ray& ray, CocVec3& intersectPoint) const;
 
         /** @deprecated Use getIntersectPoint instead. */
-        CC_DEPRECATED_ATTRIBUTE bool getInsterctPoint(const Ray& ray, Vec3& interScetPoint) const;
+        CC_DEPRECATED_ATTRIBUTE bool getInsterctPoint(const Ray& ray, CocVec3& interScetPoint) const;
 
-        void transform(const Mat4& matrix);
-        Vec3 _p1, _p2, _p3;
+        void transform(const CocMat4& matrix);
+        CocVec3 _p1, _p2, _p3;
     };
 
 
@@ -186,15 +186,15 @@ private:
     {
         /*constructor*/
         TerrainVertexData(){};
-        TerrainVertexData(const Vec3& v1, const Tex2F& v2)
+        TerrainVertexData(const CocVec3& v1, const Tex2F& v2)
         {
             _position = v1;
             _texcoord = v2;
         }
         /*the vertex's attributes*/
-        cocos2d::Vec3 _position;
+        cocos2d::CocVec3 _position;
         cocos2d::Tex2F _texcoord;
-        cocos2d::Vec3 _normal;
+        cocos2d::CocVec3 _normal;
     };
 
     struct CC_DLL QuadTree;
@@ -237,10 +237,10 @@ private:
         /**calculate the average slop of chunk*/
         void calculateSlope();
 
-        bool getIntersectPointWithRay(const Ray& ray, Vec3& intersectPoint);
+        bool getIntersectPointWithRay(const Ray& ray, CocVec3& intersectPoint);
 
         /** @deprecated Use getIntersectPointWithRay instead. */
-        CC_DEPRECATED_ATTRIBUTE bool getInsterctPointWithRay(const Ray& ray, Vec3& intersectPoint);
+        CC_DEPRECATED_ATTRIBUTE bool getInsterctPointWithRay(const Ray& ray, CocVec3& intersectPoint);
 
         /**current LOD of the chunk*/
         int _currentLod;
@@ -286,9 +286,9 @@ private:
         /**recursively set itself and its children is need to draw*/
         void resetNeedDraw(bool value);
         /**recursively potential visible culling*/
-        void cullByCamera(const Camera * camera, const Mat4 & worldTransform);
+        void cullByCamera(const Camera * camera, const CocMat4 & worldTransform);
         /**precalculate the AABB(In world space) of each quad*/
-        void preCalculateAABB(const Mat4 & worldTransform);
+        void preCalculateAABB(const CocMat4 & worldTransform);
         QuadTree * _tl;
         QuadTree * _tr;
         QuadTree * _bl;
@@ -319,7 +319,7 @@ public:
      set directional light for the terrain
      @param lightDir The direction of directional light, Note that lightDir is in the terrain's local space. Most of the time terrain is placed at (0,0,0) and without rotation, so lightDir is also in the world space.
      */
-    void setLightDir(const Vec3& lightDir);
+    void setLightDir(const CocVec3& lightDir);
     /*init function*/
     /**initialize all Properties which terrain need */
     bool initProperties();
@@ -335,20 +335,20 @@ public:
      * @param normal the specified position's normal vector in terrain . if this argument is NULL or nullptr,Normal calculation shall be skip.
      * @return the height value of the specified position of the terrain, if the (X,Z) position is out of the terrain bounds,it shall return 0;
      **/
-    float getHeight(float x, float z, Vec3 * normal= nullptr) const;
+    float getHeight(float x, float z, CocVec3 * normal= nullptr) const;
 
     /**get specified position's height mapping to the terrain,use bi-linear interpolation method
      * @param pos the position (X,Z)
      * @param normal the specified position's normal vector in terrain . if this argument is NULL or nullptr,Normal calculation shall be skip.
      * @return the height value of the specified position of the terrain, if the (X,Z) position is out of the terrain bounds,it shall return 0;
      **/
-    float getHeight(const Vec2& pos, Vec3* normal = nullptr) const;
+    float getHeight(const CocVec2& pos, CocVec3* normal = nullptr) const;
 
     /**get the normal of the specified position in terrain
      * @return the normal vector of the specified position of the terrain.
      * @note the fast normal calculation may not get precise normal vector.
      **/
-    Vec3 getNormal(int pixelX, int pixelY) const;
+    CocVec3 getNormal(int pixelX, int pixelY) const;
     /**get height from the raw height filed*/
     float getImageHeight(int pixelX, int pixelY) const;
     /**show the wireline instead of the surface,Debug Use only.
@@ -372,12 +372,12 @@ public:
     void setDetailMap(unsigned int index, DetailMap detailMap);
 
     // Overrides, internal use only
-    virtual void draw(cocos2d::Renderer* renderer, const cocos2d::Mat4 &transform, uint32_t flags) override;
+    virtual void draw(cocos2d::CocRenderer* renderer, const cocos2d::CocMat4 &transform, uint32_t flags) override;
     /**
      * Ray-Terrain intersection.
      * @return the intersection point
      */
-    Vec3 getIntersectionPoint(const Ray & ray) const;
+    CocVec3 getIntersectionPoint(const Ray & ray) const;
 
    /**
     * Ray-Terrain intersection.
@@ -385,7 +385,7 @@ public:
     * @param intersectionPoint hit point if hit
     * @return true if hit, false otherwise
     */
-    bool getIntersectionPoint(const Ray & ray, Vec3 & intersectionPoint) const;
+    bool getIntersectionPoint(const Ray & ray, CocVec3 & intersectionPoint) const;
 
     /**
      * set the MaxDetailAmount.
@@ -395,7 +395,7 @@ public:
     /**
      * Convert a world Space position (X,Z) to terrain space position (X,Z)
      */
-    Vec2 convertToTerrainSpace(const Vec2& worldSpace) const;
+    CocVec2 convertToTerrainSpace(const CocVec2& worldSpace) const;
 
     /**
      * reset the heightmap data.
@@ -444,13 +444,13 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~Terrain();
     bool initWithTerrainData(TerrainData &parameter, CrackFixedType fixedType);
 protected:
-    void onDraw(const Mat4 &transform, uint32_t flags);
+    void onDraw(const CocMat4 &transform, uint32_t flags);
 
     /**
      * recursively set each chunk's LOD
      * @param cameraPos the camera position in world space
      **/
-    void setChunksLOD(const Vec3& cameraPos);
+    void setChunksLOD(const CocVec3& cameraPos);
 
     /**
      * load Vertices from height filed for the whole terrain.
@@ -484,7 +484,7 @@ protected:
 protected:
     std::vector <ChunkLODIndices> _chunkLodIndicesSet;
     std::vector<ChunkLODIndicesSkirt> _chunkLodIndicesSkirtSet;
-    Mat4 _CameraMatrix;
+    CocMat4 _CameraMatrix;
     bool _isCameraViewChanged;
     TerrainData _terrainData;
     bool _isDrawWire;
@@ -493,7 +493,7 @@ protected:
     Texture2D * _detailMapTextures[4];
     Texture2D * _alphaMap;
     Texture2D * _lightMap;
-    Vec3 _lightDir;
+    CocVec3 _lightDir;
     CustomCommand _customCommand;
     QuadTree * _quadRoot;
     Chunk * _chunkesArray[MAX_CHUNKES][MAX_CHUNKES];
@@ -505,8 +505,8 @@ protected:
     bool _isEnableFrustumCull;
     int _maxDetailMapValue;
     cocos2d::Image * _heightMapImage;
-    Mat4 _oldCameraModelMatrix;
-    Mat4 _terrainModelMatrix;
+    CocMat4 _oldCameraModelMatrix;
+    CocMat4 _terrainModelMatrix;
     GLuint _normalLocation;
     GLuint _positionLocation;
     GLuint _texcoordLocation;

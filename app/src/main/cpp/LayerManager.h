@@ -108,11 +108,11 @@ public:
     //vec3 getRotate(); //获取当前旋转值
     ////////////////////////
     int setAllTranslate(float x, float y, float z);//整个场景平移，失败返回-1，成功返回1
-    cocos2d::Vec3 getAllTranslate();//整个场景，获取当前图层的位置，返回图层所在的位置
+    cocos2d::CocVec3 getAllTranslate();//整个场景，获取当前图层的位置，返回图层所在的位置
     int setAllScale(float cx, float cy, float scale);//设置整个场景缩放，失败返回-1，成功返回1, 中心点，两手指中点
-    cocos2d::Vec3 getAllScale(); // 获取当前图层的缩放比例，
+    cocos2d::CocVec3 getAllScale(); // 获取当前图层的缩放比例，
     int setAllRotate(float cx, float cy, float angle);//设置图层当前旋转, 成功返回1， 失败返回-1, 中心点，两手指中点
-    cocos2d::Vec3 getAllRotate(); //获取当前旋转值
+    cocos2d::CocVec3 getAllRotate(); //获取当前旋转值
     /////////////
     int setBlendMode(int mode);//设置当前图层的混合模式，成功返回1，失败返回-1
     int getBlendMode(); //设置当前图层的混合模式
@@ -131,7 +131,7 @@ private:
 
 public: // for test
     Size visibleSize;
-    Vec2 origin;
+    CocVec2 origin;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

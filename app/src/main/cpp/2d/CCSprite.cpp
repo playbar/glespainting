@@ -276,7 +276,7 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         _flippedX = _flippedY = false;
 
         // default transform anchor: center
-        setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+        setAnchorPoint(CocVec2::ANCHOR_MIDDLE);
 
         // zwoptex default values
         _offsetPosition.setZero();
@@ -317,7 +317,7 @@ Sprite::Sprite(void)
 , _renderMode(Sprite::RenderMode::QUAD)
 , _trianglesVertex(nullptr)
 , _trianglesIndex(nullptr)
-, _stretchFactor(Vec2::ONE)
+, _stretchFactor(CocVec2::ONE)
 , _originalContentSize(Size::ZERO)
 , _stretchEnabled(true)
 {
@@ -364,7 +364,7 @@ void Sprite::setTexture(const std::string &filename)
 {
     Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(filename);
     setTexture(texture);
-    _unflippedOffsetPositionFromCenter = Vec2::ZERO;
+    _unflippedOffsetPositionFromCenter = CocVec2::ZERO;
     Rect rect = Rect::ZERO;
     if (texture)
         rect.size = texture->getContentSize();
@@ -980,8 +980,8 @@ void Sprite::updateTransform(void)
             else
             {
                 CCASSERT( dynamic_cast<Sprite*>(_parent), "Logic error in Sprite. Parent must be a Sprite");
-                const Mat4 &nodeToParent = getNodeToParentTransform();
-                Mat4 &parentTransform = static_cast<Sprite*>(_parent)->_transformToBatch;
+                const CocMat4 &nodeToParent = getNodeToParentTransform();
+                CocMat4 &parentTransform = static_cast<Sprite*>(_parent)->_transformToBatch;
                 _transformToBatch = parentTransform * nodeToParent;
             }
 
@@ -1046,7 +1046,7 @@ void Sprite::updateTransform(void)
 
 // draw
 
-void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+void Sprite::draw(CocRenderer *renderer, const CocMat4 &transform, uint32_t flags)
 {
     if (_texture == nullptr)
     {
@@ -1090,17 +1090,17 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         for(ssize_t i = 0; i < count; i++)
         {
             //draw 3 lines
-            Vec3 from =verts[indices[i*3]].vertices;
-            Vec3 to = verts[indices[i*3+1]].vertices;
-            _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
+            CocVec3 from =verts[indices[i*3]].vertices;
+            CocVec3 to = verts[indices[i*3+1]].vertices;
+            _debugDrawNode->drawLine(CocVec2(from.x, from.y), CocVec2(to.x,to.y), Color4F::WHITE);
 
             from =verts[indices[i*3+1]].vertices;
             to = verts[indices[i*3+2]].vertices;
-            _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
+            _debugDrawNode->drawLine(CocVec2(from.x, from.y), CocVec2(to.x,to.y), Color4F::WHITE);
 
             from =verts[indices[i*3+2]].vertices;
             to = verts[indices[i*3]].vertices;
-            _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
+            _debugDrawNode->drawLine(CocVec2(from.x, from.y), CocVec2(to.x,to.y), Color4F::WHITE);
         }
 #endif //CC_SPRITE_DEBUG_DRAW
     }
@@ -1259,7 +1259,7 @@ void Sprite::setDirtyRecursively(bool bValue)
                         }                               \
                     }
 
-void Sprite::setPosition(const Vec2& pos)
+void Sprite::setPosition(const CocVec2& pos)
 {
     Node::setPosition(pos);
     SET_DIRTY_RECURSIVELY();
@@ -1332,7 +1332,7 @@ void Sprite::setPositionZ(float fVertexZ)
     SET_DIRTY_RECURSIVELY();
 }
 
-void Sprite::setAnchorPoint(const Vec2& anchor)
+void Sprite::setAnchorPoint(const CocVec2& anchor)
 {
     Node::setAnchorPoint(anchor);
     SET_DIRTY_RECURSIVELY();
@@ -1401,7 +1401,7 @@ void Sprite::updateStretchFactor()
         const float x_factor = size.width / _originalContentSize.width;
         const float y_factor = size.height / _originalContentSize.height;
 
-        _stretchFactor = Vec2(std::max(0.0f, x_factor),
+        _stretchFactor = CocVec2(std::max(0.0f, x_factor),
                               std::max(0.0f, y_factor));
     }
     else if (_renderMode == RenderMode::SLICE9)
@@ -1421,7 +1421,7 @@ void Sprite::updateStretchFactor()
         const float x_factor = (adjustedWidth - x1 - x3) / x2;
         const float y_factor = (adjustedHeight - y1 - y3) / y2;
 
-        _stretchFactor = Vec2(std::max(0.0f, x_factor),
+        _stretchFactor = CocVec2(std::max(0.0f, x_factor),
                               std::max(0.0f, y_factor));
     }
 
@@ -1684,7 +1684,7 @@ void Sprite::setBatchNode(SpriteBatchNode *spriteBatchNode)
     } else {
         // using batch
         _renderMode = RenderMode::QUAD_BATCHNODE;
-        _transformToBatch = Mat4::IDENTITY;
+        _transformToBatch = CocMat4::IDENTITY;
         setTextureAtlas(_batchNode->getTextureAtlas()); // weak ref
     }
 }

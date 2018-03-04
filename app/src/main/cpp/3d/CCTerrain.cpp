@@ -98,7 +98,7 @@ void cocos2d::Terrain::setLightMap(const std::string& fileName)
 
 }
 
-void cocos2d::Terrain::setLightDir(const Vec3& lightDir)
+void cocos2d::Terrain::setLightDir(const CocVec3& lightDir)
 {
     _lightDir = lightDir;
 }
@@ -117,20 +117,20 @@ bool Terrain::initProperties()
 
     setDrawWire(false);
     setIsEnableFrustumCull(true);
-    setAnchorPoint(Vec2(0,0));
+    setAnchorPoint(CocVec2(0,0));
     return true;
 }
 
-void Terrain::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags)
+void Terrain::draw(cocos2d::CocRenderer *renderer, const cocos2d::CocMat4 &transform, uint32_t flags)
 {
     _customCommand.func = CC_CALLBACK_0(Terrain::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
 }
 
-void Terrain::onDraw(const Mat4 &transform, uint32_t /*flags*/)
+void Terrain::onDraw(const CocMat4 &transform, uint32_t /*flags*/)
 {
     auto modelMatrix = getNodeToWorldTransform();
-    if(memcmp(&modelMatrix,&_terrainModelMatrix,sizeof(Mat4))!=0)
+    if(memcmp(&modelMatrix,&_terrainModelMatrix,sizeof(CocMat4))!=0)
     {
         _terrainModelMatrix = modelMatrix;
         _quadRoot->preCalculateAABB(_terrainModelMatrix);
@@ -186,7 +186,7 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t /*flags*/)
     }
     auto camera = Camera::getVisitingCamera();
 
-    if(memcmp(&_CameraMatrix,&camera->getViewMatrix(),sizeof(Mat4))!=0)
+    if(memcmp(&_CameraMatrix,&camera->getViewMatrix(),sizeof(CocMat4))!=0)
     {
         _isCameraViewChanged = true;
         _CameraMatrix = camera->getViewMatrix();
@@ -197,7 +197,7 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t /*flags*/)
     {
         auto m = camera->getNodeToWorldTransform();
         //set lod
-        setChunksLOD(Vec3(m.m[12], m.m[13], m.m[14]));
+        setChunksLOD(CocVec3(m.m[12], m.m[13], m.m[14]));
     }
 
     if(_isCameraViewChanged )
@@ -295,7 +295,7 @@ Terrain::Terrain()
 #endif
 }
 
-void Terrain::setChunksLOD(const Vec3& cameraPos)
+void Terrain::setChunksLOD(const CocVec3& cameraPos)
 {
     int chunk_amount_y = _imageHeight/_chunkSize.height;
     int chunk_amount_x = _imageWidth/_chunkSize.width;
@@ -304,7 +304,7 @@ void Terrain::setChunksLOD(const Vec3& cameraPos)
         {
             AABB aabb = _chunkesArray[m][n]->_parent->_worldSpaceAABB;
             auto center = aabb.getCenter();
-            float dist = Vec2(center.x, center.z).distance(Vec2(cameraPos.x, cameraPos.z));
+            float dist = CocVec2(center.x, center.z).distance(CocVec2(cameraPos.x, cameraPos.z));
             _chunkesArray[m][n]->_currentLod = 3;
             for(int i =0;i<3;++i)
             {
@@ -317,20 +317,20 @@ void Terrain::setChunksLOD(const Vec3& cameraPos)
         }
 }
 
-float Terrain::getHeight(float x, float z, Vec3 * normal) const
+float Terrain::getHeight(float x, float z, CocVec3 * normal) const
 {
-    Vec2 pos(x,z);
+    CocVec2 pos(x,z);
 
     //top-left
-    Vec2 tl(-1*_terrainData._mapScale*_imageWidth/2,-1*_terrainData._mapScale*_imageHeight/2);
-    auto mulResult = getNodeToWorldTransform() * Vec4(tl.x, 0.0f, tl.y, 1.0f);
+    CocVec2 tl(-1*_terrainData._mapScale*_imageWidth/2,-1*_terrainData._mapScale*_imageHeight/2);
+    auto mulResult = getNodeToWorldTransform() * CocVec4(tl.x, 0.0f, tl.y, 1.0f);
     tl.set(mulResult.x, mulResult.z);
 
-    Vec2 to_tl = pos - tl;
+    CocVec2 to_tl = pos - tl;
 
     //real size
-    Vec2 size(_imageWidth*_terrainData._mapScale,_imageHeight*_terrainData._mapScale);
-    mulResult = getNodeToWorldTransform() * Vec4(size.x, 0.0f, size.y, 0.0f);
+    CocVec2 size(_imageWidth*_terrainData._mapScale,_imageHeight*_terrainData._mapScale);
+    mulResult = getNodeToWorldTransform() * CocVec4(size.x, 0.0f, size.y, 0.0f);
     size.set(mulResult.x, mulResult.z);
 
     float width_ratio = to_tl.x/size.x;
@@ -370,7 +370,7 @@ float Terrain::getHeight(float x, float z, Vec3 * normal) const
     }
 }
 
-float Terrain::getHeight(const Vec2& pos, Vec3* normal) const
+float Terrain::getHeight(const CocVec2& pos, CocVec3* normal) const
 {
     return getHeight(pos.x, pos.y, normal);
 }
@@ -405,7 +405,7 @@ void Terrain::loadVertices()
         {
             float height = getImageHeight(j,i);
             TerrainVertexData v;
-            v._position = Vec3(j*_terrainData._mapScale- _imageWidth/2*_terrainData._mapScale, //x
+            v._position = CocVec3(j*_terrainData._mapScale- _imageWidth/2*_terrainData._mapScale, //x
                 height, //y
                 i*_terrainData._mapScale - _imageHeight/2*_terrainData._mapScale);//z
             v._texcoord = Tex2F(j*1.0/_imageWidth,i*1.0/_imageHeight);
@@ -441,10 +441,10 @@ void Terrain::calculateNormal()
         unsigned int Index0 = _indices[i];
         unsigned int Index1 = _indices[i + 1];
         unsigned int Index2 = _indices[i + 2];
-        Vec3 v1 = _vertices[Index1]._position - _vertices[Index0]._position;
-        Vec3 v2 = _vertices[Index2]._position - _vertices[Index0]._position;
-        Vec3 Normal;
-        Vec3::cross(v1,v2,&Normal);
+        CocVec3 v1 = _vertices[Index1]._position - _vertices[Index0]._position;
+        CocVec3 v2 = _vertices[Index2]._position - _vertices[Index0]._position;
+        CocVec3 Normal;
+        CocVec3::cross(v1,v2,&Normal);
         Normal.normalize();
         _vertices[Index0]._normal += Normal;
         _vertices[Index1]._normal += Normal;
@@ -515,13 +515,13 @@ Terrain::~Terrain()
 #endif
 }
 
-cocos2d::Vec3 Terrain::getNormal(int pixel_x, int pixel_y) const
+cocos2d::CocVec3 Terrain::getNormal(int pixel_x, int pixel_y) const
 {
     float a = getImageHeight(pixel_x,pixel_y)*getScaleY();
     float b = getImageHeight(pixel_x,pixel_y+1)*getScaleY();
     float c = getImageHeight(pixel_x+1,pixel_y)*getScaleY();
     float d = getImageHeight(pixel_x+1,pixel_y+1)*getScaleY();
-    Vec3 normal;
+    CocVec3 normal;
     normal.x = c - b;
     normal.y = 2;
     normal.z = d - a;
@@ -529,37 +529,37 @@ cocos2d::Vec3 Terrain::getNormal(int pixel_x, int pixel_y) const
     return normal;
 }
 
-cocos2d::Vec3 Terrain::getIntersectionPoint(const Ray & ray) const
+cocos2d::CocVec3 Terrain::getIntersectionPoint(const Ray & ray) const
 {
-    Vec3 collisionPoint;
+    CocVec3 collisionPoint;
     if (getIntersectionPoint(ray, collisionPoint))
     {
         return collisionPoint;
     }
     else
     {
-        return Vec3(0,0,0);
+        return CocVec3(0,0,0);
     }
 }
 
-bool Terrain::getIntersectionPoint(const Ray & ray_, Vec3 & intersectionPoint) const
+bool Terrain::getIntersectionPoint(const Ray & ray_, CocVec3 & intersectionPoint) const
 {
     // convert ray from world space to local space
     Ray ray(ray_);
     getWorldToNodeTransform().transformPoint(&(ray._origin));
 
     std::set<Chunk *> closeList;
-    Vec2 start = Vec2(ray_._origin.x,ray_._origin.z);
-    Vec2 dir = Vec2(ray._direction.x,ray._direction.z);
+    CocVec2 start = CocVec2(ray_._origin.x,ray_._origin.z);
+    CocVec2 dir = CocVec2(ray._direction.x,ray._direction.z);
     start = convertToTerrainSpace(start);
     start.x /=(_terrainData._chunkSize.width+1);
     start.y /=(_terrainData._chunkSize.height+1);
-    Vec2 delta = dir.getNormalized();
+    CocVec2 delta = dir.getNormalized();
     auto width = float(_imageWidth) / (_terrainData._chunkSize.width + 1);
     auto height = float(_imageHeight) / (_terrainData._chunkSize.height + 1);
     bool hasIntersect = false;
     float intersectionDist = FLT_MAX;
-    Vec3 tmpIntersectionPoint;
+    CocVec3 tmpIntersectionPoint;
     for(;;)
     {
         int x1 = floorf(start.x);
@@ -607,20 +607,20 @@ void Terrain::setMaxDetailMapAmount(int max_value)
     _maxDetailMapValue = max_value;
 }
 
-cocos2d::Vec2 Terrain::convertToTerrainSpace(const Vec2& worldSpaceXZ) const
+cocos2d::CocVec2 Terrain::convertToTerrainSpace(const CocVec2& worldSpaceXZ) const
 {
-    Vec2 pos(worldSpaceXZ.x,worldSpaceXZ.y);
+    CocVec2 pos(worldSpaceXZ.x,worldSpaceXZ.y);
 
     //top-left
-    Vec2 tl(-1*_terrainData._mapScale*_imageWidth/2,-1*_terrainData._mapScale*_imageHeight/2);
-    auto result  = getNodeToWorldTransform()*Vec4(tl.x,0.0f,tl.y,1.0f);
+    CocVec2 tl(-1*_terrainData._mapScale*_imageWidth/2,-1*_terrainData._mapScale*_imageHeight/2);
+    auto result  = getNodeToWorldTransform()*CocVec4(tl.x,0.0f,tl.y,1.0f);
     tl.set(result.x, result.z);
 
-    Vec2 to_tl = pos - tl;
+    CocVec2 to_tl = pos - tl;
 
     //real size
-    Vec2 size(_imageWidth*_terrainData._mapScale,_imageHeight*_terrainData._mapScale);
-    result = getNodeToWorldTransform()*Vec4(size.x,0.0f,size.y,0.0f);
+    CocVec2 size(_imageWidth*_terrainData._mapScale,_imageHeight*_terrainData._mapScale);
+    result = getNodeToWorldTransform()*CocVec4(size.x,0.0f,size.y,0.0f);
     size.set(result.x, result.z);
 
     float width_ratio = to_tl.x/size.x;
@@ -628,7 +628,7 @@ cocos2d::Vec2 Terrain::convertToTerrainSpace(const Vec2& worldSpaceXZ) const
 
     float image_x = width_ratio * _imageWidth;
     float image_y = height_ratio * _imageHeight;
-    return Vec2(image_x,image_y);
+    return CocVec2(image_x,image_y);
 }
 
 void Terrain::resetHeightMap(const std::string& heightMap)
@@ -970,7 +970,7 @@ void Terrain::Chunk::bindAndDraw()
     unsigned long offset = 0;
     //position
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(TerrainVertexData), (GLvoid *)offset);
-    offset +=sizeof(Vec3);
+    offset +=sizeof(CocVec3);
     //texcoord
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD,2,GL_FLOAT,GL_FALSE,sizeof(TerrainVertexData),(GLvoid *)offset);
     offset +=sizeof(Tex2F);
@@ -1292,7 +1292,7 @@ void Terrain::Chunk::updateIndicesLOD()
 
 void Terrain::Chunk::calculateAABB()
 {
-    std::vector<Vec3>pos;
+    std::vector<CocVec3>pos;
     for(size_t i = 0, size = _originalVertices.size(); i < size; ++i)
     {
         pos.push_back(_originalVertices[i]._position);
@@ -1319,13 +1319,13 @@ void Terrain::Chunk::calculateSlope()
             highest = _originalVertices[i]._position;
         }
     }
-    Vec2 a(lowest.x,lowest.z);
-    Vec2 b(highest.x,highest.z);
+    CocVec2 a(lowest.x,lowest.z);
+    CocVec2 b(highest.x,highest.z);
     float dist = a.distance(b);
     _slope = (highest.y - lowest.y)/dist;
 }
 
-bool Terrain::Chunk::getIntersectPointWithRay(const Ray& ray, Vec3& intersectPoint)
+bool Terrain::Chunk::getIntersectPointWithRay(const Ray& ray, CocVec3& intersectPoint)
 {
     if (!ray.intersects(_aabb))
         return false;
@@ -1334,7 +1334,7 @@ bool Terrain::Chunk::getIntersectPointWithRay(const Ray& ray, Vec3& intersectPoi
     bool isFind = false;
     for (auto triangle : _trianglesList)
     {
-        Vec3 p;
+        CocVec3 p;
         if (triangle.getIntersectPoint(ray, p))
         {
             float dist = ray._origin.distance(p);
@@ -1350,7 +1350,7 @@ bool Terrain::Chunk::getIntersectPointWithRay(const Ray& ray, Vec3& intersectPoi
     return isFind;
 }
 
-bool Terrain::Chunk::getInsterctPointWithRay(const Ray& ray, Vec3& intersectPoint)
+bool Terrain::Chunk::getInsterctPointWithRay(const Ray& ray, CocVec3& intersectPoint)
 {
     return getIntersectPointWithRay(ray, intersectPoint);
 }
@@ -1549,7 +1549,7 @@ void Terrain::QuadTree::resetNeedDraw(bool value)
     }
 }
 
-void Terrain::QuadTree::cullByCamera(const Camera * camera, const Mat4 & worldTransform)
+void Terrain::QuadTree::cullByCamera(const Camera * camera, const CocMat4 & worldTransform)
 {
     if(!camera->isVisibleInFrustum(&_worldSpaceAABB))
     {
@@ -1565,7 +1565,7 @@ void Terrain::QuadTree::cullByCamera(const Camera * camera, const Mat4 & worldTr
     }
 }
 
-void Terrain::QuadTree::preCalculateAABB(const Mat4 & worldTransform)
+void Terrain::QuadTree::preCalculateAABB(const CocMat4 & worldTransform)
 {
 
     _worldSpaceAABB = _localAABB;
@@ -1643,14 +1643,14 @@ Terrain::DetailMap::DetailMap()
     _detailMapSize = 35;
 }
 
-Terrain::Triangle::Triangle(const Vec3& p1, const Vec3& p2, const Vec3& p3)
+Terrain::Triangle::Triangle(const CocVec3& p1, const CocVec3& p2, const CocVec3& p3)
 {
     _p1 = p1;
     _p2 = p2;
     _p3 = p3;
 }
 
-void Terrain::Triangle::transform(const cocos2d::Mat4& matrix)
+void Terrain::Triangle::transform(const cocos2d::CocMat4& matrix)
 {
     matrix.transformPoint(&_p1);
     matrix.transformPoint(&_p2);
@@ -1658,23 +1658,23 @@ void Terrain::Triangle::transform(const cocos2d::Mat4& matrix)
 }
 
 //Please refer to 3D Math Primer for Graphics and Game Development
-bool Terrain::Triangle::getIntersectPoint(const Ray& ray, Vec3& intersectPoint) const
+bool Terrain::Triangle::getIntersectPoint(const Ray& ray, CocVec3& intersectPoint) const
 {
     // E1
-    Vec3 E1 = _p2 - _p1;
+    CocVec3 E1 = _p2 - _p1;
 
     // E2
-    Vec3 E2 = _p3 - _p1;
+    CocVec3 E2 = _p3 - _p1;
 
     // P
-    Vec3 P;
-    Vec3::cross(ray._direction,E2,&P);
+    CocVec3 P;
+    CocVec3::cross(ray._direction,E2,&P);
 
     // determinant
     float det =  E1.dot(P);
 
     // keep det > 0, modify T accordingly
-    Vec3 T;
+    CocVec3 T;
     if (det > 0)
     {
         T = ray._origin - _p1;
@@ -1697,8 +1697,8 @@ bool Terrain::Triangle::getIntersectPoint(const Ray& ray, Vec3& intersectPoint) 
         return false;
 
     // Q
-    Vec3 Q;
-    Vec3::cross(T,E1,&Q);
+    CocVec3 Q;
+    CocVec3::cross(T,E1,&Q);
 
     // Calculate v and make sure u + v <= 1
     v = ray._direction.dot(Q);
@@ -1715,7 +1715,7 @@ bool Terrain::Triangle::getIntersectPoint(const Ray& ray, Vec3& intersectPoint) 
     return true;
 }
 
-bool Terrain::Triangle::getInsterctPoint(const Ray& ray, Vec3& intersectPoint) const
+bool Terrain::Triangle::getInsterctPoint(const Ray& ray, CocVec3& intersectPoint) const
 {
     return getIntersectPoint(ray, intersectPoint);
 }

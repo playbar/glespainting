@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include <cmath>
 #include "base/ccMacros.h"
 
-// implementation of Vec2
+// implementation of CocVec2
 NS_CC_BEGIN
 
 // implementation of Size
@@ -47,7 +47,7 @@ Size::Size(const Size& other) : width(other.width), height(other.height)
 {
 }
 
-Size::Size(const Vec2& point) : width(point.x), height(point.y)
+Size::Size(const CocVec2& point) : width(point.x), height(point.y)
 {
 }
 
@@ -57,7 +57,7 @@ Size& Size::operator= (const Size& other)
     return *this;
 }
 
-Size& Size::operator= (const Vec2& point)
+Size& Size::operator= (const CocVec2& point)
 {
     setSize(point.x, point.y);
     return *this;
@@ -109,7 +109,7 @@ Rect::Rect(float x, float y, float width, float height)
 {
     setRect(x, y, width, height);
 }
-Rect::Rect(const Vec2& pos, const Size& dimension)
+Rect::Rect(const CocVec2& pos, const Size& dimension)
 {
     setRect(pos.x, pos.y, dimension.width, dimension.height);
 }
@@ -173,7 +173,7 @@ float Rect::getMinY() const
     return origin.y;
 }
 
-bool Rect::containsPoint(const Vec2& point) const
+bool Rect::containsPoint(const CocVec2& point) const
 {
     bool bRet = false;
 
@@ -194,9 +194,9 @@ bool Rect::intersectsRect(const Rect& rect) const
              rect.getMaxY() <      getMinY());
 }
 
-bool Rect::intersectsCircle(const Vec2& center, float radius) const
+bool Rect::intersectsCircle(const CocVec2& center, float radius) const
 {
-    Vec2 rectangleCenter((origin.x + size.width / 2),
+    CocVec2 rectangleCenter((origin.x + size.width / 2),
                          (origin.y + size.height / 2));
     
     float w = size.width / 2;
@@ -210,7 +210,7 @@ bool Rect::intersectsCircle(const Vec2& center, float radius) const
         return false;
     }
     
-    Vec2 circleDistance(std::abs(center.x - origin.x - w),
+    CocVec2 circleDistance(std::abs(center.x - origin.x - w),
                         std::abs(center.y - origin.y - h));
     
     if (circleDistance.x <= (w))

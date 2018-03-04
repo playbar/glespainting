@@ -229,11 +229,11 @@ struct CC_DLL Tex2F {
 };
 
 /** @struct PointSprite
- * Vec2 Sprite component.
+ * CocVec2 Sprite component.
  */
 struct CC_DLL PointSprite
 {
-    Vec2   pos;        // 8 bytes
+    CocVec2   pos;        // 8 bytes
     Color4B    color;      // 4 bytes
     GLfloat    size;       // 4 bytes
 };
@@ -243,29 +243,29 @@ struct CC_DLL PointSprite
  */
 struct CC_DLL Quad2
 {
-    Vec2        tl;
-    Vec2        tr;
-    Vec2        bl;
-    Vec2        br;
+    CocVec2        tl;
+    CocVec2        tr;
+    CocVec2        bl;
+    CocVec2        br;
 };
 
 /** @struct Quad3
  * A 3D Quad. 4 * 3 floats.
  */
 struct CC_DLL Quad3 {
-    Vec3        bl;
-    Vec3        br;
-    Vec3        tl;
-    Vec3        tr;
+    CocVec3        bl;
+    CocVec3        br;
+    CocVec3        tl;
+    CocVec3        tr;
 };
 
 /** @struct V2F_C4B_T2F
- * A Vec2 with a vertex point, a tex coord point and a color 4B.
+ * A CocVec2 with a vertex point, a tex coord point and a color 4B.
  */
 struct V2F_C4B_T2F
 {
     /// vertices (2F)
-    Vec2       vertices;
+    CocVec2       vertices;
     /// colors (4B)
     Color4B        colors;
     /// tex coords (2F)
@@ -278,7 +278,7 @@ struct V2F_C4B_T2F
 struct V2F_C4B_PF
 {
     /// vertices (2F)
-    Vec2       vertices;
+    CocVec2       vertices;
     /// colors (4B)
     Color4B        colors;
     /// pointsize
@@ -286,12 +286,12 @@ struct V2F_C4B_PF
 };
 
 /** @struct V2F_C4F_T2F
- * A Vec2 with a vertex point, a tex coord point and a color 4F.
+ * A CocVec2 with a vertex point, a tex coord point and a color 4F.
  */
 struct CC_DLL V2F_C4F_T2F
 {
     /// vertices (2F)
-    Vec2       vertices;
+    CocVec2       vertices;
     /// colors (4F)
     Color4F        colors;
     /// tex coords (2F)
@@ -299,12 +299,12 @@ struct CC_DLL V2F_C4F_T2F
 };
 
 /** @struct V3F_C4B_T2F
- * A Vec2 with a vertex point, a tex coord point and a color 4B.
+ * A CocVec2 with a vertex point, a tex coord point and a color 4B.
  */
 struct CC_DLL V3F_C4B_T2F
 {
     /// vertices (3F)
-    Vec3     vertices;            // 12 bytes
+    CocVec3     vertices;            // 12 bytes
 
     /// colors (4B)
     Color4B      colors;              // 4 bytes
@@ -314,12 +314,12 @@ struct CC_DLL V3F_C4B_T2F
 };
 
 /** @struct V3F_T2F
- * A Vec2 with a vertex point, a tex coord point.
+ * A CocVec2 with a vertex point, a tex coord point.
  */
 struct CC_DLL V3F_T2F
 {
     /// vertices (2F)
-    Vec3       vertices;
+    CocVec3       vertices;
     /// tex coords (2F)
     Tex2F          texCoords;
 };
