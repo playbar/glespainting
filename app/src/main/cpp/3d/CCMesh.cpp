@@ -406,7 +406,7 @@ void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, u
 
     // set default uniforms for Mesh
     // 'u_color' and others
-    const auto scene = Director::getInstance()->getRunningScene();
+    const auto scene = Director::getInstance()->getLayerManager();
     auto technique = _material->_currentTechnique;
     for(const auto pass : technique->_passes)
     {

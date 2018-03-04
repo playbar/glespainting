@@ -88,7 +88,7 @@ bool TransitionScene::initWithDuration(float t, Scene *scene)
 #endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
         _inScene = scene;
         _inScene->retain();
-        _outScene = Director::getInstance()->getRunningScene();
+        _outScene = Director::getInstance()->getLayerManager();
         if (_outScene == nullptr)
         {
             _outScene = Scene::create();

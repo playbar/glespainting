@@ -3,6 +3,7 @@
 
 // standard includes
 #include <string>
+#include <LayerManager.h>
 
 #include "2d/CCDrawingPrimitives.h"
 #include "2d/CCSpriteFrameCache.h"
@@ -88,8 +89,7 @@ bool Director::init(void)
 {
     setDefaultValues();
 
-    // scenes
-    _runningScene = nullptr;
+    _layerManager = nullptr;
 
     _notificationNode = nullptr;
 
@@ -165,7 +165,7 @@ Director::~Director(void)
     CC_SAFE_RELEASE(_drawnVerticesLabel);
     CC_SAFE_RELEASE(_drawnBatchesLabel);
 
-    CC_SAFE_RELEASE(_runningScene);
+    CC_SAFE_RELEASE(_layerManager);
     CC_SAFE_RELEASE(_notificationNode);
     CC_SAFE_RELEASE(_scheduler);
     CC_SAFE_RELEASE(_actionManager);
@@ -256,6 +256,7 @@ void Director::drawScene()
         _eventDispatcher->dispatchEvent(_eventAfterUpdate);
     }
 
+
 //    _renderer->clear();
     experimental::FrameBuffer::clearAllFBOs();
     
@@ -263,14 +264,14 @@ void Director::drawScene()
 
     pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     
-    if (_runningScene)
+    if (_layerManager)
     {
         //clear draw stats
         _renderer->clearDrawStats();
         
         //render the scene
         if(_openGLView)
-            _openGLView->renderScene(_runningScene, _renderer);
+            _openGLView->renderScene(_layerManager, _renderer);
         
         _eventDispatcher->dispatchEvent(_eventAfterVisit);
     }
@@ -811,58 +812,20 @@ Rect Director::getSafeAreaRect() const
 void Director::runWithScene(Scene *scene)
 {
     CCASSERT(scene != nullptr, "This command can only be used to start the Director. There is already a scene present.");
-    CCASSERT(_runningScene == nullptr, "_runningScene should be null");
+    CCASSERT(_layerManager == nullptr, "_layerManager should be null");
 
     _eventDispatcher->dispatchEvent(_beforeSetNextScene);
-    _runningScene = scene;
-    _runningScene->retain();
+    _layerManager = scene;
+    _layerManager->retain();
     _sendCleanupToScene = false;
-    _runningScene->onEnter();
-    _runningScene->onEnterTransitionDidFinish();
+    _layerManager->onEnter();
+    _layerManager->onEnterTransitionDidFinish();
 
 //    _eventDispatcher->dispatchEvent(_afterSetNextScene);
 
 //    pushScene(scene);
 }
 
-//void Director::replaceScene(Scene *scene)
-//{
-////    //CCASSERT(_runningScene, "Use runWithScene: instead to start the director");
-////    CCASSERT(scene != nullptr, "the scene should not be null");
-////
-////    if (_runningScene == nullptr) {
-////        runWithScene(scene);
-////        return;
-////    }
-////
-////    if (scene == _nextScene)
-////        return;
-////
-////    if (_nextScene)
-////    {
-////        if (_nextScene->isRunning())
-////        {
-////            _nextScene->onExit();
-////        }
-////        _nextScene->cleanup();
-////        _nextScene = nullptr;
-////    }
-////
-////
-////    _sendCleanupToScene = true;
-////
-////
-////    _nextScene = scene;
-//}
-
-//void Director::pushScene(Scene *scene)
-//{
-////    CCASSERT(scene, "the scene should not null");
-////
-////    _sendCleanupToScene = false;
-////
-////    _nextScene = scene;
-//}
 
 
 void Director::end()
@@ -878,14 +841,14 @@ void Director::restart()
 void Director::reset()
 {
 
-    if (_runningScene)
+    if (_layerManager)
     {
-        _runningScene->onExit();
-        _runningScene->cleanup();
-        _runningScene->release();
+        _layerManager->onExit();
+        _layerManager->cleanup();
+        _layerManager->release();
     }
     
-    _runningScene = nullptr;
+    _layerManager = nullptr;
 //    _nextScene = nullptr;
 
     if (_eventDispatcher)
@@ -979,48 +942,6 @@ void Director::restartDirector()
     startAnimation();
 
 }
-
-//void Director::setNextScene()
-//{
-////    _eventDispatcher->dispatchEvent(_beforeSetNextScene);
-////
-//////    bool runningIsTransition = dynamic_cast<TransitionScene*>(_runningScene) != nullptr;
-//////    bool newIsTransition = dynamic_cast<TransitionScene*>(_nextScene) != nullptr;
-//////
-//////    // If it is not a transition, call onExit/cleanup
-//////     if (! newIsTransition)
-//////     {
-//////         if (_runningScene)
-//////         {
-//////             _runningScene->onExitTransitionDidStart();
-//////             _runningScene->onExit();
-//////         }
-//////
-//////         // issue #709. the root node (scene) should receive the cleanup message too
-//////         // otherwise it might be leaked.
-//////         if (_sendCleanupToScene && _runningScene)
-//////         {
-//////             _runningScene->cleanup();
-//////         }
-//////     }
-//////
-//////    if (_runningScene)
-//////    {
-//////        _runningScene->release();
-//////    }
-////    _runningScene = _nextScene;
-////    _nextScene->retain();
-////    _nextScene = nullptr;
-////
-////    if (_runningScene)
-////    {
-////        _runningScene->onEnter();
-////        _runningScene->onEnterTransitionDidFinish();
-////    }
-////
-////    _eventDispatcher->dispatchEvent(_afterSetNextScene);
-//
-//}
 
 void Director::pause()
 {

@@ -82,7 +82,7 @@ Camera* Camera::createOrthographic(float zoomX, float zoomY, float nearPlane, fl
 
 Camera* Camera::getDefaultCamera()
 {
-    auto scene = Director::getInstance()->getRunningScene();
+    auto scene = Director::getInstance()->getLayerManager();
     if(scene)
     {
         return scene->getDefaultCamera();

@@ -42,28 +42,10 @@ static cocos2d::Size smallResolutionSize = cocos2d::Size(480, 320);
 static cocos2d::Size mediumResolutionSize = cocos2d::Size(1024, 768);
 static cocos2d::Size largeResolutionSize = cocos2d::Size(2048, 1536);
 
-// ----------------------------------------------------------------------------
-
-void printGlString(const char* name, GLenum s)
-{
-    const char* v = (const char*)glGetString(s);
-    LOGV("GL %s: %s\n", name, v);
-}
-
 
 JNIEXPORT void JNICALL
 Java_com_haowan_openglnew_RenderLib_init(JNIEnv* env, jobject obj)
 {
-
-    printGlString("Version", GL_VERSION);
-    printGlString("Vendor", GL_VENDOR);
-    printGlString("Renderer", GL_RENDERER);
-    printGlString("Extensions", GL_EXTENSIONS);
-
-//    g_renderer = createES2Renderer();
-
-    /////
-
     auto director = cocos2d::Director::getInstance();
     auto glview = director->getOpenGLView();
     if (!glview)
@@ -72,7 +54,6 @@ Java_com_haowan_openglnew_RenderLib_init(JNIEnv* env, jobject obj)
         glview->setFrameSize(1080, 1920);
         director->setOpenGLView(glview);
 
-//        cocos2d::Application::getInstance()->run();
 
         if(!glview) {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
@@ -108,10 +89,10 @@ Java_com_haowan_openglnew_RenderLib_init(JNIEnv* env, jobject obj)
             director->setContentScaleFactor(MIN(smallResolutionSize.height/designResolutionSize.height, smallResolutionSize.width/designResolutionSize.width));
         }
 
-        // create a scene. it's an autorelease object
+//        // create a scene. it's an autorelease object
         auto scene = LayerManager::createScene();
-
-        // run
+//
+//        // run
         director->runWithScene(scene);
         director->startAnimation();
     }
@@ -125,7 +106,7 @@ Java_com_haowan_openglnew_RenderLib_init(JNIEnv* env, jobject obj)
         director->getEventDispatcher()->dispatchEvent(&recreatedEvent);
         director->setGLDefaultValues();
     }
-
+    return;
 }
 
 

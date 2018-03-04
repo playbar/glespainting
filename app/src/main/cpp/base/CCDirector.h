@@ -136,7 +136,7 @@ public:
     // attribute
 
     /** Gets current running Scene. Director can only run one Scene at a time. */
-    Scene* getRunningScene() { return _runningScene; }
+    Scene* getLayerManager() { return _layerManager; }
 
     /** Gets the FPS value. */
     float getAnimationInterval() { return _animationInterval; }
@@ -542,8 +542,6 @@ protected:
     void restartDirector();
     bool _restartDirectorInNextLoop; // this flag will be set to true in restart()
     
-//    void setNextScene();
-    
     void updateFrameRate();
 #if !CC_STRIP_FPS
     void showStats();
@@ -582,7 +580,15 @@ protected:
      @since v3.0
      */
     EventDispatcher* _eventDispatcher;
-    EventCustom *_eventProjectionChanged, *_eventBeforeDraw, *_eventAfterDraw, *_eventAfterVisit, *_eventBeforeUpdate, *_eventAfterUpdate, *_eventResetDirector, *_beforeSetNextScene, *_afterSetNextScene;
+    EventCustom *_eventProjectionChanged;
+    EventCustom *_eventBeforeDraw;
+    EventCustom *_eventAfterDraw;
+    EventCustom *_eventAfterVisit;
+    EventCustom *_eventBeforeUpdate;
+    EventCustom *_eventAfterUpdate;
+    EventCustom *_eventResetDirector;
+    EventCustom *_beforeSetNextScene;
+    EventCustom *_afterSetNextScene;
         
     /* delta time since last tick to main loop */
 	float _deltaTime;
@@ -618,7 +624,7 @@ protected:
     float _secondsPerFrame;
     
     /* The running scene */
-    Scene *_runningScene;
+    Scene *_layerManager;
 //    bool _bfirst;
     /* will be the next 'runningScene' in the next frame
      nextScene is a weak reference. */

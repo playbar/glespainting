@@ -899,7 +899,7 @@ void Renderer::flushTriangles()
 bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
 {
     auto director = Director::getInstance();
-    auto scene = director->getRunningScene();
+    auto scene = director->getLayerManager();
     
     //If draw to Rendertexture, return true directly.
     // only cull the default camera. The culling algorithm is valid for default camera.

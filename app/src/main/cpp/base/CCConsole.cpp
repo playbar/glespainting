@@ -1555,7 +1555,7 @@ int Console::printSceneGraph(int fd, Node* node, int level)
 void Console::printSceneGraphBoot(int fd)
 {
     Console::Utility::sendToConsole(fd,"\n",1);
-    auto scene = Director::getInstance()->getRunningScene();
+    auto scene = Director::getInstance()->getLayerManager();
     int total = printSceneGraph(fd, scene, 0);
     Console::Utility::mydprintf(fd, "Total Nodes: %d\n", total);
     Console::Utility::sendPrompt(fd);

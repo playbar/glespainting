@@ -827,7 +827,7 @@ void EventDispatcher::dispatchTouchEventToListeners(EventListenerVector* listene
         }
     }
     
-    auto scene = Director::getInstance()->getRunningScene();
+    auto scene = Director::getInstance()->getLayerManager();
     if (scene && sceneGraphPriorityListeners)
     {
         if (!shouldStopPropagation)
@@ -1298,7 +1298,7 @@ void EventDispatcher::sortEventListeners(const EventListener::ListenerID& listen
         
         if ((int)dirtyFlag & (int)DirtyFlag::SCENE_GRAPH_PRIORITY)
         {
-            auto rootNode = Director::getInstance()->getRunningScene();
+            auto rootNode = Director::getInstance()->getLayerManager();
             if (rootNode)
             {
                 sortEventListenersOfSceneGraphPriority(listenerID, rootNode);
