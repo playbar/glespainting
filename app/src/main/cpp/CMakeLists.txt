@@ -7,7 +7,6 @@ add_definitions(-DUSE_FILE32API)
 
 add_library(gles3jni SHARED
            gles3jni.cpp
-           RendererES2.cpp
            drawtest.cpp
            math/CCAffineTransform.cpp
            math/CCGeometry.cpp

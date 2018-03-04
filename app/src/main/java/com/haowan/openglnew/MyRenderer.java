@@ -121,6 +121,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
             JNILib.drawBlankCanvas(0.9f,0.9f,0.9f);
             _first = false;
         }
+
         else {
             if(_mode == 4){
                 JNILib.changeCanvas(screenWH[0],screenWH[1],0xffffffff);
