@@ -135,30 +135,30 @@ public class MyRenderer implements GLSurfaceView.Renderer {
             }else if(_mode==1){
                 if(_act==-1)
                     return;
-                JNILib.drawBlurLine(_act, _x, _y, size, color, _mode);
+//                JNILib.drawBlurLine(_act, _x, _y, size, color, _mode);
             }else if(_mode == 2){
                 if(_act==-1)
                     return;
-                JNILib.drawSegLine(_act, _x, _y, size, color, _mode);
+//                JNILib.drawSegLine(_act, _x, _y, size, color, _mode);
             }else if(_mode == 3){
                 if(_act==-1)
                     return;
-                JNILib.drawLeaf(_act, _x, _y, size, color, _mode);
+//                JNILib.drawLeaf(_act, _x, _y, size, color, _mode);
 
             }else if(_mode==50){
                 JNILib.pan(_x0,_y0,_x1,_y1);
                 JNILib.zoom(_k,_x0,_y0);
 
             }else if(_mode == 10){
-                JNILib.undo(-1, beanSize, mbyte, mbyte.length);
+//                JNILib.undo(-1, beanSize, mbyte, mbyte.length);
             }else if(_mode == 11){
-                JNILib.redo(mbyte, mbyte.length);
+//                JNILib.redo(mbyte, mbyte.length);
             }else if(_mode == 12){
 
 //              JNILib.drawBlankCanvas(0.8f,0.8f,0.8f);
-                JNILib.playData(beanSize, mbyte, mbyte.length);
+//                JNILib.playData(beanSize, mbyte, mbyte.length);
                 long time = System.currentTimeMillis();
-                JNILib.playDraw(beanSize);
+//                JNILib.playDraw(beanSize);
                 Log.i(TAG,"---------------play use time:"+(System.currentTimeMillis() - time));
 
             }else if(_mode == 20){
@@ -212,19 +212,20 @@ public class MyRenderer implements GLSurfaceView.Renderer {
     public void play(int i){
 //        Log.i("GLes","----render,play111--i:"+i);
 //        long time = System.currentTimeMillis();
-        JNILib.playDraw(i);
+//        JNILib.playDraw(i);
 //        Log.i("xxxxxxx","--------play use time:"+(System.currentTimeMillis() - time));
 //        Log.i("GLes","----render,play222--i:"+i);
     }
 
     public int pick(int x,int y){
-        int color = JNILib.pick(x,y);
+//        int color = JNILib.pick(x,y);
         Log.i(TAG,"------color:"+color+",color16:"+Integer.toHexString(color));
         return color;
     }
 
     public byte[] getCanvasContent(){
-        return JNILib.getCanvasContent();
+//        return JNILib.getCanvasContent();
+        return null;
     }
 
   }

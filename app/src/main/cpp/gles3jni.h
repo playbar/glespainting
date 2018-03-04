@@ -46,9 +46,9 @@ extern const Vertex QUAD[4];
 extern const Vertex QUAD1[4];
 
 // returns true if a GL error occurred
-extern bool checkGlError(const char* funcName);
-extern GLuint createShader(GLenum shaderType, const char* src);
-extern GLuint createProgram(const char* vtxSrc, const char* fragSrc);
+extern bool checkGlErrorTest(const char* funcName);
+extern GLuint createShaderTest(GLenum shaderType, const char* src);
+extern GLuint createProgramTest(const char* vtxSrc, const char* fragSrc);
 
 
 #endif // __GLES3JNI_H__

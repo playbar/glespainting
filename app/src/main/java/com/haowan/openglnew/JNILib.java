@@ -34,16 +34,19 @@ public class JNILib {
      public static native void drawBlankCanvas(float r, float g, float b);
 
      public static native void drawNormalLine(int action, float x, float y, float size, int rgba, int textureID);
-     public static native void drawBlurLine(int action, float x, float y, float size, int rgba, int textureID);
-     public static native void drawSegLine(int action, float x, float y, float size, int rgba, int textureID);
-     public static native void drawLeaf(int action, float x, float y, float size, int rgba, int textureID);
-     public static native void snap(int index);
-     public static native void undo(int baseMapIndex, int cnt, byte[] dat, int len);
-     public static native void redo(byte[] dat, int len);
 
-     public static native void playData(int cnt, byte[] dat, int len);
-     public static native void playDraw(int cnt);
 
-     public static native int pick(int x,int y);
-     public static native byte[] getCanvasContent();
+
+//     public static native void drawBlurLine(int action, float x, float y, float size, int rgba, int textureID);
+//     public static native void drawSegLine(int action, float x, float y, float size, int rgba, int textureID);
+//     public static native void drawLeaf(int action, float x, float y, float size, int rgba, int textureID);
+//     public static native void snap(int index);
+//     public static native void undo(int baseMapIndex, int cnt, byte[] dat, int len);
+//     public static native void redo(byte[] dat, int len);
+//
+//     public static native void playData(int cnt, byte[] dat, int len);
+//     public static native void playDraw(int cnt);
+//
+//     public static native int pick(int x,int y);
+//     public static native byte[] getCanvasContent();
 }

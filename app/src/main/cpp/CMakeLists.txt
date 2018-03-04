@@ -150,6 +150,15 @@ add_library(gles3jni SHARED
            external/poly2tri/sweep/sweep.cc
            Java_org_cocos2dx_lib_Cocos2dxBitmap.cpp
            Java_org_cocos2dx_lib_Cocos2dxHelper.cpp
+           draw/curve.cpp
+           draw/main.cpp
+           draw/mat4.cpp
+           draw/myjni.cpp
+           draw/renderer.cpp
+           draw/state.cpp
+           draw/vec2.cpp
+           draw/vec3.cpp
+           draw/vec4.cpp
            Caretaker.cpp
            LayerManager.cpp
            VisibleRect.cpp

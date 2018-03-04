@@ -433,7 +433,7 @@ public class GLESSurfaceView extends GLSurfaceView {
 
                 if(drawBeans.size() % 20 == 0){
                     Log.i("GLESSURFACE","------size:"+drawBeans.size());
-                    JNILib.snap(drawBeans.size() / 20);
+//                    JNILib.snap(drawBeans.size() / 20);
 
                 }
 

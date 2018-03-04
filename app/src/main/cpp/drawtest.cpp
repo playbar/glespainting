@@ -34,7 +34,7 @@ typedef struct
 
 UserData gUserData;
 
-bool checkGlError(const char* funcName) {
+bool checkGlErrorTest(const char* funcName) {
     GLint err = glGetError();
     if (err != GL_NO_ERROR) {
         LOGE("GL error after %s(): 0x%08x\n", funcName, err);
@@ -43,10 +43,10 @@ bool checkGlError(const char* funcName) {
     return false;
 }
 
-GLuint createShader(GLenum shaderType, const char* src) {
+GLuint createShaderTest(GLenum shaderType, const char* src) {
     GLuint shader = glCreateShader(shaderType);
     if (!shader) {
-        checkGlError("glCreateShader");
+        checkGlErrorTest("glCreateShader");
         return 0;
     }
     glShaderSource(shader, 1, &src, NULL);
@@ -74,23 +74,23 @@ GLuint createShader(GLenum shaderType, const char* src) {
     return shader;
 }
 
-GLuint createProgram(const char* vtxSrc, const char* fragSrc) {
+GLuint createProgramTest(const char* vtxSrc, const char* fragSrc) {
     GLuint vtxShader = 0;
     GLuint fragShader = 0;
     GLuint program = 0;
     GLint linked = GL_FALSE;
 
-    vtxShader = createShader(GL_VERTEX_SHADER, vtxSrc);
+    vtxShader = createShaderTest(GL_VERTEX_SHADER, vtxSrc);
     if (!vtxShader)
         goto exit;
 
-    fragShader = createShader(GL_FRAGMENT_SHADER, fragSrc);
+    fragShader = createShaderTest(GL_FRAGMENT_SHADER, fragSrc);
     if (!fragShader)
         goto exit;
 
     program = glCreateProgram();
     if (!program) {
-        checkGlError("glCreateProgram");
+        checkGlErrorTest("glCreateProgram");
         goto exit;
     }
     glAttachShader(program, vtxShader);
@@ -252,7 +252,7 @@ void Init ( )
                     "}                                                   \n";
 
     // Load the shaders and get a linked program object
-    gUserData.programObject = createProgram ( vShaderStr, fShaderStr );
+    gUserData.programObject = createProgramTest ( vShaderStr, fShaderStr );
 
     // Get the sampler location
     gUserData.samplerLoc = glGetUniformLocation ( gUserData.programObject, "s_texture" );

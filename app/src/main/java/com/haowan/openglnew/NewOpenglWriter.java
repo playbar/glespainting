@@ -82,7 +82,7 @@ public class NewOpenglWriter extends Activity implements View.OnClickListener,
     GridView baseColorView;
     GridView usedGrid;
     ColorAdapter usedGridAdapter;
-    int currColor = Color.BLACK;
+    int currColor = 0xff0000ff;
     private int mAlpha = 255;
 
 
