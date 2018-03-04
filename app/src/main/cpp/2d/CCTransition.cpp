@@ -155,7 +155,7 @@ void TransitionScene::setNewScene(float /*dt*/)
     Director *director = Director::getInstance();
     _isSendCleanupToScene = director->isSendCleanupToScene();
     
-    director->replaceScene(_inScene);
+//    director->replaceScene(_inScene);
 #if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
     if (sEngine)

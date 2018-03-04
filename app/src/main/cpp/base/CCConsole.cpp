@@ -200,7 +200,6 @@ void log(const char * format, ...)
     fflush(stdout);
 #endif
 
-    Director::getInstance()->getConsole()->log(buf);
     delete[] buf;
 }
 

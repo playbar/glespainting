@@ -1,31 +1,3 @@
-/****************************************************************************
-Copyright (c) 2008-2010 Ricardo Quesada
-Copyright (c) 2010-2013 cocos2d-x.org
-Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2016 Chukong Technologies Inc.
-Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
-
-http://www.cocos2d-x.org
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-****************************************************************************/
-
 // cocos2d includes
 #include "base/CCDirector.h"
 
@@ -62,10 +34,6 @@ THE SOFTWARE.
 #include "base/CCConfiguration.h"
 #include "base/CCAsyncTaskPool.h"
 #include "base/ObjectFactory.h"
-
-#if CC_ENABLE_SCRIPT_BINDING
-#include "base/CCScriptSupport.h"
-#endif
 
 /**
  Position of the FPS
@@ -119,11 +87,9 @@ Director::Director()
 bool Director::init(void)
 {
     setDefaultValues();
-    _bfirst = true;
 
     // scenes
     _runningScene = nullptr;
-    _nextScene = nullptr;
 
     _notificationNode = nullptr;
 
@@ -155,8 +121,6 @@ bool Director::init(void)
     _defaultFBO = nullptr;
     
     _contentScaleFactor = 1.0f;
-
-    _console = new (std::nothrow) Console;
 
     // scheduler
     _scheduler = new (std::nothrow) Scheduler();
@@ -218,7 +182,6 @@ Director::~Director(void)
     CC_SAFE_RELEASE(_eventResetDirector);
 
     delete _renderer;
-    delete _console;
 
     CC_SAFE_RELEASE(_eventDispatcher);
     
@@ -297,20 +260,6 @@ void Director::drawScene()
     experimental::FrameBuffer::clearAllFBOs();
     
     _eventDispatcher->dispatchEvent(_eventBeforeDraw);
-    
-    /* to avoid flickr, nextScene MUST be here: after tick and before draw.
-     * FIXME: Which bug is this one. It seems that it can't be reproduced with v0.9
-     */
-    if (_nextScene)
-    {
-        setNextScene();
-//        _eventDispatcher->dispatchEvent(_beforeSetNextScene);
-//        _runningScene->onEnter();
-//        _runningScene->onEnterTransitionDidFinish();
-//
-//        _eventDispatcher->dispatchEvent(_afterSetNextScene);
-//        _bfirst = false;
-    }
 
     pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     
@@ -336,9 +285,7 @@ void Director::drawScene()
     
     if (_displayStats)
     {
-#if !CC_STRIP_FPS
         showStats();
-#endif
     }
     
     _renderer->render();
@@ -357,9 +304,7 @@ void Director::drawScene()
 
     if (_displayStats)
     {
-#if !CC_STRIP_FPS
         calculateMPF();
-#endif
     }
 }
 
@@ -382,14 +327,7 @@ void Director::calculateDeltaTime()
         }
         _deltaTime = MAX(0, _deltaTime);
     }
-
-#if COCOS2D_DEBUG
-    // If we are debugging our code, prevent big delta time
-    if (_deltaTime > 0.2f)
-    {
-        _deltaTime = 1 / 60.0f;
-    }
-#endif
+    return;
 }
 
 float Director::getDeltaTime() const
@@ -468,12 +406,6 @@ void Director::setNextDeltaTimeZero(bool nextDeltaTimeZero)
     _nextDeltaTimeZero = nextDeltaTimeZero;
 }
 
-//
-// FIXME TODO
-// Matrix code MUST NOT be part of the Director
-// MUST BE moved outside.
-// Why the Director must have this code ?
-//
 void Director::initMatrixStack()
 {
     while (!_modelViewMatrixStack.empty())
@@ -881,55 +813,56 @@ void Director::runWithScene(Scene *scene)
     CCASSERT(scene != nullptr, "This command can only be used to start the Director. There is already a scene present.");
     CCASSERT(_runningScene == nullptr, "_runningScene should be null");
 
-//    _eventDispatcher->dispatchEvent(_beforeSetNextScene);
-//    _runningScene = scene;
-//    _sendCleanupToScene = false;
-//    _runningScene->onEnter();
-//    _runningScene->onEnterTransitionDidFinish();
+    _eventDispatcher->dispatchEvent(_beforeSetNextScene);
+    _runningScene = scene;
+    _runningScene->retain();
+    _sendCleanupToScene = false;
+    _runningScene->onEnter();
+    _runningScene->onEnterTransitionDidFinish();
 
 //    _eventDispatcher->dispatchEvent(_afterSetNextScene);
 
-    pushScene(scene);
+//    pushScene(scene);
 }
 
-void Director::replaceScene(Scene *scene)
-{
-    //CCASSERT(_runningScene, "Use runWithScene: instead to start the director");
-    CCASSERT(scene != nullptr, "the scene should not be null");
-    
-    if (_runningScene == nullptr) {
-        runWithScene(scene);
-        return;
-    }
-    
-    if (scene == _nextScene)
-        return;
-    
-    if (_nextScene)
-    {
-        if (_nextScene->isRunning())
-        {
-            _nextScene->onExit();
-        }
-        _nextScene->cleanup();
-        _nextScene = nullptr;
-    }
+//void Director::replaceScene(Scene *scene)
+//{
+////    //CCASSERT(_runningScene, "Use runWithScene: instead to start the director");
+////    CCASSERT(scene != nullptr, "the scene should not be null");
+////
+////    if (_runningScene == nullptr) {
+////        runWithScene(scene);
+////        return;
+////    }
+////
+////    if (scene == _nextScene)
+////        return;
+////
+////    if (_nextScene)
+////    {
+////        if (_nextScene->isRunning())
+////        {
+////            _nextScene->onExit();
+////        }
+////        _nextScene->cleanup();
+////        _nextScene = nullptr;
+////    }
+////
+////
+////    _sendCleanupToScene = true;
+////
+////
+////    _nextScene = scene;
+//}
 
-
-    _sendCleanupToScene = true;
-
-
-    _nextScene = scene;
-}
-
-void Director::pushScene(Scene *scene)
-{
-    CCASSERT(scene, "the scene should not null");
-
-    _sendCleanupToScene = false;
-
-    _nextScene = scene;
-}
+//void Director::pushScene(Scene *scene)
+//{
+////    CCASSERT(scene, "the scene should not null");
+////
+////    _sendCleanupToScene = false;
+////
+////    _nextScene = scene;
+//}
 
 
 void Director::end()
@@ -953,7 +886,7 @@ void Director::reset()
     }
     
     _runningScene = nullptr;
-    _nextScene = nullptr;
+//    _nextScene = nullptr;
 
     if (_eventDispatcher)
         _eventDispatcher->dispatchEvent(_eventResetDirector);
@@ -990,22 +923,8 @@ void Director::reset()
     FontFreeType::shutdownFreeType();
     
     // purge all managed caches
-    
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
-#pragma warning (push)
-#pragma warning (disable: 4996)
-#endif
-//it will crash clang static analyzer so hide it if __clang_analyzer__ defined
-#ifndef __clang_analyzer__
+
     DrawPrimitives::free();
-#endif
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#pragma GCC diagnostic warning "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
-#pragma warning (pop)
-#endif
     AnimationCache::destroyInstance();
     SpriteFrameCache::destroyInstance();
     GLProgramCache::destroyInstance();
@@ -1058,54 +977,50 @@ void Director::restartDirector()
 
     // Restart animation
     startAnimation();
-    
-    // Real restart in script level
-#if CC_ENABLE_SCRIPT_BINDING
-    ScriptEvent scriptEvent(kRestartGame, nullptr);
-    ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
-#endif
+
 }
 
-void Director::setNextScene()
-{
-    _eventDispatcher->dispatchEvent(_beforeSetNextScene);
-
-    bool runningIsTransition = dynamic_cast<TransitionScene*>(_runningScene) != nullptr;
-    bool newIsTransition = dynamic_cast<TransitionScene*>(_nextScene) != nullptr;
-
-    // If it is not a transition, call onExit/cleanup
-     if (! newIsTransition)
-     {
-         if (_runningScene)
-         {
-             _runningScene->onExitTransitionDidStart();
-             _runningScene->onExit();
-         }
- 
-         // issue #709. the root node (scene) should receive the cleanup message too
-         // otherwise it might be leaked.
-         if (_sendCleanupToScene && _runningScene)
-         {
-             _runningScene->cleanup();
-         }
-     }
-
-    if (_runningScene)
-    {
-        _runningScene->release();
-    }
-    _runningScene = _nextScene;
-    _nextScene->retain();
-    _nextScene = nullptr;
-
-    if ((! runningIsTransition) && _runningScene)
-    {
-        _runningScene->onEnter();
-        _runningScene->onEnterTransitionDidFinish();
-    }
-    
-    _eventDispatcher->dispatchEvent(_afterSetNextScene);
-}
+//void Director::setNextScene()
+//{
+////    _eventDispatcher->dispatchEvent(_beforeSetNextScene);
+////
+//////    bool runningIsTransition = dynamic_cast<TransitionScene*>(_runningScene) != nullptr;
+//////    bool newIsTransition = dynamic_cast<TransitionScene*>(_nextScene) != nullptr;
+//////
+//////    // If it is not a transition, call onExit/cleanup
+//////     if (! newIsTransition)
+//////     {
+//////         if (_runningScene)
+//////         {
+//////             _runningScene->onExitTransitionDidStart();
+//////             _runningScene->onExit();
+//////         }
+//////
+//////         // issue #709. the root node (scene) should receive the cleanup message too
+//////         // otherwise it might be leaked.
+//////         if (_sendCleanupToScene && _runningScene)
+//////         {
+//////             _runningScene->cleanup();
+//////         }
+//////     }
+//////
+//////    if (_runningScene)
+//////    {
+//////        _runningScene->release();
+//////    }
+////    _runningScene = _nextScene;
+////    _nextScene->retain();
+////    _nextScene = nullptr;
+////
+////    if (_runningScene)
+////    {
+////        _runningScene->onEnter();
+////        _runningScene->onEnterTransitionDidFinish();
+////    }
+////
+////    _eventDispatcher->dispatchEvent(_afterSetNextScene);
+//
+//}
 
 void Director::pause()
 {
@@ -1149,7 +1064,6 @@ void Director::updateFrameRate()
     _frameRate = 1.0f / _deltaTime;
 }
 
-#if !CC_STRIP_FPS
 
 // display the FPS using a LabelAtlas
 // updates the FPS every frame
@@ -1294,7 +1208,6 @@ void Director::createStatsLabel()
     _FPSLabel->setPosition(Vec2(0, height_spacing*0)+CC_DIRECTOR_STATS_POSITION);
 }
 
-#endif // #if !CC_STRIP_FPS
 
 void Director::setContentScaleFactor(float scaleFactor)
 {

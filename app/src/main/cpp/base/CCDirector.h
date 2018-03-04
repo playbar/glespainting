@@ -271,14 +271,14 @@ public:
      * Try to avoid big stacks of pushed scenes to reduce memory allocation. 
      * ONLY call it if there is a running scene.
      */
-    void pushScene(Scene *scene);
+//    void pushScene(Scene *scene);
 
 
     /** Replaces the running scene with a new one. The running scene is terminated.
      * ONLY call it if there is a running scene.
      * @js NA
      */
-    void replaceScene(Scene *scene);
+//    void replaceScene(Scene *scene);
 
     /** Ends the execution, releases the running scene.
      * @lua endToLua
@@ -405,12 +405,6 @@ public:
      * @since v3.0
      */
     Renderer* getRenderer() const { return _renderer; }
-
-    /** Returns the Console associated with this director.
-     * @since v3.0
-     * @js NA
-     */
-    Console* getConsole() const { return _console; }
 
     /* Gets delta time since last tick to main loop. */
 	float getDeltaTime() const;
@@ -548,7 +542,7 @@ protected:
     void restartDirector();
     bool _restartDirectorInNextLoop; // this flag will be set to true in restart()
     
-    void setNextScene();
+//    void setNextScene();
     
     void updateFrameRate();
 #if !CC_STRIP_FPS
@@ -625,10 +619,10 @@ protected:
     
     /* The running scene */
     Scene *_runningScene;
-    bool _bfirst;
+//    bool _bfirst;
     /* will be the next 'runningScene' in the next frame
      nextScene is a weak reference. */
-    Scene *_nextScene;
+//    Scene *_nextScene;
     
     /* If true, then "old" scene will receive the cleanup message */
     bool _sendCleanupToScene;
@@ -660,9 +654,6 @@ protected:
     /* Default FrameBufferObject*/
     experimental::FrameBuffer* _defaultFBO;
 
-    /* Console for the director */
-    Console *_console;
-
     bool _isStatusLabelUpdated;
 
     /* cocos2d thread id */
@@ -675,14 +666,7 @@ protected:
     friend class GLView;
 };
 
-// FIXME: Added for backward compatibility in case
-// someone is subclassing it.
-// Should be removed in v4.0
-class DisplayLinkDirector : public Director
-{};
 
-// end of base group
-/** @} */
 
 NS_CC_END
 
