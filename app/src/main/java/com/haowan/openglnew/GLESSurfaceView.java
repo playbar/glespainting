@@ -333,7 +333,7 @@ public class GLESSurfaceView extends GLSurfaceView {
 
                         mRenderer.setOpMode(mode);
 
-                        float[] f = JNILib.getCanvasCoord(xDown, yDown);
+                        float[] f = RenderLib.getCanvasCoord(xDown, yDown);
                         mRenderer.handleActionDown(idDown, f[0], f[1]);
 
                         mDrawBean = new DrawBean();
@@ -377,7 +377,7 @@ public class GLESSurfaceView extends GLSurfaceView {
                             return;
                         }
 
-                        float[] f = JNILib.getCanvasCoord(xs[0],ys[0]);
+                        float[] f = RenderLib.getCanvasCoord(xs[0],ys[0]);
                         xs[0] = f[0];
                         ys[0] = f[1];
                         mRenderer.handleActionMove(ids, xs, ys);
@@ -418,7 +418,7 @@ public class GLESSurfaceView extends GLSurfaceView {
                             });
                             return;
                         }
-                        float[] f = JNILib.getCanvasCoord(xUp, yUp);
+                        float[] f = RenderLib.getCanvasCoord(xUp, yUp);
                         mRenderer.handleActionUp(idUp, f[0], f[1]);
 
                         Point mEndPoint = new Point((int)f[0],(int)f[1]);
