@@ -151,7 +151,6 @@ add_library(gles3jni SHARED
            Java_org_cocos2dx_lib_Cocos2dxBitmap.cpp
            Java_org_cocos2dx_lib_Cocos2dxHelper.cpp
            Caretaker.cpp
-           AppDelegate.cpp
            LayerManager.cpp
            VisibleRect.cpp
            JniHelper.cpp

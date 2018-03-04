@@ -1,31 +1,3 @@
-/****************************************************************************
- Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2010-2013 cocos2d-x.org
- Copyright (c) 2011      Zynga Inc.
- Copyright (c) 2013-2016 Chukong Technologies Inc.
- Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
-
-http://www.cocos2d-x.org
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-****************************************************************************/
-
 #ifndef __CCDIRECTOR_H__
 #define __CCDIRECTOR_H__
 
@@ -301,27 +273,6 @@ public:
      */
     void pushScene(Scene *scene);
 
-    /** 
-     * Pops out a scene from the stack.
-     * This scene will replace the running one.
-     * The running scene will be deleted. If there are no more scenes in the stack the execution is terminated.
-     * ONLY call it if there is a running scene.
-     */
-    void popScene();
-
-    /** 
-     * Pops out all scenes from the stack until the root scene in the queue.
-     * This scene will replace the running one.
-     * Internally it will call `popToSceneStackLevel(1)`.
-     */
-    void popToRootScene();
-
-    /** Pops out all scenes from the stack until it reaches `level`.
-     If level is 0, it will end the director.
-     If level is 1, it will pop all scenes until it reaches to root scene.
-     If level is <= than the current stack level, it won't do anything.
-     */
- 	void popToSceneStackLevel(int level);
 
     /** Replaces the running scene with a new one. The running scene is terminated.
      * ONLY call it if there is a running scene.
@@ -674,7 +625,7 @@ protected:
     
     /* The running scene */
     Scene *_runningScene;
-    
+    bool _bfirst;
     /* will be the next 'runningScene' in the next frame
      nextScene is a weak reference. */
     Scene *_nextScene;
@@ -683,7 +634,7 @@ protected:
     bool _sendCleanupToScene;
 
     /* scheduled scenes */
-    Vector<Scene*> _scenesStack;
+//    Vector<Scene*> _scenesStack;
     
     /* last time the main loop was updated */
     std::chrono::steady_clock::time_point _lastUpdate;

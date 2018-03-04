@@ -33,7 +33,6 @@
 #include "gles3jni.h"
 #include "mylog.h"
 #include "base/CCDirector.h"
-#include "AppDelegate.h"
 #include "LayerManager.h"
 
 
@@ -114,6 +113,7 @@ Java_com_haowan_openglnew_RenderLib_init(JNIEnv* env, jobject obj)
 
         // run
         director->runWithScene(scene);
+        director->startAnimation();
     }
     else
     {
@@ -142,14 +142,10 @@ Java_com_haowan_openglnew_RenderLib_step(JNIEnv* env, jobject obj)
     cocos2d::Director::getInstance()->mainLoop();
 }
 
-namespace {
-    std::unique_ptr<AppDelegate> appDelegate;
-}
 
 JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved)
 {
     cocos2d::JniHelper::setJavaVM(vm);
-    appDelegate.reset(new AppDelegate());
 
     return JNI_VERSION_1_4;
 }
