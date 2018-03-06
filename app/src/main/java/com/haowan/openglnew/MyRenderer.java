@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.opengl.GLSurfaceView;
 import android.util.Log;
 
-import com.haowan.opengl_new.R;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -85,7 +84,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
           }
         {
             //初始化模糊画笔纹理
-          final Bitmap bm = BitmapFactory.decodeResource(_context.getResources(), R.drawable._104, options);
+          final Bitmap bm = BitmapFactory.decodeResource(_context.getResources(), R.drawable.point_blur_max, options);
           int w = bm.getWidth();
           int h = bm.getHeight();
           int[] pixels = new int[w * h];

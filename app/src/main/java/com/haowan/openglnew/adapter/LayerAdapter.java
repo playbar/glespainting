@@ -11,7 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.haowan.opengl_new.R;
+import com.haowan.openglnew.R;
 import com.haowan.openglnew.bean.DrawLayer;
 import com.haowan.openglnew.dialog.LayerSettingPopWindow;
 

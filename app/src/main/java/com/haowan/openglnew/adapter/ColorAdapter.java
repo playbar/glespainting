@@ -7,7 +7,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
-import com.haowan.opengl_new.R;
+import com.haowan.openglnew.R;
+
 
 public class ColorAdapter extends BaseAdapter
 {

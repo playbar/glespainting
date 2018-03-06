@@ -8,7 +8,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
-import com.haowan.opengl_new.R;
+import com.haowan.openglnew.R;
 import com.haowan.openglnew.util.PGUtil;
 
 public class SizeAlphaAdapter extends BaseAdapter {

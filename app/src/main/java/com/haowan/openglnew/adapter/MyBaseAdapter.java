@@ -10,7 +10,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.haowan.opengl_new.R;
+import com.haowan.openglnew.R;
+
 
 /**
  * 所有上面为图片下面为文字的列表适配器

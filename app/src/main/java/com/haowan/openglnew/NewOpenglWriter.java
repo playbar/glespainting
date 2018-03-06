@@ -22,7 +22,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.haowan.opengl_new.R;
 import com.haowan.openglnew.Constants.Constants;
 import com.haowan.openglnew.adapter.ColorAdapter;
 import com.haowan.openglnew.adapter.LayerAdapter;
@@ -292,7 +291,7 @@ public class NewOpenglWriter extends Activity implements View.OnClickListener,
                 return false;
             }
         });
-        getData();
+//        getData();
     }
 
     /**
@@ -590,6 +589,8 @@ public class NewOpenglWriter extends Activity implements View.OnClickListener,
 
     @Override
     public void clearNote() {
+        surfaceView.setMode(20);
+        surfaceView.requestRender();
     }
 
     @Override

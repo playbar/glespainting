@@ -1,6 +1,7 @@
 package com.haowan.openglnew.Constants;
 
-import com.haowan.opengl_new.R;
+
+import com.haowan.openglnew.R;
 
 /**
  * Created by Mypc on 2018/1/14 0014.

@@ -15,8 +15,8 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.haowan.opengl_new.R;
 import com.haowan.openglnew.Constants.Constants;
+import com.haowan.openglnew.R;
 import com.haowan.openglnew.adapter.MyBaseAdapter;
 import com.haowan.openglnew.adapter.SizeAlphaAdapter;
 
@@ -90,15 +90,12 @@ public class PaintPopWindow {
 		paint_func.setOnItemClickListener(itemclick);
 		
 		GridView canvas_scale = (GridView)view.findViewById(R.id.canvas_scale);
-		TextView canvas_scale_text = (TextView)view.findViewById(R.id.canvas_scale_text);
 		if(mode == 0){
-			canvas_scale_text.setVisibility(View.VISIBLE);
 			canvas_scale.setVisibility(View.VISIBLE);
 			canvas_scale.setAdapter(new SizeAlphaAdapter(c, scaleResid));
 			canvas_scale.setOnItemClickListener(itemclick);
 		}else{
 			//隐藏画布比例设置
-			canvas_scale_text.setVisibility(View.GONE);
 			canvas_scale.setVisibility(View.GONE);
 		}
 

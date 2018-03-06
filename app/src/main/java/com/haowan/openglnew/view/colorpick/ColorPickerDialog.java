@@ -32,7 +32,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.haowan.opengl_new.R;
+import com.haowan.openglnew.R;
 import com.haowan.openglnew.util.PGUtil;
 
 import java.util.Locale;

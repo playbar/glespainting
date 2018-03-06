@@ -13,7 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.haowan.opengl_new.R;
+import com.haowan.openglnew.R;
 import com.haowan.openglnew.util.PGUtil;
 import com.haowan.openglnew.view.NoScrollListView;
 
@@ -22,7 +22,7 @@ import com.haowan.openglnew.view.NoScrollListView;
  */
 
 public class LayerModeCheckDialog extends Dialog {
-    public static final int[][] mode = {{1,R.string.layer_mode_normal},{2,R.string.layer_mode_multiply},{3,R.string.layer_mode_screen}};
+    public static final int[][] mode = {{1, R.string.layer_mode_normal},{2,R.string.layer_mode_multiply},{3,R.string.layer_mode_screen}};
     LayerModeCallback callback;
     LayoutInflater inflater;
 

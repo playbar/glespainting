@@ -9,7 +9,8 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
 
-import com.haowan.opengl_new.R;
+import com.haowan.openglnew.R;
+
 
 /**
  * 单步恢复按钮显示框

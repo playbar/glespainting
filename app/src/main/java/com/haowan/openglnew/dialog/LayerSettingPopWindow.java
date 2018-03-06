@@ -11,7 +11,7 @@ import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.haowan.opengl_new.R;
+import com.haowan.openglnew.R;
 import com.haowan.openglnew.bean.DrawLayer;
 import com.haowan.openglnew.util.PGUtil;
 
@@ -43,7 +43,7 @@ public class LayerSettingPopWindow extends PopupWindow implements View.OnClickLi
         View view = inflater.inflate(R.layout.layer_setting_layout,null);
         modeView = (TextView)view.findViewById(R.id.layer_mode);
         modeView.setText(layerBean.getLayerMode()[1]);
-        PGUtil.setTextViewDrawable(context,modeView,R.drawable.new_arrow_down,PGUtil.dip2px(context,6),2);
+        PGUtil.setTextViewDrawable(context,modeView, R.drawable.new_arrow_down,PGUtil.dip2px(context,6),2);
         modeView.setOnClickListener(this);
         ImageView layer_lock = (ImageView)view.findViewById(R.id.layer_lock);
         ImageView layer_copy = (ImageView)view.findViewById(R.id.layer_copy);

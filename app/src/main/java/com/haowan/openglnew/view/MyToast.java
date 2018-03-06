@@ -10,7 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.haowan.opengl_new.R;
+import com.haowan.openglnew.R;
+
 
 public class MyToast {
 

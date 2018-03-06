@@ -2,7 +2,8 @@ package com.haowan.openglnew.bean;
 
 import android.graphics.Bitmap;
 
-import com.haowan.opengl_new.R;
+import com.haowan.openglnew.R;
+
 
 /**
  * Created by Mypc on 2018/2/22 0022.

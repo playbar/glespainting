@@ -15,7 +15,6 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
-import com.haowan.opengl_new.R;
 import com.haowan.openglnew.bean.DrawBean;
 import com.haowan.openglnew.view.MyToast;
 
