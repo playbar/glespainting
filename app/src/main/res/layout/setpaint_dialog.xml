@@ -31,7 +31,7 @@
 		android:layout_toLeftOf="@id/other"
 		android:layout_alignBottom="@id/other"
 		android:background="@drawable/shape_paint_left_bottom_part_bg">
-		<com.haowan.openglnew.view.NoScrollGridView
+		<com.gles.painting.view.NoScrollGridView
 			android:id="@+id/canvas_scale"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"

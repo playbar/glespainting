@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal">
-    <com.haowan.openglnew.view.RoundImageView android:id="@+id/image_item"
+    <com.gles.painting.view.RoundImageView
+        android:id="@+id/image_item"
         android:layout_width="30dip"
         android:layout_height="30dip"
         android:layout_marginTop="5dip"/>

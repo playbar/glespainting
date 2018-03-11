@@ -3,7 +3,7 @@
 
 // standard includes
 #include <string>
-#include <LayerManager.h>
+#include <draw/LayerManager.h>
 
 #include "2d/CCDrawingPrimitives.h"
 #include "2d/CCSpriteFrameCache.h"

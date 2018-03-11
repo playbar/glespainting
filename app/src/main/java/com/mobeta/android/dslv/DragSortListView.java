@@ -49,7 +49,7 @@ import android.widget.Checkable;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.haowan.openglnew.R;
+import com.gles.painting.R;
 
 
 /**
