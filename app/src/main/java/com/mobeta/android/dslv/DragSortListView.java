@@ -49,7 +49,8 @@ import android.widget.Checkable;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.haowan.opengl_new.R;
+import com.gles.painting.R;
+
 
 /**
  * ListView subclass that mediates drag and drop resorting of items.

@@ -6,7 +6,6 @@ add_definitions(-DUSE_FILE32API)
 
 
 add_library(gles3jni SHARED
-           gles3jni.cpp
            drawtest.cpp
            math/CCAffineTransform.cpp
            math/CCGeometry.cpp
@@ -161,8 +160,9 @@ add_library(gles3jni SHARED
            draw/vec2.cpp
            draw/vec3.cpp
            draw/vec4.cpp
-           Caretaker.cpp
-           LayerManager.cpp
+           draw/Caretaker.cpp
+           draw/LayerManager.cpp
+           draw/gles3jni.cpp
            VisibleRect.cpp
            JniHelper.cpp
            cocos2d.cpp

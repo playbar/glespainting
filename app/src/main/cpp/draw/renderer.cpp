@@ -243,6 +243,7 @@ void Renderer::setTransformMatrix(double* mat){
 void Renderer::draw1(int us) { }
 
 void Renderer::draw0(int us) {
+
   glBindFramebuffer(GL_FRAMEBUFFER, _fb0);
   glViewport(0, 0, _fbo_width, _fbo_height);
 
@@ -310,8 +311,10 @@ void Renderer::draw0(int us) {
 
   if (pc->_status == 2){
     pc->_status = 3;
-    pc->pt0.clear();  pc->pt2.clear();   //free memory
-    if(g_opmode==6) return;
+    pc->pt0.clear();
+    pc->pt2.clear();   //free memory
+    if(g_opmode==6)
+      return;
   }
 }
 

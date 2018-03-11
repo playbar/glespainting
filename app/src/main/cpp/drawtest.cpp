@@ -4,7 +4,7 @@
 
 
 #include <GLES2/gl2.h>
-#include "gles3jni.h"
+#include "draw/gles3jni.h"
 #include "mylog.h"
 
 const Vertex QUAD[4] = {

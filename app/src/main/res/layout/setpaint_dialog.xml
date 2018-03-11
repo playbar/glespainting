@@ -1,76 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/root_view"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/transparent" >
     <!-- 基本功能 -->
     <RelativeLayout android:id="@+id/other"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/new_dimen_60dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true">
-	    <RelativeLayout android:id="@+id/other_func_relative"
-	        android:layout_width="40dip"
-	        android:layout_height="wrap_content"
-	        android:paddingTop="10dp"
-	        android:paddingBottom="8dp"
-	        android:background="@drawable/shape_paint_tool_bg"><!-- dialogbg -->
-	        <ListView android:id="@+id/other_func_listview"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:background="@android:color/transparent"
-	            android:dividerHeight="25dip"
-	            android:divider="@color/transparent"
-	            android:listSelector="@color/new_color_29CC88"
-	            android:cacheColorHint="@android:color/transparent"/>
-	    </RelativeLayout>
+        android:layout_alignParentRight="true"
+		android:layout_marginRight="@dimen/new_dimen_5dp"
+		android:paddingTop="@dimen/new_dimen_10dp"
+		android:paddingBottom="@dimen/new_dimen_10dp"
+		android:background="@drawable/shape_paint_right_part_bg">
+		<ListView android:id="@+id/other_func_listview"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:background="@android:color/transparent"
+			android:dividerHeight="@dimen/new_dimen_25dp"
+			android:divider="@color/transparent"
+			android:listSelector="@color/new_color_29CC88"
+			android:cacheColorHint="@android:color/transparent"/>
     </RelativeLayout>
-
-    
-    
-    
+	<RelativeLayout
+		android:id="@+id/canvas_layout"
+		android:layout_width="wrap_content"
+		android:layout_height="@dimen/new_dimen_60dp"
+		android:layout_marginRight="@dimen/new_dimen_5dp"
+		android:layout_marginTop="@dimen/new_dimen_5dp"
+		android:layout_toLeftOf="@id/other"
+		android:layout_alignBottom="@id/other"
+		android:background="@drawable/shape_paint_left_bottom_part_bg">
+		<com.gles.painting.view.NoScrollGridView
+			android:id="@+id/canvas_scale"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="@dimen/new_dimen_8dp"
+			android:numColumns="4"
+			android:layout_centerHorizontal="true"
+			android:listSelector="@color/new_color_29CC88"/>
+	</RelativeLayout>
     <!-- 画笔效果 -->
     <RelativeLayout android:id="@+id/paint_func_relative"
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="8dip"
-        android:layout_marginLeft="8dip"
-        android:paddingTop="10dp"
+        android:layout_marginRight="@dimen/new_dimen_5dp"
         android:layout_toLeftOf="@id/other"
-        android:layout_alignBottom="@id/other"
         android:layout_alignTop="@id/other"
-        android:background="@drawable/shape_paint_tool_bg">
-	    <TextView android:id="@+id/canvas_scale_text"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_marginLeft="8dp"
-	        android:textSize="10sp"
-	        android:textColor="@color/white"
-	        android:text="@string/per_canvas_scale"/>
-        <com.haowan.openglnew.view.NoScrollGridView
-   	 	    android:id="@+id/canvas_scale"
-   	 	    android:layout_width="fill_parent"
-   	 	    android:layout_height="wrap_content"
-   	 	    android:layout_marginTop="8dip"
-   	 	    android:layout_below="@id/canvas_scale_text"
-   	        android:numColumns="3"
-   	        android:layout_centerHorizontal="true"
-   	        android:listSelector="@color/new_color_29CC88"/>
-        <TextView android:id="@+id/tool_text"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_below="@id/canvas_scale"
-	        android:layout_marginTop="15dip"
-	        android:layout_marginLeft="8dp"
-	        android:textSize="10sp"
-	        android:textColor="@color/white"
-	        android:text="@string/per_tool"/>
+		android:layout_above="@id/canvas_layout"
+        android:background="@drawable/shape_paint_left_top_part_bg">
         <GridView android:id="@+id/paint_func"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tool_text"
-            android:layout_marginTop="8dip"
-            android:numColumns="3"
+            android:numColumns="4"
             android:verticalSpacing="10dp"
             android:cacheColorHint="@android:color/transparent"
             android:listSelector="@color/new_color_29CC88"
