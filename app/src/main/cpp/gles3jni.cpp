@@ -9,10 +9,12 @@
 #include "mylog.h"
 #include "LayerManager.h"
 
+extern LayerManager* g_renderer;
+
 JNIEXPORT int JNICALL
 Java_com_haowan_openglnew_RenderLib_creatLayer(JNIEnv* env, jobject obj)
 {
-    return hd_createLayer();
+    return g_renderer->createLayer();
 }
 
 
