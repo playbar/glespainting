@@ -4,42 +4,15 @@
 #include "renderer.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "glsl.h"
+#include "mylog.h"
 
 extern Curve cc;
 extern int g_opmode;
 extern int g_pencil;
 extern State st;
 
-static const char VERTEX_SHADER[] =
-"uniform mat4 mvp;\n"
-"attribute vec2 pos;\n"
-"attribute vec2 tcoord;\n"
-"varying vec2 vTexCoord;\n"
-"void main() {\n"
-"  gl_Position = mvp*vec4(pos, 0.0, 1.0);\n"
-"  vTexCoord = tcoord;\n"
-"}\n";
 
-static const char FRAGMENT_SHADER[] =
-"precision highp float;\n"
-"uniform int flag;\n"
-"uniform int pcl;\n"
-"uniform vec4 color;\n"
-"uniform sampler2D texture;\n"
-"uniform sampler2D texture1;\n"
-"varying vec2 vTexCoord;\n"
-"void main() {\n"
-"  if(flag==10){\n"
-"    gl_FragColor = texture2D(texture,vTexCoord); \n"
-"    if(pcl==0)\n"
-"      if(gl_FragColor.a<0.82){ discard; return; }\n"
-"    gl_FragColor.a *= color.a;\n"
-"    gl_FragColor.rgb = gl_FragColor.a * color.rgb;\n"
-"  }\n"
-"  else if(flag==2){\n"
-"    gl_FragColor = texture2D(texture,vTexCoord); \n"
-"  }\n"
-"}\n";
 
 // returns true if a GL error occurred
 bool checkGlError(const char* funcName);
@@ -53,6 +26,7 @@ float *g_buf = 0; int g_bp = 0;
 Renderer::Renderer() //:mEglContext(eglGetCurrentContext()),
   :mProgram(0), mVB(0), mVP(0)
 {
+  mProgramBlur = 0;
   _curTexIdx = -1;
   _snaped = -1;
 }
@@ -65,6 +39,10 @@ Renderer::~Renderer() {
 bool Renderer::init() {
   mProgram = createProgram(VERTEX_SHADER, FRAGMENT_SHADER);
   if (!mProgram)
+    return false;
+
+  mProgramBlur = createProgram(vertexShaderprocess, fragmentShaderprocess);
+  if( mProgramBlur == 0 )
     return false;
 
   float w = st.canvas_width;
@@ -239,8 +217,6 @@ void Renderer::setTransformMatrix(double* mat){
     transmat[i]=mat[i];
 }
 
-//leaf pencil
-void Renderer::draw1(int us) { }
 
 void Renderer::draw0(int us) {
 
@@ -318,6 +294,51 @@ void Renderer::draw0(int us) {
   }
 }
 
+//leaf pencil
+void Renderer::draw1(int us)
+{
+    glBindFramebuffer(GL_FRAMEBUFFER, _fb1);
+    glViewport(0, 0, _fbo_width, _fbo_height);
+  glClearColor(1.0, 0.6, 0.6, 1.0);
+  glClear(GL_COLOR_BUFFER_BIT);
+
+  glDisable(GL_BLEND);
+  glDisable(GL_DEPTH_TEST);
+  glDisable(GL_STENCIL_TEST);
+
+  glBindBuffer(GL_ARRAY_BUFFER, _a0);
+  GLint ptloc = glGetAttribLocation(mProgram, "pos");
+  GLint tcloc = glGetAttribLocation(mProgram, "tcoord");
+  glVertexAttribPointer(ptloc, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex),
+                        (const GLvoid *) offsetof(Vertex, x));
+  glVertexAttribPointer(tcloc, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex),
+                        (const GLvoid *) offsetof(Vertex, u));
+  glEnableVertexAttribArray(ptloc);
+  glEnableVertexAttribArray(tcloc);
+
+  glUseProgram(mProgram);
+  GLint loc = glGetUniformLocation(mProgram, "mvp");
+  glUniformMatrix4fv(loc, 1, GL_FALSE, transmat);
+
+  glEnable(GL_TEXTURE_2D);
+
+  {
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, _tex0);
+    GLint loc = glGetUniformLocation(mProgram, "flag");
+    glUniform1i(loc, 2);
+    loc = glGetUniformLocation(mProgram, "texture");
+    glUniform1i(loc, 0);
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+  }
+
+  glDisableVertexAttribArray(ptloc);
+  glDisableVertexAttribArray(tcloc);
+  glUseProgram(0);
+  glBindTexture(GL_TEXTURE_2D,0);
+
+}
+
 void Renderer::draw2( ) {
   glBindFramebuffer(GL_FRAMEBUFFER, DEFO);
   glViewport(st.view_posx, st.view_posy, st.view_width, st.view_height);
@@ -340,14 +361,14 @@ void Renderer::draw2( ) {
   glEnableVertexAttribArray(tcloc);
 
   glUseProgram(mProgram); 
-    GLint loc = glGetUniformLocation(mProgram, "mvp");
-    glUniformMatrix4fv(loc, 1, GL_FALSE, transmat);
+  GLint loc = glGetUniformLocation(mProgram, "mvp");
+  glUniformMatrix4fv(loc, 1, GL_FALSE, transmat);
 
   glEnable(GL_TEXTURE_2D);
 
   {
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _tex0);
+    glBindTexture(GL_TEXTURE_2D, _tex1);
     GLint loc = glGetUniformLocation(mProgram, "flag");
     glUniform1i(loc, 2);
     loc = glGetUniformLocation(mProgram, "texture");
@@ -366,8 +387,9 @@ void Renderer::smap1(int base) { }
 
 void Renderer::draw() {
   if(g_opmode==0){  //drawing
-    draw0();    
-    draw2();
+      draw0();
+      draw1();
+      draw2();
   }
 }
 
@@ -490,6 +512,7 @@ GLuint createShader(GLenum shaderType, const char* src) {
         printf("Could not compile %s shader:\n%s\n",
             shaderType == GL_VERTEX_SHADER ? "vertex" : "fragment",
             infoLog);
+          LOGE("%s, shader:%s", shaderType == GL_VERTEX_SHADER ? "vertex" : "fragment", infoLog);
         free(infoLog);
       }
     }

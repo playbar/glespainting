@@ -24,7 +24,7 @@ public class MyRenderer implements GLSurfaceView.Renderer {
 
     private int _mode;  //0:draw, 1:pan, 2:zoom-in 3:zoom-out,4:change-canvas
 
-    private float size = 5;
+    private float size = 20;
     private int[] screenWH = {1080, 1800};
     private int color = 0xff000000;
 

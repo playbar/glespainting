@@ -44,6 +44,7 @@ public:
 public:
 
     GLuint mProgram;
+    GLuint mProgramBlur;
     GLuint mVB, mVP;
     GLuint _fb0,_fb1,_fb;
     GLuint _tex0, _tex1, _tex[20];
