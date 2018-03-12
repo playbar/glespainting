@@ -54,9 +54,11 @@ void mh_drawBlankCanvas(float r, float g, float b){
 
 // x,y: canvas coordinate 
 // color: rgba
-void mh_drawNormalLine(int action, float x, float y, float size, int color, int textureID) {
+void mh_drawNormalLine(int action, float x, float y, float size, int color, int textureID)
+{
   g_opmode = OP_DRAW;
-  if (action == 0) {
+  if (action == 0)
+  {
     cc.reset();
     // 0--normal, 1--blur, 2--spray, 3--leaf
     cc._pencil = 1;
@@ -69,11 +71,13 @@ void mh_drawNormalLine(int action, float x, float y, float size, int color, int 
     cc.addPoint(x,y,0);
     g_renderer->draw();
   }
-  else if (action == 1) {
+  else if (action == 1)
+  {
     cc.addPoint(x,y,1);
     g_renderer->draw();
   }
-  else if (action == 2) {
+  else if (action == 2)
+  {
     cc.addPoint(x,y,2);
     g_renderer->draw();
   }
@@ -87,16 +91,19 @@ void mh_init(float cw, float ch, float vw, float vh){
   g_renderer->init();
   g_renderer->setTransformMatrix(st.mvp.m);
 }
+
 void mh_exit(){
   if(g_renderer) {
     delete g_renderer;
     g_renderer = 0;
   }
 }
+
 void mh_setTexture(int id, int w, int h, unsigned char* color){
   int tid = g_renderer->setTexture(color,w,h);
   st.texid[id] = tid;
 }
+
 void mh_resize(int width, int height) {
   st.resize(width,height);
   g_renderer->setTransformMatrix(st.mvp.m);
