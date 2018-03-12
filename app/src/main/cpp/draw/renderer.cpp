@@ -305,10 +305,11 @@ void Renderer::draw1(int us)
   glDisable(GL_BLEND);
   glDisable(GL_DEPTH_TEST);
   glDisable(GL_STENCIL_TEST);
+    glUseProgram(mProgramBlur);
 
   glBindBuffer(GL_ARRAY_BUFFER, _a0);
-  GLint ptloc = glGetAttribLocation(mProgram, "pos");
-  GLint tcloc = glGetAttribLocation(mProgram, "tcoord");
+  GLint ptloc = glGetAttribLocation(mProgramBlur, "pos");
+  GLint tcloc = glGetAttribLocation(mProgramBlur, "tcoord");
   glVertexAttribPointer(ptloc, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex),
                         (const GLvoid *) offsetof(Vertex, x));
   glVertexAttribPointer(tcloc, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex),
@@ -316,8 +317,7 @@ void Renderer::draw1(int us)
   glEnableVertexAttribArray(ptloc);
   glEnableVertexAttribArray(tcloc);
 
-  glUseProgram(mProgram);
-  GLint loc = glGetUniformLocation(mProgram, "mvp");
+  GLint loc = glGetUniformLocation(mProgramBlur, "mvp");
   glUniformMatrix4fv(loc, 1, GL_FALSE, transmat);
 
   glEnable(GL_TEXTURE_2D);
@@ -325,9 +325,7 @@ void Renderer::draw1(int us)
   {
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _tex0);
-    GLint loc = glGetUniformLocation(mProgram, "flag");
-    glUniform1i(loc, 2);
-    loc = glGetUniformLocation(mProgram, "texture");
+    loc = glGetUniformLocation(mProgramBlur, "texture");
     glUniform1i(loc, 0);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
   }

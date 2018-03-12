@@ -37,28 +37,20 @@ const char FRAGMENT_SHADER[] =
         "}\n";
 
 const char vertexShaderprocess[] =
-        "uniform vec2 uvScale;\n"
         "uniform mat4 mvp;\n"
         "attribute vec2 pos;\n"
         "attribute vec2 tcoord;\n"
         "varying vec2 vUv;\n"
         "void main()\n"
         "{\n"
-        "   vUv = uvScale * tcoord;\n"
+        "   vUv = tcoord;\n"
         "   gl_Position = mvp * vec4( pos, 0.0, 1.0 );\n"
         "}";
 
 const char fragmentShaderprocess[]=
-        "uniform float time;\n"
-        "uniform vec2 resolution;\n"
-        "uniform float fogDensity;\n"
-        "uniform vec3 fogColor;\n"
-        "uniform sampler2D texturenoise;\n"
         "uniform sampler2D texture2;\n"
         "varying vec2 vUv;\n"
         "void main( void ) {\n"
-        " vec2 position = -1.0 + 2.0 * vUv;\n"
-        " vec4 noise = texture2D( texturenoise, vUv );\n"
         " vec4 color = vec4( 0.0 ); \n"
         " float h = 1.0/512.0;\n"
         " vec4 colorh1 = texture2D( texture2, vec2( vUv.x - 4.0 * h, vUv.y ) ) ;\n"
