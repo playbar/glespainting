@@ -3,13 +3,13 @@
     package="com.gles.painting">
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <application
-        android:name="com.gles.painting.App"
+        android:name="MyApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"><!--MainActivity-->
-        <activity android:name="com.gles.painting.NewOpenglWriter"
+        <activity android:name="NewOpenglWriter"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

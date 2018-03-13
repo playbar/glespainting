@@ -7,7 +7,7 @@ import android.util.Log;
 
 
 
-public class App extends Application {
+public class MyApp extends Application {
 
 
 	static {
