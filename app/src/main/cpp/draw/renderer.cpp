@@ -30,6 +30,8 @@ Renderer::Renderer() //:mEglContext(eglGetCurrentContext()),
     mProgramBlurCol = 0;
     _curTexIdx = -1;
     _snaped = -1;
+    mBlurX = 10;
+    mBlurY = 10;
 }
 Renderer::~Renderer() {
     glDeleteBuffers(1, &mVB);
@@ -351,6 +353,14 @@ void Renderer::drawRow()
     GLint loc = glGetUniformLocation(mProgramBlurRow, "mvp");
     glUniformMatrix4fv(loc, 1, GL_FALSE, transmat);
 
+    loc = glGetUniformLocation(mProgramBlurRow, "uWH");
+    float width = _fbo_width;
+    float height = _fbo_height;
+    glUniform2f(loc, width, height);
+
+    loc = glGetUniformLocation(mProgramBlurRow, "uPix");
+    glUniform1i(loc, mBlurX);
+
     glEnable(GL_TEXTURE_2D);
 
     {
@@ -392,6 +402,14 @@ void Renderer::drawCol()
 
     GLint loc = glGetUniformLocation(mProgramBlurCol, "mvp");
     glUniformMatrix4fv(loc, 1, GL_FALSE, transmat);
+
+    loc = glGetUniformLocation(mProgramBlurCol, "uWH");
+    float width = _fbo_width;
+    float height = _fbo_height;
+    glUniform2f(loc, width, height);
+
+    loc = glGetUniformLocation(mProgramBlurCol, "uPix");
+    glUniform1i(loc, mBlurY);
 
     glEnable(GL_TEXTURE_2D);
 

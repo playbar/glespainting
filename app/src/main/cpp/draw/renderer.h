@@ -47,6 +47,8 @@ public:
     GLuint mProgram;
     GLuint mProgramBlurRow;
     GLuint mProgramBlurCol;
+    int mBlurX;
+    int mBlurY;
     GLuint mVB, mVP;
     GLuint mFboOrigin,mFboRow, mFboCol, _fb;
     GLuint mTexOrigin, mTexRow, mTexCol, _tex[20];
