@@ -36,7 +36,7 @@ const char FRAGMENT_SHADER[] =
         "  }\n"
         "}\n";
 
-const char vertexShaderprocess[] =
+const char vertexShaderprocessRow[] =
         "uniform mat4 mvp;\n"
         "attribute vec2 pos;\n"
         "attribute vec2 tcoord;\n"
@@ -47,12 +47,12 @@ const char vertexShaderprocess[] =
         "   gl_Position = mvp * vec4( pos, 0.0, 1.0 );\n"
         "}";
 
-const char fragmentShaderprocess[]=
+const char fragmentShaderprocessRow[]=
         "uniform sampler2D texture2;\n"
         "varying vec2 vUv;\n"
         "void main( void ) {\n"
         " vec4 color = vec4( 0.0 ); \n"
-        " float h = 1.0/512.0;\n"
+        " float h = 1.0/800.0;\n"
         " vec4 colorh1 = texture2D( texture2, vec2( vUv.x - 4.0 * h, vUv.y ) ) ;\n"
         " vec4 colorh2 = texture2D( texture2, vec2( vUv.x - 3.0 * h, vUv.y ) ) ;\n"
         " vec4 colorh3 = texture2D( texture2, vec2( vUv.x - 2.0 * h, vUv.y ) ) ;\n"
@@ -62,15 +62,6 @@ const char fragmentShaderprocess[]=
         " vec4 colorh7 = texture2D( texture2, vec2( vUv.x + 2.0 * h, vUv.y ) ) ;\n"
         " vec4 colorh8 = texture2D( texture2, vec2( vUv.x + 3.0 * h, vUv.y ) ) ;\n"
         " vec4 colorh9 = texture2D( texture2, vec2( vUv.x + 4.0 * h, vUv.y ) ) ;\n"
-        " vec4 colorv1 = texture2D( texture2, vec2( vUv.x, vUv.y - 4.0 * h ) );\n"
-        " vec4 colorv2 = texture2D( texture2, vec2( vUv.x, vUv.y - 3.0 * h ) );\n"
-        " vec4 colorv3= texture2D( texture2, vec2( vUv.x, vUv.y - 2.0 * h ) );\n"
-        " vec4 colorv4= texture2D( texture2, vec2( vUv.x, vUv.y - 1.0 * h ) );\n"
-        " vec4 colorv5= texture2D( texture2, vec2( vUv.x, vUv.y - 0.0 * h ) );\n"
-        " vec4 colorv6= texture2D( texture2, vec2( vUv.x, vUv.y + 1.0 * h ) );\n"
-        " vec4 colorv7= texture2D( texture2, vec2( vUv.x, vUv.y + 2.0 * h ) );\n"
-        " vec4 colorv8= texture2D( texture2, vec2( vUv.x, vUv.y + 3.0 * h ) );\n"
-        " vec4 colorv9 = texture2D( texture2, vec2( vUv.x, vUv.y + 4.0 * h ) );\n"
         " color =\n"
         " +colorh1\n"
         " +colorh2\n"
@@ -80,17 +71,48 @@ const char fragmentShaderprocess[]=
         " +colorh6\n"
         " +colorh7\n"
         " +colorh8\n"
-        " +colorh9\n"
-        " +colorv1\n"
-        " +colorv2\n"
-        " +colorv3\n"
-        " +colorv4\n"
-        " +colorv5\n"
-        " +colorv6\n"
-        " +colorv7\n"
-        " +colorv8\n"
-        " +colorv9;\n"
-        " gl_FragColor = color/18.0;\n"
+        " +colorh9;\n"
+        " gl_FragColor = color/9.0;\n"
         "}";
+
+
+const char vertexShaderprocessCol[] =
+        "uniform mat4 mvp;\n"
+                "attribute vec2 pos;\n"
+                "attribute vec2 tcoord;\n"
+                "varying vec2 vUv;\n"
+                "void main()\n"
+                "{\n"
+                "   vUv = tcoord;\n"
+                "   gl_Position = mvp * vec4( pos, 0.0, 1.0 );\n"
+                "}";
+
+const char fragmentShaderprocessCol[]=
+        "uniform sampler2D texture2;\n"
+                "varying vec2 vUv;\n"
+                "void main( void ) {\n"
+                " vec4 color = vec4( 0.0 ); \n"
+                " float h = 1.0/1200.0;\n"
+                " vec4 colorv1 = texture2D( texture2, vec2( vUv.x, vUv.y - 4.0 * h ) );\n"
+                " vec4 colorv2 = texture2D( texture2, vec2( vUv.x, vUv.y - 3.0 * h ) );\n"
+                " vec4 colorv3= texture2D( texture2, vec2( vUv.x, vUv.y - 2.0 * h ) );\n"
+                " vec4 colorv4= texture2D( texture2, vec2( vUv.x, vUv.y - 1.0 * h ) );\n"
+                " vec4 colorv5= texture2D( texture2, vec2( vUv.x, vUv.y - 0.0 * h ) );\n"
+                " vec4 colorv6= texture2D( texture2, vec2( vUv.x, vUv.y + 1.0 * h ) );\n"
+                " vec4 colorv7= texture2D( texture2, vec2( vUv.x, vUv.y + 2.0 * h ) );\n"
+                " vec4 colorv8= texture2D( texture2, vec2( vUv.x, vUv.y + 3.0 * h ) );\n"
+                " vec4 colorv9 = texture2D( texture2, vec2( vUv.x, vUv.y + 4.0 * h ) );\n"
+                " color =\n"
+                " +colorv1\n"
+                " +colorv2\n"
+                " +colorv3\n"
+                " +colorv4\n"
+                " +colorv5\n"
+                " +colorv6\n"
+                " +colorv7\n"
+                " +colorv8\n"
+                " +colorv9;\n"
+                " gl_FragColor = color/9.0;\n"
+                "}";
 
 #endif //GLESPAINTING_GLSL_H
